@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.squareup.picasso.RequestCreator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -93,6 +94,7 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
 //        }
         // 아이템 내 각 위젯에 데이터 반영
 
+
         photo.setImageDrawable(listViewItem.getPhoto());
         title.setText(listViewItem.getTitle());
         name.setText(listViewItem.getName());
@@ -101,7 +103,7 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
         return convertView;
     }
 
-    public void addItem(Drawable photo, String title,String time,String name) {
+    public void addItem(Drawable photo, String title, String time, String name) {
         listViewItems.add(new NoticeListViewItem(photo,title,name,time));
     }
 

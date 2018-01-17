@@ -7,24 +7,23 @@
 
     <ScrollView
         android:id="@+id/scrollView4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/textView90"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            >
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/titleText1"
-                android:layout_width="0dp"
-                android:layout_height="47dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/view_style_option"
                 android:ems="10"
                 android:fontFamily="@font/nanumsquarebold"
@@ -37,10 +36,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/textView82"
+                android:layout_width="match_parent"
+                android:layout_height="0.25dp"
+                android:background="#C8C9CA"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleText1" />
+
+            <ImageView
+                android:id="@+id/questionnaireImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/btn_star" />
+
             <EditText
                 android:id="@+id/inText"
-                android:layout_width="0dp"
-                android:layout_height="97.75dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/view_style_option"
                 android:ems="10"
                 android:fontFamily="@font/nanumsquarebold"
@@ -54,27 +68,20 @@
                 android:textSize="13.75dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/questionnaireImage" />
-            <TextView
-                android:id="@+id/textView82"
-                android:layout_width="match_parent"
-                android:layout_height="0.25dp"
-                android:background="#C8C9CA"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/titleText1" />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout2"
-                android:layout_width="332dp"
-                android:layout_height="500dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/voteboxcolor"
                 app:layout_constraintBottom_toTopOf="@+id/textView85"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inText">
+                app:layout_constraintTop_toBottomOf="@+id/inText"
+                android:layout_gravity="center"
+                >
 
                 <TextView
                     android:id="@+id/textView86"
@@ -159,7 +166,7 @@
                     <ListView
                         android:id="@+id/questListview"
                         android:layout_width="304dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:divider="@null"
                         android:dividerHeight="0dp"
                         android:scrollbars="none"
@@ -170,7 +177,8 @@
                 </android.support.constraint.ConstraintLayout>
             </android.support.constraint.ConstraintLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
     </ScrollView>
 
 

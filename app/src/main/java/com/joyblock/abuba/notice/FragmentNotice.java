@@ -188,7 +188,8 @@ public class FragmentNotice extends android.support.v4.app.Fragment {
                 //for(R13_SelectNoticeList list:noticeList)
                 for(int i=0;i<noticeList.length;i++) {
                     R13_SelectNoticeList list=noticeList[i];
-//                    adapter.addItem(Picasso.with(getContext()).load(list.file_path).into(adapter.get), list.title, TimeConverter.convert(list.reg_date), list.name);
+                    Picasso.with(getContext()).load(list.file_path);
+//                    adapter.addItem(Picasso.with(getContext()).load(list.file_path), list.title, TimeConverter.convert(list.reg_date), list.name);
                 }
                 adapter.notifyDataSetChanged();
 //                Log.d("Tag","공지사항 길이 : "+noticeList.length);

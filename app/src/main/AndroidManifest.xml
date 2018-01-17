@@ -30,7 +30,11 @@
 
         <activity android:name=".QuestionnaireActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".notice.NoticeTabActivity" />
         <activity android:name=".register.MainActivity" />
@@ -82,11 +86,7 @@
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 
