@@ -1,5 +1,6 @@
 package com.joyblock.abuba.notice;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -7,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.MainDawerSelectActivity;
+import com.joyblock.abuba.QuestionnaireActivity;
 import com.joyblock.abuba.R;
 
 /**
@@ -115,9 +118,28 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NoticeActivity.this, NoticeEditorActivity.class);
-                NoticeActivity.this.startActivity(intent);
-                finish();
+
+                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeActivity.this);
+                nd.setMessage("작성하실 게시판을 선택하세요")
+                        .setPositiveButton("공지", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(NoticeActivity.this, NoticeEditorActivity.class);
+                                NoticeActivity.this.startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("설문지", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(NoticeActivity.this, QuestionnaireActivity.class);
+                                NoticeActivity.this.startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .create()
+                        .show();
+
             }
         });
 
