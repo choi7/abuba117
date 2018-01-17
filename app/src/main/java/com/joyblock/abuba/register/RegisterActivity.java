@@ -117,7 +117,7 @@ public class RegisterActivity extends BaseActivity {
                 Intent intent = new Intent(RegisterActivity.this, RegisterJobSelectActivity.class);
                 RegisterActivity.this.startActivity(intent);
 
-                /*
+/*
                 switch (job) {
                     case "ROLE_PARENTS":
                         intent = new Intent(RegisterActivity.this, ChildrenRegisterActivity.class);
@@ -140,7 +140,8 @@ public class RegisterActivity extends BaseActivity {
 
 
 
-                        /*
+
+
                         new BuyTask(
                                 idText.getText().toString(),
                                 passwordText.getText().toString(),
@@ -150,7 +151,7 @@ public class RegisterActivity extends BaseActivity {
                                 phonenumberText.getText().toString(),
                                 emailText.getText().toString(),
                                 "0").execute();
-                        */
+
 
 
             }

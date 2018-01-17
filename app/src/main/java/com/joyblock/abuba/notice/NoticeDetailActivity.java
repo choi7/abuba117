@@ -22,7 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
+import com.joyblock.abuba.CustomDialog;
+import com.joyblock.abuba.CustomDialogModifyAndDel;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.RegisterSchoolClassSelectActivity;
+import com.joyblock.abuba.RegisterStandbyActivity;
 import com.joyblock.abuba.TimeConverter;
 import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
 import com.squareup.picasso.Picasso;
@@ -38,9 +42,10 @@ import okhttp3.RequestBody;
 public class NoticeDetailActivity extends AppCompatActivity {
 
     TextView noticeTitle,noticeBan,noticeName,noticeTime,noticeContent;//제목, 반, 작성자, 등록시간, 내용
-    String seq_notice;
+    String seq_notice, modify_title, modify_;
     ImageView insertAndDelete, detailImage, backImage;
     Activity activity;
+    CustomDialogModifyAndDel mCustomDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,39 +100,10 @@ public class NoticeDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_mod_del, null);
-                // 해당 뷰에 리스트뷰 호출
-                //listview = (ListView)view.findViewById(R.id.notice_popup_listview);
-                // 리스트뷰에 어댑터 설정
-
-                // 반 다이얼로그 생성
-                AlertDialog.Builder modDelDialogBuilder= new AlertDialog.Builder(activity);
-                // 리스트뷰 설정된 레이아웃
-                modDelDialogBuilder.setView(view);
-
-//                // 확인버튼
-//                banListDialogBuilder.setPositiveButton("확인", null);
-
-                // 반 다이얼로그 보기
-                DialogInterface modDelDialogInterface=modDelDialogBuilder.show();
-
-                //반 다이얼로그 이벤트 처리
-//                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        BanListViewItem item= adapter.list.get(position);
-//
-//                        seq_kindergarden_class=position==0?"0":classList[position-1].seq_kindergarden_class;
-//                        banListDialogInterface.dismiss();
-//                        title.setText(item.getName());
-//                        Toast.makeText(getApplicationContext(), position==0?"전체":item.getName(),Toast.LENGTH_LONG).show();
-//                    }
-//                });
-
-
-
-
-
+                mCustomDialog = new CustomDialogModifyAndDel(NoticeDetailActivity.this,
+                        modifyListener,
+                        delListener);
+                mCustomDialog.show();
             }
         });
 
@@ -219,6 +195,13 @@ public class NoticeDetailActivity extends AppCompatActivity {
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
                 detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);
                 Log.d("detail" , String.valueOf(detail));
+                modify_title = detail.title;
+                Log.d("details",detail.title);
+
+
+
+
+
 
                 Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
                 detailImage.setVisibility(View.VISIBLE);
@@ -244,6 +227,21 @@ public class NoticeDetailActivity extends AppCompatActivity {
         }
     }
 
+
+    //왼쪽버튼 클릭시 종료버튼
+    private View.OnClickListener modifyListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            mCustomDialog.dismiss();
+        }
+    };
+
+    //오른쪽버튼 클릭시 등록 끝 화면
+    private View.OnClickListener delListener = new View.OnClickListener() {
+        public void onClick(View v) {
+
+            mCustomDialog.dismiss();
+        }
+    };
 
 
 
