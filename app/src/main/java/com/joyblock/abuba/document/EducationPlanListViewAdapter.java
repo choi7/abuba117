@@ -1,9 +1,7 @@
 package com.joyblock.abuba.document;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,7 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,10 +22,17 @@ import java.util.ArrayList;
 
 public class EducationPlanListViewAdapter extends BaseAdapter implements Serializable {
 
-    private ArrayList<NoticeItem> listViewItems = new ArrayList<NoticeItem>();
+    private ArrayList<ListViewItem> listViewItems = new ArrayList<ListViewItem>();
     BaseActivity activity;
     Typeface font;
     ListViewHolder holder;
+    Context context;
+
+
+    public EducationPlanListViewAdapter(Context context){
+        this.context=context;
+
+    }
 
     public EducationPlanListViewAdapter(Typeface font){
         this.font=font;
@@ -38,7 +44,7 @@ public class EducationPlanListViewAdapter extends BaseAdapter implements Seriali
     }
 
     @Override
-    public NoticeItem getItem(int position) {
+    public ListViewItem getItem(int position) {
         return listViewItems.get(position);
     }
 
@@ -52,56 +58,89 @@ public class EducationPlanListViewAdapter extends BaseAdapter implements Seriali
 
         final int pos = position;
         final Context context = parent.getContext();
-        ImageView iconImageView,iconImageView1;
-        TextView titleTextView;
+
+
+        ImageView photo;
+        TextView title,time,name;
+        //        // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.park_fragment_document_listview_item, parent, false);
+            convertView = inflater.inflate(R.layout.noticelistviewcustom, parent, false);
+            photo = (ImageView) convertView.findViewById(R.id.photo);
+            title= (TextView) convertView.findViewById(R.id.titleListViewCell);
+            time = (TextView) convertView.findViewById(R.id.timeViewCell);
+            name = (TextView) convertView.findViewById(R.id.nickListViewCell);
             holder=new ListViewHolder();
-
-            // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-            iconImageView = (ImageView) convertView.findViewById(R.id.imageView_item);
-            holder.iconImageView=iconImageView;
-            titleTextView = (TextView) convertView.findViewById(R.id.textView_item);
-            holder.titleTextView=titleTextView;
-            iconImageView1 = (ImageView) convertView.findViewById(R.id.imageView_item1);
-            holder.iconImageView1=iconImageView1;
+            holder.photo=photo;
+            holder.title=title;
+            holder.time=time;
+            holder.name=name;
+            convertView.setTag(holder);
         }else{
             holder=(ListViewHolder)convertView.getTag();
-            iconImageView=holder.iconImageView;
-            titleTextView=holder.titleTextView;
-            iconImageView1=holder.iconImageView1;
+            photo=holder.photo;
+            title=holder.title;
+            time=holder.time;
+            name=holder.name;
         }
 
 //        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        NoticeItem listViewItem = listViewItems.get(position);
+        ListViewItem listViewItem = listViewItems.get(position);
 
-        titleTextView.setTypeface(font);
-        if(!listViewItem.a){
-            titleTextView.setTextColor(Color.RED);
-        }else{
-            titleTextView.setTextColor(Color.BLUE);
-        }
-//        // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageDrawable(listViewItem.getIcon());
-        titleTextView.setText(listViewItem.getTitle());
-        iconImageView1.setImageDrawable(listViewItem.getIcon1());
+//        titleTextView.setTypeface(font);
+//        if(!listViewItem.a){
+//            titleTextView.setTextColor(Color.RED);0
+//        }else{
+//            titleTextView.setTextColor(Color.BLUE);
+//        }
+        // 아이템 내 각 위젯에 데이터 반영
+        Picasso.with(context).load(listViewItem.getFile_path()).into(photo);
+
+
+//        photo.setImageDrawable(listViewItem.getPhoto());
+        title.setText(listViewItem.getTitle());
+        name.setText(listViewItem.getName());
+        time.setText(listViewItem.getTime());
 
         return convertView;
     }
 
-    public void addItem(Drawable icon, String title, Drawable icon1) {
-        NoticeItem item = new NoticeItem();
-
-        item.setIcon(icon);
-        item.setTitle(title);
-        item.setIcon1(icon1);
-
-        listViewItems.add(item);
+    public void addItem(String file_path, String title,String time,String name) {
+        listViewItems.add(new ListViewItem(file_path,title,name,time));
     }
+
     private class ListViewHolder {
-        ImageView iconImageView,iconImageView1;
-        TextView titleTextView;
+        ImageView photo;
+        TextView title,time,name;
     }
+
+    private class ListViewItem{
+
+        private String file_path, title,name,time;
+        boolean a=false;
+
+        public ListViewItem(String file_path,String title,String name,String time){
+            this.file_path=file_path;
+            this.title=title;
+            this.name=name;
+            this.time=time;
+        }
+
+        public String getFile_path(){
+            return file_path;
+        }
+        public String getTitle(){
+            return title;
+        }
+        public String getName(){
+            return name;
+        }
+        public String getTime(){
+            return time;
+        }
+
+
+    }
+
 }

@@ -1,8 +1,10 @@
 package com.joyblock.abuba.document;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -36,7 +38,7 @@ public class EducationPlanAcitivty extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        month=true;
+        month=true;// 월간/주간 플래그
         setContentView(R.layout.activity_education);
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -57,6 +59,7 @@ public class EducationPlanAcitivty extends BaseActivity {
         String content="내용없음";
         String files="no files";
 
+        callFragment();
 
 
 
@@ -80,6 +83,64 @@ public class EducationPlanAcitivty extends BaseActivity {
 
 
     }
+
+    private void callFragment() {
+
+        // 프래그먼트 사용을 위해
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if(month) {
+            // '공지사항 리스트 fragment' 호출
+            FragmentEducationPlanMonth fragment1 = new FragmentEducationPlanMonth();
+            fragment1.setPref(pref);
+            transaction.replace(R.id.education_plan_fragment_container, fragment1);
+            transaction.commit();
+        }else{
+            // '설문지 fragment' 호출
+            FragmentEducationPlanWeek fragment2 = new FragmentEducationPlanWeek();
+            transaction.replace(R.id.education_plan_fragment_container, fragment2);
+            transaction.commit();
+        }
+    }
+
+    public void actionbarCustom() {
+
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        final TextView title = (TextView) findViewById(R.id.titleName);
+        title.setText("공지사항");
+        title.setVisibility(View.VISIBLE);
+//
+//        ImageView imageView = (ImageView) findViewById(R.id.editorImage);
+//        imageView.setVisibility(View.VISIBLE);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(NoticeActivity.this, NoticeEditorActivity.class);
+//                NoticeActivity.this.startActivity(intent);
+//                finish();
+//            }
+//        });
+//
+//        ImageView backImage = (ImageView) findViewById(R.id.backImage);
+//        backImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent loginIntent = new Intent(NoticeActivity.this, MainDawerSelectActivity.class);
+//                NoticeActivity.this.startActivity(loginIntent);
+//                finish();
+//            }
+//        });
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
+        } if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
+    }
+
 
     public void monthList(View v){
 
