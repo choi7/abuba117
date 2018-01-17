@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,12 +30,14 @@ public class EducationPlanAcitivty extends BaseActivity {
     ListViewAdapter adapter;
     ListView listView;
     SharedPreferences.Editor editor;
+    boolean month;
 
 //    R27_SelectEducationPlanOne data;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.park_activity_education);
+        month=true;
+        setContentView(R.layout.activity_education);
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
@@ -54,7 +57,12 @@ public class EducationPlanAcitivty extends BaseActivity {
         String content="내용없음";
         String files="no files";
 
-        System.out.println("\n시퀀스 : "+seq_user+" / "+seq_kindergarden);
+
+
+
+
+
+        //System.out.println("\n시퀀스 : "+seq_user+" / "+seq_kindergarden);
 
 //        new InsertEducationPlan(seq_user,seq_kindergarden,plan_flag,notice_title,content,files).execute();
 
@@ -64,12 +72,16 @@ public class EducationPlanAcitivty extends BaseActivity {
 
 //        new SelectEducationPlanList(seq_kindergarden,plan_flag).execute();
 
-        new SelectEducationPlanOne("4").execute();
+//        new SelectEducationPlanOne("4").execute();
 
 //        System.out.println("제목 : "+data.seq_educational_plan);
 
 //        new UpdateEducationPlan("4","w","공지변경","냉무").execute();
 
+
+    }
+
+    public void monthList(View v){
 
     }
 

@@ -40,14 +40,14 @@ public class NoticeAndQuestActivity extends AppCompatActivity implements View.On
         switch (frament_no){
             case 1:
                 // '프래그먼트1' 호출
-                FragmentNotice fragment1 = new FragmentNotice();
+                FragmentNotice1 fragment1 = new FragmentNotice1();
                 transaction.replace(R.id.fragment_container, fragment1);
                 transaction.commit();
                 break;
 
             case 2:
                 // '프래그먼트2' 호출
-                FragmentSurvey fragment2 = new FragmentSurvey();
+                FragmentSurvey1 fragment2 = new FragmentSurvey1();
                 transaction.replace(R.id.fragment_container, fragment2);
                 transaction.commit();
                 break;
