@@ -403,7 +403,7 @@ public class QuestionnaireActivity extends BaseActivity {
     }
 
     //갤러리에서 사진을 가져오는 경우
-    private void selectGallery() {
+    public void selectGallery() {
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
