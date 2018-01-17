@@ -20,6 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     int width, height;
     public SharedPreferences pref;
     public Typeface NanumSquareBold,NanumSquareExtraBold,NanumSquareLight,NanumSquareRegular;
+    String sss;
 
 
     @Override
