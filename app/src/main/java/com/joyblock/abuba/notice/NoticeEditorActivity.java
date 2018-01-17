@@ -269,7 +269,8 @@ public class NoticeEditorActivity extends BaseActivity {
                     .addFormDataPart("is_reply", is_reply)
                     .addFormDataPart("title", title)
                     .addFormDataPart("content", content)
-                    .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, new File(imagePath)))
+//                    .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, new File(imagePath)))
+                    .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, image))
                     .build();
 
             request = new okhttp3.Request.Builder()
@@ -493,6 +494,8 @@ public class NoticeEditorActivity extends BaseActivity {
             bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap1.compress( PNG, 30, stream) ;
+            image=stream.toByteArray();
+            Log.d("Tag",""+stream.size());
 
 //            Uri uri = Uri.fromFile(file);
 
@@ -508,6 +511,13 @@ public class NoticeEditorActivity extends BaseActivity {
 
         editorImage.setAdjustViewBounds(true);
 //        image = bitmapToByteArray(bitmap1);
+    }
+
+    void a(int a, int b){
+
+    }
+    void a(int c, String d){
+
     }
 
     //사진의 절대경로 구하기
