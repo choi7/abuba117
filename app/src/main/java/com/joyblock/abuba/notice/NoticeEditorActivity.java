@@ -494,6 +494,7 @@ public class NoticeEditorActivity extends BaseActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap1.compress( PNG, 30, stream) ;
 
+
 //            Uri uri = Uri.fromFile(file);
 
         } catch (FileNotFoundException e) {
@@ -639,6 +640,6 @@ public class NoticeEditorActivity extends BaseActivity {
         return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
     }
 
-    
+
 
 }

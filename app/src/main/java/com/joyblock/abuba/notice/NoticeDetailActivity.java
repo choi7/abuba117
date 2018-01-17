@@ -134,6 +134,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
     }
 
 
+
     //휴대폰 하단 백 버튼 눌렀을때 실행되는 메소드
     @Override
     public void onBackPressed() {
@@ -198,8 +199,11 @@ public class NoticeDetailActivity extends AppCompatActivity {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
                 detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);
+                Log.d("detail" , String.valueOf(detail));
+
                 setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 //                for(R14_SelectNoticeOne list:noticeList)
+
 //                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title,list.reg_date,list.name);
 //                adapter.notifyDataSetChanged();
 //                Log.d("Tag","공지사항 길이 : "+noticeList.length);
