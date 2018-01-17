@@ -455,22 +455,22 @@ public class NoticeEditorActivity extends BaseActivity {
 //     'RESULT_OK' 가 취소 했을때는 'RESULT_CANCEL'
 //    사진 데이터는 intent 타입으로 반환.
 //    */
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK) {
-//            switch (requestCode) {
-//                case GALLERY_CODE:
-//                    sendPicture(data.getData()); //갤러리에서 가져오기
-//                    break;
-//                case CAMERA_CODE:
-////                    getPictureForPhoto(); //카메라에서 가져오기
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case GALLERY_CODE:
+                    sendPicture(data.getData(),getApplicationContext()); //갤러리에서 가져오기
+                    break;
+                case CAMERA_CODE:
+//                    getPictureForPhoto(); //카메라에서 가져오기
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 //
 //
 //    //선택한 사진 데이터 갤러리 처리
