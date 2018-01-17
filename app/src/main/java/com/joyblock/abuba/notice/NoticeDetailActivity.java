@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
+import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CustomDialog;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
 import com.joyblock.abuba.R;
@@ -39,16 +40,16 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 
-public class NoticeDetailActivity extends AppCompatActivity {
+public class NoticeDetailActivity extends BaseActivity {
 
     TextView noticeTitle,noticeBan,noticeName,noticeTime,noticeContent;//제목, 반, 작성자, 등록시간, 내용
-    String seq_notice, modify_title, modify_;
+    String seq_notice, notice_detail_seq_user, intentPutExtraModifyData;
     ImageView insertAndDelete, detailImage, backImage;
     Activity activity;
     CustomDialogModifyAndDel mCustomDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         activity=this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_view1);
@@ -96,6 +97,17 @@ public class NoticeDetailActivity extends AppCompatActivity {
 
 //        setNotice(position,position,null,position,position,position,false);
 
+
+
+        new SelectNoticeOne(seq_notice).execute();
+
+//        setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
+
+        String seq_user = pref.getString("seq_user","");
+        if(seq_user != notice_detail_seq_user){
+            insertAndDelete.setVisibility(View.INVISIBLE);
+        }
+
         insertAndDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,10 +118,6 @@ public class NoticeDetailActivity extends AppCompatActivity {
                 mCustomDialog.show();
             }
         });
-
-        new SelectNoticeOne(seq_notice).execute();
-
-//        setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 
 
     }
@@ -193,15 +201,11 @@ public class NoticeDetailActivity extends AppCompatActivity {
             try {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+
                 detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);
                 Log.d("detail" , String.valueOf(detail));
-                modify_title = detail.title;
-                Log.d("details",detail.title);
-
-
-
-
-
+                notice_detail_seq_user = detail.seq_user;
+                intentPutExtraModifyData = jsonResponse.getString("notice");
 
                 Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
                 detailImage.setVisibility(View.VISIBLE);
@@ -228,16 +232,20 @@ public class NoticeDetailActivity extends AppCompatActivity {
     }
 
 
-    //왼쪽버튼 클릭시 종료버튼
+    //수정버튼
     private View.OnClickListener modifyListener = new View.OnClickListener() {
         public void onClick(View v) {
-            mCustomDialog.dismiss();
+            Intent intent=new Intent(NoticeDetailActivity.this,NoticeEditorActivity.class);
+            intent.putExtra("sdf",intentPutExtraModifyData);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            finish();
         }
     };
 
-    //오른쪽버튼 클릭시 등록 끝 화면
+    //삭제버튼
     private View.OnClickListener delListener = new View.OnClickListener() {
         public void onClick(View v) {
+
 
             mCustomDialog.dismiss();
         }

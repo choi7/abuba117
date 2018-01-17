@@ -46,14 +46,16 @@
             android:name=".bus.BusLocationActivity"
             android:label="@string/title_activity_bus_location"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".register.SchoolRegister_2Activity" />
+        <activity android:name=".register.SchoolRegister_2Activity">
+        </activity>
         <activity android:name=".notice.NoticeEditorActivity" />
         <activity
             android:name=".register.SchoolRegister_1Activity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".notice.NoticeViewComentActivity" />
         <activity android:name=".calendar.CalendarActivity" />
-        <activity android:name=".register.SchoolClassRegisterActivity" />
+        <activity android:name=".register.SchoolClassRegisterActivity" >
+        </activity>
         <activity android:name=".register.ChildrenRegisterActivity" />
         <activity
             android:name=".calendar.ScheduleAndDailyMenuActivity"
@@ -87,8 +89,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
 
         <activity android:name=".document.AttendanceActivity"/>
