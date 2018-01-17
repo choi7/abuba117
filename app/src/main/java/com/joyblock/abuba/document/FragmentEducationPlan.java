@@ -30,13 +30,20 @@ import okhttp3.RequestBody;
  * Created by hyoshinchoi on 2018. 1. 10..
  */
 
-public class FragmentEducationPlanMonth extends android.support.v4.app.Fragment {
+public class FragmentEducationPlan extends android.support.v4.app.Fragment {
 
 
     SharedPreferences pref;
     String seq_user,seq_kindergarden,seq_kindergarden_class;
     EducationPlanListViewAdapter adapter;
     ListView listView;
+
+    String plan_flag;
+
+
+    void setFlag(String plan_flag){
+        this.plan_flag=plan_flag;
+    }
 
 
 
@@ -75,7 +82,7 @@ public class FragmentEducationPlanMonth extends android.support.v4.app.Fragment 
 
         adapter = new EducationPlanListViewAdapter();
 
-        listView = rootView.findViewById(R.id.monthPlanListView);
+        listView = rootView.findViewById(R.id.planListView);
 
         listView.setAdapter(adapter);
 
