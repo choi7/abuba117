@@ -62,7 +62,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questionnaire1);
+        setContentView(R.layout.activity_questionnaire);
 
         titleText = (EditText) findViewById(R.id.titleText);
         inText = (EditText) findViewById(R.id.inText);
@@ -127,6 +127,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         actionbarCustom();
 
         mListView11 = (ListView) findViewById(R.id.questListview);
+        setListViewHeightBasedOnChildren(mListView11);
 
         mAdapter11 = new QuestionnaireActivity.ListViewAdapter(this);
         mListView11.setAdapter(mAdapter11);
@@ -505,6 +506,31 @@ public class QuestionnaireActivity extends AppCompatActivity {
 //        ivImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
         questionnaireImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
         questionnaireImage.setVisibility(View.VISIBLE);
+    }
+
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            //listItem.measure(0, 0);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
+
+        listView.requestLayout();
     }
 
 
