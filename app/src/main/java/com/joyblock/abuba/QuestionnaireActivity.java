@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,7 +32,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.GsonBuilder;
+import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
+import com.joyblock.abuba.api_message.R18_InsertSurvey;
 import com.joyblock.abuba.notice.NoticeActivity;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -40,9 +47,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+
 import static android.graphics.Bitmap.CompressFormat.PNG;
 
-public class QuestionnaireActivity extends AppCompatActivity {
+public class QuestionnaireActivity extends BaseActivity {
 
     EditText titleText, inText;
     Boolean imageChange = true; // imageChange1 = true;
@@ -60,7 +71,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     byte[] image;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire1);
 
@@ -149,6 +160,14 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
             }
         });
+
+
+        String seq_user = pref.getString("seq_user","없음");
+        String seq_kindergarden = pref.getString("seq_kindergarden","없음");
+        String seq_kindergarden_class= pref.getString("seq_kindergarden_class","없음");
+
+        Log.d("seq_" , seq_user +" " +seq_kindergarden +" " +seq_kindergarden_class);
+
 
 
     }
@@ -533,6 +552,76 @@ public class QuestionnaireActivity extends AppCompatActivity {
         listView.setLayoutParams(params);
 
         listView.requestLayout();
+    }
+
+
+    R18_InsertSurvey detail;
+    class InsertSurvey extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+        String url="http://58.229.208.246/Ububa/insertSurvey.do";
+
+        //설문지 작성
+        public InsertSurvey(String seq_user, String seq_kindergarden, String seq_kindergarden_class,
+                            String title, String content, String year, String month, String day,
+                            String c_survey_vote, String files, String vote_item) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_user", seq_user)
+                    .add("seq_kindergarden", seq_kindergarden)
+                    .add("seq_kindergarden_class", seq_kindergarden_class)
+                    .add("title", title)
+                    .add("content", content)
+                    .add("year", year)
+                    .add("month", month)
+                    .add("day", day)
+                    .add("c_survey_vote", c_survey_vote)
+                    .add("files", files)
+                    .add("vote_item", vote_item)
+                    .build();
+
+
+
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("response : ",json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+//                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);
+//                Log.d("detail" , String.valueOf(detail));
+
+//                Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
+//                detailImage.setVisibility(View.VISIBLE);
+//
+//                setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 
