@@ -1,7 +1,6 @@
 package com.joyblock.abuba.document;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,7 +15,7 @@ import android.widget.ListView;
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.TimeConverter;
-import com.joyblock.abuba.api_message.R13_SelectNoticeList;
+import com.joyblock.abuba.api_message.R26_SelectEducationalPlanList;
 
 import org.json.JSONObject;
 
@@ -72,7 +71,7 @@ public class FragmentEducationPlanMonth extends android.support.v4.app.Fragment 
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_document_education_plan_month, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_document_education_plan, container, false);
 
         adapter = new EducationPlanListViewAdapter();
 
@@ -111,99 +110,76 @@ public class FragmentEducationPlanMonth extends android.support.v4.app.Fragment 
 
     }
 
-//    class SelectNoticeList extends AsyncTask<Void, Void, String> {
-//        R13_SelectNoticeList[] noticeList;
-//        OkHttpClient client;
-//        okhttp3.Request request;
-//        RequestBody formBody;
-//        String url="http://58.229.208.246/Ububa/selectNoticeList.do";
-//
-//        //전체 공지 조회
-//        public SelectNoticeList(String seq_kindergarden) {
-//            client = new OkHttpClient();
-//            formBody = new FormBody.Builder()
-//                    .add("seq_kindergarden", seq_kindergarden)
-//                    .build();
-//
-//            request = new okhttp3.Request.Builder()
-//                    .url(url)
-//                    .post(formBody)
-//                    .build();
-//        }
-//
-//
-//
-//        //해당 반 공지 조회
-//        public SelectNoticeList(String seq_kindergarden, String seq_kindergarden_class) {
-//            client = new OkHttpClient();
-//            formBody = new FormBody.Builder()
-//                    .add("seq_kindergarden", seq_kindergarden)
-//                    .add("seq_kindergarden_class", seq_kindergarden_class)
-//                    .build();
-//
-//            request = new okhttp3.Request.Builder()
-//                    .url(url)
-//                    .post(formBody)
-//                    .build();
-//        }
-//
-//        //해당 반 페이지 번호 조회
-//        public SelectNoticeList(String seq_kindergarden, String seq_kindergarden_class, String page) {
-//            client = new OkHttpClient();
-//            formBody = new FormBody.Builder()
-//                    .add("seq_kindergarden", seq_kindergarden)
-//                    .add("seq_kindergarden_class", seq_kindergarden_class)
-//                    .add("page",page)
-//                    .build();
-//
-//            request = new okhttp3.Request.Builder()
-//                    .url(url)
-//                    .post(formBody)
-//                    .build();
-//        }
-//
-//
-//        @Override
-//        protected String doInBackground(Void... params) {
-//            try {
-//                okhttp3.Response response = client.newCall(request).execute();
-//                if (!response.isSuccessful()) {
-//                    return null;
-//                }
-//                return response.body().string();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String json) {
-//            super.onPostExecute(json);
-//            Log.d("TAG", json);
-//            try {
-//                JSONObject jsonResponse = new JSONObject(json);
-//                System.out.println("반환되는 값 : " + jsonResponse);
-//                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-//                System.out.println(jsonResponse.getString("notice_list"));
-//                noticeList=new GsonBuilder().create().fromJson(jsonResponse.getString("notice_list"),R13_SelectNoticeList[].class);
-//                for(R13_SelectNoticeList list:noticeList)
-//                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title, TimeConverter.convert(list.reg_date),list.name);
-//                adapter.notifyDataSetChanged();
-////                Log.d("Tag","공지사항 길이 : "+noticeList.length);
-////                if (ss == 200) {
-////                    String userID = jsonResponse.getString("resultCode");
-////                    String userPassword = jsonResponse.getString("resultMsg");
-////                    System.out.println(userID + userPassword);
-////                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
-////                    System.out.println(json1);
-////                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//    }
+    class buyTask extends AsyncTask<Void, Void, String> {
+        R26_SelectEducationalPlanList[] message;
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+        String url="http://58.229.208.246/Ububa/selectEducationalPlanList.do";
+
+
+        //해당 반 공지 조회
+        public buyTask(String seq_kindergarden) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_kindergarden", seq_kindergarden)
+                    .add("plan_flag", "m")
+                    .build();
+
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+        //해당 반 공지 조회
+        public buyTask(String seq_kindergarden, String plan_flag,String page) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_kindergarden", seq_kindergarden)
+                    .add("plan_flag", "m")
+                    .add("page", page)
+                    .build();
+
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("TAG", json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                System.out.println("반환되는 값 : " + jsonResponse);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                message=new GsonBuilder().create().fromJson(jsonResponse.getString("educational_plan_list"),R26_SelectEducationalPlanList[].class);
+                for(R26_SelectEducationalPlanList list:message)
+                    adapter.addItem(list.file_path,list.title, TimeConverter.convert(list.reg_date),"API 수정 필요");
+                adapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 
 
 }

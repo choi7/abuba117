@@ -9,11 +9,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.joyblock.abuba.api_message.R27_SelectEducationPlanOne;
+import com.joyblock.abuba.api_message.R27_SelectEducationalPlanOne;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 
@@ -34,7 +33,6 @@ public class EducationPlanAcitivty extends BaseActivity {
     SharedPreferences.Editor editor;
     boolean month;
 
-//    R27_SelectEducationPlanOne data;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +96,7 @@ public class EducationPlanAcitivty extends BaseActivity {
         }else{
             // '설문지 fragment' 호출
             FragmentEducationPlanWeek fragment2 = new FragmentEducationPlanWeek();
+            fragment2.setPref(pref);
             transaction.replace(R.id.education_plan_fragment_container, fragment2);
             transaction.commit();
         }
@@ -142,7 +141,14 @@ public class EducationPlanAcitivty extends BaseActivity {
     }
 
 
-    public void monthList(View v){
+    public void showMonthList(View v){
+        month=true;
+        callFragment();
+    }
+
+    public void showWeekList(View v){
+        month=false;
+        callFragment();
 
     }
 
@@ -418,7 +424,7 @@ public class EducationPlanAcitivty extends BaseActivity {
                 JSONObject jsonResponse = new JSONObject(json);
 
 //                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                R27_SelectEducationPlanOne msg=gson.fromJson(jsonResponse.getString("educational_plan"), R27_SelectEducationPlanOne.class);
+                R27_SelectEducationalPlanOne msg=gson.fromJson(jsonResponse.getString("educational_plan"), R27_SelectEducationalPlanOne.class);
 //                data=msg;
 
 

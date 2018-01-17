@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:background="#0099FF"
             android:fontFamily="@font/nanumsquarebold"
-            android:onClick="monthList"
+            android:onClick="showMonthList"
             android:text="월간"
             android:textColor="#FFFFFF" />
 
@@ -49,7 +49,7 @@
             android:layout_weight="1"
             android:background="#0099FF"
             android:fontFamily="@font/nanumsquarebold"
-            android:onClick="weekList"
+            android:onClick="showWeekList"
             android:text="주간"
             android:textColor="#FFFFFF" />
 
