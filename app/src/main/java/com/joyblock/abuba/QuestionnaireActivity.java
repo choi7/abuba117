@@ -119,6 +119,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mCustomDialog = new CalendarCustomDialogActivity(QuestionnaireActivity.this);
                 mCustomDialog.show();
+
             }
         });
 

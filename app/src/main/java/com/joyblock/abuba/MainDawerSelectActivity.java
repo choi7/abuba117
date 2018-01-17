@@ -72,7 +72,7 @@ public class MainDawerSelectActivity extends BaseActivity
         seq_user = pref.getString("seq_user","없음");
 
         new BuyTask(seq_user).execute();
-
+        String test ="test";
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
