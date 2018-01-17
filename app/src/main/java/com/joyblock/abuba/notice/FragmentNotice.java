@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.TimeConverter;
 import com.joyblock.abuba.api_message.R13_SelectNoticeList;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -184,8 +185,11 @@ public class FragmentNotice extends android.support.v4.app.Fragment {
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
                 System.out.println(jsonResponse.getString("notice_list"));
                 noticeList=new GsonBuilder().create().fromJson(jsonResponse.getString("notice_list"),R13_SelectNoticeList[].class);
-                for(R13_SelectNoticeList list:noticeList)
-                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title, TimeConverter.convert(list.reg_date),list.name);
+                //for(R13_SelectNoticeList list:noticeList)
+                for(int i=0;i<noticeList.length;i++) {
+                    R13_SelectNoticeList list=noticeList[i];
+//                    adapter.addItem(Picasso.with(getContext()).load(list.file_path).into(adapter.get), list.title, TimeConverter.convert(list.reg_date), list.name);
+                }
                 adapter.notifyDataSetChanged();
 //                Log.d("Tag","공지사항 길이 : "+noticeList.length);
 //                if (ss == 200) {
