@@ -33,13 +33,12 @@ import android.widget.Toast;
 
 import com.joyblock.abuba.bus.BusLocationActivity;
 import com.joyblock.abuba.calendar.CalendarActivity;
-import com.joyblock.abuba.document.DocumentSelectActivity;
+import com.joyblock.abuba.document.A1_DocumentSelect;
 import com.joyblock.abuba.login.LoginActivity;
 import com.joyblock.abuba.notice.NoticeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -157,7 +156,7 @@ public class MainDawerSelectActivity extends BaseActivity
                         finish();
                         break;
                     case "문서함" :
-                        Intent s5 = new Intent(MainDawerSelectActivity.this, DocumentSelectActivity.class);
+                        Intent s5 = new Intent(MainDawerSelectActivity.this, A1_DocumentSelect.class);
                         MainDawerSelectActivity.this.startActivity(s5);
                         finish();
                         break;

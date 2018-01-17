@@ -1,5 +1,6 @@
 package com.joyblock.abuba.document;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,7 +27,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 
 
-public class EducationPlanAcitivty extends BaseActivity {
+public class A2_1_EducationPlan extends BaseActivity {
 
     String[] list = {"교육계획안", "투약의뢰서", "귀가동의서", "출석부"};
     ListViewAdapter adapter;
@@ -56,6 +58,8 @@ public class EducationPlanAcitivty extends BaseActivity {
         String content="내용없음";
         String files="no files";
 
+
+        actionbarCustom();
         callFragment("m");
 
 
@@ -85,7 +89,7 @@ public class EducationPlanAcitivty extends BaseActivity {
 
         // 프래그먼트 사용을 위해
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        FragmentEducationPlan fragment = new FragmentEducationPlan();
+        F2_1_EducationPlan fragment = new F2_1_EducationPlan();
         fragment.setFlag(plan_flag);
         fragment.setPref(pref);
         transaction.replace(R.id.education_plan_fragment_container, fragment);
@@ -93,7 +97,7 @@ public class EducationPlanAcitivty extends BaseActivity {
 
 //        if(month) {
 //            // '공지사항 리스트 fragment' 호출
-//            FragmentEducationPlan fragment1 = new FragmentEducationPlan();
+//            FragmentEducationPlan1 fragment1 = new 1FragmentEducationPlan();
 //            fragment1.setPref(pref);
 //            transaction.replace(R.id.education_plan_fragment_container, fragment1);
 //            transaction.commit();
@@ -113,29 +117,30 @@ public class EducationPlanAcitivty extends BaseActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         final TextView title = (TextView) findViewById(R.id.titleName);
-        title.setText("공지사항");
+        title.setText("교육계획안");
         title.setVisibility(View.VISIBLE);
+
 //
-//        ImageView imageView = (ImageView) findViewById(R.id.editorImage);
-//        imageView.setVisibility(View.VISIBLE);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(NoticeActivity.this, NoticeEditorActivity.class);
-//                NoticeActivity.this.startActivity(intent);
-//                finish();
-//            }
-//        });
-//
-//        ImageView backImage = (ImageView) findViewById(R.id.backImage);
-//        backImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent loginIntent = new Intent(NoticeActivity.this, MainDawerSelectActivity.class);
-//                NoticeActivity.this.startActivity(loginIntent);
-//                finish();
-//            }
-//        });
+        ImageView imageView = (ImageView) findViewById(R.id.editorImage);
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(A2_1_EducationPlan.this, A2_2_EducationPlanEditor.class);
+                A2_1_EducationPlan.this.startActivity(intent);
+                finish();
+            }
+        });
+
+        ImageView backImage = (ImageView) findViewById(R.id.backImage);
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(A2_1_EducationPlan.this, A1_DocumentSelect.class);
+                A2_1_EducationPlan.this.startActivity(loginIntent);
+                finish();
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#0099FF"));

@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 
 
-public class DocumentSelectActivity extends BaseActivity {
+public class A5_1_Attendance extends BaseActivity {
 
     String[] list = {"교육계획안", "투약의뢰서", "귀가동의서", "출석부"};
     ListViewAdapter adapter;
@@ -30,21 +29,25 @@ public class DocumentSelectActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getApplicationContext(), Integer.toString(position),Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainDawerSelectActivity.this, mData.mTitle,Toast.LENGTH_LONG).show();
 
                 switch (position) {
                     case 0 :
 //                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-                        getApplicationContext().startActivity(new Intent(getApplicationContext(), EducationPlanAcitivty.class));
+//                        Intent s1 = new Intent(MainDawerSelectActivity.this, NoticeActivity.class);
+//                        MainDawerSelectActivity.this.startActivity(s1);
                         break;
                     case 1 :
-                        getApplicationContext().startActivity(new Intent(getApplicationContext(), MedicineActivity.class));
+                        Intent s2 = new Intent(getApplicationContext(), A5_1_Attendance.class);
+                        getApplicationContext().startActivity(s2);
                         break;
                     case 2 :
-                        getApplicationContext().startActivity(new Intent(getApplicationContext(), HomeCommingActivity.class));
+//                        Intent s3 = new Intent(MainDawerSelectActivity.this, ScheduleAndDailyMenuActivity.class);
+//                        MainDawerSelectActivity.this.startActivity(s3);
                         break;
                     case 3 :
-                        getApplicationContext().startActivity(new Intent(getApplicationContext(), AttendanceActivity.class));
+//                        Intent s5 = new Intent(MainDawerSelectActivity.this, 1DocumentSelectActivity.class);
+//                        MainDawerSelectActivity.this.startActivity(s5);
                         break;
                         /*
                     case "알림" :

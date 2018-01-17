@@ -1,16 +1,20 @@
 package com.joyblock.abuba.document;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 
 
-public class AttendanceActivity extends BaseActivity {
+public class A1_DocumentSelect extends BaseActivity {
 
     String[] list = {"교육계획안", "투약의뢰서", "귀가동의서", "출석부"};
     ListViewAdapter adapter;
@@ -20,6 +24,16 @@ public class AttendanceActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.park_activity_document_select);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cccc));
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+
+        TextView title=((TextView)findViewById(R.id.titleName));
+        title.setText("문서함");
+        title.setVisibility(View.VISIBLE);
+
+
         listView = findViewById(R.id.documentSelectListView);
         adapter = new ListViewAdapter(NanumSquareBold);
         listView.setAdapter(adapter);
@@ -29,25 +43,21 @@ public class AttendanceActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                Toast.makeText(MainDawerSelectActivity.this, mData.mTitle,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), Integer.toString(position),Toast.LENGTH_LONG).show();
 
                 switch (position) {
                     case 0 :
 //                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-//                        Intent s1 = new Intent(MainDawerSelectActivity.this, NoticeActivity.class);
-//                        MainDawerSelectActivity.this.startActivity(s1);
+                        getApplicationContext().startActivity(new Intent(getApplicationContext(), A2_1_EducationPlan.class));
                         break;
                     case 1 :
-                        Intent s2 = new Intent(getApplicationContext(), AttendanceActivity.class);
-                        getApplicationContext().startActivity(s2);
+                        getApplicationContext().startActivity(new Intent(getApplicationContext(), A3_1_Medicine.class));
                         break;
                     case 2 :
-//                        Intent s3 = new Intent(MainDawerSelectActivity.this, ScheduleAndDailyMenuActivity.class);
-//                        MainDawerSelectActivity.this.startActivity(s3);
+                        getApplicationContext().startActivity(new Intent(getApplicationContext(), A4_1_HomeComming.class));
                         break;
                     case 3 :
-//                        Intent s5 = new Intent(MainDawerSelectActivity.this, DocumentSelectActivity.class);
-//                        MainDawerSelectActivity.this.startActivity(s5);
+                        getApplicationContext().startActivity(new Intent(getApplicationContext(), A5_1_Attendance.class));
                         break;
                         /*
                     case "알림" :

@@ -30,7 +30,7 @@ import okhttp3.RequestBody;
  * Created by hyoshinchoi on 2018. 1. 10..
  */
 
-public class FragmentEducationPlan extends android.support.v4.app.Fragment {
+public class F2_1_EducationPlan extends android.support.v4.app.Fragment {
 
 
     SharedPreferences pref;
@@ -97,6 +97,7 @@ public class FragmentEducationPlan extends android.support.v4.app.Fragment {
 //            adapter.addItem(getResources().getDrawable(R.mipmap.ic_document), "11","11","11");
 //        }
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,6 +110,7 @@ public class FragmentEducationPlan extends android.support.v4.app.Fragment {
         });
         adapter.notifyDataSetChanged();
 
+        new BuyTask(seq_kindergarden,plan_flag).execute();
         return rootView;
 
 
@@ -117,39 +119,39 @@ public class FragmentEducationPlan extends android.support.v4.app.Fragment {
 
     }
 
-    class buyTask extends AsyncTask<Void, Void, String> {
+    class BuyTask extends AsyncTask<Void, Void, String> {
         R26_SelectEducationalPlanList[] message;
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/selectEducationalPlanList.do";
+        String api="selectEducationalPlanList";
 
 
         //해당 반 공지 조회
-        public buyTask(String seq_kindergarden) {
+        public BuyTask(String seq_kindergarden, String plan_flag) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
                     .add("seq_kindergarden", seq_kindergarden)
-                    .add("plan_flag", "m")
+                    .add("plan_flag", plan_flag)
                     .build();
 
             request = new okhttp3.Request.Builder()
-                    .url(url)
+                    .url("http://58.229.208.246/Ububa/"+api+".do")
                     .post(formBody)
                     .build();
         }
 
         //해당 반 공지 조회
-        public buyTask(String seq_kindergarden, String plan_flag,String page) {
+        public BuyTask(String seq_kindergarden, String plan_flag,String page) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
                     .add("seq_kindergarden", seq_kindergarden)
-                    .add("plan_flag", "m")
+                    .add("plan_flag", plan_flag)
                     .add("page", page)
                     .build();
 
             request = new okhttp3.Request.Builder()
-                    .url(url)
+                    .url("http://58.229.208.246/Ububa/"+api+".do")
                     .post(formBody)
                     .build();
         }

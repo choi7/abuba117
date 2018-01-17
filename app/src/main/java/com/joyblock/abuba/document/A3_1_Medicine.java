@@ -10,7 +10,7 @@ import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 
 
-public class HomeCommingActivity extends BaseActivity {
+public class A3_1_Medicine extends BaseActivity {
 
     String[] list = {"교육계획안", "투약의뢰서", "귀가동의서", "출석부"};
     ListViewAdapter adapter;
@@ -38,7 +38,7 @@ public class HomeCommingActivity extends BaseActivity {
 //                        MainDawerSelectActivity.this.startActivity(s1);
                         break;
                     case 1 :
-                        Intent s2 = new Intent(getApplicationContext(), HomeCommingActivity.class);
+                        Intent s2 = new Intent(getApplicationContext(), A3_1_Medicine.class);
                         getApplicationContext().startActivity(s2);
                         break;
                     case 2 :
@@ -46,7 +46,7 @@ public class HomeCommingActivity extends BaseActivity {
 //                        MainDawerSelectActivity.this.startActivity(s3);
                         break;
                     case 3 :
-//                        Intent s5 = new Intent(MainDawerSelectActivity.this, DocumentSelectActivity.class);
+//                        Intent s5 = new Intent(MainDawerSelectActivity.this, DocumentSelectActivity1.class);
 //                        MainDawerSelectActivity.this.startActivity(s5);
                         break;
                         /*
