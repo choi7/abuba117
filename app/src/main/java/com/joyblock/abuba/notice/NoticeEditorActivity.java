@@ -2,6 +2,7 @@ package com.joyblock.abuba.notice;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -40,7 +42,10 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -81,7 +86,7 @@ public class NoticeEditorActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice_editor);
+        setContentView(R.layout.activity_notice_editor1);
 
         activity=this;
 
@@ -469,6 +474,7 @@ public class NoticeEditorActivity extends BaseActivity {
 
     //선택한 사진 데이터 갤러리 처리
     private void sendPicture(Uri data) {
+        Log.d("data : ", String.valueOf(data));
         imagePath = getRealPathFromURI(data); // path 경로
         Log.d("imagePath : ", imagePath);
         ExifInterface exif = null;
@@ -478,25 +484,30 @@ public class NoticeEditorActivity extends BaseActivity {
             e.printStackTrace();
         }
         int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//        int exifDegree = exifOrientationToDegrees(exifOrientation);
+        int exifDegree = exifOrientationToDegrees(exifOrientation);
 
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
-//        timeImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
-        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
+//        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
+        Bitmap bitmap1 = null;
+
+        try {
+            bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap1.compress( PNG, 30, stream) ;
+
+//            Uri uri = Uri.fromFile(file);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
+//        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
         editorImage.setVisibility(View.VISIBLE);
         editorImage.setScaleType(ImageView.ScaleType.CENTER);
 
         editorImage.setAdjustViewBounds(true);
-        image = bitmapToByteArray(bitmap);
-        System.out.println("test");
-        System.out.println(image.length);
-        /*
-        for (int i = 0 ; i<image.length; i++) {
-            Log.d("이미지"+i+"번째 : ", String.valueOf(image[i]));
-        }
-        */
-        System.out.println(image);
-        System.out.println("test");
+//        image = bitmapToByteArray(bitmap1);
     }
 
     //사진의 절대경로 구하기
@@ -509,9 +520,9 @@ public class NoticeEditorActivity extends BaseActivity {
         }
         return cursor.getString(column_index);
     }
-    /*
+
     //사진을 정방향대로 회전하기
-    private Bitmap rotate(Bitmap bitmap, int exifDegree) {
+    private Bitmap rotate(Bitmap src, float degree) {
         // Matrix 객체 생성
         Matrix matrix = new Matrix();
         // 회전 각도 셋팅
@@ -520,8 +531,8 @@ public class NoticeEditorActivity extends BaseActivity {
         return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
                 src.getHeight(), matrix, true);
     }
-    */
-    /*
+
+
     //사진의 회전값 가져오기
     private int exifOrientationToDegrees(int exifOrientation) {
         if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
@@ -533,14 +544,7 @@ public class NoticeEditorActivity extends BaseActivity {
         }
         return 0;
     }
-    */
 
-    public byte[] bitmapToByteArray( Bitmap $bitmap ) {  // 이미지를 byte[]배열로 변환
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        $bitmap.compress( PNG, 30, stream) ;  //CompressFormat.PNG or CompressFormat.JPG
-        byte[] byteArray = stream.toByteArray();
-        return byteArray ;
-    }
     private void getPictureForPhoto() {
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
         ExifInterface exif = null;
@@ -563,6 +567,8 @@ public class NoticeEditorActivity extends BaseActivity {
     }
 
 
+
+    //안드로이드 7.0 부터는 앱권한이 적용되지 않아 유저한테 직접 권한을 받는 메소드
     private void checkPermissions(){
 
         if (ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
@@ -609,5 +615,30 @@ public class NoticeEditorActivity extends BaseActivity {
     }
 
 
+    //비트맵 사이즈를 줄여줌
+    public static Bitmap decodeUri(Context c, Uri uri, final int requiredSize)
+            throws FileNotFoundException {
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
+
+        int width_tmp = o.outWidth
+                , height_tmp = o.outHeight;
+        int scale = 1;
+
+        while(true) {
+            if(width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
+                break;
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
+    }
+
+    
 
 }
