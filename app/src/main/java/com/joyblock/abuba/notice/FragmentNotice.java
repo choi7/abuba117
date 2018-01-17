@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TimeConverter;
 import com.joyblock.abuba.api_message.R13_SelectNoticeList;
 
 import org.json.JSONObject;
@@ -93,53 +94,11 @@ public class FragmentNotice extends android.support.v4.app.Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-//                Toast.makeText(MainDawerSelectActivity.this, mData.mTitle,Toast.LENGTH_LONG).show();
-
                 Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
                 intent.putExtra("seq_notice",noticeList[position].seq_notice);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                 startActivity(intent);
-
-//                switch (position) {
-//                    case 0 :
-////                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-//                        Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
-////                        intent.putExtra("type", "recent");
-//                        intent.putExtra("position", position);
-//                        System.out.println("position : "+intent.getIntExtra("position",-1));
-//
-////                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                        startActivity(intent);
-////                        startActivity(new Intent(NoticeActivity.this.getApplicationContext(), NoticeDetailActivity.class));
-//                        break;
-//                    case 1 :
-////                        getApplicationContext().startActivity(new Intent(getApplicationContext(), MedicineActivity.class));
-//                            Intent intent1 = new Intent(getContext(), NoticeDetailActivity.class);
-//                            intent1.putExtra("position", position);
-//                            System.out.println("position : "+intent1.getIntExtra("position",-1));
-//                        break;
-////                    case 2 :
-////                        getApplicationContext().startActivity(new Intent(getApplicationContext(), HomeCommingActivity.class));
-////                        break;
-////                    case 3 :
-////                        getApplicationContext().startActivity(new Intent(getApplicationContext(), AttendanceActivity.class));
-////                        break;
-//                        /*
-//                    case "알림" :
-//                        Intent s4 = new Intent(MainDawerSelectActivity.this, NoticeActivity.class);
-//                        MainDawerSelectActivity.this.startActivity(s4);
-//                        break;
-//
-//                    case "사진 앨범" :
-//                        Intent s6 = new Intent(MainDawerSelectActivity.this, PhotoActivity.class);
-//                        MainDawerSelectActivity.this.startActivity(s6);
-//                        break;
-//                        */
-//
-//                }
-
             }
         });
         adapter.notifyDataSetChanged();
@@ -226,7 +185,7 @@ public class FragmentNotice extends android.support.v4.app.Fragment {
                 System.out.println(jsonResponse.getString("notice_list"));
                 noticeList=new GsonBuilder().create().fromJson(jsonResponse.getString("notice_list"),R13_SelectNoticeList[].class);
                 for(R13_SelectNoticeList list:noticeList)
-                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title,list.reg_date,"0","원장");
+                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title, TimeConverter.convert(list.reg_date),list.name);
                 adapter.notifyDataSetChanged();
 //                Log.d("Tag","공지사항 길이 : "+noticeList.length);
 //                if (ss == 200) {

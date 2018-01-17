@@ -8,16 +8,14 @@ import java.util.Date;
 public class NoticeListViewItem {
 
     private Drawable photo ;
-    private String title,count,name,time;
+    private String title,name,time;
     boolean a=false;
 
-    public NoticeListViewItem(Drawable photo,String title,String count,String name,String time){
+    public NoticeListViewItem(Drawable photo,String title,String name,String time){
         this.photo=photo;
         this.title=title;
-        this.count=count;
         this.name=name;
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.time=dateFormat.format(new Date(Long.parseLong(time))).toString();
+        this.time=time;
     }
 
     public Drawable getPhoto(){
@@ -25,9 +23,6 @@ public class NoticeListViewItem {
     }
     public String getTitle(){
         return title;
-    }
-    public String getCount(){
-        return count;
     }
     public String getName(){
         return name;

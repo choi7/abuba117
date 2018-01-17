@@ -48,20 +48,6 @@
         android:layout_marginLeft="4dp" />
 
     <TextView
-        android:id="@+id/lookup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_weight="1"
-        android:text="조회"
-        android:textSize="11dp"
-        android:textColor="#9E9E9F"
-        android:fontFamily="@font/nanumsquarebold"
-        app:layout_constraintStart_toEndOf="@+id/textView84"
-        app:layout_constraintTop_toTopOf="@+id/nickListViewCell"
-        android:layout_marginLeft="4dp" />
-
-    <TextView
         android:id="@+id/textView81"
         android:layout_width="0.25dp"
         android:layout_height="11dp"
@@ -73,31 +59,6 @@
         app:layout_constraintStart_toEndOf="@+id/nickListViewCell"
         app:layout_constraintTop_toTopOf="@+id/nickListViewCell"
         android:layout_marginLeft="4dp" />
-
-    <TextView
-        android:id="@+id/textView84"
-        android:layout_width="0.25dp"
-        android:layout_height="11dp"
-        android:layout_marginStart="4dp"
-        android:layout_weight="1"
-        android:background="#9E9E9F"
-        android:textSize="11dp"
-        app:layout_constraintBottom_toBottomOf="@+id/nickListViewCell"
-        app:layout_constraintStart_toEndOf="@+id/timeViewCell"
-        app:layout_constraintTop_toTopOf="@+id/nickListViewCell"
-        android:layout_marginLeft="4dp" />
-
-    <TextView
-        android:id="@+id/countListViewCell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/nanumsquarebold"
-        android:text="600"
-        android:textColor="#9E9E9F"
-        android:textSize="11dp"
-        app:layout_constraintStart_toEndOf="@+id/lookup"
-        app:layout_constraintTop_toTopOf="@+id/nickListViewCell" />
 
     <TextView
         android:id="@+id/nickListViewCell"

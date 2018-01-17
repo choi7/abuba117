@@ -6,18 +6,31 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TimeConverter;
+import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 public class NoticeDetailActivity extends AppCompatActivity {
 
@@ -58,8 +71,9 @@ public class NoticeDetailActivity extends AppCompatActivity {
         noticeName=(TextView)findViewById(R.id.noticeDetailNameText);
         noticeTime=(TextView)findViewById(R.id.noticeDetailTimeText);
 
-        String position=Integer.toString(getIntent().getIntExtra("seq_notice",0));
-        setNotice(position,position,null,position,position,position,false);
+        String seq_notice=getIntent().getStringExtra("seq_notice");
+
+//        setNotice(position,position,null,position,position,position,false);
 
         insertAndDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,32 +108,16 @@ public class NoticeDetailActivity extends AppCompatActivity {
 //                    }
 //                });
 
-//.setMessage("작성글을 수정하시겠습니까")
 
-
-//        AlertDialog.Builder nd = new AlertDialog.Builder(NoticeDetailActivity.this);
-//        nd.setMessage("작성글을 수정하시겠습니까")
-//                .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Toast.makeText(NoticeDetailActivity.this, "공지사항 수정 화면",Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(NoticeDetailActivity.this, NoticeEditorActivity.class);
-//                        NoticeDetailActivity.this.startActivity(intent);
-//                        finish();
-//                    }
-//                })
-//                .setPositiveButton("취소", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                    }
-//                })
-//                .create()
-//                .show();
 
 
 
             }
         });
+
+        new SelectNoticeOne(seq_notice).execute();
+
+//        setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 
 
     }
@@ -157,5 +155,69 @@ public class NoticeDetailActivity extends AppCompatActivity {
 
         return super.onSupportNavigateUp();
     }
+
+    R14_SelectNoticeOne detail;
+    class SelectNoticeOne extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+        String url="http://58.229.208.246/Ububa/selectNoticeOne.do";
+
+        //전체 공지 조회
+        public SelectNoticeOne(String seq_notice) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_notice", seq_notice)
+                    .build();
+
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("response : ",json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);
+                setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
+//                for(R14_SelectNoticeOne list:noticeList)
+//                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title,list.reg_date,list.name);
+//                adapter.notifyDataSetChanged();
+//                Log.d("Tag","공지사항 길이 : "+noticeList.length);
+//                if (ss == 200) {
+//                    String userID = jsonResponse.getString("resultCode");
+//                    String userPassword = jsonResponse.getString("resultMsg");
+//                    System.out.println(userID + userPassword);
+//                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
+//                    System.out.println(json1);
+//                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+
 
 }
