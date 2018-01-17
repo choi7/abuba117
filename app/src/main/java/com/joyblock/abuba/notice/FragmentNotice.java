@@ -57,6 +57,7 @@ public class FragmentNotice extends android.support.v4.app.Fragment {
 
     }
 
+
     /*
     @Nullable
     @Override

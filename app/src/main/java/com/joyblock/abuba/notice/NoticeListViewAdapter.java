@@ -32,6 +32,7 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
 
     public NoticeListViewAdapter(Context context){
         this.context=context;
+
     }
 
     public NoticeListViewAdapter(Typeface font){
