@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.TimeConverter;
 import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -36,25 +39,26 @@ public class NoticeDetailActivity extends AppCompatActivity {
 
     TextView noticeTitle,noticeBan,noticeName,noticeTime,noticeContent;//제목, 반, 작성자, 등록시간, 내용
     String seq_notice;
-
+    ImageView insertAndDelete, detailImage, backImage;
     Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         activity=this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice_view);
+        setContentView(R.layout.activity_notice_view1);
         seq_notice=getIntent().getStringExtra("seq_notice");
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33a09e));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Build.VERSION.SDK_INT >= 21) {
-            // 21 버전 이상일 때
-            getWindow().setStatusBarColor(Color.parseColor("#33A09E"));
+            getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
         }
-
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
 
         TextView title = (TextView) findViewById(R.id.titleName);
         title.setText("공지사항");
@@ -63,13 +67,25 @@ public class NoticeDetailActivity extends AppCompatActivity {
         EditText et = (EditText) findViewById(R.id.editTexttt);
         et.setVisibility(View.VISIBLE);
 
-        ImageView insertAndDelete = (ImageView) findViewById(R.id.noticeDetailinsertAndDeleteText);
+        insertAndDelete = (ImageView) findViewById(R.id.noticeDetailinsertAndDeleteText);
+        detailImage=(ImageView) findViewById(R.id.detailImageView);
+        backImage=(ImageView) findViewById(R.id.backImage);
+
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
+                NoticeDetailActivity.this.startActivity(intent);
+                finish();
+            }
+        });
 
 
         noticeTitle=(TextView)findViewById(R.id.noticeDetailTitleText);
         noticeBan=(TextView)findViewById(R.id.noticeDetailBanText);
         noticeName=(TextView)findViewById(R.id.noticeDetailNameText);
         noticeTime=(TextView)findViewById(R.id.noticeDetailTimeText);
+        noticeContent=(TextView)findViewById(R.id.inTextView);
 
         String seq_notice=getIntent().getStringExtra("seq_notice");
 
@@ -127,6 +143,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
         noticeTitle.setText(title);
         noticeName.setText(name);
         noticeTime.setText(time);
+        noticeContent.setText(content);
 
 
         //userImage, content
@@ -144,6 +161,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
         finish();
     }
 
+    /*
     //화면 상단 왼쪽에 있는 백 버튼 눌렀을때 실행되는 메소드
     //백 버튼 활성화는 액션바.setDisplayHomeAsUpEnabled(true);
     @Override
@@ -156,6 +174,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
 
         return super.onSupportNavigateUp();
     }
+    */
 
     R14_SelectNoticeOne detail;
     class SelectNoticeOne extends AsyncTask<Void, Void, String> {
@@ -201,8 +220,12 @@ public class NoticeDetailActivity extends AppCompatActivity {
                 detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);
                 Log.d("detail" , String.valueOf(detail));
 
+                Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
+                detailImage.setVisibility(View.VISIBLE);
+
                 setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 //                for(R14_SelectNoticeOne list:noticeList)
+
 
 //                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title,list.reg_date,list.name);
 //                adapter.notifyDataSetChanged();

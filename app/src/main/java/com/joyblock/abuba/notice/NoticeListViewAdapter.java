@@ -27,6 +27,7 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
     Typeface font;
     ListViewHolder holder;
 
+
     public NoticeListViewAdapter(){
     }
 
@@ -104,7 +105,7 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
         listViewItems.add(new NoticeListViewItem(photo,title,name,time));
     }
 
-    private class ListViewHolder {
+    public class ListViewHolder {
         ImageView photo;
         TextView title,time,name;
     }
