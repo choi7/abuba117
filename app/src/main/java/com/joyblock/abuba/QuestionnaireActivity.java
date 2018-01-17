@@ -33,8 +33,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
-import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
-import com.joyblock.abuba.api_message.R18_InsertSurvey;
 import com.joyblock.abuba.notice.NoticeActivity;
 import com.squareup.picasso.Picasso;
 
@@ -555,7 +553,7 @@ public class QuestionnaireActivity extends BaseActivity {
     }
 
 
-    R18_InsertSurvey detail;
+//    R18_InsertSurvey detail;
     class InsertSurvey extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
