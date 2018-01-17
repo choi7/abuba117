@@ -62,7 +62,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questionnaire);
+        setContentView(R.layout.activity_questionnaire1);
 
         titleText = (EditText) findViewById(R.id.titleText);
         inText = (EditText) findViewById(R.id.inText);
@@ -97,7 +97,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
             }
         });
 
-        questTimeSettingImageView = (ImageView) findViewById(R.id.questionTimeImageView);
+        questTimeSettingImageView = (ImageView) findViewById(R.id.questionTimeSettingImageView);
 //        questTimeSettingImageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -127,13 +127,14 @@ public class QuestionnaireActivity extends AppCompatActivity {
         actionbarCustom();
 
         mListView11 = (ListView) findViewById(R.id.questListview);
-        setListViewHeightBasedOnChildren(mListView11);
+
 
         mAdapter11 = new QuestionnaireActivity.ListViewAdapter(this);
         mListView11.setAdapter(mAdapter11);
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
+        setListViewHeightBasedOnChildren(mListView11);
 
 
         ImageView imageView = (ImageView) findViewById(R.id.questionListViewInsertImageView);
@@ -143,6 +144,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
                 Log.d("투표항목수 : ", String.valueOf(mAdapter11.getCount()));
                 mListView11.setAdapter(mAdapter11);
+                setListViewHeightBasedOnChildren(mListView11);
 
 
             }
