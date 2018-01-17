@@ -1,8 +1,10 @@
 package com.joyblock.abuba.notice;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v13.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -118,6 +122,10 @@ public class NoticeEditorActivity extends BaseActivity {
 
 
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkPermissions();
+        }
 
 
     }
@@ -248,6 +256,7 @@ public class NoticeEditorActivity extends BaseActivity {
 
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+
 
             formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
                     .addFormDataPart("seq_user", seq_user)
@@ -551,6 +560,52 @@ public class NoticeEditorActivity extends BaseActivity {
 //        ivImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
         editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
         editorImage.setVisibility(View.VISIBLE);
+    }
+
+
+    private void checkPermissions(){
+
+        if (ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED||
+                ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(NoticeEditorActivity.this,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    },
+                    1052);
+
+        }
+
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[],
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case 1052: {
+                // If request is cancelled, the result
+                // arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED ){
+
+                    // permission was granted.
+
+                } else {
+                    // Permission denied - Show a message
+                    // to inform the user that this app only works
+                    // with these permissions granted
+
+                }
+                return;
+            }
+
+        }
     }
 
 

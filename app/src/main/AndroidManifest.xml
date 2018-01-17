@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
 
     <application
         android:name=".MyApplication"
@@ -68,7 +70,7 @@
         <activity android:name=".register.ProvisionActivity" />
         <activity android:name=".calendar.CarteRegisterActivity" />
         <activity android:name=".NoticeAndQuestActivity" />
-        <activity android:name=".DocumentSelectActivity" />
+        <activity android:name=".document.DocumentSelectActivity" />
         <activity android:name=".RegisterAddressSelectActivity" />
         <activity android:name=".RegisterJobSelectActivity" />
         <activity android:name=".RegisterSchoolClassSelectActivity" />
@@ -91,7 +93,6 @@
         <activity android:name=".document.AttendanceActivity"/>
         <activity android:name=".document.HomeCommingActivity"/>
         <activity android:name=".document.EducationPlanAcitivty"/>
-        <activity android:name=".document.DocumentSelectActivity"/>
         <activity android:name=".document.MedicineActivity"/>
 
     </application>
