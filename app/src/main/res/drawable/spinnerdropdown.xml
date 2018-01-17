@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:constantSize="false">
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="#ffffff" /> <!-- 배경 -->
+                    <stroke android:width="1dip" android:color="#F7F7F7" /> <!-- 외각선 -->
+                </shape>
+            </item>
+            <!-- 회살표를 넣기위해-->
+            <item android:width="5dp" android:height="5dp" >
+                <bitmap android:gravity="center_horizontal|right" android:src="@mipmap/ic_spinner_dropdown" />
+
+
+            </item>
+        </layer-list>
+    </item>
+</selector>

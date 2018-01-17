@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="12.5dp"
+        android:layout_marginTop="12.5dp"
+        android:background="@drawable/imageviewcellcustom"
+        android:src="#EEEEEF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="12.5dp" />
+
+    <TextView
+        android:id="@+id/titleListViewCell"
+        android:layout_width="215.5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="15.75dp"
+        android:textColor="#000000"
+        android:fontFamily="@font/nanumsquarebold"
+        app:layout_constraintStart_toEndOf="@+id/photo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="9dp" />
+
+    <TextView
+        android:id="@+id/timeViewCell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:text="09:55"
+        android:textSize="11dp"
+        android:textColor="#9E9E9F"
+        android:fontFamily="@font/nanumsquarebold"
+        app:layout_constraintStart_toEndOf="@+id/textView81"
+        app:layout_constraintTop_toTopOf="@+id/nickListViewCell"
+        android:layout_marginLeft="4dp" />
+
+    <TextView
+        android:id="@+id/lookup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:text="조회"
+        android:textSize="11dp"
+        android:textColor="#9E9E9F"
+        android:fontFamily="@font/nanumsquarebold"
+        app:layout_constraintStart_toEndOf="@+id/textView84"
+        app:layout_constraintTop_toTopOf="@+id/nickListViewCell"
+        android:layout_marginLeft="4dp" />
+
+    <TextView
+        android:id="@+id/textView81"
+        android:layout_width="0.25dp"
+        android:layout_height="11dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:background="#9E9E9F"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/nickListViewCell"
+        app:layout_constraintStart_toEndOf="@+id/nickListViewCell"
+        app:layout_constraintTop_toTopOf="@+id/nickListViewCell"
+        android:layout_marginLeft="4dp" />
+
+    <TextView
+        android:id="@+id/textView84"
+        android:layout_width="0.25dp"
+        android:layout_height="11dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:background="#9E9E9F"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/nickListViewCell"
+        app:layout_constraintStart_toEndOf="@+id/timeViewCell"
+        app:layout_constraintTop_toTopOf="@+id/nickListViewCell"
+        android:layout_marginLeft="4dp" />
+
+    <TextView
+        android:id="@+id/countListViewCell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/nanumsquarebold"
+        android:text="600"
+        android:textColor="#9E9E9F"
+        android:textSize="11dp"
+        app:layout_constraintStart_toEndOf="@+id/lookup"
+        app:layout_constraintTop_toTopOf="@+id/nickListViewCell" />
+
+    <TextView
+        android:id="@+id/nickListViewCell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:text="김솜솜원장"
+        android:textSize="11dp"
+        android:textColor="#9E9E9F"
+        android:fontFamily="@font/nanumsquarebold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/titleListViewCell"
+        app:layout_constraintTop_toBottomOf="@+id/titleListViewCell" />
+
+</android.support.constraint.ConstraintLayout>

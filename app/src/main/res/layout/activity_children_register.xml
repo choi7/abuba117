@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.joyblock.abuba.register.ChildrenRegisterActivity"
+    tools:layout_editor_absoluteY="68dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+    <RadioGroup
+        android:id="@+id/genderRadioGroup1"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="21.5dp"
+        android:layout_marginStart="21.5dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@+id/textView69"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <RadioButton
+            android:id="@+id/manRadioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="130dp"
+            android:drawableRight="@android:drawable/btn_radio"
+            android:fontFamily="@font/nanumsquareregular"
+            android:gravity="center"
+            android:text="엄마"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/textView651"
+            android:layout_width="320dp"
+            android:layout_height="0.25dp"
+            android:layout_weight="1"
+            android:background="#F7F7F7" />
+
+        <RadioButton
+            android:id="@+id/girlRadioButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="130dp"
+            android:drawableRight="@android:drawable/btn_radio"
+            android:fontFamily="@font/nanumsquareregular"
+            android:gravity="center"
+            android:text="아빠"
+            android:textSize="10dp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView66"
+        android:layout_width="320dp"
+        android:layout_height="0.25dp"
+        android:layout_weight="1"
+        android:background="#F7F7F7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/childrenNameEditText1" />
+
+    <TextView
+        android:id="@+id/textView67"
+        android:layout_width="320dp"
+        android:layout_height="0.25dp"
+        android:layout_weight="1"
+        android:background="#F7F7F7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/childrenMonthEditText" />
+
+    <TextView
+        android:id="@+id/textView68"
+        android:layout_width="320dp"
+        android:layout_height="0.25dp"
+        android:layout_weight="1"
+        android:background="#F7F7F7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup" />
+
+    <TextView
+        android:id="@+id/textView71"
+        android:layout_width="320dp"
+        android:layout_height="0.25dp"
+        android:layout_weight="1"
+        android:background="#F7F7F7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/childrenNameEditText2" />
+
+    <TextView
+        android:id="@+id/textView70"
+        android:layout_width="320dp"
+        android:layout_height="0.25dp"
+        android:layout_weight="1"
+        android:background="#F7F7F7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.373"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup1" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#F7F7F7"
+        android:gravity="left|center"
+        android:paddingLeft="23.5dp"
+        android:text="자녀 정보 설정"
+        android:textSize="11.25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/childrenPictureImageView" />
+
+    <ImageView
+        android:id="@+id/childrenPictureImageView"
+        android:layout_width="78.5dp"
+        android:layout_height="78.5dp"
+        android:layout_marginEnd="140.75dp"
+        android:layout_marginRight="140.75dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/register_profile" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="23.5dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:gravity="center"
+        android:text="자녀이름"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/childrenNameEditText1" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginLeft="23.5dp"
+        android:layout_marginStart="23.5dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:gravity="center"
+        android:text="생년월일"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/childrenYearEditText" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginLeft="23.5dp"
+        android:layout_marginStart="23.5dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:gravity="center"
+        android:text="성       별"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/genderRadioGroup" />
+
+    <EditText
+        android:id="@+id/childrenNameEditText1"
+        android:layout_width="220dp"
+        android:layout_height="37.5dp"
+        android:layout_marginStart="21.5dp"
+        android:background="@drawable/view_style_option"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <EditText
+        android:id="@+id/childrenNameEditText2"
+        android:layout_width="220dp"
+        android:layout_height="37.5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/view_style_option"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView69"
+        app:layout_constraintTop_toBottomOf="@+id/textView70" />
+
+    <Button
+        android:id="@+id/childrenPushButton"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#9E9E9F"
+        android:fontFamily="@font/nanumsquarebold"
+        android:text="다  음"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/childrenDayEditText"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/view_style_option"
+        android:ems="10"
+        android:inputType="phone"
+        app:layout_constraintStart_toEndOf="@+id/textView25"
+        app:layout_constraintTop_toBottomOf="@+id/textView66" />
+
+    <RadioGroup
+        android:id="@+id/genderRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21.5dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView67">
+
+        <RadioButton
+            android:id="@+id/manRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="100dp"
+            android:drawableRight="@drawable/radioselect"
+            android:fontFamily="@font/nanumsquareregular"
+            android:gravity="center"
+            android:scaleX="0.25"
+            android:scaleY="0.25"
+            android:text="남자아이"
+            android:textSize="40dp" />
+
+        <TextView
+            android:id="@+id/textView65"
+            android:layout_width="320dp"
+            android:layout_height="0.25dp"
+            android:layout_weight="1"
+            android:background="#F7F7F7" />
+
+        <RadioButton
+            android:id="@+id/girlRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="100dp"
+            android:drawableRight="@drawable/radioselect"
+            android:fontFamily="@font/nanumsquareregular"
+            android:gravity="center"
+            android:scaleX="0.25"
+            android:scaleY="0.25"
+            android:text="여자아이"
+            android:textSize="40dp" />
+
+    </RadioGroup>
+
+    <Spinner
+        android:id="@+id/nickSpinner"
+        android:layout_width="210dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="422dp" />
+
+    <EditText
+        android:id="@+id/childrenMonthEditText"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/view_style_option"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textView26"
+        app:layout_constraintTop_toTopOf="@+id/childrenDayEditText" />
+
+    <EditText
+        android:id="@+id/childrenYearEditText"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="21.5dp"
+        android:layout_marginStart="21.5dp"
+        android:background="@drawable/view_style_option"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textView14"
+        app:layout_constraintTop_toTopOf="@+id/childrenMonthEditText" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="일"
+        app:layout_constraintStart_toEndOf="@+id/childrenDayEditText"
+        app:layout_constraintTop_toBottomOf="@+id/childrenNameEditText1" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="월"
+        app:layout_constraintStart_toEndOf="@+id/childrenMonthEditText"
+        app:layout_constraintTop_toTopOf="@+id/textView24" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="년"
+        app:layout_constraintStart_toEndOf="@+id/childrenYearEditText"
+        app:layout_constraintTop_toTopOf="@+id/textView25" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="411dp"
+        android:layout_height="40dp"
+        android:background="#F7F7F7"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView68">
+
+        <TextView
+            android:id="@+id/textView62"
+            android:layout_width="20dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="#F7F7F7"
+            android:gravity="left|center"
+            android:paddingLeft="15dp"
+            android:text="호칭 설정"
+            android:textSize="11.25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="450dp" />
+
+        <TextView
+            android:id="@+id/textView63"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#F7F7F7"
+            android:text="(글을 작성할 때 표시되는 호칭을 설정해주세요)"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView69"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginLeft="23.5dp"
+        android:layout_marginStart="23.5dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:gravity="center"
+        android:text="직접입력"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView70" />
+
+</android.support.constraint.ConstraintLayout>

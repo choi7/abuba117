@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/my_1"
+        android:title="ss"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings1"
+        android:icon="@drawable/home_1"
+        android:title="dd"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings2"
+        android:icon="@drawable/notification_2"
+        android:title="ff"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings3"
+        android:icon="@drawable/bus_2"
+        android:title="환경설정"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings4"
+        android:icon="@drawable/notice_2"
+        android:title="환경설정"
+        app:showAsAction="always" />
+
+
+</menu>
