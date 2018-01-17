@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,9 +27,11 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
     BaseActivity activity;
     Typeface font;
     ListViewHolder holder;
+    Context context;
 
 
-    public NoticeListViewAdapter(){
+    public NoticeListViewAdapter(Context context){
+        this.context=context;
     }
 
     public NoticeListViewAdapter(Typeface font){
@@ -92,8 +95,10 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
 //            titleTextView.setTextColor(Color.BLUE);
 //        }
         // 아이템 내 각 위젯에 데이터 반영
+        Picasso.with(context).load(listViewItem.getFile_path()).into(photo);
 
-        photo.setImageDrawable(listViewItem.getPhoto());
+
+//        photo.setImageDrawable(listViewItem.getPhoto());
         title.setText(listViewItem.getTitle());
         name.setText(listViewItem.getName());
         time.setText(listViewItem.getTime());
@@ -101,8 +106,8 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
         return convertView;
     }
 
-    public void addItem(Drawable photo, String title,String time,String name) {
-        listViewItems.add(new NoticeListViewItem(photo,title,name,time));
+    public void addItem(String file_path, String title,String time,String name) {
+        listViewItems.add(new NoticeListViewItem(file_path,title,name,time));
     }
 
     public class ListViewHolder {

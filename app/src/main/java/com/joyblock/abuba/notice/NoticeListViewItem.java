@@ -7,19 +7,18 @@ import java.util.Date;
 
 public class NoticeListViewItem {
 
-    private Drawable photo ;
-    private String title,name,time;
+    private String file_path, title,name,time;
     boolean a=false;
 
-    public NoticeListViewItem(Drawable photo,String title,String name,String time){
-        this.photo=photo;
+    public NoticeListViewItem(String file_path,String title,String name,String time){
+        this.file_path=file_path;
         this.title=title;
         this.name=name;
         this.time=time;
     }
 
-    public Drawable getPhoto(){
-        return photo;
+    public String getFile_path(){
+        return file_path;
     }
     public String getTitle(){
         return title;
