@@ -52,12 +52,11 @@ public class EducationPlanAcitivty extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String seq_user = pref.getString("seq_user","없음");
         String seq_kindergarden = pref.getString("seq_kindergarden","없음");
-        String plan_flag="w";
         String notice_title="긴급공지";
         String content="내용없음";
         String files="no files";
 
-        callFragment();
+        callFragment("m");
 
 
 
@@ -82,24 +81,29 @@ public class EducationPlanAcitivty extends BaseActivity {
 
     }
 
-    private void callFragment() {
+    private void callFragment(String plan_flag) {
 
         // 프래그먼트 사용을 위해
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentEducationPlan fragment = new FragmentEducationPlan();
+        fragment.setFlag(plan_flag);
+        fragment.setPref(pref);
+        transaction.replace(R.id.education_plan_fragment_container, fragment);
+        transaction.commit();
 
-        if(month) {
-            // '공지사항 리스트 fragment' 호출
-            FragmentEducationPlanMonth fragment1 = new FragmentEducationPlanMonth();
-            fragment1.setPref(pref);
-            transaction.replace(R.id.education_plan_fragment_container, fragment1);
-            transaction.commit();
-        }else{
-            // '설문지 fragment' 호출
-            FragmentEducationPlanWeek fragment2 = new FragmentEducationPlanWeek();
-            fragment2.setPref(pref);
-            transaction.replace(R.id.education_plan_fragment_container, fragment2);
-            transaction.commit();
-        }
+//        if(month) {
+//            // '공지사항 리스트 fragment' 호출
+//            FragmentEducationPlan fragment1 = new FragmentEducationPlan();
+//            fragment1.setPref(pref);
+//            transaction.replace(R.id.education_plan_fragment_container, fragment1);
+//            transaction.commit();
+//        }else{
+//            // '설문지 fragment' 호출
+//            FragmentEducationPlanWeek fragment2 = new FragmentEducationPlanWeek();
+//            fragment2.setPref(pref);
+//            transaction.replace(R.id.education_plan_fragment_container, fragment2);
+//            transaction.commit();
+//        }
     }
 
     public void actionbarCustom() {
@@ -142,14 +146,11 @@ public class EducationPlanAcitivty extends BaseActivity {
 
 
     public void showMonthList(View v){
-        month=true;
-        callFragment();
+        callFragment("m");
     }
 
     public void showWeekList(View v){
-        month=false;
-        callFragment();
-
+        callFragment("w");
     }
 
     class InsertEducationPlan extends AsyncTask<Void, Void, String> {
