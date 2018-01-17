@@ -269,7 +269,6 @@ public class NoticeEditorActivity extends BaseActivity {
                     .addFormDataPart("is_reply", is_reply)
                     .addFormDataPart("title", title)
                     .addFormDataPart("content", content)
-//                    .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, new File(imagePath)))
                     .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, image))
                     .build();
 
@@ -416,239 +415,233 @@ public class NoticeEditorActivity extends BaseActivity {
         }
     }
 
+
     /*
     파일생성
     카메라로 찍은 사진을 실제 파일로 생성하는 코드
     상단에 지정한 path이름과 일치해야 에러없이 해당 기능을 수행
      */
-    private File createImageFile() throws IOException {
-        File dir = new File(Environment.getExternalStorageDirectory() + "/path/");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        mImageCaptureName = timeStamp + ".png";
-
-        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/path/"
-
-                + mImageCaptureName);
-        currentPhotoPath = storageDir.getAbsolutePath();
-
-        return storageDir;
-
-
-    }
-
-    //갤러리에서 사진을 가져오는 경우
-    private void selectGallery() {
-
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent, GALLERY_CODE);
-    }
-
-    /*
-    선택한 사진 데이터 처리
-    카메라로 사진을 찍거나 갤러리에서 사진 선택에 대한 사용자가 응답을 할경우
-     'onActivityResult'가 실행되는데 사진을 선택했을 경우 resultCode값은
-     'RESULT_OK' 가 취소 했을때는 'RESULT_CANCEL'
-    사진 데이터는 intent 타입으로 반환.
-    */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case GALLERY_CODE:
-                    sendPicture(data.getData()); //갤러리에서 가져오기
-                    break;
-                case CAMERA_CODE:
-//                    getPictureForPhoto(); //카메라에서 가져오기
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-
-    //선택한 사진 데이터 갤러리 처리
-    private void sendPicture(Uri data) {
-        Log.d("data : ", String.valueOf(data));
-        imagePath = getRealPathFromURI(data); // path 경로
-        Log.d("imagePath : ", imagePath);
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(imagePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        int exifDegree = exifOrientationToDegrees(exifOrientation);
-
-//        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
-        Bitmap bitmap1 = null;
-
-        try {
-            bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap1.compress( PNG, 30, stream) ;
-            image=stream.toByteArray();
-            Log.d("Tag",""+stream.size());
-
-
-//            Uri uri = Uri.fromFile(file);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
+//    private File createImageFile() throws IOException {
+//        File dir = new File(Environment.getExternalStorageDirectory() + "/path/");
+//        if (!dir.exists()) {
+//            dir.mkdirs();
+//        }
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        mImageCaptureName = timeStamp + ".png";
+//
+//        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/path/"
+//
+//                + mImageCaptureName);
+//        currentPhotoPath = storageDir.getAbsolutePath();
+//
+//        return storageDir;
+//
+//
+//    }
+//
+//    //갤러리에서 사진을 가져오는 경우
+//    private void selectGallery() {
+//
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        intent.setType("image/*");
+//        startActivityForResult(intent, GALLERY_CODE);
+//    }
+//
+//    /*
+//    선택한 사진 데이터 처리
+//    카메라로 사진을 찍거나 갤러리에서 사진 선택에 대한 사용자가 응답을 할경우
+//     'onActivityResult'가 실행되는데 사진을 선택했을 경우 resultCode값은
+//     'RESULT_OK' 가 취소 했을때는 'RESULT_CANCEL'
+//    사진 데이터는 intent 타입으로 반환.
+//    */
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//            switch (requestCode) {
+//                case GALLERY_CODE:
+//                    sendPicture(data.getData()); //갤러리에서 가져오기
+//                    break;
+//                case CAMERA_CODE:
+////                    getPictureForPhoto(); //카메라에서 가져오기
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
+//
+//
+//    //선택한 사진 데이터 갤러리 처리
+//    private void sendPicture(Uri data) {
+//        Log.d("data : ", String.valueOf(data));
+//        imagePath = getRealPathFromURI(data); // path 경로
+//        Log.d("imagePath : ", imagePath);
+//        ExifInterface exif = null;
+//        try {
+//            exif = new ExifInterface(imagePath);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//        int exifDegree = exifOrientationToDegrees(exifOrientation);
+//
+////        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
+//        Bitmap bitmap1 = null;
+//
+//        try {
+//            bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            bitmap1.compress( PNG, 30, stream) ;
+//            image=stream.toByteArray();
+//            Log.d("Tag",""+stream.size());
+//
+//
+////            Uri uri = Uri.fromFile(file);
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
+////        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
+//        editorImage.setVisibility(View.VISIBLE);
+//        editorImage.setScaleType(ImageView.ScaleType.CENTER);
+//
+//        editorImage.setAdjustViewBounds(true);
+////        image = bitmapToByteArray(bitmap1);
+//    }
+//
+//    //사진의 절대경로 구하기
+//    private String getRealPathFromURI(Uri contentUri) {
+//        int column_index=0;
+//        String[] proj = {MediaStore.Images.Media.DATA};
+//        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+//        if(cursor.moveToFirst()){
+//            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//        }
+//        return cursor.getString(column_index);
+//    }
+//
+//    //사진을 정방향대로 회전하기
+//    private Bitmap rotate(Bitmap src, float degree) {
+//        // Matrix 객체 생성
+//        Matrix matrix = new Matrix();
+//        // 회전 각도 셋팅
+//        matrix.postRotate(degree);
+//        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
+//        return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
+//                src.getHeight(), matrix, true);
+//    }
+//
+//
+//    //사진의 회전값 가져오기
+//    private int exifOrientationToDegrees(int exifOrientation) {
+//        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+//            return 90;
+//        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+//            return 180;
+//        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+//            return 270;
+//        }
+//        return 0;
+//    }
+//
+//    private void getPictureForPhoto() {
+//        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+//        ExifInterface exif = null;
+//        try {
+//            exif = new ExifInterface(currentPhotoPath);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        int exifOrientation;
+//        int exifDegree;
+//        if (exif != null) {
+//            exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+////            exifDegree = exifOrientationToDegrees(exifOrientation);
+//        } else {
+//            exifDegree = 0;
+//        }
+////        ivImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
 //        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
-        editorImage.setVisibility(View.VISIBLE);
-        editorImage.setScaleType(ImageView.ScaleType.CENTER);
-
-        editorImage.setAdjustViewBounds(true);
-//        image = bitmapToByteArray(bitmap1);
-    }
-
-    void a(int a, int b){
-
-    }
-    void a(int c, String d){
-
-    }
-
-    //사진의 절대경로 구하기
-    private String getRealPathFromURI(Uri contentUri) {
-        int column_index=0;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){
-            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        }
-        return cursor.getString(column_index);
-    }
-
-    //사진을 정방향대로 회전하기
-    private Bitmap rotate(Bitmap src, float degree) {
-        // Matrix 객체 생성
-        Matrix matrix = new Matrix();
-        // 회전 각도 셋팅
-        matrix.postRotate(degree);
-        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
-        return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
-                src.getHeight(), matrix, true);
-    }
-
-
-    //사진의 회전값 가져오기
-    private int exifOrientationToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270;
-        }
-        return 0;
-    }
-
-    private void getPictureForPhoto() {
-        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(currentPhotoPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int exifOrientation;
-        int exifDegree;
-        if (exif != null) {
-            exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//            exifDegree = exifOrientationToDegrees(exifOrientation);
-        } else {
-            exifDegree = 0;
-        }
-//        ivImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
-        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
-        editorImage.setVisibility(View.VISIBLE);
-    }
-
-
-
-    //안드로이드 7.0 부터는 앱권한이 적용되지 않아 유저한테 직접 권한을 받는 메소드
-    private void checkPermissions(){
-
-        if (ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED||
-                ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(NoticeEditorActivity.this,
-                    new String[]{
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    },
-                    1052);
-
-        }
-
-    }
-
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[],
-                                           int[] grantResults) {
-        switch (requestCode) {
-            case 1052: {
-                // If request is cancelled, the result
-                // arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED ){
-
-                    // permission was granted.
-
-                } else {
-                    // Permission denied - Show a message
-                    // to inform the user that this app only works
-                    // with these permissions granted
-
-                }
-                return;
-            }
-
-        }
-    }
-
-
-    //비트맵 사이즈를 줄여줌
-    public static Bitmap decodeUri(Context c, Uri uri, final int requiredSize)
-            throws FileNotFoundException {
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
-
-        int width_tmp = o.outWidth
-                , height_tmp = o.outHeight;
-        int scale = 1;
-
-        while(true) {
-            if(width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
-                break;
-            width_tmp /= 2;
-            height_tmp /= 2;
-            scale *= 2;
-        }
-
-        BitmapFactory.Options o2 = new BitmapFactory.Options();
-        o2.inSampleSize = scale;
-        return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
-    }
+//        editorImage.setVisibility(View.VISIBLE);
+//    }
+//
+//
+//
+//    //안드로이드 7.0 부터는 앱권한이 적용되지 않아 유저한테 직접 권한을 받는 메소드
+//    private void checkPermissions(){
+//
+//        if (ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
+//                Manifest.permission.READ_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED||
+//                ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//
+//            ActivityCompat.requestPermissions(NoticeEditorActivity.this,
+//                    new String[]{
+//                            Manifest.permission.READ_EXTERNAL_STORAGE,
+//                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                    },
+//                    1052);
+//
+//        }
+//
+//    }
+//
+//    public void onRequestPermissionsResult(int requestCode,
+//                                           String permissions[],
+//                                           int[] grantResults) {
+//        switch (requestCode) {
+//            case 1052: {
+//                // If request is cancelled, the result
+//                // arrays are empty.
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+//                        && grantResults[1] == PackageManager.PERMISSION_GRANTED ){
+//
+//                    // permission was granted.
+//
+//                } else {
+//                    // Permission denied - Show a message
+//                    // to inform the user that this app only works
+//                    // with these permissions granted
+//
+//                }
+//                return;
+//            }
+//
+//        }
+//    }
+//
+//
+//    //비트맵 사이즈를 줄여줌
+//    public static Bitmap decodeUri(Context c, Uri uri, final int requiredSize)
+//            throws FileNotFoundException {
+//        BitmapFactory.Options o = new BitmapFactory.Options();
+//        o.inJustDecodeBounds = true;
+//        BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
+//
+//        int width_tmp = o.outWidth
+//                , height_tmp = o.outHeight;
+//        int scale = 1;
+//
+//        while(true) {
+//            if(width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
+//                break;
+//            width_tmp /= 2;
+//            height_tmp /= 2;
+//            scale *= 2;
+//        }
+//
+//        BitmapFactory.Options o2 = new BitmapFactory.Options();
+//        o2.inSampleSize = scale;
+//        return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
+//    }
 
 
 

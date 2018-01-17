@@ -29,14 +29,14 @@ public class EducationPlanListViewAdapter extends BaseAdapter implements Seriali
     Context context;
 
 
-    public EducationPlanListViewAdapter(Context context){
-        this.context=context;
-
-    }
-
-    public EducationPlanListViewAdapter(Typeface font){
-        this.font=font;
-    }
+//    public EducationPlanListViewAdapter(Context context){
+//        this.context=context;
+//
+//    }
+//
+//    public EducationPlanListViewAdapter(Typeface font){
+//        this.font=font;
+//    }
 
     @Override
     public int getCount() {
