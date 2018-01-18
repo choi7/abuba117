@@ -104,6 +104,8 @@ public class NoticeDetailActivity extends BaseActivity {
 
 //        setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 
+
+
         seq_user = pref.getString("seq_user","");
         Log.d("유저 시퀀스 " , seq_user);
 

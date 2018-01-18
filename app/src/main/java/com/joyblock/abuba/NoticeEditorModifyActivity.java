@@ -64,7 +64,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
     RadioGroup rg;
     String checkid = "y", is_reply, seq_user, seq_kindergarden, seq_kindergarden_class, maintitle, intext, seq_notice;
     String noticeEditorPush = "http://58.229.208.246/Ububa/insertNotice.do";
-    Boolean imageChange = true;
+    Boolean imageChange = true, modifyImageChange = false;
     EditText titleText, inText;
 
 
@@ -211,14 +211,14 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                maintitle = titleText.getText().toString();
-                                intext = inText.getText().toString();
-
-                                Log.d("타이틀", maintitle);
-                                Log.d("sub타이틀", intext);
-
-                                NoticeEditorModifyActivity.InsertNotice buyTask = new NoticeEditorModifyActivity.InsertNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString(), file_path);
-                                buyTask.execute();
+                                //따로 사진을 바꾸지 않았으면 false 사진을 바꾼다면 sendPicture에서 modifyImageChange를 true바꿔줌
+                                if(modifyImageChange) {
+                                    NoticeEditorModifyActivity.UpdateNotice buyTask = new NoticeEditorModifyActivity.UpdateNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString(), modifyImageChange);
+                                    buyTask.execute();
+                                } else {
+                                    NoticeEditorModifyActivity.UpdateNotice buyTask = new NoticeEditorModifyActivity.UpdateNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString());
+                                    buyTask.execute();
+                                }
 
                             }
                         })
@@ -237,12 +237,12 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         }
     }
 
-    class InsertNotice extends AsyncTask<Void, Void, String> {
+    class UpdateNotice extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody1;
 
-        public InsertNotice(String seq_notice, String is_reply, String seq_kindergarden_class, String title, String content, String file_path) {
+        public UpdateNotice(String seq_notice, String is_reply, String seq_kindergarden_class, String title, String content, Boolean ss) {
             client = new OkHttpClient();
 
             // 현재시간을 msec 으로 구한다.
@@ -254,7 +254,43 @@ public class NoticeEditorModifyActivity extends BaseActivity {
             // nowDate 변수에 값을 저장한다.
             String formatDate = sdfNow.format(date);
 
-            imageName = seq_user + "_" + seq_kindergarden + ".png";
+            imageName = formatDate + "_" + seq_user + "_" + seq_kindergarden + ".png";
+
+//            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
+//            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+
+            Log.d("값들", seq_notice+""+is_reply+""+seq_kindergarden_class+""+title+""+content + "" + file_path);
+            Log.d("값들", file_path+""+image);
+
+
+            formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                    .addFormDataPart("seq_notice", seq_notice)
+                    .addFormDataPart("is_reply", is_reply)
+                    .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
+                    .addFormDataPart("title", title)
+                    .addFormDataPart("content", content)
+                    .addFormDataPart("files", imageName,RequestBody.create(MultipartBody.FORM, image))
+                    .build();
+
+            request = new okhttp3.Request.Builder()
+                    .url("http://58.229.208.246/Ububa/updateNotice.do")
+                    .post(formBody1)
+                    .build();
+        }
+
+        public UpdateNotice(String seq_notice, String is_reply, String seq_kindergarden_class, String title, String content) {
+            client = new OkHttpClient();
+
+            // 현재시간을 msec 으로 구한다.
+            long now = System.currentTimeMillis();
+            // 현재시간을 date 변수에 저장한다.
+            Date date = new Date(now);
+            // 시간을 나타냇 포맷을 정한다 ( yyyy/MM/dd 같은 형태로 변형 가능 )
+            SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            // nowDate 변수에 값을 저장한다.
+            String formatDate = sdfNow.format(date);
+
+            imageName = formatDate + "_" + seq_user + "_" + seq_kindergarden + ".png";
 
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
@@ -268,7 +304,6 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                     .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
                     .addFormDataPart("title", title)
                     .addFormDataPart("content", content)
-                    .addFormDataPart("files", file_path)
                     .build();
 
             request = new okhttp3.Request.Builder()
@@ -276,6 +311,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                     .post(formBody1)
                     .build();
         }
+
 
 
         @Override
@@ -454,6 +490,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, GALLERY_CODE);
+        modifyImageChange = true;
     }
 
     /*

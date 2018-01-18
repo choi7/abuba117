@@ -35,12 +35,14 @@ import android.widget.TextView;
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.api_message.R18_InsertSurvey;
 import com.joyblock.abuba.notice.NoticeActivity;
+import com.joyblock.abuba.notice.NoticeEditorActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -445,22 +447,39 @@ public class QuestionnaireActivity extends BaseActivity {
             e.printStackTrace();
         }
         int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//        int exifDegree = exifOrientationToDegrees(exifOrientation);
+        int exifDegree = exifOrientationToDegrees(exifOrientation);
 
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
-//        timeImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
-        questionnaireImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
-        questionnaireImage.setVisibility(View.VISIBLE);
-        image = bitmapToByteArray(bitmap);
-        System.out.println("test");
-        System.out.println(image.length);
-        /*
-        for (int i = 0 ; i<image.length; i++) {
-            Log.d("이미지"+i+"번째 : ", String.valueOf(image[i]));
+        Bitmap bitmap1 = null;
+        try {
+            bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if(bitmap1.getByteCount() > 100000) {
+//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+                bitmap1.compress( PNG, 1, stream) ;
+                image=stream.toByteArray();
+            } else {
+                bitmap1.compress( PNG, 100, stream) ;
+                image=stream.toByteArray();
+            }
+            Log.d("Tag","size"+image.length);
+            Log.d("Tag","size"+bitmap1.getByteCount());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        */
-        System.out.println(image);
-        System.out.println("test");
+        questionnaireImage.setImageBitmap(bitmap1);//이미지 뷰에 비트맵 넣기
+        questionnaireImage.setVisibility(View.VISIBLE);
+    }
+
+    //사진의 회전값 가져오기
+    private int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
     }
 
     //사진의 절대경로 구하기
