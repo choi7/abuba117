@@ -25,6 +25,7 @@ import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CustomDialog;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
+import com.joyblock.abuba.NoticeEditorModifyActivity;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.RegisterSchoolClassSelectActivity;
 import com.joyblock.abuba.RegisterStandbyActivity;
@@ -43,7 +44,7 @@ import okhttp3.RequestBody;
 public class NoticeDetailActivity extends BaseActivity {
 
     TextView noticeTitle,noticeBan,noticeName,noticeTime,noticeContent;//제목, 반, 작성자, 등록시간, 내용
-    String seq_notice, notice_detail_seq_user, intentPutExtraModifyData;
+    String seq_notice, notice_detail_seq_user, intentPutExtraModifyData, seq_user;
     ImageView insertAndDelete, detailImage, backImage;
     Activity activity;
     CustomDialogModifyAndDel mCustomDialog;
@@ -103,10 +104,9 @@ public class NoticeDetailActivity extends BaseActivity {
 
 //        setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 
-        String seq_user = pref.getString("seq_user","");
-        if(seq_user != notice_detail_seq_user){
-            insertAndDelete.setVisibility(View.INVISIBLE);
-        }
+        seq_user = pref.getString("seq_user","");
+        Log.d("유저 시퀀스 " , seq_user);
+
 
         insertAndDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,6 +207,18 @@ public class NoticeDetailActivity extends BaseActivity {
                 notice_detail_seq_user = detail.seq_user;
                 intentPutExtraModifyData = jsonResponse.getString("notice");
 
+                Log.d("유저 시퀀스 ", notice_detail_seq_user);
+                Log.d("유저 시퀀스1 ", seq_user);
+
+
+                if(seq_user.equals(notice_detail_seq_user)){
+                    insertAndDelete.setVisibility(View.VISIBLE);
+                    Log.d("sd ", "ss");
+                } else {
+                    insertAndDelete.setVisibility(View.INVISIBLE);
+                    Log.d("sd ", "ee");
+                }
+
                 Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
                 detailImage.setVisibility(View.VISIBLE);
 
@@ -231,13 +243,63 @@ public class NoticeDetailActivity extends BaseActivity {
         }
     }
 
+    class DeleteNotice extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+        String url="http://58.229.208.246/Ububa/deleteNotice.do";
+
+        //공지 삭제
+        public DeleteNotice(String seq_notice) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_notice", seq_notice)
+                    .build();
+
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("response : ",json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
 
     //수정버튼
     private View.OnClickListener modifyListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Intent intent=new Intent(NoticeDetailActivity.this,NoticeEditorActivity.class);
-            intent.putExtra("sdf",intentPutExtraModifyData);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            mCustomDialog.dismiss();
+            Intent intent=new Intent(NoticeDetailActivity.this,NoticeEditorModifyActivity.class);
+            intent.putExtra("ModifyData",intentPutExtraModifyData);
+            NoticeDetailActivity.this.startActivity(intent);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             finish();
         }
     };
@@ -245,9 +307,22 @@ public class NoticeDetailActivity extends BaseActivity {
     //삭제버튼
     private View.OnClickListener delListener = new View.OnClickListener() {
         public void onClick(View v) {
-
-
             mCustomDialog.dismiss();
+            AlertDialog.Builder nd = new AlertDialog.Builder(NoticeDetailActivity.this);
+            nd.setMessage("정말로 삭제하시겠습니까")
+                    .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            NoticeDetailActivity.DeleteNotice buyTask = new NoticeDetailActivity.DeleteNotice(seq_notice);
+                            buyTask.execute();
+                            Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
+                            NoticeDetailActivity.this.startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .setPositiveButton("취소", null)
+                    .create()
+                    .show();
         }
     };
 

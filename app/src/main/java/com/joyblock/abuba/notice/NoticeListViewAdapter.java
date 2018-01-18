@@ -96,7 +96,8 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
 //            titleTextView.setTextColor(Color.BLUE);
 //        }
         // 아이템 내 각 위젯에 데이터 반영
-        Picasso.with(context).load(listViewItem.getFile_path()).into(photo);
+        if(!listViewItem.getFile_path().equals(""))
+            Picasso.with(context).load(listViewItem.getFile_path()).into(photo);
 
 
 //        photo.setImageDrawable(listViewItem.getPhoto());
