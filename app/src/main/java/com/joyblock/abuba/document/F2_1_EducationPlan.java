@@ -1,6 +1,7 @@
 package com.joyblock.abuba.document;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -101,11 +102,11 @@ public class F2_1_EducationPlan extends android.support.v4.app.Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
-//                intent.putExtra("seq_notice",noticeList[position].seq_notice);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//
-//                startActivity(intent);
+                Intent intent = new Intent(getContext(), A2_3_EducationPlanDetailActivity.class);
+                intent.putExtra("seq_notice",message[position].seq_educational_plan);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                startActivity(intent);
             }
         });
         adapter.notifyDataSetChanged();
@@ -119,8 +120,9 @@ public class F2_1_EducationPlan extends android.support.v4.app.Fragment {
 
     }
 
+    R26_SelectEducationalPlanList[] message;
     class BuyTask extends AsyncTask<Void, Void, String> {
-        R26_SelectEducationalPlanList[] message;
+
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
