@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.MainDawerSelectActivity;
 import com.joyblock.abuba.R;
 
 
@@ -77,6 +78,14 @@ public class A1_DocumentSelect extends BaseActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        Intent intent = new Intent(A1_DocumentSelect.this, MainDawerSelectActivity.class);
+//        A1_DocumentSelect.this.startActivity(intent);
+//        finish();
     }
 
 
