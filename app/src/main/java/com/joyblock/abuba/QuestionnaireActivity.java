@@ -3,25 +3,16 @@ package com.joyblock.abuba;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,34 +23,24 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.api_message.R18_InsertSurvey;
 import com.joyblock.abuba.notice.NoticeActivity;
-import com.joyblock.abuba.notice.NoticeEditorActivity;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-
-import static android.graphics.Bitmap.CompressFormat.PNG;
 
 public class QuestionnaireActivity extends BaseActivity {
 
     EditText titleText, inText;
     Boolean imageChange = true, touchImage = true; // imageChange1 = true;
     String is_reply = "y", mImageCaptureName;
-    private String currentPhotoPath;//실제 사진 파일 경로
+//    private String currentPhotoPath;//실제 사진 파일 경로
     private ListView mListView11 = null;
     private QuestionnaireActivity.ListViewAdapter mAdapter11 = null;
     ImageView questTimeSettingImageView, timeImage, questionnaireImage;
@@ -67,8 +48,11 @@ public class QuestionnaireActivity extends BaseActivity {
     CalendarCustomDialogActivity mCustomDialog;
     Integer year, month, day;
     private final int CAMERA_CODE = 1111, GALLERY_CODE = 1112;
-    private Uri photoUri;
-    byte[] image;
+//    private Uri photoUri;
+//    byte[] image;
+
+    ImageFileProcessor image_file_processor=new ImageFileProcessor();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +69,7 @@ public class QuestionnaireActivity extends BaseActivity {
         pictureRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    selectGallery();
+                image_file_processor.selectGallery(QuestionnaireActivity.this,1);
             }
         });
         deadLineText = (TextView) findViewById(R.id.deadLineTimeText);
@@ -321,7 +305,7 @@ public class QuestionnaireActivity extends BaseActivity {
             holder.mIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectGallery();
+                    image_file_processor.selectGallery(QuestionnaireActivity.this,2);
 
                 }
 
@@ -357,51 +341,53 @@ public class QuestionnaireActivity extends BaseActivity {
 
     }
 
-    private void selectPhoto() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                File photoFile = null;
-                try {
-                    photoFile = createImageFile();
-                } catch (IOException ex) {
-                }
-                if (photoFile != null) {
-                    photoUri = FileProvider.getUriForFile(QuestionnaireActivity.this, getPackageName(), photoFile);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                    startActivityForResult(intent, CAMERA_CODE);
-                }
-            }
-        }
-    }
+//    private void selectPhoto() {
+//        String state = Environment.getExternalStorageState();
+//        if (Environment.MEDIA_MOUNTED.equals(state)) {
+//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//            if (intent.resolveActivity(getPackageManager()) != null) {
+//                File photoFile = null;
+//                try {
+//                    photoFile = createImageFile();
+//                } catch (IOException ex) {
+//                }
+//                if (photoFile != null) {
+//                    photoUri = FileProvider.getUriForFile(QuestionnaireActivity.this, getPackageName(), photoFile);
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+//                    startActivityForResult(intent, CAMERA_CODE);
+//                }
+//            }
+//        }
+//    }
 
     /*
     파일생성
     카메라로 찍은 사진을 실제 파일로 생성하는 코드
     상단에 지정한 path이름과 일치해야 에러없이 해당 기능을 수행
      */
-    private File createImageFile() throws IOException {
-        File dir = new File(Environment.getExternalStorageDirectory() + "/path/");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        mImageCaptureName = timeStamp + ".png";
-        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/path/"
-                + mImageCaptureName);
-        currentPhotoPath = storageDir.getAbsolutePath();
-
-        return storageDir;
-    }
-
-    //갤러리에서 사진을 가져오는 경우
-    public void selectGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent, GALLERY_CODE);
-    }
+//    private File createImageFile() throws IOException {
+//        File dir = new File(Environment.getExternalStorageDirectory() + "/path/");
+//        if (!dir.exists()) {
+//            dir.mkdirs();
+//        }
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        mImageCaptureName = timeStamp + ".png";
+//        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/path/"
+//                + mImageCaptureName);
+//        currentPhotoPath = storageDir.getAbsolutePath();
+//
+//        return storageDir;
+//    }
+//
+//    //갤러리에서 사진을 가져오는 경우
+//    public void selectGallery() {
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        intent.setType("image/*");
+//        intent.putExtra("num",122);
+//        startActivityForResult(intent, GALLERY_CODE);
+//
+//    }
 
     /*
     선택한 사진 데이터 처리
@@ -415,8 +401,8 @@ public class QuestionnaireActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case GALLERY_CODE:
-                    sendPicture(data.getData(),questionnaireImage); //갤러리에서 가져오기
+                case 1:
+                    image_file_processor.sendPicture(data.getData(),questionnaireImage,QuestionnaireActivity.this); //갤러리에서 가져오기
                     break;
                 case CAMERA_CODE:
 //                    getPictureForPhoto(); //카메라에서 가져오기
@@ -429,60 +415,60 @@ public class QuestionnaireActivity extends BaseActivity {
 
 
     //선택한 사진 데이터 갤러리 처리
-    private void sendPicture(Uri data,ImageView target) {
-        String imagePath = getRealPathFromURI(data); // path 경로
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(imagePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        int exifDegree = exifOrientationToDegrees(exifOrientation);
-
-        Bitmap bitmap1 = null;
-        try {
-            bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            if (bitmap1.getByteCount() > 100000) {
-//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
-                bitmap1.compress(PNG, 1, stream);
-                image = stream.toByteArray();
-            } else {
-                bitmap1.compress(PNG, 100, stream);
-                image = stream.toByteArray();
-            }
-            Log.d("Tag", "size" + image.length);
-            Log.d("Tag", "size" + bitmap1.getByteCount());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        target.setImageBitmap(bitmap1);//이미지 뷰에 비트맵 넣기
-        target.setVisibility(View.VISIBLE);
-    }
-
-    //사진의 회전값 가져오기
-    private int exifOrientationToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270;
-        }
-        return 0;
-    }
-
-    //사진의 절대경로 구하기
-    private String getRealPathFromURI(Uri contentUri) {
-        int column_index = 0;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        }
-        return cursor.getString(column_index);
-    }
+//    private void sendPicture(Uri data,ImageView target) {
+//        String imagePath = getRealPathFromURI(data); // path 경로
+//        ExifInterface exif = null;
+//        try {
+//            exif = new ExifInterface(imagePath);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//        int exifDegree = exifOrientationToDegrees(exifOrientation);
+//
+//        Bitmap bitmap1 = null;
+//        try {
+//            bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            if (bitmap1.getByteCount() > 100000) {
+////                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+//                bitmap1.compress(PNG, 1, stream);
+//                image = stream.toByteArray();
+//            } else {
+//                bitmap1.compress(PNG, 100, stream);
+//                image = stream.toByteArray();
+//            }
+//            Log.d("Tag", "size" + image.length);
+//            Log.d("Tag", "size" + bitmap1.getByteCount());
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        target.setImageBitmap(bitmap1);//이미지 뷰에 비트맵 넣기
+//        target.setVisibility(View.VISIBLE);
+//    }
+//
+//    //사진의 회전값 가져오기
+//    private int exifOrientationToDegrees(int exifOrientation) {
+//        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+//            return 90;
+//        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+//            return 180;
+//        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+//            return 270;
+//        }
+//        return 0;
+//    }
+//
+//    //사진의 절대경로 구하기
+//    private String getRealPathFromURI(Uri contentUri) {
+//        int column_index = 0;
+//        String[] proj = {MediaStore.Images.Media.DATA};
+//        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+//        if (cursor.moveToFirst()) {
+//            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//        }
+//        return cursor.getString(column_index);
+//    }
 
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
