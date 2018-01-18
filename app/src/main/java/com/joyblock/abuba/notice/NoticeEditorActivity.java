@@ -501,25 +501,13 @@ public class NoticeEditorActivity extends BaseActivity {
             bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-            bitmap1.compress( PNG, 80, stream) ;
-            image=stream.toByteArray();
-
-            while (image.length > 100000) {
-                
-                bitmap1.compress( PNG, 80, stream) ;
-
-                image=stream.toByteArray();
-                Log.d("압축 : " ,image.length+"\n");
-            }
-            /*
             if(bitmap1.getByteCount() > 100000) {
-//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
-                bitmap1.compress( PNG, 10, stream) ;
+                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
                 image=stream.toByteArray();
             } else {
                 image=stream.toByteArray();
             }
-            */
+
             Log.d("Tag","size"+image.length);
             Log.d("Tag","size"+bitmap1.getByteCount());
 
