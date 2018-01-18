@@ -35,7 +35,7 @@ public class CalendarCustomDialogActivity extends DatePickerDialog {
     DatePicker datePicker;
     ImageView imageView;
 
-    QuestionnaireActivity qa;
+    public QuestionnaireActivity qa;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public CalendarCustomDialogActivity(@NonNull Context context) {
@@ -81,17 +81,17 @@ public class CalendarCustomDialogActivity extends DatePickerDialog {
             }
         });
 
-        trueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qa.day = datePicker.getDayOfMonth();
-                qa.month = datePicker.getMonth() + 1;
-                qa.year = datePicker.getYear();
-                imageView.setImageResource(R.drawable.ch_on);
-                System.out.println(qa.day + "" + qa.month + "" + qa.year);
-                CalendarCustomDialogActivity.this.dismiss();
-            }
-        });
+//        trueButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qa.day = datePicker.getDayOfMonth();
+//                qa.month = datePicker.getMonth() + 1;
+//                qa.year = datePicker.getYear();
+//                imageView.setImageResource(R.drawable.ch_on);
+//                System.out.println(qa.day + "" + qa.month + "" + qa.year);
+//                CalendarCustomDialogActivity.this.dismiss();
+//            }
+//        });
     }
 }
 

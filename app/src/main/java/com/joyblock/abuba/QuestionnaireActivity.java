@@ -57,18 +57,17 @@ import static android.graphics.Bitmap.CompressFormat.PNG;
 public class QuestionnaireActivity extends BaseActivity {
 
     EditText titleText, inText;
-    Boolean imageChange = true; // imageChange1 = true;
-    String is_reply = "y";
+    Boolean imageChange = true, touchImage = true; // imageChange1 = true;
+    String is_reply = "y", mImageCaptureName;
+    private String currentPhotoPath;//실제 사진 파일 경로
     private ListView mListView11 = null;
     private QuestionnaireActivity.ListViewAdapter mAdapter11 = null;
     ImageView questTimeSettingImageView, timeImage, questionnaireImage;
+    TextView deadLineText;
     CalendarCustomDialogActivity mCustomDialog;
     Integer year, month, day;
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
+    private final int CAMERA_CODE = 1111, GALLERY_CODE = 1112;
     private Uri photoUri;
-    private String currentPhotoPath;//실제 사진 파일 경로
-    String mImageCaptureName;
     byte[] image;
 
     @Override
@@ -80,16 +79,16 @@ public class QuestionnaireActivity extends BaseActivity {
         inText = (EditText) findViewById(R.id.inText);
 
         ImageView pictureRegister = (ImageView) findViewById(R.id.pictureRegisterimageView);
-        questionnaireImage = (ImageView) findViewById(R.id.questionnaireImage);
+        questionnaireImage = (ImageView) findViewById(R.id.editorimageView);
 
         pictureRegister.setVisibility(View.VISIBLE);
         pictureRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectGallery();
+                    selectGallery();
             }
         });
-
+        deadLineText = (TextView) findViewById(R.id.deadLineTimeText);
         TextView txt = (TextView) findViewById(R.id.comenttextView);
         txt.setVisibility(View.VISIBLE);
         final ImageView replyCheck = (ImageView) findViewById(R.id.replyCheckImage);
@@ -108,21 +107,7 @@ public class QuestionnaireActivity extends BaseActivity {
                 }
             }
         });
-
         questTimeSettingImageView = (ImageView) findViewById(R.id.questionTimeSettingImageView);
-//        questTimeSettingImageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (imageChange1) {
-//                    questTimeSettingImageView.setImageDrawable(getResources().getDrawable(R.drawable.ch_on));
-//                    imageChange1 = false;
-//                    Log.d("ddd" , String.valueOf(imageChange1));
-//                } else {
-//                    questTimeSettingImageView.setImageDrawable(getResources().getDrawable(R.drawable.ch_off));
-//                    imageChange1 = true;
-//                }
-//            }
-//        });
 
         timeImage = (ImageView) findViewById(R.id.timeImageView);
         timeImage.setOnClickListener(new View.OnClickListener() {
@@ -131,23 +116,18 @@ public class QuestionnaireActivity extends BaseActivity {
             public void onClick(View v) {
                 mCustomDialog = new CalendarCustomDialogActivity(QuestionnaireActivity.this);
                 mCustomDialog.show();
-
             }
         });
-
 
         actionbarCustom();
 
         mListView11 = (ListView) findViewById(R.id.questListview);
-
-
         mAdapter11 = new QuestionnaireActivity.ListViewAdapter(this);
         mListView11.setAdapter(mAdapter11);
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
         setListViewHeightBasedOnChildren(mListView11);
-
 
         ImageView imageView = (ImageView) findViewById(R.id.questionListViewInsertImageView);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -157,20 +137,38 @@ public class QuestionnaireActivity extends BaseActivity {
                 Log.d("투표항목수 : ", String.valueOf(mAdapter11.getCount()));
                 mListView11.setAdapter(mAdapter11);
                 setListViewHeightBasedOnChildren(mListView11);
-
-
             }
         });
 
+        String seq_user = pref.getString("seq_user", "없음");
+        String seq_kindergarden = pref.getString("seq_kindergarden", "없음");
+        String seq_kindergarden_class = pref.getString("seq_kindergarden_class", "없음");
 
-        String seq_user = pref.getString("seq_user","없음");
-        String seq_kindergarden = pref.getString("seq_kindergarden","없음");
-        String seq_kindergarden_class= pref.getString("seq_kindergarden_class","없음");
-
-        Log.d("seq_" , seq_user +" " +seq_kindergarden +" " +seq_kindergarden_class);
-
+        Log.d("seq_", seq_user + " " + seq_kindergarden + " " + seq_kindergarden_class);
 
 
+    }
+
+    public void datepush(View v) {
+//        mCustomDialog.qa.day = mCustomDialog.datePicker.getDayOfMonth();
+        day = mCustomDialog.datePicker.getDayOfMonth();
+        month = mCustomDialog.datePicker.getMonth() + 1;
+        year = mCustomDialog.datePicker.getYear();
+        mCustomDialog.imageView.setImageResource(R.drawable.ch_on);
+        System.out.println(mCustomDialog.qa.day + "" + mCustomDialog.qa.month + "" + mCustomDialog.qa.year);
+        String days = null, months = null;
+        if (day < 10) {
+            days = "0" + day;
+        } else {
+            days = String.valueOf(day);
+        }
+        if (month < 10) {
+            months = "0" + month;
+        } else {
+            months = String.valueOf(month);
+        }
+        deadLineText.setText(year + "년 " + months + "월 " + days + "일 " + " 24:00");
+        mCustomDialog.dismiss();
     }
 
     public void actionbarCustom() {
@@ -324,6 +322,7 @@ public class QuestionnaireActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     selectGallery();
+
                 }
 
             });
@@ -367,7 +366,6 @@ public class QuestionnaireActivity extends BaseActivity {
                 try {
                     photoFile = createImageFile();
                 } catch (IOException ex) {
-
                 }
                 if (photoFile != null) {
                     photoUri = FileProvider.getUriForFile(QuestionnaireActivity.this, getPackageName(), photoFile);
@@ -375,9 +373,7 @@ public class QuestionnaireActivity extends BaseActivity {
                     startActivityForResult(intent, CAMERA_CODE);
                 }
             }
-
         }
-
     }
 
     /*
@@ -392,20 +388,15 @@ public class QuestionnaireActivity extends BaseActivity {
         }
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         mImageCaptureName = timeStamp + ".png";
-
         File storageDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/path/"
-
                 + mImageCaptureName);
         currentPhotoPath = storageDir.getAbsolutePath();
 
         return storageDir;
-
-
     }
 
     //갤러리에서 사진을 가져오는 경우
     public void selectGallery() {
-
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
@@ -425,7 +416,7 @@ public class QuestionnaireActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case GALLERY_CODE:
-                    sendPicture(data.getData()); //갤러리에서 가져오기
+                    sendPicture(data.getData(),questionnaireImage); //갤러리에서 가져오기
                     break;
                 case CAMERA_CODE:
 //                    getPictureForPhoto(); //카메라에서 가져오기
@@ -438,7 +429,7 @@ public class QuestionnaireActivity extends BaseActivity {
 
 
     //선택한 사진 데이터 갤러리 처리
-    private void sendPicture(Uri data) {
+    private void sendPicture(Uri data,ImageView target) {
         String imagePath = getRealPathFromURI(data); // path 경로
         ExifInterface exif = null;
         try {
@@ -453,21 +444,21 @@ public class QuestionnaireActivity extends BaseActivity {
         try {
             bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            if(bitmap1.getByteCount() > 100000) {
+            if (bitmap1.getByteCount() > 100000) {
 //                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
-                bitmap1.compress( PNG, 1, stream) ;
-                image=stream.toByteArray();
+                bitmap1.compress(PNG, 1, stream);
+                image = stream.toByteArray();
             } else {
-                bitmap1.compress( PNG, 100, stream) ;
-                image=stream.toByteArray();
+                bitmap1.compress(PNG, 100, stream);
+                image = stream.toByteArray();
             }
-            Log.d("Tag","size"+image.length);
-            Log.d("Tag","size"+bitmap1.getByteCount());
+            Log.d("Tag", "size" + image.length);
+            Log.d("Tag", "size" + bitmap1.getByteCount());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        questionnaireImage.setImageBitmap(bitmap1);//이미지 뷰에 비트맵 넣기
-        questionnaireImage.setVisibility(View.VISIBLE);
+        target.setImageBitmap(bitmap1);//이미지 뷰에 비트맵 넣기
+        target.setVisibility(View.VISIBLE);
     }
 
     //사진의 회전값 가져오기
@@ -484,67 +475,13 @@ public class QuestionnaireActivity extends BaseActivity {
 
     //사진의 절대경로 구하기
     private String getRealPathFromURI(Uri contentUri) {
-        int column_index=0;
+        int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
         return cursor.getString(column_index);
-    }
-
-
-    /*
-    //사진을 정방향대로 회전하기
-    private Bitmap rotate(Bitmap bitmap, int exifDegree) {
-        // Matrix 객체 생성
-        Matrix matrix = new Matrix();
-        // 회전 각도 셋팅
-        matrix.postRotate(degree);
-        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
-        return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
-                src.getHeight(), matrix, true);
-    }
-    */
-    /*
-    //사진의 회전값 가져오기
-    private int exifOrientationToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270;
-        }
-        return 0;
-    }
-    */
-
-    public byte[] bitmapToByteArray( Bitmap $bitmap ) {  // 이미지를 byte[]배열로 변환
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        $bitmap.compress( PNG, 30, stream) ;  //CompressFormat.PNG or CompressFormat.JPG
-        byte[] byteArray = stream.toByteArray();
-        return byteArray ;
-    }
-    private void getPictureForPhoto() {
-        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(currentPhotoPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int exifOrientation;
-        int exifDegree;
-        if (exif != null) {
-            exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//            exifDegree = exifOrientationToDegrees(exifOrientation);
-        } else {
-            exifDegree = 0;
-        }
-//        ivImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
-        questionnaireImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
-        questionnaireImage.setVisibility(View.VISIBLE);
     }
 
 
@@ -574,11 +511,12 @@ public class QuestionnaireActivity extends BaseActivity {
 
 
     R18_InsertSurvey detail;
+
     class InsertSurvey extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/insertSurvey.do";
+        String url = "http://58.229.208.246/Ububa/insertSurvey.do";
 
         //설문지 작성
         public InsertSurvey(String seq_user, String seq_kindergarden, String seq_kindergarden_class,
@@ -598,8 +536,6 @@ public class QuestionnaireActivity extends BaseActivity {
                     .add("files", files)
                     .add("vote_item", vote_item)
                     .build();
-
-
 
             request = new okhttp3.Request.Builder()
                     .url(url)
@@ -624,13 +560,12 @@ public class QuestionnaireActivity extends BaseActivity {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            Log.d("response : ",json);
+            Log.d("response : ", json);
             try {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
 //                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);
 //                Log.d("detail" , String.valueOf(detail));
-
 //                Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
 //                detailImage.setVisibility(View.VISIBLE);
 //
@@ -638,10 +573,65 @@ public class QuestionnaireActivity extends BaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
-
-
-
 }
+
+
+
+
+
+    /*
+    //사진을 정방향대로 회전하기
+    private Bitmap rotate(Bitmap bitmap, int exifDegree) {
+        // Matrix 객체 생성
+        Matrix matrix = new Matrix();
+        // 회전 각도 셋팅
+        matrix.postRotate(degree);
+        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
+        return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
+                src.getHeight(), matrix, true);
+    }
+    */
+    /*
+    //사진의 회전값 가져오기
+    private int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
+    */
+/*
+    public byte[] bitmapToByteArray(Bitmap $bitmap) {  // 이미지를 byte[]배열로 변환
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        $bitmap.compress(PNG, 30, stream);  //CompressFormat.PNG or CompressFormat.JPG
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    private void getPictureForPhoto() {
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(currentPhotoPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int exifOrientation;
+        int exifDegree;
+        if (exif != null) {
+            exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//            exifDegree = exifOrientationToDegrees(exifOrientation);
+        } else {
+            exifDegree = 0;
+        }
+//        ivImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
+        questionnaireImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
+        questionnaireImage.setVisibility(View.VISIBLE);
+    }
+*/

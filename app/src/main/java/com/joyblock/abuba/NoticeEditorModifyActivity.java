@@ -66,20 +66,13 @@ public class NoticeEditorModifyActivity extends BaseActivity {
     String noticeEditorPush = "http://58.229.208.246/Ububa/insertNotice.do";
     Boolean imageChange = true, modifyImageChange = false;
     EditText titleText, inText;
-
-
     private Uri photoUri;
-
-
     String imageName, content, file_path, titles;
-
     BanListViewAdapter adapter;
     ListView listview;
-
     Activity activity;
     AlertDialog.Builder banListDialogBuilder;//,modDelDialogBuidler;
     DialogInterface banListDialogInterface;//,modeDelDialogInteface;
-
     R6_SelectKindergardenClassList[] classList;
     R14_SelectNoticeOne detail;
 

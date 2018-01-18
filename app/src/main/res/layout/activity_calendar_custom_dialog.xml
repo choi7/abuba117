@@ -50,9 +50,10 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:textColor="#009688"
             android:fontFamily="@font/nanumsquarebold"
+            android:onClick="datepush"
             android:text="확인"
+            android:textColor="#009688"
             app:layout_constraintBottom_toBottomOf="@+id/calendarFalseButton"
             app:layout_constraintEnd_toEndOf="@+id/datePicker"
             app:layout_constraintTop_toTopOf="@+id/calendarFalseButton" />
