@@ -62,17 +62,16 @@ import static android.graphics.Bitmap.CompressFormat.PNG;
 public class NoticeEditorModifyActivity extends BaseActivity {
 
     RadioGroup rg;
-    String checkid = "y", is_reply, seq_user, seq_kindergarden, seq_kindergarden_class, maintitle, intext, files, seq_notice;
+    String checkid = "y", is_reply, seq_user, seq_kindergarden, seq_kindergarden_class, maintitle, intext, seq_notice;
     String noticeEditorPush = "http://58.229.208.246/Ububa/insertNotice.do";
     Boolean imageChange = true;
     EditText titleText, inText;
 
 
-
     private Uri photoUri;
 
 
-    String imageName;
+    String imageName, content, file_path, titles;
 
     BanListViewAdapter adapter;
     ListView listview;
@@ -91,19 +90,19 @@ public class NoticeEditorModifyActivity extends BaseActivity {
 
         Intent intent = getIntent();
         String modifyData = intent.getStringExtra("ModifyData");
-        Log.d("modifyData ",modifyData);
-        detail=new GsonBuilder().create().fromJson(modifyData,R14_SelectNoticeOne.class);
+        Log.d("modifyData ", modifyData);
+        detail = new GsonBuilder().create().fromJson(modifyData, R14_SelectNoticeOne.class);
         seq_notice = detail.seq_notice;
         seq_kindergarden_class = detail.seq_kindergarden_class;
-        String file_path = detail.file_path;
-        String content = detail.content;
+        file_path = detail.file_path;
+        content = detail.content;
         is_reply = detail.is_reply;
-        String title = detail.title;
+        titles = detail.title;
 
-        activity=this;
+        activity = this;
 
         titleText = (EditText) findViewById(R.id.titleText);
-        titleText.setText(title);
+        titleText.setText(titles);
         inText = (EditText) findViewById(R.id.inText);
         inText.setText(content);
         editorImage = (ImageView) findViewById(R.id.questionnaireImage);
@@ -127,7 +126,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         replyCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imageChange) {
+                if (imageChange) {
                     replyCheck.setImageDrawable(getResources().getDrawable(R.drawable.del));
                     is_reply = "n";
                     imageChange = false;
@@ -142,8 +141,6 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         actionbarCustom();
 
 
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkPermissions();
         }
@@ -152,11 +149,8 @@ public class NoticeEditorModifyActivity extends BaseActivity {
     }
 
 
-
-
-
-
     TextView title;
+
     public void actionbarCustom() {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
@@ -165,28 +159,19 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         title = (TextView) findViewById(R.id.titleName);
         title.setText("전체");
 
-        seq_user = pref.getString("seq_user","없음");
-        seq_kindergarden = pref.getString("seq_kindergarden","없음");
+        seq_user = pref.getString("seq_user", "없음");
+        seq_kindergarden = pref.getString("seq_kindergarden", "없음");
 
         title.setVisibility(View.VISIBLE);
-        title.setOnClickListener(new View.OnClickListener(){
+        title.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-
-
+            public void onClick(View v) {
 
                 new NoticeEditorModifyActivity.SelectKindergardenClassList(seq_kindergarden).execute();
-
-
-
 
             }
 
         });
-
-
-
-
 
 
         TextView backText = (TextView) findViewById(R.id.editorTextLeft);
@@ -229,10 +214,10 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                                 maintitle = titleText.getText().toString();
                                 intext = inText.getText().toString();
 
-                                Log.d("타이틀" , maintitle);
-                                Log.d("sub타이틀" , intext);
+                                Log.d("타이틀", maintitle);
+                                Log.d("sub타이틀", intext);
 
-                                NoticeEditorModifyActivity.InsertNotice buyTask = new NoticeEditorModifyActivity.InsertNotice(seq_user,seq_kindergarden,is_reply,maintitle, intext);
+                                NoticeEditorModifyActivity.InsertNotice buyTask = new NoticeEditorModifyActivity.InsertNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString(), file_path);
                                 buyTask.execute();
 
                             }
@@ -257,7 +242,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         okhttp3.Request request;
         RequestBody formBody1;
 
-        public InsertNotice(String seq_user, String seq_kindergarden, String is_reply, String title, String content) {
+        public InsertNotice(String seq_notice, String is_reply, String seq_kindergarden_class, String title, String content, String file_path) {
             client = new OkHttpClient();
 
             // 현재시간을 msec 으로 구한다.
@@ -269,23 +254,25 @@ public class NoticeEditorModifyActivity extends BaseActivity {
             // nowDate 변수에 값을 저장한다.
             String formatDate = sdfNow.format(date);
 
-            imageName = seq_user + "_" +seq_kindergarden + ".png";
+            imageName = seq_user + "_" + seq_kindergarden + ".png";
 
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
+            Log.d("값들", seq_notice+""+is_reply+""+seq_kindergarden_class+""+title+""+content + "" + file_path);
+
 
             formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("seq_user", seq_user)
-                    .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                    .addFormDataPart("seq_notice", seq_notice)
                     .addFormDataPart("is_reply", is_reply)
+                    .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
                     .addFormDataPart("title", title)
                     .addFormDataPart("content", content)
-                    .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, image))
+                    .addFormDataPart("files", file_path)
                     .build();
 
             request = new okhttp3.Request.Builder()
-                    .url("http://58.229.208.246/Ububa/insertNotice.do")
+                    .url("http://58.229.208.246/Ububa/updateNotice.do")
                     .post(formBody1)
                     .build();
         }
@@ -323,10 +310,10 @@ public class NoticeEditorModifyActivity extends BaseActivity {
 //                    System.out.println(json1);
                     Intent intent = new Intent(NoticeEditorModifyActivity.this, NoticeActivity.class);
                     NoticeEditorModifyActivity.this.startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "등록완료.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "등록완료.", Toast.LENGTH_LONG).show();
                     finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "잠시 후에 재시도 해주세요.",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "잠시 후에 재시도 해주세요.", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -338,7 +325,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/selectKindergardenClassList.do";
+        String url = "http://58.229.208.246/Ububa/selectKindergardenClassList.do";
 
         public SelectKindergardenClassList(String seq_kindergarden) {
             client = new OkHttpClient();
@@ -351,7 +338,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                     .build();
         }
 
-        public SelectKindergardenClassList(String seq_kindergarden,String page) {
+        public SelectKindergardenClassList(String seq_kindergarden, String page) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
                     .add("seq_kindergarden", seq_kindergarden)
@@ -384,22 +371,22 @@ public class NoticeEditorModifyActivity extends BaseActivity {
             try {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                classList=new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"),R6_SelectKindergardenClassList[].class);
+                classList = new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"), R6_SelectKindergardenClassList[].class);
 
                 View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
                 // 해당 뷰에 리스트뷰 호출
-                listview = (ListView)view.findViewById(R.id.notice_popup_listview);
+                listview = (ListView) view.findViewById(R.id.notice_popup_listview);
                 // 리스트뷰에 어댑터 설정
-                adapter=new BanListViewAdapter();
+                adapter = new BanListViewAdapter();
                 listview.setAdapter(adapter);
                 adapter.addItem("전체");
-                for(R6_SelectKindergardenClassList list:classList){
+                for (R6_SelectKindergardenClassList list : classList) {
                     adapter.addItem(list.kindergarden_class_name);
                 }
                 adapter.notifyDataSetChanged();
 
                 // 반 다이얼로그 생성
-                banListDialogBuilder= new AlertDialog.Builder(activity);
+                banListDialogBuilder = new AlertDialog.Builder(activity);
                 // 리스트뷰 설정된 레이아웃
                 banListDialogBuilder.setView(view);
 
@@ -407,19 +394,19 @@ public class NoticeEditorModifyActivity extends BaseActivity {
 //                banListDialogBuilder.setPositiveButton("확인", null);
 
                 // 반 다이얼로그 보기
-                banListDialogInterface=banListDialogBuilder.show();
+                banListDialogInterface = banListDialogBuilder.show();
 
                 //반 다이얼로그 이벤트 처리
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        BanListViewItem item= adapter.list.get(position);
+                        BanListViewItem item = adapter.list.get(position);
 
 
-                        seq_kindergarden_class=position==0?"0":classList[position-1].seq_kindergarden_class;
+                        seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
                         banListDialogInterface.dismiss();
                         title.setText(item.getName());
-                        Toast.makeText(getApplicationContext(), position==0?"전체":item.getName(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
                     }
                 });
             } catch (Exception e) {
@@ -427,7 +414,6 @@ public class NoticeEditorModifyActivity extends BaseActivity {
             }
         }
     }
-
 
 
     String mImageCaptureName;
@@ -516,15 +502,14 @@ public class NoticeEditorModifyActivity extends BaseActivity {
             bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-            bitmap1.compress( PNG, 80, stream) ;
-            image=stream.toByteArray();
-
-            while (image.length > 100000) {
-
-                bitmap1.compress( PNG, 80, stream) ;
-
+            if(bitmap1.getByteCount() > 100000) {
+//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+                bitmap1.compress( PNG, 1, stream) ;
                 image=stream.toByteArray();
-                Log.d("압축 : " ,image.length+"\n");
+            } else {
+                bitmap1.compress( PNG, 100, stream) ;
+                image=stream.toByteArray();
+
             }
             /*
             if(bitmap1.getByteCount() > 100000) {
@@ -535,9 +520,8 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                 image=stream.toByteArray();
             }
             */
-            Log.d("Tag","size"+image.length);
-            Log.d("Tag","size"+bitmap1.getByteCount());
-
+            Log.d("Tag", "size" + image.length);
+            Log.d("Tag", "size" + bitmap1.getByteCount());
 
 
 //            Uri uri = Uri.fromFile(file);
@@ -559,10 +543,10 @@ public class NoticeEditorModifyActivity extends BaseActivity {
 
     //사진의 절대경로 구하기
     private String getRealPathFromURI(Uri contentUri) {
-        int column_index=0;
+        int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
         return cursor.getString(column_index);
@@ -614,13 +598,12 @@ public class NoticeEditorModifyActivity extends BaseActivity {
     }
 
 
-
     //안드로이드 7.0 부터는 앱권한이 적용되지 않아 유저한테 직접 권한을 받는 메소드
-    public void checkPermissions(){
+    public void checkPermissions() {
 
         if (ContextCompat.checkSelfPermission(NoticeEditorModifyActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED||
+                != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(NoticeEditorModifyActivity.this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -645,7 +628,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                 // arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED ){
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
                     // permission was granted.
 
@@ -669,12 +652,11 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         o.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
 
-        int width_tmp = o.outWidth
-                , height_tmp = o.outHeight;
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
 
-        while(true) {
-            if(width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
+        while (true) {
+            if (width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
                 break;
             width_tmp /= 2;
             height_tmp /= 2;
@@ -685,7 +667,6 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         o2.inSampleSize = scale;
         return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
     }
-
 
 
 }
