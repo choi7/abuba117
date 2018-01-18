@@ -119,8 +119,8 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
 
     }
 
-    public void setNotice(String ban,String title,Drawable userImage, String name,String time,String content){
-        educationPlanAge.setText(ban);
+    public void setEducationPlan(String age,String title,String name,String time,String content){
+        educationPlanAge.setText(age);
         educationPlanTitle.setText(title);
         educationPlanName.setText(name);
         educationPlanTime.setText(time);
@@ -137,9 +137,9 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(A2_3_EducationPlanDetailActivity.this, NoticeActivity.class);
-        A2_3_EducationPlanDetailActivity.this.startActivity(intent);
-        finish();
+//        Intent intent = new Intent(A2_3_EducationPlanDetailActivity.this, A2_1_EducationPlan.class);
+//        A2_3_EducationPlanDetailActivity.this.startActivity(intent);
+//        finish();
     }
 
     /*
@@ -199,15 +199,15 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
 
-                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R27_SelectEducationalPlanOne.class);
+                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("educational_plan"),R27_SelectEducationalPlanOne.class);
                 Log.d("detail" , String.valueOf(detail));
                 notice_detail_seq_user = detail.seq_user;
-                intentPutExtraModifyData = jsonResponse.getString("notice");
+                intentPutExtraModifyData = jsonResponse.getString("educational_plan");
 
                 Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
                 detailImage.setVisibility(View.VISIBLE);
 
-                setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),/*detail.name*/"작성자 이름 요청", TimeConverter.convert(detail.reg_date),detail.content);
+                setEducationPlan(detail.seq_kindergarden_class,detail.title,/*detail.name*/"작성자 이름 요청", TimeConverter.convert(detail.reg_date),detail.content);
 //                for(R14_SelectNoticeOne list:noticeList)
 
 

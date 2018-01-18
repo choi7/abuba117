@@ -163,6 +163,15 @@ public class A2_1_EducationPlan extends BaseActivity {
         callFragment(plan_flag);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        Intent intent = new Intent(A2_1_EducationPlan.this, A1_DocumentSelect.class);
+//        A2_1_EducationPlan.this.startActivity(intent);
+//        finish();
+    }
+
     class InsertEducationPlan extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;

@@ -143,22 +143,22 @@ public class MainDawerSelectActivity extends BaseActivity
                     case "공지사항" :
                         Intent s1 = new Intent(MainDawerSelectActivity.this, NoticeActivity.class);
                         MainDawerSelectActivity.this.startActivity(s1);
-                        finish();
+//                        finish();
                         break;
                     case "버스 위치 확인" :
                         Intent s2 = new Intent(MainDawerSelectActivity.this, BusLocationActivity.class);
                         MainDawerSelectActivity.this.startActivity(s2);
-                        finish();
+//                        finish();
                         break;
                     case "일정관리" :
                         Intent s3 = new Intent(MainDawerSelectActivity.this, CalendarActivity.class);
                         MainDawerSelectActivity.this.startActivity(s3);
-                        finish();
+//                        finish();
                         break;
                     case "문서함" :
                         Intent s5 = new Intent(MainDawerSelectActivity.this, A1_DocumentSelect.class);
                         MainDawerSelectActivity.this.startActivity(s5);
-                        finish();
+//                        finish();
                         break;
                         /*
                     case "알림" :
