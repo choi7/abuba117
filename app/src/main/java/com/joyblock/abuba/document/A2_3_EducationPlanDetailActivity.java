@@ -83,18 +83,13 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
             }
         });
 
-
         educationPlanTitle=(TextView)findViewById(R.id.noticeDetailTitleText);
         educationPlanAge=(TextView)findViewById(R.id.noticeDetailBanText);
         educationPlanName=(TextView)findViewById(R.id.noticeDetailNameText);
         educationPlanTime=(TextView)findViewById(R.id.noticeDetailTimeText);
         educationPlanContent=(TextView)findViewById(R.id.inTextView);
 
-
-
 //        setNotice(position,position,null,position,position,position,false);
-
-
 
         new SelectEducationalPlanOne(seq_educational_plan).execute();
 
@@ -125,13 +120,8 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
         educationPlanName.setText(name);
         educationPlanTime.setText(time);
         educationPlanContent.setText(content);
-
-
         //userImage, content
-
     }
-
-
 
     //휴대폰 하단 백 버튼 눌렀을때 실행되는 메소드
     @Override

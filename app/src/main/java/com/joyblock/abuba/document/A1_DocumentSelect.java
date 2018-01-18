@@ -43,9 +43,7 @@ public class A1_DocumentSelect extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Toast.makeText(getApplicationContext(), Integer.toString(position),Toast.LENGTH_LONG).show();
-
                 switch (position) {
                     case 0 :
 //                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
