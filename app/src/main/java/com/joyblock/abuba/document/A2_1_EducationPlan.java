@@ -159,7 +159,7 @@ public class A2_1_EducationPlan extends BaseActivity {
     }
 
     public void showWeekList(View v){
-        plan_flag="m";
+        plan_flag="w";
         callFragment(plan_flag);
     }
 
