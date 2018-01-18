@@ -1,4 +1,4 @@
-package com.joyblock.abuba.notice;
+package com.joyblock.abuba;
 
 import android.Manifest;
 import android.app.Activity;
@@ -16,13 +16,14 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v13.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,18 +35,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
-import com.joyblock.abuba.BaseActivity;
-import com.joyblock.abuba.R;
+import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
+import com.joyblock.abuba.notice.BanListViewAdapter;
+import com.joyblock.abuba.notice.BanListViewItem;
+import com.joyblock.abuba.notice.NoticeActivity;
+import com.joyblock.abuba.notice.NoticeEditorActivity;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -56,11 +59,10 @@ import okhttp3.RequestBody;
 
 import static android.graphics.Bitmap.CompressFormat.PNG;
 
-public class NoticeEditorActivity extends BaseActivity {
-
+public class NoticeEditorModifyActivity extends BaseActivity {
 
     RadioGroup rg;
-    String checkid = "y", is_reply = "y", seq_user, seq_kindergarden, seq_kindergarden_class, maintitle, intext, files;
+    String checkid = "y", is_reply, seq_user, seq_kindergarden, seq_kindergarden_class, maintitle, intext, files, seq_notice;
     String noticeEditorPush = "http://58.229.208.246/Ububa/insertNotice.do";
     Boolean imageChange = true;
     EditText titleText, inText;
@@ -80,17 +82,33 @@ public class NoticeEditorActivity extends BaseActivity {
     DialogInterface banListDialogInterface;//,modeDelDialogInteface;
 
     R6_SelectKindergardenClassList[] classList;
+    R14_SelectNoticeOne detail;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_editor1);
 
+        Intent intent = getIntent();
+        String modifyData = intent.getStringExtra("ModifyData");
+        Log.d("modifyData ",modifyData);
+        detail=new GsonBuilder().create().fromJson(modifyData,R14_SelectNoticeOne.class);
+        seq_notice = detail.seq_notice;
+        seq_kindergarden_class = detail.seq_kindergarden_class;
+        String file_path = detail.file_path;
+        String content = detail.content;
+        is_reply = detail.is_reply;
+        String title = detail.title;
+
         activity=this;
 
         titleText = (EditText) findViewById(R.id.titleText);
+        titleText.setText(title);
         inText = (EditText) findViewById(R.id.inText);
+        inText.setText(content);
         editorImage = (ImageView) findViewById(R.id.questionnaireImage);
+        Picasso.with(NoticeEditorModifyActivity.this).load(file_path).into(editorImage);
+        editorImage.setVisibility(View.VISIBLE);
 
 
         ImageView pictureRegister = (ImageView) findViewById(R.id.pictureRegisterimageView);
@@ -157,7 +175,7 @@ public class NoticeEditorActivity extends BaseActivity {
 
 
 
-                new SelectKindergardenClassList(seq_kindergarden).execute();
+                new NoticeEditorModifyActivity.SelectKindergardenClassList(seq_kindergarden).execute();
 
 
 
@@ -177,13 +195,13 @@ public class NoticeEditorActivity extends BaseActivity {
         backText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeEditorActivity.this);
+                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeEditorModifyActivity.this);
                 nd.setMessage("작성을 취소하시겠습니까")
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
-                                NoticeEditorActivity.this.startActivity(intent);
+                                Intent intent = new Intent(NoticeEditorModifyActivity.this, NoticeActivity.class);
+                                NoticeEditorModifyActivity.this.startActivity(intent);
 
                                 finish();
                             }
@@ -203,7 +221,7 @@ public class NoticeEditorActivity extends BaseActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeEditorActivity.this);
+                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeEditorModifyActivity.this);
                 nd.setMessage("등록하시겠습니까")
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
@@ -214,7 +232,7 @@ public class NoticeEditorActivity extends BaseActivity {
                                 Log.d("타이틀" , maintitle);
                                 Log.d("sub타이틀" , intext);
 
-                                InsertNotice buyTask = new InsertNotice(seq_user,seq_kindergarden,is_reply,maintitle, intext);
+                                NoticeEditorModifyActivity.InsertNotice buyTask = new NoticeEditorModifyActivity.InsertNotice(seq_user,seq_kindergarden,is_reply,maintitle, intext);
                                 buyTask.execute();
 
                             }
@@ -238,10 +256,6 @@ public class NoticeEditorActivity extends BaseActivity {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody1;
-
-
-
-
 
         public InsertNotice(String seq_user, String seq_kindergarden, String is_reply, String title, String content) {
             client = new OkHttpClient();
@@ -307,8 +321,8 @@ public class NoticeEditorActivity extends BaseActivity {
                     System.out.println(userID + userPassword);
 //                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
 //                    System.out.println(json1);
-                    Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
-                    NoticeEditorActivity.this.startActivity(intent);
+                    Intent intent = new Intent(NoticeEditorModifyActivity.this, NoticeActivity.class);
+                    NoticeEditorModifyActivity.this.startActivity(intent);
                     Toast.makeText(getApplicationContext(), "등록완료.",Toast.LENGTH_LONG).show();
                     finish();
                 }else{
@@ -502,14 +516,25 @@ public class NoticeEditorActivity extends BaseActivity {
             bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
+            bitmap1.compress( PNG, 80, stream) ;
+            image=stream.toByteArray();
+
+            while (image.length > 100000) {
+
+                bitmap1.compress( PNG, 80, stream) ;
+
+                image=stream.toByteArray();
+                Log.d("압축 : " ,image.length+"\n");
+            }
+            /*
             if(bitmap1.getByteCount() > 100000) {
-                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+                bitmap1.compress( PNG, 10, stream) ;
                 image=stream.toByteArray();
             } else {
-                bitmap1.compress( PNG, 100, stream) ;
                 image=stream.toByteArray();
             }
-
+            */
             Log.d("Tag","size"+image.length);
             Log.d("Tag","size"+bitmap1.getByteCount());
 
@@ -593,14 +618,14 @@ public class NoticeEditorActivity extends BaseActivity {
     //안드로이드 7.0 부터는 앱권한이 적용되지 않아 유저한테 직접 권한을 받는 메소드
     public void checkPermissions(){
 
-        if (ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
+        if (ContextCompat.checkSelfPermission(NoticeEditorModifyActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED||
-                ContextCompat.checkSelfPermission(NoticeEditorActivity.this,
+                ContextCompat.checkSelfPermission(NoticeEditorModifyActivity.this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(NoticeEditorActivity.this,
+            ActivityCompat.requestPermissions(NoticeEditorModifyActivity.this,
                     new String[]{
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE

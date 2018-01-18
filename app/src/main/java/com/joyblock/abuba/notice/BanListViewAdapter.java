@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class BanListViewAdapter extends BaseAdapter implements Serializable {
 
-    ArrayList<BanListViewItem> list = new ArrayList<BanListViewItem>();
+    public ArrayList<BanListViewItem> list = new ArrayList<BanListViewItem>();
     BaseActivity activity;
     Typeface font;
     ListViewHolder holder;
