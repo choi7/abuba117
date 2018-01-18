@@ -503,11 +503,13 @@ public class NoticeEditorActivity extends BaseActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
             if(bitmap1.getByteCount() > 100000) {
-                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+                bitmap1.compress( PNG, 1, stream) ;
                 image=stream.toByteArray();
             } else {
                 bitmap1.compress( PNG, 100, stream) ;
                 image=stream.toByteArray();
+
             }
 
             Log.d("Tag","size"+image.length);

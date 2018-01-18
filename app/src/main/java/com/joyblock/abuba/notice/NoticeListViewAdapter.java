@@ -97,7 +97,7 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
 //        }
         // 아이템 내 각 위젯에 데이터 반영
         if(!listViewItem.getFile_path().equals(""))
-            Picasso.with(context).load(listViewItem.getFile_path()).into(photo);
+            Picasso.with(context).load(listViewItem.getFile_path()).resize(180,180).centerCrop().into(photo);
 
 
 //        photo.setImageDrawable(listViewItem.getPhoto());
