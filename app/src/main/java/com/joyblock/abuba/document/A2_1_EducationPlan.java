@@ -396,56 +396,6 @@ public class A2_1_EducationPlan extends BaseActivity {
         }
     }
 
-    class SelectEducationPlanOne extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/selectEducationalPlanOne.do";
 
-        public SelectEducationPlanOne(String seq_educational_plan){
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_educational_plan", seq_educational_plan)
-                    .build();
-            request = new okhttp3.Request.Builder()
-                    .url(url)
-                    .post(formBody)
-                    .build();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            Log.d("TAG", json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-
-//                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                R27_SelectEducationalPlanOne msg=gson.fromJson(jsonResponse.getString("educational_plan"), R27_SelectEducationalPlanOne.class);
-//                data=msg;
-
-
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 
 }

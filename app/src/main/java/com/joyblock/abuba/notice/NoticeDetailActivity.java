@@ -124,7 +124,7 @@ public class NoticeDetailActivity extends BaseActivity {
 
     }
 
-    public void setNotice(String ban,String title,Drawable userImage, String name,String time,String content,boolean availabeReply){
+    public void setNotice(String ban,String title, String name,String time,String content,boolean availabeReply){
         noticeBan.setText(ban);
         noticeTitle.setText(title);
         noticeName.setText(name);
@@ -224,7 +224,7 @@ public class NoticeDetailActivity extends BaseActivity {
                 Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
                 detailImage.setVisibility(View.VISIBLE);
 
-                setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
+                setNotice(detail.seq_kindergarden_class,detail.title,detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 //                for(R14_SelectNoticeOne list:noticeList)
 
 

@@ -21,6 +21,7 @@ import com.joyblock.abuba.CustomDialogModifyAndDel;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.TimeConverter;
 import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
+import com.joyblock.abuba.api_message.R27_SelectEducationalPlanOne;
 import com.joyblock.abuba.notice.NoticeActivity;
 import com.joyblock.abuba.notice.NoticeEditorActivity;
 import com.squareup.picasso.Picasso;
@@ -35,8 +36,8 @@ import okhttp3.RequestBody;
 
 public class A2_3_EducationPlanDetailActivity extends BaseActivity {
 
-    TextView noticeTitle,noticeBan,noticeName,noticeTime,noticeContent;//제목, 반, 작성자, 등록시간, 내용
-    String seq_notice, notice_detail_seq_user, intentPutExtraModifyData;
+    TextView educationPlanTitle,educationPlanAge,educationPlanName,educationPlanTime,educationPlanContent;//제목, 반, 작성자, 등록시간, 내용
+    String seq_educational_plan,plan_str, notice_detail_seq_user, intentPutExtraModifyData;
     ImageView insertAndDelete, detailImage, backImage;
     Activity activity;
     CustomDialogModifyAndDel mCustomDialog;
@@ -46,7 +47,9 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
         activity=this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_view1);
-        seq_notice=getIntent().getStringExtra("seq_notice");
+        seq_educational_plan=getIntent().getStringExtra("seq_educational_plan");
+        plan_str=getIntent().getStringExtra("plan_str");
+
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -59,8 +62,9 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
 
+
         TextView title = (TextView) findViewById(R.id.titleName);
-        title.setText("공지사항");
+        title.setText(plan_str+" 교육계획안");
         title.setVisibility(View.VISIBLE);
 
         EditText et = (EditText) findViewById(R.id.editTexttt);
@@ -80,19 +84,19 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
         });
 
 
-        noticeTitle=(TextView)findViewById(R.id.noticeDetailTitleText);
-        noticeBan=(TextView)findViewById(R.id.noticeDetailBanText);
-        noticeName=(TextView)findViewById(R.id.noticeDetailNameText);
-        noticeTime=(TextView)findViewById(R.id.noticeDetailTimeText);
-        noticeContent=(TextView)findViewById(R.id.inTextView);
+        educationPlanTitle=(TextView)findViewById(R.id.noticeDetailTitleText);
+        educationPlanAge=(TextView)findViewById(R.id.noticeDetailBanText);
+        educationPlanName=(TextView)findViewById(R.id.noticeDetailNameText);
+        educationPlanTime=(TextView)findViewById(R.id.noticeDetailTimeText);
+        educationPlanContent=(TextView)findViewById(R.id.inTextView);
 
-        String seq_notice=getIntent().getStringExtra("seq_notice");
+
 
 //        setNotice(position,position,null,position,position,position,false);
 
 
 
-        new SelectNoticeOne(seq_notice).execute();
+        new SelectEducationalPlanOne(seq_educational_plan).execute();
 
 //        setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 
@@ -115,12 +119,12 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
 
     }
 
-    public void setNotice(String ban,String title,Drawable userImage, String name,String time,String content,boolean availabeReply){
-        noticeBan.setText(ban);
-        noticeTitle.setText(title);
-        noticeName.setText(name);
-        noticeTime.setText(time);
-        noticeContent.setText(content);
+    public void setNotice(String ban,String title,Drawable userImage, String name,String time,String content){
+        educationPlanAge.setText(ban);
+        educationPlanTitle.setText(title);
+        educationPlanName.setText(name);
+        educationPlanTime.setText(time);
+        educationPlanContent.setText(content);
 
 
         //userImage, content
@@ -153,18 +157,18 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
     }
     */
 
-    R14_SelectNoticeOne detail;
-    class SelectNoticeOne extends AsyncTask<Void, Void, String> {
+    R27_SelectEducationalPlanOne detail;
+    class SelectEducationalPlanOne extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/selectNoticeOne.do";
+        String url="http://58.229.208.246/Ububa/selectEducationalPlanOne.do";
 
         //전체 공지 조회
-        public SelectNoticeOne(String seq_notice) {
+        public SelectEducationalPlanOne(String seq_educational_plan) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
-                    .add("seq_notice", seq_notice)
+                    .add("seq_educational_plan", seq_educational_plan)
                     .build();
 
             request = new okhttp3.Request.Builder()
@@ -195,7 +199,7 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
 
-                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);
+                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R27_SelectEducationalPlanOne.class);
                 Log.d("detail" , String.valueOf(detail));
                 notice_detail_seq_user = detail.seq_user;
                 intentPutExtraModifyData = jsonResponse.getString("notice");
@@ -203,7 +207,7 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
                 Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
                 detailImage.setVisibility(View.VISIBLE);
 
-                setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
+                setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),/*detail.name*/"작성자 이름 요청", TimeConverter.convert(detail.reg_date),detail.content);
 //                for(R14_SelectNoticeOne list:noticeList)
 
 
@@ -223,6 +227,9 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
 
         }
     }
+
+
+
 
 
     //수정버튼

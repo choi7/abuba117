@@ -103,7 +103,8 @@ public class F2_1_EducationPlan extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), A2_3_EducationPlanDetailActivity.class);
-                intent.putExtra("seq_notice",message[position].seq_educational_plan);
+                intent.putExtra("seq_educational_plan",message[position].seq_educational_plan);
+                intent.putExtra("plan_str",plan_flag.equals("m")?"월간":"주간");
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                 startActivity(intent);
