@@ -48,16 +48,16 @@ public class A1_DocumentSelect extends BaseActivity {
                 switch (position) {
                     case 0 :
 //                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-                        getApplicationContext().startActivity(new Intent(getApplicationContext(), A2_1_EducationPlan.class));
+                        A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A2_1_EducationPlan.class));
                         break;
                     case 1 :
-                        getApplicationContext().startActivity(new Intent(getApplicationContext(), A3_1_Medicine.class));
+                        A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A3_1_Medicine.class));
                         break;
                     case 2 :
-                        getApplicationContext().startActivity(new Intent(getApplicationContext(), A4_1_HomeComming.class));
+                        A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A4_1_HomeComming.class));
                         break;
                     case 3 :
-                        getApplicationContext().startActivity(new Intent(getApplicationContext(), A5_1_Attendance.class));
+                        A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A5_1_Attendance.class));
                         break;
                         /*
                     case "알림" :
