@@ -65,14 +65,12 @@ public class NoticeEditorActivity extends BaseActivity {
     Boolean imageChange = true;
     EditText titleText, inText;
 
-    ImageView editorImage;
-    private final int CAMERA_CODE = 1111;
-    private final int GALLERY_CODE = 1112;
+
+
     private Uri photoUri;
-    private String currentPhotoPath;//실제 사진 파일 경로
-    String mImageCaptureName;
-    byte[] image;
-    String imagePath, imageName;
+
+
+    String imageName;
 
     BanListViewAdapter adapter;
     ListView listview;
@@ -416,6 +414,15 @@ public class NoticeEditorActivity extends BaseActivity {
     }
 
 
+
+    String mImageCaptureName;
+    private String currentPhotoPath;//실제 사진 파일 경로
+    private final int CAMERA_CODE = 1111;
+    private final int GALLERY_CODE = 1112;
+    String imagePath;
+    byte[] image;
+    ImageView editorImage;
+
     /*
     파일생성
     카메라로 찍은 사진을 실제 파일로 생성하는 코드
@@ -493,9 +500,29 @@ public class NoticeEditorActivity extends BaseActivity {
         try {
             bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap1.compress( PNG, 30, stream) ;
+
+            bitmap1.compress( PNG, 80, stream) ;
             image=stream.toByteArray();
-            Log.d("Tag",""+stream.size());
+
+            while (image.length > 100000) {
+                
+                bitmap1.compress( PNG, 80, stream) ;
+
+                image=stream.toByteArray();
+                Log.d("압축 : " ,image.length+"\n");
+            }
+            /*
+            if(bitmap1.getByteCount() > 100000) {
+//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+                bitmap1.compress( PNG, 10, stream) ;
+                image=stream.toByteArray();
+            } else {
+                image=stream.toByteArray();
+            }
+            */
+            Log.d("Tag","size"+image.length);
+            Log.d("Tag","size"+bitmap1.getByteCount());
+
 
 
 //            Uri uri = Uri.fromFile(file);
