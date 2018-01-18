@@ -53,6 +53,7 @@
             android:name=".register.SchoolRegister_1Activity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".notice.NoticeViewComentActivity" />
+        <activity android:name=".NoticeEditorModifyActivity"/>
         <activity android:name=".calendar.CalendarActivity" />
         <activity android:name=".register.SchoolClassRegisterActivity" >
         </activity>
