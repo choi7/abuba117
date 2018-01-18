@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
 
     <application
         android:name=".MyApplication"
@@ -26,9 +28,10 @@
                 android:resource="@xml/file_path" />
         </provider>
 
-        <activity
-            android:name=".QuestionnaireActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+        <activity android:name=".QuestionnaireActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
+
+        </activity>
         <activity android:name=".notice.NoticeTabActivity" />
         <activity android:name=".register.MainActivity" />
         <activity
@@ -43,14 +46,16 @@
             android:name=".bus.BusLocationActivity"
             android:label="@string/title_activity_bus_location"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".register.SchoolRegister_2Activity"></activity>
+        <activity android:name=".register.SchoolRegister_2Activity">
+        </activity>
         <activity android:name=".notice.NoticeEditorActivity" />
         <activity
             android:name=".register.SchoolRegister_1Activity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".notice.NoticeViewComentActivity" />
         <activity android:name=".calendar.CalendarActivity" />
-        <activity android:name=".register.SchoolClassRegisterActivity"></activity>
+        <activity android:name=".register.SchoolClassRegisterActivity" >
+        </activity>
         <activity android:name=".register.ChildrenRegisterActivity" />
         <activity
             android:name=".calendar.ScheduleAndDailyMenuActivity"
@@ -60,7 +65,10 @@
             android:name=".login.LoginActivity"
             android:hardwareAccelerated="false"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity android:name=".notice.NoticeActivity" />
+
         <activity android:name=".register.ProvisionActivity" />
         <activity android:name=".calendar.CarteRegisterActivity" />
         <activity android:name=".NoticeAndQuestActivity" />
@@ -82,12 +90,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".document.A5_1_Attendance" />
-        <activity android:name=".document.A4_1_HomeComming" />
-        <activity android:name=".document.A2_1_EducationPlan" />
-        <activity android:name=".document.A2_2_EducationPlanEditor" />
-        <activity android:name=".document.A3_1_Medicine" />
-        <activity android:name=".NoticeEditorModifyActivity"></activity>
+
+        <activity android:name=".document.A5_1_Attendance"/>
+        <activity android:name=".document.A4_1_HomeComming"/>
+        <activity android:name=".document.A2_1_EducationPlan"/>
+        <activity android:name=".document.A2_2_EducationPlanEditor"/>
+        <activity android:name=".document.A3_1_Medicine"/>
+
     </application>
 
 </manifest>

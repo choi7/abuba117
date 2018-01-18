@@ -215,7 +215,7 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
                                 Log.d("타이틀" , maintitle);
                                 Log.d("sub타이틀" , intext);
 
-                                InsertEducationPlan buyTask = new InsertEducationPlan(seq_user,seq_kindergarden,"m",maintitle, intext,"6");
+                                InsertEducationPlan buyTask = new InsertEducationPlan(seq_user,seq_kindergarden,plan_flag,maintitle, intext,age);
                                 buyTask.execute();
 
                             }
