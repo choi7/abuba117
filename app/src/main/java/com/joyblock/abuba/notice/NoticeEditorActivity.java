@@ -505,6 +505,7 @@ public class NoticeEditorActivity extends BaseActivity {
                 bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
                 image=stream.toByteArray();
             } else {
+                bitmap1.compress( PNG, 100, stream) ;
                 image=stream.toByteArray();
             }
 
