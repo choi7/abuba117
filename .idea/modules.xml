@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://D:\OneDrive\TheCompany\android\abuba117\abuba 2.iml" filepath="D:\OneDrive\TheCompany\android\abuba117\abuba 2.iml" />
       <module fileurl="file://$PROJECT_DIR$/abuba117.iml" filepath="$PROJECT_DIR$/abuba117.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
