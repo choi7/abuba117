@@ -12,6 +12,7 @@
         android:layout_height="55dp"
         android:background="#FFFFFF"
         android:fontFamily="@font/nanumsquarebold"
+        android:onClick="setAge7"
         android:text="7세"
         android:textColor="#000000"
         android:textSize="15dp" />
@@ -27,6 +28,7 @@
         android:layout_height="55dp"
         android:background="#FFFFFF"
         android:fontFamily="@font/nanumsquarebold"
+        android:onClick="setAge6"
         android:text="6세"
         android:textColor="#000000"
         android:textSize="15dp" />
@@ -43,6 +45,7 @@
         android:layout_height="55dp"
         android:background="#FFFFFF"
         android:fontFamily="@font/nanumsquarebold"
+        android:onClick="setAge5"
         android:text="5세"
         android:textColor="#000000"
         android:textSize="15dp" />

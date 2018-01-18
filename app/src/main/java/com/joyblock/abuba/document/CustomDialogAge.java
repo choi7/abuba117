@@ -50,7 +50,9 @@ public class CustomDialogAge extends Dialog {
 
     }
 
-
+    public CustomDialogAge(Context context){
+        super(context);
+    }
 
 
     // 클릭버튼이 하나일때 생성자 함수로 클릭이벤트를 받는다.

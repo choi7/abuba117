@@ -58,6 +58,7 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
     String seq_user, seq_kindergarden, age,plan_flag,maintitle, intext;
     Boolean imageChange = true;
     EditText titleText, inText;
+    String plan;
 
     ImageView editorImage;
     private final int CAMERA_CODE = 1111;
@@ -79,7 +80,8 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_editor1);
-
+        plan_flag=getIntent().getStringExtra("plan_flag");
+        plan=plan_flag.equals("m")?"월간 ":"주간 ";
         activity=this;
 
         titleText = (EditText) findViewById(R.id.titleText);
@@ -112,6 +114,24 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
 
 
 
+    CustomDialogAge mCustomDialog;
+
+    public void setAge7(View v){
+        age=7+"";
+        title.setText(plan+"7세");
+        mCustomDialog.dismiss();
+
+    }
+    public void setAge6(View v){
+        age=6+"";
+        title.setText(plan+"6세");
+        mCustomDialog.dismiss();
+    }
+    public void setAge5(View v){
+        age=7+"";
+        title.setText(plan+"5세");
+        mCustomDialog.dismiss();
+    }
 
 
 
@@ -122,7 +142,7 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         title = (TextView) findViewById(R.id.titleName);
-        title.setText("전체");
+        title.setText(plan+"전체");
 
         seq_user = pref.getString("seq_user","없음");
         seq_kindergarden = pref.getString("seq_kindergarden","없음");
@@ -131,6 +151,10 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
         title.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+                mCustomDialog = new CustomDialogAge(A2_2_EducationPlanEditor.this);
+                mCustomDialog.show();
+
 
 
 

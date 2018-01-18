@@ -30,6 +30,7 @@ import okhttp3.RequestBody;
 public class A2_1_EducationPlan extends BaseActivity {
 
     String[] list = {"교육계획안", "투약의뢰서", "귀가동의서", "출석부"};
+    String plan_flag;
     ListViewAdapter adapter;
     ListView listView;
     SharedPreferences.Editor editor;
@@ -60,7 +61,8 @@ public class A2_1_EducationPlan extends BaseActivity {
 
 
         actionbarCustom();
-        callFragment("m");
+        plan_flag="m";
+        callFragment(plan_flag);
 
 
 
@@ -127,6 +129,7 @@ public class A2_1_EducationPlan extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(A2_1_EducationPlan.this, A2_2_EducationPlanEditor.class);
+                intent.putExtra("plan_flag",plan_flag);
                 A2_1_EducationPlan.this.startActivity(intent);
                 finish();
             }
@@ -151,11 +154,13 @@ public class A2_1_EducationPlan extends BaseActivity {
 
 
     public void showMonthList(View v){
-        callFragment("m");
+        plan_flag="m";
+        callFragment(plan_flag);
     }
 
     public void showWeekList(View v){
-        callFragment("w");
+        plan_flag="m";
+        callFragment(plan_flag);
     }
 
     class InsertEducationPlan extends AsyncTask<Void, Void, String> {
