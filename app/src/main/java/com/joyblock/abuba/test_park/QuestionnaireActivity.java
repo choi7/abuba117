@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -99,6 +100,21 @@ public class QuestionnaireActivity extends BaseActivity {
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
 
         setListViewHeightBasedOnChildren(mListView11);
+
+//        mListView11.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                BanListViewItem item= adapter.list.get(position);
+//
+//
+//                seq_kindergarden_class=position==0?"0":classList[position-1].seq_kindergarden_class;
+//                banListDialogInterface.dismiss();
+//                title.setText(item.getName());
+//                Toast.makeText(getApplicationContext(), position==0?"전체":item.getName(),Toast.LENGTH_LONG).show();
+//            }
+//        });
+
+
         ImageView imageView = (ImageView) findViewById(R.id.questionListViewInsertImageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
