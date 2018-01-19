@@ -1,7 +1,9 @@
 package com.joyblock.abuba.document;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.View;
@@ -26,10 +28,15 @@ public class A1_DocumentSelect extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.park_activity_document_select);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cccc));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
-
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
         TextView title=((TextView)findViewById(R.id.titleName));
         title.setText("문서함");
         title.setVisibility(View.VISIBLE);
@@ -39,7 +46,7 @@ public class A1_DocumentSelect extends BaseActivity {
         adapter = new ListViewAdapter(NanumSquareBold);
         listView.setAdapter(adapter);
         for(String str:list)
-            adapter.addItem(getResources().getDrawable(R.mipmap.ic_document), str,getResources().getDrawable(R.mipmap.ic_notice));
+            adapter.addItem(getResources().getDrawable(R.drawable.document_image), str,getResources().getDrawable(R.drawable.document_next_image));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

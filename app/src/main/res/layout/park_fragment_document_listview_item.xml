@@ -6,34 +6,35 @@
 
     <ImageView
         android:id="@+id/imageView_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28.5dp"
+        android:layout_height="28.5dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="38dp"
         android:layout_marginStart="38dp"
-        android:background="@mipmap/ic_document" />
+        android:background="@drawable/document_image" />
 
     <TextView
         android:id="@+id/textView_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
         android:layout_toEndOf="@+id/imageView_item"
         android:layout_toRightOf="@+id/imageView_item"
         android:gravity="center_vertical|center"
-        android:textColor="#000000"
+        android:fontFamily="@font/nanumsquarebold"
+        android:textColor="#3E3A39"
         android:textSize="15dp" />
 
     <ImageView
         android:id="@+id/imageView_item1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/imageView_item"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="19dp"
         android:layout_marginRight="19dp"
-        app:srcCompat="@mipmap/ic_notice" />
+        app:srcCompat="@drawable/document_next_image" />
 
 </RelativeLayout>

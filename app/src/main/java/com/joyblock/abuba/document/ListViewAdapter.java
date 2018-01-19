@@ -80,7 +80,7 @@ public class ListViewAdapter extends BaseAdapter implements Serializable {
 
         titleTextView.setTypeface(font);
         if(!listViewItem.a){
-            titleTextView.setTextColor(Color.RED);
+//            titleTextView.setTextColor(Color.RED);
         }else{
             titleTextView.setTextColor(Color.BLUE);
         }
@@ -88,6 +88,11 @@ public class ListViewAdapter extends BaseAdapter implements Serializable {
         iconImageView.setImageDrawable(listViewItem.getIcon());
         titleTextView.setText(listViewItem.getTitle());
         iconImageView1.setImageDrawable(listViewItem.getIcon1());
+
+        //리스트뷰 안에 홀수마다 백그라운드 컬러 지정
+        if (!(position % 2 == 0)) {
+            convertView.setBackgroundColor(Color.parseColor("#F7F7F7"));
+        }
 
         return convertView;
     }
