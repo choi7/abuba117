@@ -104,13 +104,14 @@ public class QuestionnaireActivity extends BaseActivity {
 //        mListView11.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                BanListViewItem item= adapter.list.get(position);
+//                QuestionnaireListViewAdapter.Data item= mAdapter11.data_list.get(position);
 //
 //
-//                seq_kindergarden_class=position==0?"0":classList[position-1].seq_kindergarden_class;
-//                banListDialogInterface.dismiss();
-//                title.setText(item.getName());
-//                Toast.makeText(getApplicationContext(), position==0?"전체":item.getName(),Toast.LENGTH_LONG).show();
+//
+////                seq_kindergarden_class=position==0?"0":classList[position-1].seq_kindergarden_class;
+////                banListDialogInterface.dismiss();
+////                title.setText(item.getName());
+////                Toast.makeText(getApplicationContext(), position==0?"전체":item.getName(),Toast.LENGTH_LONG).show();
 //            }
 //        });
 
@@ -203,6 +204,9 @@ public class QuestionnaireActivity extends BaseActivity {
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
+
+
                                 Intent intent = new Intent(QuestionnaireActivity.this, NoticeActivity.class);
                                 intent.putExtra("fragment_num",2);
                                 QuestionnaireActivity.this.startActivity(intent);
@@ -241,10 +245,8 @@ public class QuestionnaireActivity extends BaseActivity {
             if(requestCode==100)
                 image_file_processor.sendPicture(data.getData(),questionnaireImage,QuestionnaireActivity.this); //갤러리에서 가져오기
             else {
-                Drawable icon=image_file_processor.getDrawbleFromPciture(data.getData(), QuestionnaireActivity.this); //갤러리에서 가져오기
-
-
-                mAdapter11.setIcon(requestCode,icon);
+                Object[] drawable_byteArray=image_file_processor.getDrawableAndByteArray(data.getData(), QuestionnaireActivity.this); //갤러리에서 가져오기
+                mAdapter11.setIcon(requestCode,(Drawable) drawable_byteArray[0],(byte[])drawable_byteArray[1]);
                 mListView11.setAdapter(mAdapter11);
 
 
