@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <TextView
+        android:id="@+id/checkPeopleClassText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="23.5dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/nanumsquareextrabold"
+        android:text="노랑반"
+        android:textColor="#888888"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="23.5dp" />
+
+    <TextView
+        android:id="@+id/checkPeopleKidsNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5.5dp"
+        android:fontFamily="@font/nanumsquarebold"
+        android:text="김철수"
+        android:textColor="#000000"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkPeopleClassText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.533"
+        android:layout_marginLeft="5.5dp" />
+
+    <TextView
+        android:id="@+id/checkPeopleParentNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5.5dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:text="(부모 : 홍길동)"
+        android:textColor="#000000"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkPeopleKidsNameText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.533" />
+
+    <ImageView
+        android:id="@+id/checkPeopleImageView"
+        android:layout_width="17.25dp"
+        android:layout_height="17.25dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="18.5dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ch_on" />
+</android.support.constraint.ConstraintLayout>

@@ -9,12 +9,14 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,13 +32,12 @@ import java.util.ArrayList;
 
 public class CommentActivity extends BaseActivity implements Serializable {
 
-    TextView commentPushText;
+    TextView commentPushText, titleCount;
     ListView allCommentListView;
     EditText commentEditText;
     Context context;
     CommentListVieaAdapter commentListVieaAdapter;
-    ConstraintLayout constraintLayout;
-
+    InputMethodManager imm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class CommentActivity extends BaseActivity implements Serializable {
         commentPushText = (TextView) findViewById(R.id.commentPushText);
         allCommentListView = (ListView) findViewById(R.id.allCommentListView);
         commentEditText = (EditText) findViewById(R.id.commentEditText);
-
+        imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -70,6 +71,9 @@ public class CommentActivity extends BaseActivity implements Serializable {
         commentListVieaAdapter.addItem("테스트요\n\n","시간이다","어부바원장님");
         commentListVieaAdapter.addItem("테스트요\n\n\n\n","시간이다","어부바원장님");
 
+        titleCount = (TextView) findViewById(R.id.titleCountText);
+        titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
+
         commentPushText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,23 +83,19 @@ public class CommentActivity extends BaseActivity implements Serializable {
                 commentEditText.clearFocus();
                 commentEditText.setText(null);
                 commentEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
+                titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
             }
         });
 
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
+        allCommentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
             }
         });
 
     }
-
-
-
-
-
 
 }
 

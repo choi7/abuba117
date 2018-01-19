@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.CommentActivity"
     android:background="#FFFFFF"
+    tools:context="com.joyblock.abuba.CommentActivity"
 
     >
 
@@ -13,6 +13,7 @@
         android:id="@+id/allCommentListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:listSelector="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/textView78"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,10 +49,10 @@
             android:ems="10"
             android:fontFamily="@font/nanumsquarebold"
             android:hint="댓글을 입력해주세요."
-            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
+            android:inputType="none"
             android:paddingLeft="25dp"
             android:textSize="13.75dp"
-            android:imeOptions="actionDone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
