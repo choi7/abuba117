@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.CheckPeopleListActivity;
+import com.joyblock.abuba.CommentActivity;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
 import com.joyblock.abuba.NoticeEditorModifyActivity;
 import com.joyblock.abuba.R;
@@ -35,9 +37,9 @@ import okhttp3.RequestBody;
 
 public class NoticeDetailActivity extends BaseActivity {
 
-    TextView noticeTitle,noticeBan,noticeName,noticeTime,noticeContent;//제목, 반, 작성자, 등록시간, 내용
+    TextView noticeTitle,noticeBan,noticeName,noticeTime,noticeContent, commentregister;//제목, 반, 작성자, 등록시간, 내용, 덧글등록
     String seq_notice, notice_detail_seq_user, intentPutExtraModifyData, seq_user;
-    ImageView insertAndDelete, detailImage, backImage;
+    ImageView insertAndDelete, detailImage, backImage, commentPushImage, checkPeopleListImage;
     Activity activity;
     CustomDialogModifyAndDel mCustomDialog;
 
@@ -62,6 +64,8 @@ public class NoticeDetailActivity extends BaseActivity {
         TextView title = (TextView) findViewById(R.id.titleName);
         title.setText("공지사항");
         title.setVisibility(View.VISIBLE);
+        //에디트 텍스트를 누르면 등록텍스트가 활성화할려고 등록함 현재 gone
+        commentregister = (TextView) findViewById(R.id.commentPushText1);
 
         EditText et = (EditText) findViewById(R.id.editTexttt);
         et.setVisibility(View.VISIBLE);
@@ -76,6 +80,25 @@ public class NoticeDetailActivity extends BaseActivity {
                 Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
                 NoticeDetailActivity.this.startActivity(intent);
                 finish();
+            }
+        });
+
+        commentPushImage = (ImageView) findViewById(R.id.commentPushImage);
+        commentPushImage.setVisibility(View.VISIBLE);
+        commentPushImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoticeDetailActivity.this, CommentActivity.class);
+                NoticeDetailActivity.this.startActivity(intent);
+            }
+        });
+
+        checkPeopleListImage = (ImageView) findViewById(R.id.checkPushImageView);
+        checkPeopleListImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoticeDetailActivity.this, CheckPeopleListActivity.class);
+                NoticeDetailActivity.this.startActivity(intent);
             }
         });
 

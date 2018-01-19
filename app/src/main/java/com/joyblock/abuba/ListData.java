@@ -11,6 +11,8 @@ import java.util.Comparator;
 
 public class ListData {
 
+    String ss;
+
     //아이콘
     public Drawable mIcon;
     //제목
