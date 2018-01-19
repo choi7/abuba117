@@ -104,6 +104,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
             case 2:
                 // '설문지 fragment' 호출
                 FragmentSurvey fragment2 = new FragmentSurvey();
+                fragment2.setPref(pref);
                 transaction.replace(R.id.fragment_container, fragment2);
                 transaction.commit();
                 break;
