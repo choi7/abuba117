@@ -152,13 +152,15 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/selectEducationalPlanOne.do";
+        String api_string="selectEducationalPlanOne";
+        String message_key="educational_plan";
+        String url="http://58.229.208.246/Ububa/"+api_string+".do";
 
         //전체 공지 조회
         public SelectEducationalPlanOne(String seq_educational_plan) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
-                    .add("seq_educational_plan", seq_educational_plan)
+                    .add(api_string, seq_educational_plan)
                     .build();
 
             request = new okhttp3.Request.Builder()
@@ -189,10 +191,10 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
 
-                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("educational_plan"),R27_SelectEducationalPlanOne.class);
+                detail=new GsonBuilder().create().fromJson(jsonResponse.getString(message_key),R27_SelectEducationalPlanOne.class);
                 Log.d("detail" , String.valueOf(detail));
                 notice_detail_seq_user = detail.seq_user;
-                intentPutExtraModifyData = jsonResponse.getString("educational_plan");
+                intentPutExtraModifyData = jsonResponse.getString(message_key);
 
                 Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
                 detailImage.setVisibility(View.VISIBLE);

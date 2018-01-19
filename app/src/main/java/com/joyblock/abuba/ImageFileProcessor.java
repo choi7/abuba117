@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.media.Image;
 import android.net.Uri;
@@ -151,6 +153,30 @@ public class ImageFileProcessor{
         target.setVisibility(View.VISIBLE);
     }
 
+
+    //사진의 절대경로 구하기
+    private String getRealPathFromURI(Activity activity,Uri contentUri) {
+        int column_index = 0;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = activity.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        }
+        return cursor.getString(column_index);
+    }
+
+
+
+    //시계방향으로 회전
+    private Bitmap rotate(Bitmap src, int degree) {
+        // Matrix 객체 생성
+        Matrix matrix = new Matrix();
+        // 회전 각도 셋팅
+        matrix.postRotate(degree);
+        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
+        return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
+                src.getHeight(), matrix, true);
+    }
     //사진의 회전값 가져오기
     private int exifOrientationToDegrees(int exifOrientation) {
         if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
@@ -163,15 +189,25 @@ public class ImageFileProcessor{
         return 0;
     }
 
-    //사진의 절대경로 구하기
-    private String getRealPathFromURI(Activity activity,Uri contentUri) {
-        int column_index = 0;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = activity.getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+    private void getPictureForPhoto(ImageView target) {
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(currentPhotoPath);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return cursor.getString(column_index);
+        int exifOrientation;
+        int exifDegree;
+        if (exif != null) {
+            exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//            exifDegree = exifOrientationToDegrees(exifOrientation);
+        } else {
+            exifDegree = 0;
+        }
+//        ivImage.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
+        target.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
+        target.setVisibility(View.VISIBLE);
     }
 
 
