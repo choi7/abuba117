@@ -96,6 +96,7 @@
 
 
         </activity>
+        <activity android:name=".CheckPeopleListActivity"></activity>
     </application>
 
 </manifest>
