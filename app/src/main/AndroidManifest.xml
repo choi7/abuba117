@@ -27,7 +27,7 @@
         </provider>
 
         <activity
-            android:name=".QuestionnaireActivity"
+            android:name=".test_park.QuestionnaireActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"></activity>
         <activity android:name=".notice.NoticeTabActivity" />
         <activity android:name=".register.MainActivity" />

@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.media.Image;
 import android.net.Uri;
@@ -83,11 +85,11 @@ public class ImageFileProcessor{
     }
 
     //갤러리에서 사진을 가져오는 경우
-    public void selectGallery(Activity activity,int result) {
+    public void selectGallery(Activity activity,int requst_code) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        activity.startActivityForResult(intent, result);
+        activity.startActivityForResult(intent, requst_code);
     }
 
 //    public int getOrder(){
@@ -121,7 +123,7 @@ public class ImageFileProcessor{
 
 
     //선택한 사진 데이터 갤러리 처리
-    public void sendPicture(Uri data, ImageView target,Activity activity) {
+    public void sendPicture(Uri data, ImageView target_ImageView,Activity activity) {
         String imagePath = getRealPathFromURI(activity,data); // path 경로
         ExifInterface exif = null;
         try {
@@ -149,8 +151,40 @@ public class ImageFileProcessor{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        target.setImageBitmap(bitmap1);//이미지 뷰에 비트맵 넣기
-        target.setVisibility(View.VISIBLE);
+        target_ImageView.setImageBitmap(bitmap1);//이미지 뷰에 비트맵 넣기
+        target_ImageView.setVisibility(View.VISIBLE);
+    }
+
+    //sendPiture랑 동일한 기능 타겟이미지 설정 대신 Drawble을 반환한다.
+    public Drawable getDrawbleFromPciture(Uri data, Activity activity) {
+        String imagePath = getRealPathFromURI(activity,data); // path 경로
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(imagePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+        int exifDegree = exifOrientationToDegrees(exifOrientation);
+
+        Bitmap bitmap1 = null;
+        try {
+            bitmap1 = NoticeEditorActivity.decodeUri(activity, data, 400);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if (bitmap1.getByteCount() > 100000) {
+//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+                bitmap1.compress(PNG, 1, stream);
+                byteArray = stream.toByteArray();
+            } else {
+                bitmap1.compress(PNG, 100, stream);
+                byteArray = stream.toByteArray();
+            }
+            Log.d("Tag", "size" + byteArray.length);
+            Log.d("Tag", "size" + bitmap1.getByteCount());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return new BitmapDrawable(bitmap1);
     }
 
 
@@ -210,7 +244,7 @@ public class ImageFileProcessor{
         target.setVisibility(View.VISIBLE);
     }
 
-    
+
 
 
 

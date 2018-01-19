@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.test_park;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.joyblock.abuba.R;
 
 
 public class CalendarCustomDialogActivity extends DatePickerDialog {

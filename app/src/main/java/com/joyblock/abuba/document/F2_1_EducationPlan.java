@@ -15,7 +15,7 @@ import android.widget.ListView;
 
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
-import com.joyblock.abuba.TimeConverter;
+import com.joyblock.abuba.util.TimeConverter;
 import com.joyblock.abuba.api_message.R26_SelectEducationalPlanList;
 
 import org.json.JSONObject;

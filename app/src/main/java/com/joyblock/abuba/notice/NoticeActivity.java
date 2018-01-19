@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.MainDawerSelectActivity;
-import com.joyblock.abuba.QuestionnaireActivity;
+import com.joyblock.abuba.test_park.QuestionnaireActivity;
 import com.joyblock.abuba.R;
 
 /**
@@ -44,16 +44,23 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         bt_tab1.setOnClickListener(this);
         bt_tab2.setOnClickListener(this);
 
-        callFragment(FRAGMENT1);
 
 
         //액션바 및 상태바 커스텀
         actionbarCustom();
 
 
-        seq_user = pref.getString("seq_user", "sss");
 
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        callFragment(getIntent().getIntExtra("fragment_num",1));
+        seq_user = pref.getString("seq_user", "sss");
         Log.d("seq : " , seq_user);
+
 
     }
 

@@ -1,9 +1,7 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.test_park;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -14,7 +12,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -23,15 +20,18 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.util.ImageFileProcessor;
+import com.joyblock.abuba.R;
+import com.joyblock.abuba.util.TimeConverter;
 import com.joyblock.abuba.api_message.R18_InsertSurvey;
 import com.joyblock.abuba.notice.NoticeActivity;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import okhttp3.FormBody;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 
@@ -39,10 +39,9 @@ public class QuestionnaireActivity extends BaseActivity {
 
     EditText titleText, inText;
     Boolean imageChange = true, touchImage = true; // imageChange1 = true;
-    String is_reply = "y", mImageCaptureName;
-//    private String currentPhotoPath;//실제 사진 파일 경로
+    //    private String currentPhotoPath;//실제 사진 파일 경로
     private ListView mListView11 = null;
-    private QuestionnaireActivity.ListViewAdapter mAdapter11 = null;
+    private QuestionnaireListViewAdapter mAdapter11 = null;
     ImageView questTimeSettingImageView, timeImage, questionnaireImage;
     TextView deadLineText;
     CalendarCustomDialogActivity mCustomDialog;
@@ -66,31 +65,18 @@ public class QuestionnaireActivity extends BaseActivity {
         questionnaireImage = (ImageView) findViewById(R.id.editorimageView);
 
         pictureRegister.setVisibility(View.VISIBLE);
+
         pictureRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                image_file_processor.selectGallery(QuestionnaireActivity.this,1);
+                image_file_processor.selectGallery(QuestionnaireActivity.this,100);
             }
         });
         deadLineText = (TextView) findViewById(R.id.deadLineTimeText);
         TextView txt = (TextView) findViewById(R.id.comenttextView);
         txt.setVisibility(View.VISIBLE);
         final ImageView replyCheck = (ImageView) findViewById(R.id.replyCheckImage);
-        replyCheck.setVisibility(View.VISIBLE);
-        replyCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (imageChange) {
-                    replyCheck.setImageDrawable(getResources().getDrawable(R.drawable.del));
-                    is_reply = "n";
-                    imageChange = false;
-                } else {
-                    replyCheck.setImageDrawable(getResources().getDrawable(R.drawable.ch_off));
-                    is_reply = "y";
-                    imageChange = true;
-                }
-            }
-        });
+//        replyCheck.setVisibility(View.VISIBLE);
         questTimeSettingImageView = (ImageView) findViewById(R.id.questionTimeSettingImageView);
 
         timeImage = (ImageView) findViewById(R.id.timeImageView);
@@ -106,13 +92,13 @@ public class QuestionnaireActivity extends BaseActivity {
         actionbarCustom();
 
         mListView11 = (ListView) findViewById(R.id.questListview);
-        mAdapter11 = new QuestionnaireActivity.ListViewAdapter(this);
+        mAdapter11 = new QuestionnaireListViewAdapter(this);
         mListView11.setAdapter(mAdapter11);
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
         mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
-        setListViewHeightBasedOnChildren(mListView11);
 
+        setListViewHeightBasedOnChildren(mListView11);
         ImageView imageView = (ImageView) findViewById(R.id.questionListViewInsertImageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +188,7 @@ public class QuestionnaireActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(QuestionnaireActivity.this, NoticeActivity.class);
+                                intent.putExtra("fragment_num",2);
                                 QuestionnaireActivity.this.startActivity(intent);
                                 finish();
                             }
@@ -222,125 +209,6 @@ public class QuestionnaireActivity extends BaseActivity {
     }
 
 
-    public class ViewHolder {
-        public ImageView mIcon;
-        public EditText mText;
-    }
-
-    private class ListViewAdapter extends BaseActivity implements ListAdapter {
-
-        private Context mContext = null;
-        private ArrayList<ListData> mListData = new ArrayList<ListData>();
-
-        public ListViewAdapter(Context mContext) {
-            super();
-            this.mContext = mContext;
-        }
-
-        public void addItem(Drawable icon, String mTitle) {
-            ListData addInfo = null;
-            addInfo = new ListData();
-            addInfo.mIcon = icon;
-            addInfo.mTitle = mTitle;
-
-            mListData.add(addInfo);
-        }
-
-
-        @Override
-        public void registerDataSetObserver(DataSetObserver observer) {
-
-        }
-
-        @Override
-        public void unregisterDataSetObserver(DataSetObserver observer) {
-
-        }
-
-        @Override
-        public int getCount() {
-            return mListData.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mListData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            QuestionnaireActivity.ViewHolder holder;
-            if (convertView == null) {
-                holder = new QuestionnaireActivity.ViewHolder();
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.votelistviewcell, null);
-                holder.mIcon = (ImageView) convertView.findViewById(R.id.imageView19);
-                holder.mText = (EditText) convertView.findViewById(R.id.editText4);
-//                holder.mDate = (TextView) convertView.findViewById(R.id.textView1);
-                convertView.setTag(holder);
-            } else {
-                holder = (QuestionnaireActivity.ViewHolder) convertView.getTag();
-            }
-            ListData mData = mListData.get(position);
-            if (mData.mIcon != null) {
-                holder.mIcon.setVisibility(View.VISIBLE);
-                holder.mIcon.setImageDrawable(mData.mIcon);
-            } else {
-                holder.mIcon.setVisibility(View.GONE);
-            }
-            holder.mText.setText(mData.mTitle);
-
-
-            holder.mIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    image_file_processor.selectGallery(QuestionnaireActivity.this,2);
-
-                }
-
-            });
-
-            return convertView;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return position;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return 1;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return false;
-        }
-
-        @Override
-        public boolean isEnabled(int position) {
-            return false;
-        }
-
-    }
-
     /*
     선택한 사진 데이터 처리
     카메라로 사진을 찍거나 갤러리에서 사진 선택에 대한 사용자가 응답을 할경우
@@ -351,16 +219,20 @@ public class QuestionnaireActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case 1:
-                    image_file_processor.sendPicture(data.getData(),questionnaireImage,QuestionnaireActivity.this); //갤러리에서 가져오기
-                    break;
-                case CAMERA_CODE:
-//                    getPictureForPhoto(); //카메라에서 가져오기
-                    break;
-                default:
-                    break;
+            Log.d("requestCode :",requestCode+"");
+            if(requestCode==100)
+                image_file_processor.sendPicture(data.getData(),questionnaireImage,QuestionnaireActivity.this); //갤러리에서 가져오기
+            else {
+                Drawable icon=image_file_processor.getDrawbleFromPciture(data.getData(), QuestionnaireActivity.this); //갤러리에서 가져오기
+
+
+                mAdapter11.setIcon(requestCode,icon);
+                mListView11.setAdapter(mAdapter11);
+
+
+
             }
         }
     }
@@ -398,26 +270,38 @@ public class QuestionnaireActivity extends BaseActivity {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url = "http://58.229.208.246/Ububa/insertSurvey.do";
+        String api_string="insertSurvey";
+        String message_key="";
+        String url = "http://58.229.208.246/Ububa/"+api_string+".do";
+        MultipartBody.Builder builder;
 
         //설문지 작성
         public InsertSurvey(String seq_user, String seq_kindergarden, String seq_kindergarden_class,
                             String title, String content, String year, String month, String day,
-                            String c_survey_vote, String files, String vote_item) {
+                            byte[][] files, String[] vote_item) {
             client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_user", seq_user)
-                    .add("seq_kindergarden", seq_kindergarden)
-                    .add("seq_kindergarden_class", seq_kindergarden_class)
-                    .add("title", title)
-                    .add("content", content)
-                    .add("year", year)
-                    .add("month", month)
-                    .add("day", day)
-                    .add("c_survey_vote", c_survey_vote)
-                    .add("files", files)
-                    .add("vote_item", vote_item)
+            builder=new MultipartBody.Builder().setType(MultipartBody.FORM);
+//            formBody = new MultipartBody.Builder().setType(MultipartBody.FORM)//new FormBody.Builder()
+            builder.addFormDataPart("seq_user", seq_user)
+                    .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                    .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
+                    .addFormDataPart("title", title)
+                    .addFormDataPart("content", content)
+                    .addFormDataPart("year", year)
+                    .addFormDataPart("month", month)
+                    .addFormDataPart("day", day)
+                    .addFormDataPart("c_survey_vote", vote_item.length+"")
+
                     .build();
+
+            for(int i=0;i<vote_item.length;i++)
+                builder.addFormDataPart("files["+i+"]", TimeConverter.getFileTime()+".png",RequestBody.create(MultipartBody.FORM,files[i]));
+
+            for(int i=0;i<vote_item.length;i++)
+                builder.addFormDataPart("vote_item["+i+"]", vote_item[i]);
+
+            formBody=builder.build();
+
 
             request = new okhttp3.Request.Builder()
                     .url(url)
