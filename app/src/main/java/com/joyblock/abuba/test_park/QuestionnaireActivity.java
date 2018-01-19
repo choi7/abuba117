@@ -31,6 +31,7 @@ import com.joyblock.abuba.notice.NoticeActivity;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -46,6 +47,8 @@ public class QuestionnaireActivity extends BaseActivity {
     ImageView questTimeSettingImageView, timeImage, questionnaireImage;
     TextView deadLineText;
     CalendarCustomDialogActivity mCustomDialog;
+
+    String seq_user,seq_kindergarden,seq_kindergarden_class;
     Integer year, month, day;
     private final int CAMERA_CODE = 1111, GALLERY_CODE = 1112;
 //    private Uri photoUri;
@@ -127,9 +130,9 @@ public class QuestionnaireActivity extends BaseActivity {
             }
         });
 
-        String seq_user = pref.getString("seq_user", "없음");
-        String seq_kindergarden = pref.getString("seq_kindergarden", "없음");
-        String seq_kindergarden_class = pref.getString("seq_kindergarden_class", "없음");
+        seq_user = pref.getString("seq_user", "없음");
+        seq_kindergarden = pref.getString("seq_kindergarden", "없음");
+        seq_kindergarden_class = pref.getString("seq_kindergarden_class", "없음");
 
         Log.d("seq_", seq_user + " " + seq_kindergarden + " " + seq_kindergarden_class);
 
@@ -204,8 +207,11 @@ public class QuestionnaireActivity extends BaseActivity {
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                String survey_title=titleText.getText().toString()
+                                        ,survey_content=inText.getText().toString();
 
-
+                                new InsertSurvey(seq_user,seq_kindergarden,seq_kindergarden_class,
+                                        survey_title,survey_content,year+"",month+"",day+"",mAdapter11.data_list).execute();
 
                                 Intent intent = new Intent(QuestionnaireActivity.this, NoticeActivity.class);
                                 intent.putExtra("fragment_num",2);
@@ -227,6 +233,7 @@ public class QuestionnaireActivity extends BaseActivity {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
     }
+
 
 
     /*
@@ -296,10 +303,11 @@ public class QuestionnaireActivity extends BaseActivity {
         //설문지 작성
         public InsertSurvey(String seq_user, String seq_kindergarden, String seq_kindergarden_class,
                             String title, String content, String year, String month, String day,
-                            byte[][] files, String[] vote_item) {
+                            ArrayList<QuestionnaireListViewAdapter.Data> list) {
             client = new OkHttpClient();
             builder=new MultipartBody.Builder().setType(MultipartBody.FORM);
 //            formBody = new MultipartBody.Builder().setType(MultipartBody.FORM)//new FormBody.Builder()
+            int size=list.size();
             builder.addFormDataPart("seq_user", seq_user)
                     .addFormDataPart("seq_kindergarden", seq_kindergarden)
                     .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
@@ -308,15 +316,18 @@ public class QuestionnaireActivity extends BaseActivity {
                     .addFormDataPart("year", year)
                     .addFormDataPart("month", month)
                     .addFormDataPart("day", day)
-                    .addFormDataPart("c_survey_vote", vote_item.length+"")
+                    .addFormDataPart("c_survey_vote", size+"")
 
                     .build();
 
-            for(int i=0;i<vote_item.length;i++)
-                builder.addFormDataPart("files["+i+"]", TimeConverter.getFileTime()+".png",RequestBody.create(MultipartBody.FORM,files[i]));
+            for(int i=0;i<size;i++) {
+                QuestionnaireListViewAdapter.Data data=list.get(i);
+                builder.addFormDataPart("files[" + i + "]", TimeConverter.getFileTime() + ".png", RequestBody.create(MultipartBody.FORM, data.image_byte_array));
+                builder.addFormDataPart("vote_item["+i+"]",data.mTitle );
+            }
+//
+//            for(int i=0;i<vote_item.length;i++)
 
-            for(int i=0;i<vote_item.length;i++)
-                builder.addFormDataPart("vote_item["+i+"]", vote_item[i]);
 
             formBody=builder.build();
 
