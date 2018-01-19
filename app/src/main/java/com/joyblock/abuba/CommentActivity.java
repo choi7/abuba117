@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -33,6 +35,7 @@ public class CommentActivity extends BaseActivity implements Serializable {
     EditText commentEditText;
     Context context;
     CommentListVieaAdapter commentListVieaAdapter;
+    ConstraintLayout constraintLayout;
 
 
     @Override
@@ -76,6 +79,14 @@ public class CommentActivity extends BaseActivity implements Serializable {
                 commentEditText.clearFocus();
                 commentEditText.setText(null);
                 commentEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            }
+        });
+
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
             }
         });
 
