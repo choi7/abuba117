@@ -4,8 +4,9 @@ import android.graphics.drawable.Drawable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+/*
 public class NoticeListViewItem {
+
 
     private String file_path, title,name,time;
     boolean a=false;
@@ -41,4 +42,6 @@ public class NoticeListViewItem {
 //        return this.iconDrawable1 ;
 //    }
 
+
 }
+*/

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
 
-    private ArrayList<NoticeListViewItem> listViewItems = new ArrayList<NoticeListViewItem>();
+    ArrayList<NoticeListViewItem> listViewItems = new ArrayList<NoticeListViewItem>();
     BaseActivity activity;
     Typeface font;
     ListViewHolder holder;
@@ -34,6 +34,8 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
         this.context=context;
 
     }
+
+
 
     public NoticeListViewAdapter(Typeface font){
         this.font=font;
@@ -116,4 +118,43 @@ public class NoticeListViewAdapter extends BaseAdapter implements Serializable {
         ImageView photo;
         TextView title,time,name;
     }
+
+    public class NoticeListViewItem {
+
+        private String file_path, title,name,time;
+        boolean a=false;
+
+        public NoticeListViewItem(String file_path,String title,String name,String time){
+            this.file_path=file_path;
+            this.title=title;
+            this.name=name;
+            this.time=time;
+        }
+
+        public String getFile_path(){
+            return file_path;
+        }
+        public String getTitle(){
+            return title;
+        }
+        public String getName(){
+            return name;
+        }
+        public String getTime(){
+            return time;
+        }
+
+
+//    public Drawable getIcon() {
+//        return this.iconDrawable ;
+//    }
+//    public String getTitle() {
+//        return this.titleStr ;
+//    }
+//    public Drawable getIcon1() {
+//        return this.iconDrawable1 ;
+//    }
+
+    }
+
 }
