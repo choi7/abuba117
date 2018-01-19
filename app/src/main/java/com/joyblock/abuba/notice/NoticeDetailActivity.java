@@ -89,6 +89,8 @@ public class NoticeDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NoticeDetailActivity.this, CommentActivity.class);
+                intent.putExtra("seq_notice", detail.seq_notice);
+                intent.putExtra("flag", "n");
                 NoticeDetailActivity.this.startActivity(intent);
             }
         });

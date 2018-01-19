@@ -14,8 +14,7 @@
         android:fontFamily="@font/nanumsquareregular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ch_on"
-        android:layout_marginLeft="14.5dp" />
+        app:srcCompat="@drawable/comment_profile" />
 
     <TextView
         android:id="@+id/commentNameText"
@@ -62,9 +61,7 @@
         android:id="@+id/textView83"
         android:layout_width="wrap_content"
         android:layout_height="62.5dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
