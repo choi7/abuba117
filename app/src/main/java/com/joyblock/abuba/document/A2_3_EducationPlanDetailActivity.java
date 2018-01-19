@@ -169,6 +169,7 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
                     .build();
         }
 
+
         @Override
         protected String doInBackground(Void... params) {
             try {

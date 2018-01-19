@@ -545,6 +545,7 @@ public class NoticeEditorActivity extends BaseActivity {
         return cursor.getString(column_index);
     }
 
+
     //사진을 정방향대로 회전하기
     private Bitmap rotate(Bitmap src, float degree) {
         // Matrix 객체 생성
