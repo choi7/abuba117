@@ -156,7 +156,7 @@ public class ImageFileProcessor{
     }
 
     //sendPiture랑 동일한 기능 타겟이미지 설정 대신 Drawble을 반환한다.
-    public Drawable getDrawbleFromPciture(Uri data, Activity activity) {
+    public Object[] getDrawableAndByteArray(Uri data, Activity activity) {
         String imagePath = getRealPathFromURI(activity,data); // path 경로
         ExifInterface exif = null;
         try {
@@ -184,7 +184,9 @@ public class ImageFileProcessor{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return new BitmapDrawable(bitmap1);
+        Object[] object={new BitmapDrawable(bitmap1),byteArray};
+//        return new BitmapDrawable(bitmap1);
+        return object;
     }
 
 

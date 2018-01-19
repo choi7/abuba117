@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,6 @@ import android.widget.ListAdapter;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.util.ImageFileProcessor;
-import com.joyblock.abuba.ListData;
 import com.joyblock.abuba.R;
 
 import java.util.ArrayList;
@@ -25,7 +26,8 @@ import java.util.ArrayList;
 public class QuestionnaireListViewAdapter extends BaseActivity implements ListAdapter {
     Activity activity;
 //    private Context mContext = null;
-    private ArrayList<ListData> mListData = new ArrayList<ListData>();
+    ImageFileProcessor ifp=new ImageFileProcessor();
+    public ArrayList<Data> data_list = new ArrayList<Data>();
 
     public QuestionnaireListViewAdapter(Activity activity) {
         super();
@@ -33,17 +35,26 @@ public class QuestionnaireListViewAdapter extends BaseActivity implements ListAd
         this.activity=activity;
     }
 
-    public void addItem(Drawable icon, String mTitle) {
-        ListData addInfo = null;
-        addInfo = new ListData();
+    public void addDefualtItem(Drawable icon, String text) {
+        Data addInfo= new Data();
         addInfo.mIcon = icon;
-        addInfo.mTitle = mTitle;
-        mListData.add(addInfo);
+        addInfo.mTitle = text;
+        data_list.add(addInfo);
     }
 
-    public void setIcon(int position,Drawable image){
-        ListData item=(ListData)getItem(position);
-        item.mIcon=image;
+
+
+    public void addItem(Drawable icon, String mTitle) {
+        Data addInfo = new Data();
+        addInfo.mIcon = icon;
+        addInfo.mTitle = mTitle;
+        data_list.add(addInfo);
+    }
+
+    public void setIcon(int position,Drawable icon,byte[] image_byte_array){
+        Data item=(Data)getItem(position);
+        item.image_byte_array=image_byte_array;
+        item.mIcon=icon;
 
     }
 
@@ -62,12 +73,12 @@ public class QuestionnaireListViewAdapter extends BaseActivity implements ListAd
 
     @Override
     public int getCount() {
-        return mListData.size();
+        return data_list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mListData.get(position);
+        return data_list.get(position);
     }
 
     @Override
@@ -82,8 +93,8 @@ public class QuestionnaireListViewAdapter extends BaseActivity implements ListAd
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder holder;
+        final int pos=position;
+        final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -95,23 +106,42 @@ public class QuestionnaireListViewAdapter extends BaseActivity implements ListAd
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        ListData mData = mListData.get(position);
-        if (mData.mIcon != null) {
-            holder.mIcon.setVisibility(View.VISIBLE);
-            holder.mIcon.setImageDrawable(mData.mIcon);
-        } else {
-            holder.mIcon.setVisibility(View.GONE);
-        }
-        holder.mText.setText(mData.mTitle);
+        Data mData = data_list.get(position);
 
-        final int pos=position;
+        holder.mIcon.setImageDrawable(mData.mIcon);
+        holder.mIcon.setVisibility(View.VISIBLE);
+        holder.mText.setText(mData.mTitle);
+//        holder.mText.setEditableFactory(Editab);//.setEnabled(!(position>size+1));
+
+
+
         holder.mIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ImageFileProcessor().selectGallery(activity,pos);
+            new ImageFileProcessor().selectGallery(activity,pos);
 
             }
+        });
 
+
+        holder.mText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 입력되는 텍스트에 변화가 있을 때 호출된다.
+                Data data=data_list.get(pos);
+                data.mTitle=holder.mText.getText().toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // 입력이 끝났을 때 호출된다.
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 입력하기 전에 호출된다.
+            }
         });
 
         return convertView;
@@ -145,6 +175,17 @@ public class QuestionnaireListViewAdapter extends BaseActivity implements ListAd
     public class ViewHolder {
         public ImageView mIcon;
         public EditText mText;
+    }
+
+
+    class Data {
+        //아이콘
+        public Drawable mIcon;
+        //제목
+        public String mTitle;
+
+        public byte[] image_byte_array;
+
     }
 
 }
