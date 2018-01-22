@@ -1,26 +1,21 @@
-package com.joyblock.abuba.document;
+package com.joyblock.abuba;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.joyblock.abuba.BaseActivity;
-import com.joyblock.abuba.R;
-
-
-public class A4_1_HomeComming extends BaseActivity {
+public class A3_2_MedicineView extends AppCompatActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_a3_1_medicine);
+        setContentView(R.layout.layout_a3_2_medicine_view);
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -32,12 +27,7 @@ public class A4_1_HomeComming extends BaseActivity {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
         TextView title=((TextView)findViewById(R.id.titleName));
-        title.setText("귀가동의서");
+        title.setText("김철수");
         title.setVisibility(View.VISIBLE);
-
-
     }
-
-
-
 }

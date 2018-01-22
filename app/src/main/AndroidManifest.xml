@@ -28,7 +28,7 @@
 
         <activity
             android:name=".test_park.QuestionnaireActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".notice.NoticeTabActivity" />
         <activity android:name=".register.MainActivity" />
         <activity
@@ -43,7 +43,7 @@
             android:name=".bus.BusLocationActivity"
             android:label="@string/title_activity_bus_location"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".register.SchoolRegister_2Activity"></activity>
+        <activity android:name=".register.SchoolRegister_2Activity" />
         <activity android:name=".notice.NoticeEditorActivity" />
         <activity
             android:name=".register.SchoolRegister_1Activity"
@@ -51,7 +51,7 @@
         <activity android:name=".notice.NoticeViewComentActivity" />
         <activity android:name=".NoticeEditorModifyActivity" />
         <activity android:name=".calendar.CalendarActivity" />
-        <activity android:name=".register.SchoolClassRegisterActivity"></activity>
+        <activity android:name=".register.SchoolClassRegisterActivity" />
         <activity android:name=".register.ChildrenRegisterActivity" />
         <activity
             android:name=".calendar.ScheduleAndDailyMenuActivity"
@@ -77,13 +77,11 @@
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".document.A5_1_Attendance" />
         <activity android:name=".document.A4_1_HomeComming" />
@@ -91,12 +89,15 @@
         <activity android:name=".document.A2_2_EducationPlanEditor" />
         <activity android:name=".document.A2_3_EducationPlanDetailActivity" />
         <activity android:name=".document.A3_1_Medicine" />
-        <activity android:name=".CommentActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+        <activity
+            android:name=".CommentActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+        <activity android:name=".CheckPeopleListActivity" />
+        <activity android:name=".A3_2_MedicineView">
+
 
 
         </activity>
-        <activity android:name=".CheckPeopleListActivity"></activity>
     </application>
 
 </manifest>

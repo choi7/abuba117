@@ -2,12 +2,18 @@ package com.joyblock.abuba.register;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
@@ -22,6 +28,22 @@ public class ProvisionActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provision);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cccc));
+        TextView title = (TextView) findViewById(R.id.titleName);
+        title.setText("약관동의");
+        title.setVisibility(View.VISIBLE);
+
+        Log.d("로그는", String.valueOf(getSupportActionBar().isShowing()));
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#33CCCC"));
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
 
         checkBox1 = (CheckBox) findViewById(R.id.checkBox);
         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);

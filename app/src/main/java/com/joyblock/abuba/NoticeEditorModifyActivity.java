@@ -212,7 +212,6 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                                     NoticeEditorModifyActivity.UpdateNotice buyTask = new NoticeEditorModifyActivity.UpdateNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString());
                                     buyTask.execute();
                                 }
-
                             }
                         })
                         .setPositiveButton("취소", null)
@@ -220,7 +219,6 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                         .show();
             }
         });
-
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#0099FF"));

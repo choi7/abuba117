@@ -14,12 +14,12 @@ import android.widget.TextView;
 import com.joyblock.abuba.register.RegisterActivity;
 import com.joyblock.abuba.register.SchoolRegister_1Activity;
 
-public class RegisterAddressSelectActivity extends AppCompatActivity {
+public class RegisterAddressSelectActivity extends BaseActivity {
 
     Button btn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_address_select);
 
@@ -27,6 +27,10 @@ public class RegisterAddressSelectActivity extends AppCompatActivity {
             // 21 버전 이상일 때
             getWindow().setStatusBarColor(Color.parseColor("#33CCCC"));
         }
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
+
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);

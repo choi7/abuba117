@@ -101,6 +101,13 @@ public class RegisterActivity extends BaseActivity {
         title.setText("회원등록");
         title.setVisibility(View.VISIBLE);
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#33CCCC"));
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
+
 
         addrresTextView.setOnClickListener(new View.OnClickListener() {
             @Override

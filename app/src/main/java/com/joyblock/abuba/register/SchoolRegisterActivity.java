@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CustomDialog;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.RegisterAddressSelectActivity;
 import com.joyblock.abuba.RegisterSchoolClassSelectActivity;
 import com.joyblock.abuba.RegisterStandbyActivity;
 
@@ -38,6 +39,8 @@ import java.util.ArrayList;
 public class SchoolRegisterActivity extends BaseActivity {
     String garden_name, alertmsg;
     CustomDialog mCustomDialog;
+    EditText schoolNameText;
+    TextView detailText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,14 +54,35 @@ public class SchoolRegisterActivity extends BaseActivity {
         title.setText("원등록");
         title.setVisibility(View.VISIBLE);
 
-        EditText schoolNameText = (EditText) findViewById(R.id.schoolNameText);
-        EditText detailText = (EditText) findViewById(R.id.detailText);
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#33CCCC"));
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
+
+        schoolNameText = (EditText) findViewById(R.id.schoolNameText);
+        detailText = (TextView) findViewById(R.id.detailText);
         Button nextButton = (Button) findViewById(R.id.registerButton);
 
-        alertmsg = garden_name + "으로\n승인요청하시겠습니까?";
+        detailText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SchoolRegisterActivity.this, RegisterAddressSelectActivity.class);
+                SchoolRegisterActivity.this.startActivity(intent);
+            }
+        });
+
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(schoolNameText.getText().toString() == "" && detailText.getText().toString() == "")
+
+
+                garden_name = schoolNameText.getText().toString();
+                alertmsg = garden_name + "으로\n승인요청하시겠습니까?";
                 mCustomDialog = new CustomDialog(SchoolRegisterActivity.this,
                         alertmsg,
                         leftListener,

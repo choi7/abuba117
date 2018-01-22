@@ -53,6 +53,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         gson=new GsonBuilder().create();
 
+        //액션바가 있을때 하단 명암 제거
+        try {
+            getSupportActionBar().setElevation(0);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);

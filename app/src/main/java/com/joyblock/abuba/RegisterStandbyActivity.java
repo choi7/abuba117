@@ -39,6 +39,13 @@ public class RegisterStandbyActivity extends BaseActivity {
         garden_name = intent.getStringExtra("garden_name");
         textView.setText(garden_name);
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#33CCCC"));
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
+
         textView1 = (TextView) findViewById(R.id.textView74);
         textView1.setOnClickListener(new View.OnClickListener() {
             @Override

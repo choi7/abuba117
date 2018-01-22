@@ -42,15 +42,7 @@ public class A2_1_EducationPlan extends BaseActivity {
         month=true;// 월간/주간 플래그
         setContentView(R.layout.activity_education);
 
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbarcustom);
 
-        final TextView title = (TextView)findViewById(R.id.titleName);
-        title.setText("교육계획안");
-
-        title.setVisibility(View.VISIBLE);
         editor=pref.edit();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String seq_user = pref.getString("seq_user","없음");
@@ -115,7 +107,7 @@ public class A2_1_EducationPlan extends BaseActivity {
     public void actionbarCustom() {
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         final TextView title = (TextView) findViewById(R.id.titleName);
@@ -146,7 +138,7 @@ public class A2_1_EducationPlan extends BaseActivity {
         });
 
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
+            getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
         } if (Build.VERSION.SDK_INT >= 23) {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }

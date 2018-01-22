@@ -32,7 +32,7 @@ import com.joyblock.abuba.register.SchoolRegister_1Activity;
 
 import java.util.ArrayList;
 
-public class RegisterJobSelectActivity extends AppCompatActivity {
+public class RegisterJobSelectActivity extends BaseActivity {
 
     Integer listposition;
     Button btn;
@@ -41,7 +41,7 @@ public class RegisterJobSelectActivity extends AppCompatActivity {
     private ArrayList<ListData> mListData = new ArrayList<ListData>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_job_select);
 
@@ -57,6 +57,9 @@ public class RegisterJobSelectActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             // 21 버전 이상일 때
             getWindow().setStatusBarColor(Color.parseColor("#33CCCC"));
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
 
         mListView = (ListView) findViewById(R.id.jobListView);

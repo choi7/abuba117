@@ -24,6 +24,7 @@ import com.joyblock.abuba.RegisterJobSelectActivity;
 import com.joyblock.abuba.register.MainActivity;
 import com.joyblock.abuba.MainDawerSelectActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.register.ProvisionActivity;
 import com.joyblock.abuba.register.RegisterActivity;
 
 import org.json.JSONObject;
@@ -53,6 +54,13 @@ public class LoginActivity extends BaseActivity {
         //fbi 셋팅
         findViewbyIdSet();
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#EEEEEF"));
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
+
         //체크박스의 체크가 풀리면 SharePreferences에 저장되어 있는 데이터를 다 리셋 시킴
         autoLoginCheckBox.setOnCheckedChangeListener(checkedChangeListener);
 
@@ -70,7 +78,7 @@ public class LoginActivity extends BaseActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, ProvisionActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
             }
         });

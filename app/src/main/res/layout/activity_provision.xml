@@ -17,7 +17,9 @@
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#FFFFFF"
+        />
 
     <TextView
         android:id="@+id/textView43"
@@ -30,7 +32,9 @@
         android:text="TextView\n야간ㄴ\n야간ㄴ\n야간ㄴ\n야간ㄴ\n야간ㄴ\n야간ㄴ\n야간ㄴ\n야간ㄴ\n야간ㄴ\n야간ㄴ\n야간ㅇㄴㄴ\n야간ㄴ\n야간ㄴ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox"
+        android:background="#FFFFFF"
+        />
 
     <CheckBox
         android:id="@+id/checkBox"

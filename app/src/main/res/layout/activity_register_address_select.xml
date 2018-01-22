@@ -56,7 +56,7 @@
         android:layout_marginTop="5.75dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="검색어를 입력해주세요"
+        android:hint="상세 주소를 입력해주세요"
         android:paddingLeft="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner2"
@@ -69,6 +69,7 @@
         android:layout_height="wrap_content"
         android:text="※도로명과 동/읍/면/리 뒤는 한 칸 띄어써 주세요."
         android:textSize="10dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/textView51"
         app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
@@ -80,6 +81,7 @@
         android:layout_marginTop="11.75dp"
         android:text="도로명, 건물명, 지번, 우편번호 검색이 가능합니다."
         android:textSize="11.25dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/editText2"
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
@@ -89,6 +91,7 @@
         android:layout_height="wrap_content"
         android:text="· 도로명+건물번호 (예: 창원대로 371)\n· 동/읍/면/리+번지 (예: 팔용동 35)\n· 건물명, 아파트명 (예: 창원시외버스터미널, 푸르지오)\n· 5자리 우편번호 (예: 51393)"
         android:textSize="8.75dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/textView48"
         app:layout_constraintTop_toBottomOf="@+id/textView48" />
     <Button
