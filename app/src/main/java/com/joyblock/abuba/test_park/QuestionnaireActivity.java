@@ -322,7 +322,8 @@ public class QuestionnaireActivity extends BaseActivity {
 
             for(int i=0;i<size;i++) {
                 QuestionnaireListViewAdapter.Data data=list.get(i);
-                builder.addFormDataPart("files[" + i + "]", TimeConverter.getFileTime() + ".png", RequestBody.create(MultipartBody.FORM, data.image_byte_array));
+                if(data.image_byte_array!=null)
+                    builder.addFormDataPart("files[" + i + "]", TimeConverter.getFileTime() + ".png", RequestBody.create(MultipartBody.FORM, data.image_byte_array));
                 builder.addFormDataPart("vote_item["+i+"]",data.mTitle );
             }
 //
