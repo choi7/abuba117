@@ -1,4 +1,4 @@
-package com.joyblock.abuba.test_park;
+package com.joyblock.abuba;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -15,10 +15,13 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.joyblock.abuba.R;
+import com.joyblock.abuba.document.A3_1_Medicine;
 
+/**
+ * Created by hyoshinchoi on 2018. 1. 22..
+ */
 
-public class CalendarCustomDialogActivity extends DatePickerDialog {
+public class CalendarCustomDialong_document extends DatePickerDialog {
 
     private TextView mTitleView;
     private TextView mContentView;
@@ -35,23 +38,19 @@ public class CalendarCustomDialogActivity extends DatePickerDialog {
 
     public Integer year, month, day;
     DatePicker datePicker;
-    ImageView imageView;
 
-    public QuestionnaireActivity qa;
-//    public A3_1_Medicine qaa;
+    public A3_1_Medicine qas;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public CalendarCustomDialogActivity(@NonNull Context context) {
+    public CalendarCustomDialong_document(@NonNull Context context) {
         super(context);
-        this.qa = (QuestionnaireActivity) context;
-//        this.qaa = (A3_1_Medicine) context;
+        this.qas = (A3_1_Medicine) context;
     }
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 다이얼로그 외부 화면 흐리게 표현
+
         WindowManager.LayoutParams lpWindow = new WindowManager.LayoutParams();
         lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         lpWindow.dimAmount = 0.8f;
@@ -64,43 +63,31 @@ public class CalendarCustomDialogActivity extends DatePickerDialog {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 
+        setContentView(R.layout.activity_calendar_custom_dialog);
+
+
         //뷰 외부 터치시 종료
         this.setCanceledOnTouchOutside(true);
 //        System.gc();
-        setContentView(R.layout.activity_calendar_custom_dialog);
 
         Button trueButton = (Button) findViewById(R.id.calendarTrueButton);
-        Button trueButto1 = (Button) findViewById(R.id.calendarTrueButton1);
-        trueButto1.setVisibility(View.GONE);
+        Button trueButton1 = (Button) findViewById(R.id.calendarTrueButton1);
+        trueButton.setVisibility(View.GONE);
         Button falseButton = (Button) findViewById(R.id.calendarFalseButton);
 
         datePicker = (DatePicker) findViewById(R.id.datePicker);
-//        datePicker.setDrawingCacheBackgroundColor(Color.parseColor("#009688"));
-        imageView = qa.questTimeSettingImageView;
+
+        day = datePicker.getDayOfMonth();
+        year = datePicker.getYear();
+        month = datePicker.getMonth();
 
 
         falseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.setImageResource(R.drawable.ch_off);
-                CalendarCustomDialogActivity.this.cancel();
+                CalendarCustomDialong_document.this.cancel();
             }
         });
 
-//        trueButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qa.day = datePicker.getDayOfMonth();
-//                qa.month = datePicker.getMonth() + 1;
-//                qa.year = datePicker.getYear();
-//                imageView.setImageResource(R.drawable.ch_on);
-//                System.out.println(qa.day + "" + qa.month + "" + qa.year);
-//                CalendarCustomDialogActivity.this.dismiss();
-//            }
-//        });
     }
 }
-
-
-
-
