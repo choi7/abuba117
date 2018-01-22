@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.api_message.R20_SelectSurveyList;
+import com.joyblock.abuba.test_park.QuestionnaireDetailActivity;
 import com.joyblock.abuba.util.TimeConverter;
 
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okio.Buffer;
 
 /**
  * Created by hyoshinchoi on 2018. 1. 10..
@@ -78,8 +80,8 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
 
         listView.setAdapter(adapter);
 
-        String seq_kindergarden=pref.getString("seq_kindergarden","없음");
-        String seq_kindergarden_class=pref.getString("seq_kindergarden_class","없음");
+        String seq_kindergarden=pref.getString("seq_kindergarden","");
+        String seq_kindergarden_class=pref.getString("seq_kindergarden_class","");
 
         new SelectNoticeList(seq_kindergarden).execute();
 //        Log.d("Tag","공지 개수"+noticeList.length);
@@ -92,7 +94,7 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
+                Intent intent = new Intent(getContext(), QuestionnaireDetailActivity.class);
                 intent.putExtra("seq_survey",surveyList[position].seq_survey);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //                startActivity(intent);
@@ -114,7 +116,7 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
         RequestBody formBody;
 
         String api_string="selectSurveyList";
-        String message_key="";
+        String message_key="survey_list";
         String url = "http://58.229.208.246/Ububa/"+api_string+".do";
 
         //전체 공지 조회
@@ -159,6 +161,15 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
                     .build();
         }
 
+        void printRequest(String tag) {
+            try {
+                final Buffer buffer = new Buffer();
+                formBody.writeTo(buffer);
+                Log.d(tag+" request", buffer.readUtf8());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -177,13 +188,12 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            Log.d("response R20", json);
+            Log.d("API20 response", json);
             try {
                 JSONObject jsonResponse = new JSONObject(json);
                 System.out.println("반환되는 값 : " + jsonResponse);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                System.out.println(jsonResponse.getString("notice_list"));
-                surveyList=new GsonBuilder().create().fromJson(jsonResponse.getString("notice_list"),R20_SelectSurveyList[].class);
+                surveyList=new GsonBuilder().create().fromJson(jsonResponse.getString(message_key),R20_SelectSurveyList[].class);
                 //for(R13_SelectNoticeList list:noticeList)
                 for(int i=0;i<surveyList.length;i++) {
                     R20_SelectSurveyList list=surveyList[i];

@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okio.Buffer;
 
 public class QuestionnaireActivity extends BaseActivity {
 
@@ -130,9 +131,9 @@ public class QuestionnaireActivity extends BaseActivity {
             }
         });
 
-        seq_user = pref.getString("seq_user", "없음");
-        seq_kindergarden = pref.getString("seq_kindergarden", "없음");
-        seq_kindergarden_class = pref.getString("seq_kindergarden_class", "없음");
+        seq_user = pref.getString("seq_user", "");
+        seq_kindergarden = pref.getString("seq_kindergarden", "");
+        seq_kindergarden_class = pref.getString("seq_kindergarden_class", "");
 
         Log.d("seq_", seq_user + " " + seq_kindergarden + " " + seq_kindergarden_class);
 
@@ -310,7 +311,7 @@ public class QuestionnaireActivity extends BaseActivity {
             int size=list.size();
             builder.addFormDataPart("seq_user", seq_user)
                     .addFormDataPart("seq_kindergarden", seq_kindergarden)
-                    .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
+                    .addFormDataPart("seq_kindergarden_class", ""/*seq_kindergarden_class*/)
                     .addFormDataPart("title", title)
                     .addFormDataPart("content", content)
                     .addFormDataPart("year", year)
@@ -332,17 +333,31 @@ public class QuestionnaireActivity extends BaseActivity {
 
             formBody=builder.build();
 
-
             request = new okhttp3.Request.Builder()
                     .url(url)
                     .post(formBody)
                     .build();
+
+//            Log.d("API18 request : ", request.body().toString());
+
+            printRequest("API18");
+        }
+
+        void printRequest(String tag) {
+            try {
+                final Buffer buffer = new Buffer();
+                formBody.writeTo(buffer);
+                Log.d(tag+" request", buffer.readUtf8());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         protected String doInBackground(Void... params) {
             try {
                 okhttp3.Response response = client.newCall(request).execute();
+
                 if (!response.isSuccessful()) {
                     return null;
                 }
@@ -356,7 +371,7 @@ public class QuestionnaireActivity extends BaseActivity {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            Log.d("response : ", json);
+            Log.d("API18 response : ", json);
             try {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
