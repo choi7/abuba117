@@ -37,7 +37,7 @@ public class CalendarCustomDialong_document extends DatePickerDialog {
     private View.OnClickListener mRightClickListener;
 
     public Integer year, month, day;
-    DatePicker datePicker;
+    public DatePicker datePicker;
 
     public A3_1_Medicine qas;
 
@@ -88,6 +88,9 @@ public class CalendarCustomDialong_document extends DatePickerDialog {
                 CalendarCustomDialong_document.this.cancel();
             }
         });
+
+
+
 
     }
 }

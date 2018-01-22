@@ -25,6 +25,12 @@ public class A3_ListViewAdapterCustom extends BaseAdapter implements Serializabl
     private ArrayList<A3_ItemList> listViewItems = new ArrayList<A3_ItemList>();
     BaseActivity activity;
     ListViewHolders holder;
+    Context context;
+
+
+    public A3_ListViewAdapterCustom (Context context) {
+        this.context = context;
+    }
 
     @Override
     public int getCount() {
@@ -83,7 +89,7 @@ public class A3_ListViewAdapterCustom extends BaseAdapter implements Serializabl
 
 
 
-        return null;
+        return convertView;
     }
 
     public void addItem(String name, String title, Drawable icon1) {
