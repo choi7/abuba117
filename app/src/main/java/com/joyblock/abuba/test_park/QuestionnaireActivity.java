@@ -131,8 +131,8 @@ public class QuestionnaireActivity extends BaseActivity {
             }
         });
 
-        seq_user = pref.getString("seq_user", "없음");
-        seq_kindergarden = pref.getString("seq_kindergarden", "없음");
+        seq_user = pref.getString("seq_user", "");
+        seq_kindergarden = pref.getString("seq_kindergarden", "");
         seq_kindergarden_class = pref.getString("seq_kindergarden_class", "");
 
         Log.d("seq_", seq_user + " " + seq_kindergarden + " " + seq_kindergarden_class);
