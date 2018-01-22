@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.joyblock.abuba.document.A3_1_Medicine;
+import com.joyblock.abuba.document.A4_1_HomeComming;
 
 /**
  * Created by hyoshinchoi on 2018. 1. 22..
@@ -39,12 +40,14 @@ public class CalendarCustomDialong_document extends DatePickerDialog {
     public Integer year, month, day;
     public DatePicker datePicker;
 
-    public A3_1_Medicine qas;
+    //public A3_1_Medicine qas;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public CalendarCustomDialong_document(@NonNull Context context) {
         super(context);
-        this.qas = (A3_1_Medicine) context;
+
+        //this.qas = (A3_1_Medicine) context;
+
     }
 
     @Override

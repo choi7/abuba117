@@ -31,6 +31,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.GsonBuilder;
+import com.joyblock.abuba.api_message.R17_SelectMyKidsList;
 import com.joyblock.abuba.bus.BusLocationActivity;
 import com.joyblock.abuba.calendar.CalendarActivity;
 import com.joyblock.abuba.document.A1_DocumentSelect;
@@ -71,6 +73,7 @@ public class MainDawerSelectActivity extends BaseActivity
         seq_user = pref.getString("seq_user","없음");
 
         new BuyTask(seq_user).execute();
+        new BuyTasks(seq_user).execute();
 
 
         /*
@@ -435,6 +438,7 @@ public class MainDawerSelectActivity extends BaseActivity
                     System.out.print(json3);
                     System.out.print("xx");
                     JSONObject json4 = new JSONObject(json3.getString(0));
+                    Log.d("json4", String.valueOf(json4));
 //                    JSONObject json4 = new JSONObject(json3.getString(""));
                     editor = pref.edit();
                     editor.putString("kindergarden_class_name", json4.getString("kindergarden_class_name"));
@@ -446,6 +450,100 @@ public class MainDawerSelectActivity extends BaseActivity
                     Log.d("반환값 : ", pref.getString("seq_kindergarden", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
                     Log.d("반환값 : ", pref.getString("kindergarden_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
                     Log.d("반환값 : ", pref.getString("rep_flag", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+
+                } else if (ss == 102) {
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+    R17_SelectMyKidsList[] r17_selectMyKidsLists;
+    class BuyTasks extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+
+        public BuyTasks(String seq_user) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_user", seq_user)
+                    .build();
+            request = new okhttp3.Request.Builder()
+                    .url("http://58.229.208.246/Ububa/selectMyKidsList.do")
+                    .post(formBody)
+                    .build();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("TAG", json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                System.out.println(jsonResponse);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                System.out.println(ss);
+
+                if (ss == 200) {
+                    String resultCode = jsonResponse.getString("resultCode");
+                    String resultMsg = jsonResponse.getString("resultMsg");
+                    Log.d("resultCode : ", resultCode);
+                    Log.d("resultMsg : ", resultMsg);
+
+                    r17_selectMyKidsLists=new GsonBuilder().create().fromJson(jsonResponse.getString("my_kids_list"),R17_SelectMyKidsList[].class);
+                    Log.d("detail" , String.valueOf(r17_selectMyKidsLists));
+                    Log.d("details" , String.valueOf(r17_selectMyKidsLists.length));
+//                    notice_detail_seq_user = detail.seq_user;
+//                    intentPutExtraModifyData = jsonResponse.getString(message_key);
+
+
+//                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
+//                    System.out.println(json);
+//                    JSONObject json2 = new JSONObject(json1.getString("user"));
+//                    System.out.println(json2);
+                    JSONArray json3 = new JSONArray(jsonResponse.getString("my_kids_list"));
+                    System.out.print("sdf");
+                    System.out.print(json3);
+                    System.out.print("sdf");
+                    JSONObject json4 = new JSONObject(json3.getString(0));
+                    Log.d("json4", String.valueOf(json4));
+//                    JSONObject json4 = new JSONObject(json3.getString(""));
+                    editor = pref.edit();
+                    editor.putString("kindergarden_class_name", json4.getString("kindergarden_class_name"));
+                    editor.putString("seq_kindergarden", json4.getString("seq_kindergarden"));
+                    editor.putString("kindergarden_name", json4.getString("kindergarden_name"));
+                    editor.putString("rep_flag", json4.getString("rep_flag"));
+                    editor.putString("kids_image", json4.getString("kids_image"));
+                    editor.putString("name_title", json4.getString("name_title"));
+                    editor.putString("name", json4.getString("name"));
+                    editor.putString("kids_name", json4.getString("kids_name"));
+                    editor.commit();
+                    Log.d("반환값 : ", pref.getString("kindergarden_class_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+                    Log.d("반환값 : ", pref.getString("seq_kindergarden", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+                    Log.d("반환값 : ", pref.getString("kindergarden_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+                    Log.d("반환값 : ", pref.getString("rep_flag", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+                    Log.d("반환값 : ", pref.getString("kids_image", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+                    Log.d("반환값 : ", pref.getString("name_title", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+                    Log.d("반환값 : ", pref.getString("name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+                    Log.d("반환값 : ", pref.getString("kids_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
 
                 } else if (ss == 102) {
                 }

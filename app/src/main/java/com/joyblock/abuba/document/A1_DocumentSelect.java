@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
-import com.joyblock.abuba.MainDawerSelectActivity;
 import com.joyblock.abuba.R;
 
 
@@ -22,6 +22,7 @@ public class A1_DocumentSelect extends BaseActivity {
     String[] list = {"교육계획안", "투약의뢰서", "귀가동의서", "출석부"};
     ListViewAdapter adapter;
     ListView listView;
+    String authority;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,9 @@ public class A1_DocumentSelect extends BaseActivity {
         title.setText("문서함");
         title.setVisibility(View.VISIBLE);
 
+        authority = pref.getString("authority","");
+        Log.d("ddddd", authority);
+
 
         listView = findViewById(R.id.documentSelectListView);
         adapter = new ListViewAdapter(NanumSquareBold);
@@ -52,16 +56,28 @@ public class A1_DocumentSelect extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), Integer.toString(position),Toast.LENGTH_LONG).show();
                 switch (position) {
+                        //교육계획안
                     case 0 :
 //                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
                         A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A2_1_EducationPlan.class));
                         break;
+                        //투약의뢰서
                     case 1 :
-                        A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A3_1_Medicine.class));
+                        if(authority.equals("ROLE_PARENTS")) {
+                            A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A3_1_Medicine_Parent.class));
+                        } else {
+                            A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A3_1_Medicine.class));
+                        }
                         break;
+                        //귀가동의서
                     case 2 :
-                        A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A4_1_HomeComming.class));
+                        if(authority.equals("ROLE_PARENTS")) {
+                            A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A4_1_HomeComming_Parent.class));
+                        } else {
+                            A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A4_1_HomeComming.class));
+                        }
                         break;
+                        //출석부
                     case 3 :
                         A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A5_1_Attendance.class));
                         break;

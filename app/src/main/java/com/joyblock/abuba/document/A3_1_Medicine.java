@@ -3,6 +3,7 @@ package com.joyblock.abuba.document;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -15,7 +16,6 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +32,8 @@ import com.joyblock.abuba.notice.BanListViewItem;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -62,6 +64,8 @@ public class A3_1_Medicine extends BaseActivity {
 
         activity = this;
 
+
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -80,24 +84,34 @@ public class A3_1_Medicine extends BaseActivity {
         seq_kindergarden = pref.getString("seq_kindergarden", "");
         classText = (TextView) findViewById(R.id.a3_1_Class_TextView);
 
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
+        SimpleDateFormat month = new SimpleDateFormat("MM");
+        SimpleDateFormat day = new SimpleDateFormat("dd");
+        String getTime = year.format(date);
+        String getTime1 = month.format(date);
+        String getTime2 = day.format(date);
+        dayText.setText(getTime + "년 " +getTime1+"월 "+getTime2 +"일");
+
 
         mainlistView = (ListView) findViewById(R.id.a3_1_listview);
         a3_listViewAdapterCustom = new A3_ListViewAdapterCustom(getBaseContext());
 
-
-
-
-        a3_listViewAdapterCustom.addItem("병아리반","김철수",getResources().getDrawable(R.drawable.no_check));
-        a3_listViewAdapterCustom.addItem("병아리반","김철수",getResources().getDrawable(R.drawable.no_check));
-        a3_listViewAdapterCustom.addItem("병아리반","김철수",getResources().getDrawable(R.drawable.no_check));
-        a3_listViewAdapterCustom.addItem("병아리반","김철수",getResources().getDrawable(R.drawable.no_check));
+        a3_listViewAdapterCustom.addItem("김철수","병아리반",getResources().getDrawable(R.drawable.no_check));
+        a3_listViewAdapterCustom.addItem("김철수","병아리반",getResources().getDrawable(R.drawable.no_check));
+        a3_listViewAdapterCustom.addItem("김철수","병아리반",getResources().getDrawable(R.drawable.no_check));
+        a3_listViewAdapterCustom.addItem("김철수","병아리반",getResources().getDrawable(R.drawable.no_check));
         mainlistView.setAdapter(a3_listViewAdapterCustom);
         Log.d("ee", String.valueOf(a3_listViewAdapterCustom.getCount()));
 
         mainlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(A3_1_Medicine.this, A3_2_MedicineView.class);
+//                intent.putExtra("seq_notice",r34_selectMedicationRequestList[position].seq_medication_request);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
             }
         });
 
@@ -120,11 +134,6 @@ public class A3_1_Medicine extends BaseActivity {
                 Log.d("ss", "ss");
             }
         });
-
-//
-//        a3_listViewAdapterCustom.addItem("호랑랑이반","김철수",getResources().getDrawable(R.drawable.no_check));
-//        a3_listViewAdapterCustom.addItem("호랑이반","김철수",getResources().getDrawable(R.drawable.no_check));
-
 
     }
 
@@ -207,7 +216,7 @@ public class A3_1_Medicine extends BaseActivity {
         month = mCustomDialog1.datePicker.getMonth() + 1;
         year = mCustomDialog1.datePicker.getYear();
 
-        System.out.println(mCustomDialog1.qas.day + "sss" + mCustomDialog1.qas.month + "ssss" + mCustomDialog1.qas.year);
+        //System.out.println(mCustomDialog1.qas.day + "sss" + mCustomDialog1.qas.month + "ssss" + mCustomDialog1.qas.year);
         String days = null, months = null;
         if (day < 10) {
             days = "0" + day;

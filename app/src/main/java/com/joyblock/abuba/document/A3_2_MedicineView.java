@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.document;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class A3_2_MedicineView extends AppCompatActivity {
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.R;
+
+public class A3_2_MedicineView extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_a3_2_medicine_view);
 

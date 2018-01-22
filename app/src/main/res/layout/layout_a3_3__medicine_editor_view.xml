@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.document.A3_2_MedicineView"
+    tools:context="com.joyblock.abuba.document.A3_3_MedicineEditorView"
     android:background="#FFFFFF"
     >
-
 
     <com.joyblock.abuba.bottomtabbar
         android:id="@+id/PageNavigationView_medicine_view"
@@ -37,19 +36,6 @@
         app:layout_constraintBottom_toTopOf="@+id/textView101"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/symptomText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="46.5dp"
-        android:layout_marginStart="46.5dp"
-        android:fontFamily="@font/nanumsquarebold"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="13.75dp"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toTopOf="@+id/textView28" />
 
     <TextView
         android:id="@+id/textView101"
@@ -114,13 +100,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView105" />
+        app:layout_constraintTop_toBottomOf="@+id/textView100" />
 
     <TextView
         android:id="@+id/textView107"
         android:layout_width="match_parent"
         android:layout_height="0.25dp"
-        android:layout_marginTop="138.75dp"
+        android:layout_marginTop="105dp"
         android:background="#7E7E7E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -142,17 +128,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
     <TextView
-        android:id="@+id/medicineTypeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarebold"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="13.75dp"
-        app:layout_constraintStart_toStartOf="@+id/symptomText"
-        app:layout_constraintTop_toTopOf="@+id/textView108" />
-
-    <TextView
         android:id="@+id/textView110"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -163,17 +138,6 @@
         app:layout_constraintBottom_toTopOf="@+id/textView103"
         app:layout_constraintStart_toStartOf="@+id/textView108"
         app:layout_constraintTop_toBottomOf="@+id/textView102" />
-
-    <TextView
-        android:id="@+id/medicationCapacityText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarebold"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="13.75dp"
-        app:layout_constraintStart_toStartOf="@+id/symptomText"
-        app:layout_constraintTop_toTopOf="@+id/textView110" />
 
     <TextView
         android:id="@+id/textView112"
@@ -188,17 +152,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView103" />
 
     <TextView
-        android:id="@+id/medicationTimeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarebold"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="13.75dp"
-        app:layout_constraintStart_toStartOf="@+id/symptomText"
-        app:layout_constraintTop_toTopOf="@+id/textView112" />
-
-    <TextView
         android:id="@+id/textView114"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -211,17 +164,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView104" />
 
     <TextView
-        android:id="@+id/methodOfKeepingText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarebold"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="13.75dp"
-        app:layout_constraintStart_toStartOf="@+id/symptomText"
-        app:layout_constraintTop_toTopOf="@+id/textView114" />
-
-    <TextView
         android:id="@+id/textView116"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -231,18 +173,7 @@
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/textView106"
         app:layout_constraintStart_toStartOf="@+id/textView114"
-        app:layout_constraintTop_toBottomOf="@+id/textView105" />
-
-    <TextView
-        android:id="@+id/specialNoteText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarebold"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="13.75dp"
-        app:layout_constraintStart_toStartOf="@+id/symptomText"
-        app:layout_constraintTop_toTopOf="@+id/textView116" />
+        app:layout_constraintTop_toBottomOf="@+id/textView100" />
 
     <TextView
         android:id="@+id/textView118"
@@ -294,7 +225,7 @@
         android:layout_width="196.5dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/textView107"
-        app:layout_constraintStart_toStartOf="@+id/symptomText"
+        app:layout_constraintStart_toStartOf="@+id/symptomEditText"
         app:layout_constraintTop_toBottomOf="@+id/textView106"
         app:srcCompat="@drawable/ch_on" />
 
@@ -302,7 +233,7 @@
         android:id="@+id/medicineViewPushText"
         android:layout_width="match_parent"
         android:layout_height="43.5dp"
-        android:text="알림재전송"
+        android:text="보내기"
         android:background="#E73828"
         android:textColor="#FFFFFF"
         android:gravity="center"
@@ -310,5 +241,167 @@
         app:layout_constraintBottom_toTopOf="@+id/PageNavigationView_medicine_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/symptomEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="47.5dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:background="@drawable/view_style_option"
+        android:fontFamily="@font/nanumsquarebold"
+        android:textColor="#000000"
+        android:textSize="13.75dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView101"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="47.5dp" />
+
+    <EditText
+        android:id="@+id/medicineTypeEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:background="@drawable/view_style_option"
+        android:fontFamily="@font/nanumsquarebold"
+        android:textColor="#000000"
+        android:textSize="13.75dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView102"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/symptomEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textView101" />
+
+    <EditText
+        android:id="@+id/medicationCapacityEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:background="@drawable/view_style_option"
+        android:fontFamily="@font/nanumsquarebold"
+        android:textColor="#000000"
+        android:textSize="13.75dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView103"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/symptomEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textView102" />
+
+    <EditText
+        android:id="@+id/medicationTimeEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:background="@drawable/view_style_option"
+        android:fontFamily="@font/nanumsquarebold"
+        android:textColor="#000000"
+        android:textSize="13.75dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView104"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/symptomEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textView103" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/a_3_3Checktemp1ConstraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="43.5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/textView105"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/symptomEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textView104">
+
+        <TextView
+            android:id="@+id/textView96"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="상 온"
+            android:textColor="#000000"
+            android:textSize="13.75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="4dp" />
+
+        <ImageView
+            android:id="@+id/a3_3_temp1ImageView"
+            android:layout_width="17.5dp"
+            android:layout_height="17.5dp"
+            android:layout_marginEnd="14.25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ch_off"
+            android:layout_marginRight="14.25dp" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView100"
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginTop="43.5dp"
+        android:background="#7E7E7E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView105" />
+
+    <EditText
+        android:id="@+id/specialNoteEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/view_style_option"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:fontFamily="@font/nanumsquarebold"
+        android:textColor="#000000"
+        android:textSize="13.75dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView106"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/symptomEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textView100" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/a_3_3Checktemp2ConstraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="43.5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/textView100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/symptomEditText"
+        app:layout_constraintTop_toBottomOf="@+id/textView105">
+
+        <TextView
+            android:id="@+id/textView109"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="냉 장"
+            android:textColor="#000000"
+            android:textSize="13.75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="4dp" />
+
+        <ImageView
+            android:id="@+id/a3_3_temp2ImageView"
+            android:layout_width="17.5dp"
+            android:layout_height="17.5dp"
+            android:layout_marginEnd="14.25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ch_off"
+            android:layout_marginRight="14.25dp" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

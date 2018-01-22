@@ -66,7 +66,6 @@
         <activity android:name=".calendar.CarteRegisterActivity" />
         <activity android:name=".NoticeAndQuestActivity" />
         <activity android:name=".test_park.QuestionnaireDetailActivity" />
-
         <activity android:name=".RegisterAddressSelectActivity" />
         <activity android:name=".RegisterJobSelectActivity" />
         <activity android:name=".RegisterSchoolClassSelectActivity" />
@@ -84,7 +83,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".document.A1_DocumentSelect" />
         <activity android:name=".document.A5_1_Attendance" />
         <activity android:name=".document.A4_1_HomeComming" />
@@ -94,13 +92,13 @@
         <activity android:name=".document.A3_1_Medicine" />
         <activity
             android:name=".CommentActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".CheckPeopleListActivity" />
-        <activity android:name=".A3_2_MedicineView">
-
-
-
-        </activity>
+        <activity android:name=".document.A3_2_MedicineView" />
+        <activity android:name=".document.A3_3_MedicineEditorView"></activity>
+        <activity android:name=".document.A3_1_Medicine_Parent"></activity>
+        <activity android:name=".document.A4_1_HomeComming_Parent"></activity>
+        <activity android:name=".document.A4_2_HomeCommingEditorView_Parent"></activity>
     </application>
 
 </manifest>

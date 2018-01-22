@@ -41,6 +41,8 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         bt_tab1 = (Button)findViewById(R.id.bt_tab11);
         bt_tab2 = (Button)findViewById(R.id.bt_tab22);
 
+
+
         bt_tab1.setOnClickListener(this);
         bt_tab2.setOnClickListener(this);
 
