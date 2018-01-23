@@ -1,18 +1,17 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.register;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.joyblock.abuba.register.RegisterActivity;
-import com.joyblock.abuba.register.SchoolRegister_1Activity;
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.R;
 
 public class RegisterAddressSelectActivity extends BaseActivity {
 

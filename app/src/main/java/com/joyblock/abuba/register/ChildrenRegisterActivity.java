@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
-import com.joyblock.abuba.RegisterAddressSelectActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

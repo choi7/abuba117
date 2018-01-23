@@ -1,34 +1,24 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.register;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.joyblock.abuba.register.ChildrenRegisterActivity;
-import com.joyblock.abuba.register.RegisterActivity;
-import com.joyblock.abuba.register.SchoolRegisterActivity;
-import com.joyblock.abuba.register.SchoolRegister_1Activity;
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.ListData;
+import com.joyblock.abuba.R;
 
 import java.util.ArrayList;
 

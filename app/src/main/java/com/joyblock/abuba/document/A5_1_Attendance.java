@@ -70,7 +70,7 @@ public class A5_1_Attendance extends BaseActivity implements View.OnClickListene
         // 프래그먼트 사용을 위해
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        /*
+
         switch (frament_no) {
             case 1:
                 // '공지사항 리스트 fragment' 호출
@@ -88,7 +88,7 @@ public class A5_1_Attendance extends BaseActivity implements View.OnClickListene
                 transaction.commit();
                 break;
         }
-        */
+
 
 
     }

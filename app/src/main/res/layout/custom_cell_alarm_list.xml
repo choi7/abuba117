@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="22.5dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/alarm_image"
+        android:layout_marginLeft="22.5dp" />
+
+    <TextView
+        android:id="@+id/alarm_List_Cell_Content_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:fontFamily="@font/nanumsquarebold"
+        android:text="김민석 투약의뢰서가 등록되었습니다."
+        android:textSize="11.25dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView18"
+        app:layout_constraintTop_toTopOf="@+id/imageView18" />
+
+    <TextView
+        android:id="@+id/alarm_List_Cell_Day_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6.5dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:text="2018/01/02"
+        android:textSize="8.75dp"
+        app:layout_constraintStart_toStartOf="@+id/alarm_List_Cell_Content_TextView"
+        app:layout_constraintTop_toBottomOf="@+id/alarm_List_Cell_Content_TextView" />
+</android.support.constraint.ConstraintLayout>

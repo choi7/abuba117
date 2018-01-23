@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/textView5000"
+        android:id="@+id/textView500"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#FFFFFF"

@@ -97,7 +97,7 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
                 Intent intent = new Intent(getContext(), QuestionnaireDetailActivity.class);
                 intent.putExtra("seq_survey",surveyList[position].seq_survey);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                startActivity(intent);
+                startActivity(intent);
             }
         });
         adapter.notifyDataSetChanged();
@@ -132,6 +132,7 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
                     .build();
         }
 
+
         //해당 반 공지 조회
         public SelectNoticeList(String seq_kindergarden, String seq_kindergarden_class) {
             client = new OkHttpClient();
@@ -139,7 +140,6 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
                     .add("seq_kindergarden", seq_kindergarden)
                     .add("seq_kindergarden_class", seq_kindergarden_class)
                     .build();
-
             request = new okhttp3.Request.Builder()
                     .url(url)
                     .post(formBody)
@@ -154,7 +154,6 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
                     .add("seq_kindergarden_class", seq_kindergarden_class)
                     .add("page",page)
                     .build();
-
             request = new okhttp3.Request.Builder()
                     .url(url)
                     .post(formBody)

@@ -98,19 +98,14 @@ public class FragmentNotice extends android.support.v4.app.Fragment {
                 Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
                 intent.putExtra("seq_notice",noticeList[position].seq_notice);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
                 startActivity(intent);
             }
         });
         adapter.notifyDataSetChanged();
-
         return rootView;
-
-
 //        return inflater.inflate(R.layout.noticelistviewcustom, container, false);
-
-
     }
+
 
     class SelectNoticeList extends AsyncTask<Void, Void, String> {
         OkHttpClient client;

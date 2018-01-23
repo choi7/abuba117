@@ -21,7 +21,6 @@ import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CheckPeopleListActivity;
 import com.joyblock.abuba.CommentActivity;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
-import com.joyblock.abuba.NoticeEditorModifyActivity;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.util.TimeConverter;
 import com.joyblock.abuba.api_message.R14_SelectNoticeOne;

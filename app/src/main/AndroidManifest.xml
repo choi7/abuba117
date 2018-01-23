@@ -49,7 +49,7 @@
             android:name=".register.SchoolRegister_1Activity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".notice.NoticeViewComentActivity" />
-        <activity android:name=".NoticeEditorModifyActivity" />
+        <activity android:name=".notice.NoticeEditorModifyActivity" />
         <activity android:name=".calendar.CalendarActivity" />
         <activity android:name=".register.SchoolClassRegisterActivity" />
         <activity android:name=".register.ChildrenRegisterActivity" />
@@ -66,11 +66,11 @@
         <activity android:name=".calendar.CarteRegisterActivity" />
         <activity android:name=".NoticeAndQuestActivity" />
         <activity android:name=".test_park.QuestionnaireDetailActivity" />
-        <activity android:name=".RegisterAddressSelectActivity" />
-        <activity android:name=".RegisterJobSelectActivity" />
-        <activity android:name=".RegisterSchoolClassSelectActivity" />
+        <activity android:name=".register.RegisterAddressSelectActivity" />
+        <activity android:name=".register.RegisterJobSelectActivity" />
+        <activity android:name=".register.RegisterSchoolClassSelectActivity" />
         <activity
-            android:name=".RegisterStandbyActivity"
+            android:name=".register.RegisterStandbyActivity"
             android:hardwareAccelerated="false" />
         <activity
             android:name=".SplashActivity"
@@ -95,10 +95,12 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".CheckPeopleListActivity" />
         <activity android:name=".document.A3_2_MedicineView" />
-        <activity android:name=".document.A3_3_MedicineEditorView"></activity>
-        <activity android:name=".document.A3_1_Medicine_Parent"></activity>
-        <activity android:name=".document.A4_1_HomeComming_Parent"></activity>
-        <activity android:name=".document.A4_2_HomeCommingEditorView_Parent"></activity>
+        <activity android:name=".document.A3_3_MedicineEditorView" />
+        <activity android:name=".document.A3_1_Medicine_Parent" />
+        <activity android:name=".document.A4_1_HomeComming_Parent" />
+        <activity android:name=".document.A4_2_HomeCommingEditorView_Parent" />
+        <activity android:name=".Album" />
+        <activity android:name=".Alarm"></activity>
     </application>
 
 </manifest>

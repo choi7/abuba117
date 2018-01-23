@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,8 +31,6 @@ import com.android.volley.toolbox.Volley;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 
-import com.joyblock.abuba.RegisterAddressSelectActivity;
-import com.joyblock.abuba.RegisterJobSelectActivity;
 import com.joyblock.abuba.login.LoginActivity;
 
 import org.json.JSONException;

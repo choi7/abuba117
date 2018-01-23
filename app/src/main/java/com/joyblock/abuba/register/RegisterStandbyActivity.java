@@ -1,19 +1,17 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.register;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.R;
 import com.joyblock.abuba.login.LoginActivity;
 
 public class RegisterStandbyActivity extends BaseActivity {

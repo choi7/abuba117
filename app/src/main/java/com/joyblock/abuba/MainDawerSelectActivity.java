@@ -163,17 +163,18 @@ public class MainDawerSelectActivity extends BaseActivity
                         MainDawerSelectActivity.this.startActivity(s5);
 //                        finish();
                         break;
-                        /*
+
                     case "알림" :
-                        Intent s4 = new Intent(MainDawerSelectActivity.this, NoticeActivity.class);
+                        Intent s4 = new Intent(MainDawerSelectActivity.this, Alarm.class);
                         MainDawerSelectActivity.this.startActivity(s4);
                         break;
 
+
                     case "사진 앨범" :
-                        Intent s6 = new Intent(MainDawerSelectActivity.this, PhotoActivity.class);
+                        Intent s6 = new Intent(MainDawerSelectActivity.this, Album.class);
                         MainDawerSelectActivity.this.startActivity(s6);
                         break;
-                        */
+
 
                 }
 

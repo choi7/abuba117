@@ -20,12 +20,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.joyblock.abuba.BaseActivity;
 
-import com.joyblock.abuba.RegisterJobSelectActivity;
 import com.joyblock.abuba.register.MainActivity;
 import com.joyblock.abuba.MainDawerSelectActivity;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.register.ProvisionActivity;
-import com.joyblock.abuba.register.RegisterActivity;
 
 import org.json.JSONObject;
 

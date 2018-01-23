@@ -5,36 +5,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CustomDialog;
 import com.joyblock.abuba.R;
-import com.joyblock.abuba.RegisterAddressSelectActivity;
-import com.joyblock.abuba.RegisterSchoolClassSelectActivity;
-import com.joyblock.abuba.RegisterStandbyActivity;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 
 public class SchoolRegisterActivity extends BaseActivity {
     String garden_name, alertmsg;

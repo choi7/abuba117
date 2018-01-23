@@ -24,6 +24,7 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 
 import java.text.SimpleDateFormat;
@@ -39,7 +40,7 @@ import static android.graphics.Color.parseColor;
  * Created by hyoshinchoi on 2018. 1. 9..
  */
 
-public class CalendarActivity extends AppCompatActivity {
+public class CalendarActivity extends BaseActivity {
 
     private TextView tvDate;
     private GridAdapter gridAdapter;
@@ -50,7 +51,7 @@ public class CalendarActivity extends AppCompatActivity {
     //@Nullable
 //    @SuppressLint("WrongConstant")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar3);
