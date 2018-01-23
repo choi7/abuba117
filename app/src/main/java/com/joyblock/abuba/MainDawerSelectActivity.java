@@ -38,6 +38,7 @@ import com.joyblock.abuba.calendar.CalendarActivity;
 import com.joyblock.abuba.document.A1_DocumentSelect;
 import com.joyblock.abuba.login.LoginActivity;
 import com.joyblock.abuba.notice.NoticeActivity;
+import com.joyblock.abuba.test_park.A0_bus;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -149,7 +150,7 @@ public class MainDawerSelectActivity extends BaseActivity
 //                        finish();
                         break;
                     case "버스 위치 확인" :
-                        Intent s2 = new Intent(MainDawerSelectActivity.this, BusLocationActivity.class);
+                        Intent s2 = new Intent(MainDawerSelectActivity.this, A0_bus.class);
                         MainDawerSelectActivity.this.startActivity(s2);
 //                        finish();
                         break;

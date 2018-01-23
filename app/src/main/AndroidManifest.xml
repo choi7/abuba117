@@ -100,7 +100,22 @@
         <activity android:name=".document.A4_1_HomeComming_Parent" />
         <activity android:name=".document.A4_2_HomeCommingEditorView_Parent" />
         <activity android:name=".Album" />
-        <activity android:name=".Alarm"></activity>
+        <activity android:name=".Alarm" />
+        <activity android:name=".test_park.A0_bus"/>
+        <activity android:name=".test_park.A1_1_bus_location" />
+        <activity android:name=".test_park.A2_1_boading_management" />
+        <activity android:name=".test_park.A2_2_1_route_change_list" />
+        <activity android:name=".test_park.A2_2_2_route_change_detail" />
+        <activity android:name=".test_park.A2_2_3_route_change_select_goto" />
+        <activity android:name=".test_park.A2_2_4_route_change_select_day" />
+        <activity android:name=".test_park.A2_2_5_route_change_select_bus" />
+        <activity android:name=".test_park.A2_2_6_route_change_select_point" />
+        <activity android:name=".test_park.A2_3_1_route_registration_point_list" />
+        <activity android:name=".test_park.A2_3_2_route_registration_point_student_list" />
+        <activity android:name=".test_park.A2_3_3_route_registration_class_student_list" />
+        <activity android:name=".test_park.A3_1_student_guidance_bus_list" />
+        <activity android:name=".test_park.A3_2_student_guidance_select_point" />
+        <activity android:name=".test_park.A3_3_student_guidance_point_detail" />
     </application>
 
 </manifest>
