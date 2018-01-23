@@ -10,11 +10,11 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -68,12 +68,27 @@ public class Album extends BaseActivity {
         listView = (ListView) findViewById(R.id.album_ListView);
         mAdapters = new AlarmsListViewAdapter(this);
         listView.setAdapter(mAdapters);
-        mAdapters.addItem("ddd","ddd");
-        mAdapters.addItem("ddd","ddd");
-        mAdapters.addItem("ddd","ddd");
-        mAdapters.addItem("ddd","ddd");
-        mAdapters.addItem("ddd","ddd");
+//        mAdapters.addItem("ddd","ddd");
+//        mAdapters.addItem("ddd","ddd");
+//        mAdapters.addItem("ddd","ddd");
+//        mAdapters.addItem("ddd","ddd");
+//        mAdapters.addItem("ddd","ddd");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check),"노랑반","이쁜이들이에요","아무개","2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check),"노랑반","이쁜이들이에요","아무개","2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check),"노랑반","이쁜이들이에요","아무개","2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check),"노랑반","이쁜이들이에요","아무개","2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check),"노랑반","이쁜이들이에요","아무개","2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check),"노랑반","이쁜이들이에요","아무개","2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check),"노랑반","이쁜이들이에요","아무개","2018.01.01");
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("포지션은", String.valueOf(position));
+                Intent intent = new Intent(Album.this, NoticeEditorActivity.class);
+                Album.this.startActivity(intent);
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= 21) {
             // 21 버전 이상일 때
@@ -153,15 +168,14 @@ public class Album extends BaseActivity {
             this.mContext = mContext;
         }
 
-        public void addItem(String mTitle, String mDate) {
+        public void addItem(Drawable userImage, String mBan, String mTitle,String mName, String mTime) {
             ListDatas addInfo = null;
             addInfo = new ListDatas();
+            addInfo.userImage = userImage;
+            addInfo.mBan = mBan;
             addInfo.mTitle = mTitle;
-            addInfo.mTitle = mTitle;
-            addInfo.mTitle = mTitle;
-            addInfo.mTitle = mTitle;
-            addInfo.mTitle = mTitle;
-//            addInfo.mDate = mDate;
+            addInfo.mName = mName;
+            addInfo.mTime = mTime;
 
             mListData.add(addInfo);
         }
@@ -194,17 +208,58 @@ public class Album extends BaseActivity {
                 holder.name = (TextView) convertView.findViewById(R.id.noticeDetailNameText);
                 holder.time = (TextView) convertView.findViewById(R.id.noticeDetailTimeText);
                 holder.text = (TextView) convertView.findViewById(R.id.textView27);
+                TextView txt = (TextView) convertView.findViewById(R.id.textView91);
+                txt.setVisibility(View.GONE);
                 holder.userImage = (ImageView) convertView.findViewById(R.id.noticeDetailUserImage);
                 holder.insertAndDelete = (ImageView) convertView.findViewById(R.id.noticeDetailinsertAndDeleteText);
                 holder.checkPushImage = (ImageView) convertView.findViewById(R.id.checkPushImageView);
-//                linearLayout = (LinearLayout) convertView.findViewById(R.id.joblistviewcustomLayout);
+                mRecyclerView = (RecyclerView) convertView.findViewById(R.id.album_recyclerView);
+                mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+                // 지정된 레이아웃매니저를 RecyclerView에 Set 해주어야한다.
+
+                mRecyclerView.setLayoutManager(mLayoutManager);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             ListDatas mData = mListData.get(position);
-//            holder.mText.setText(mData.mTitle);
-//            holder.mText1.setText(mData.mDate);
+            holder.banText.setText(mData.mBan);
+            holder.title.setText(mData.mTitle);
+            holder.name.setText(mData.mName);
+            holder.time.setText(mData.mTime);
+            holder.userImage.setImageDrawable(mData.userImage);
+
+
+            holder.text.setVisibility(View.GONE);
+            holder.insertAndDelete.setVisibility(View.GONE);
+            holder.checkPushImage.setVisibility(View.GONE);
+
+
+/*
+            mRecyclerView = (RecyclerView) findViewById(R.id.album_recyclerView);
+//        mRecyclerView.setHasFixedSize(true);
+
+        // StaggeredGrid 레이아웃을 사용한다
+//        mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+            mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+        // 지정된 레이아웃매니저를 RecyclerView에 Set 해주어야한다.
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+//        Adapter = new AlbumListViewAdapter(items, mContext);
+*/
+
+
+        myDataset = new ArrayList<>();
+        mAdapter = new MyAdapter(myDataset);
+        mRecyclerView.setAdapter(mAdapter);
+        myDataset.add(new MyAdapter.MyData(R.drawable.alarm_image));
+        myDataset.add(new MyAdapter.MyData(R.drawable.alarm_image));
+        myDataset.add(new MyAdapter.MyData(R.drawable.alarm_image));
+        myDataset.add(new MyAdapter.MyData(R.drawable.alarm_image));
+        myDataset.add(new MyAdapter.MyData(R.drawable.alarm_image));
+        myDataset.add(new MyAdapter.MyData(R.drawable.bus_2));
+        myDataset.add(new MyAdapter.MyData(R.drawable.ch_off));
+
 
 
 

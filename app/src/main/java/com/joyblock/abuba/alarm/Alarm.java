@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.alarm;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.R;
 
 import java.util.ArrayList;
 
