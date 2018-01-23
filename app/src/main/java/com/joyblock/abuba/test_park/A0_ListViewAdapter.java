@@ -69,10 +69,22 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
             iconImageView1 = (ImageView) convertView.findViewById(R.id.imageView_item1);
             holder.iconImageView1=iconImageView1;
         }else{
-            holder=(ListViewHolder)convertView.getTag();
-            iconImageView=holder.iconImageView;
-            titleTextView=holder.titleTextView;
-            iconImageView1=holder.iconImageView1;
+            try {
+                holder = (ListViewHolder) convertView.getTag();
+                iconImageView = holder.iconImageView;
+                titleTextView = holder.titleTextView;
+                iconImageView1 = holder.iconImageView1;
+            }catch(NullPointerException e){
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.park_fragment_document_listview_item, parent, false);
+                holder=new ListViewHolder();
+                iconImageView = (ImageView) convertView.findViewById(R.id.imageView_item);
+                holder.iconImageView=iconImageView;
+                titleTextView = (TextView) convertView.findViewById(R.id.textView_item);
+                holder.titleTextView=titleTextView;
+                iconImageView1 = (ImageView) convertView.findViewById(R.id.imageView_item1);
+                holder.iconImageView1=iconImageView1;
+            }
         }
 
 //        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
@@ -97,6 +109,21 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
         return convertView;
     }
 
+    public void removeItem(int index){
+        listViewItems.remove(index);
+    }
+
+
+    public void addItem(Drawable icon, String title, Drawable icon1,int index) {
+        Item item = new Item();
+
+        item.setIcon(icon);
+        item.setTitle(title);
+        item.setIcon1(icon1);
+
+        listViewItems.add(index,item);
+    }
+
     public void addItem(Drawable icon, String title, Drawable icon1) {
         Item item = new Item();
 
@@ -108,8 +135,7 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
     }
     private class ListViewHolder {
         ImageView iconImageView,iconImageView1;
-        TextView titleTextView
-                ;
+        TextView titleTextView;
     }
 
     public class Item {
