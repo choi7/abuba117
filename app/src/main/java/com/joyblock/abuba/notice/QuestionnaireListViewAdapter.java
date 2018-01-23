@@ -1,4 +1,4 @@
-package com.joyblock.abuba.test_park;
+package com.joyblock.abuba.notice;
 
 import android.app.Activity;
 import android.content.Context;

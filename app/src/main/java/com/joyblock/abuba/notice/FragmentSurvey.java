@@ -15,7 +15,6 @@ import android.widget.ListView;
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.api_message.R20_SelectSurveyList;
-import com.joyblock.abuba.test_park.QuestionnaireDetailActivity;
 import com.joyblock.abuba.util.TimeConverter;
 
 import org.json.JSONObject;

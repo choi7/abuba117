@@ -27,7 +27,7 @@
         </provider>
 
         <activity
-            android:name=".test_park.QuestionnaireActivity"
+            android:name=".notice.QuestionnaireActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".notice.NoticeTabActivity" />
         <activity android:name=".register.MainActivity" />
@@ -65,7 +65,7 @@
         <activity android:name=".register.ProvisionActivity" />
         <activity android:name=".calendar.CarteRegisterActivity" />
         <activity android:name=".NoticeAndQuestActivity" />
-        <activity android:name=".test_park.QuestionnaireDetailActivity" />
+        <activity android:name=".notice.QuestionnaireDetailActivity" />
         <activity android:name=".register.RegisterAddressSelectActivity" />
         <activity android:name=".register.RegisterJobSelectActivity" />
         <activity android:name=".register.RegisterSchoolClassSelectActivity" />

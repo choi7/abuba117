@@ -1,4 +1,4 @@
-package com.joyblock.abuba.test_park;
+package com.joyblock.abuba.notice;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +14,6 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -26,7 +25,6 @@ import com.joyblock.abuba.util.ImageFileProcessor;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.util.TimeConverter;
 import com.joyblock.abuba.api_message.R18_InsertSurvey;
-import com.joyblock.abuba.notice.NoticeActivity;
 
 import org.json.JSONObject;
 

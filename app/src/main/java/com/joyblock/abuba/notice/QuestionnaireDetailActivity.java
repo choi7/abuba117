@@ -1,4 +1,4 @@
-package com.joyblock.abuba.test_park;
+package com.joyblock.abuba.notice;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -20,7 +20,6 @@ import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.api_message.R21_SelectNoticeOne;
-import com.joyblock.abuba.notice.NoticeActivity;
 
 import org.json.JSONObject;
 
