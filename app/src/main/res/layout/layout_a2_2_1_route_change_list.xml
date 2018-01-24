@@ -3,7 +3,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.test_park.A2_2_1_route_change_list">
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView500"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView500">
+
+        <Button
+            android:id="@+id/bt_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#9966FF"
+            android:fontFamily="@font/nanumsquarebold"
+            android:onClick="showMonthList"
+            android:text="등원"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textView499"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF" />
+
+        <Button
+            android:id="@+id/bt_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#9966FF"
+            android:fontFamily="@font/nanumsquarebold"
+            android:onClick="showWeekList"
+            android:text="하원"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+    <com.joyblock.abuba.bottomtabbar
+        android:id="@+id/PageNavigationView1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></com.joyblock.abuba.bottomtabbar>
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/education_plan_fragment_container"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/PageNavigationView1"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/linearLayout">-->
+
+    <!--</FrameLayout>-->
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toTopOf="@+id/PageNavigationView1"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+
 
 </android.support.constraint.ConstraintLayout>
