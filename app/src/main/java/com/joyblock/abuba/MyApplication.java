@@ -8,14 +8,9 @@ import android.graphics.Typeface;
  */
 
 public class MyApplication extends Application {
-    public Typeface NanumSquareBold,NanumSquareExtraBold,NanumSquareLight,NanumSquareRegular;
 
-    public void setFont(){
-        NanumSquareBold=Typeface.createFromAsset(getAssets(),"NanumSquareBold.ttf");
-        NanumSquareExtraBold=Typeface.createFromAsset(getAssets(), "NanumSquareExtraBold.ttf");
-        NanumSquareLight=Typeface.createFromAsset(getAssets(), "NanumSquareLight.ttf");
-        NanumSquareRegular=Typeface.createFromAsset(getAssets(), "NanumSquareRegular.ttf");
-    }
+    public String seq_user;
+
 
 
 

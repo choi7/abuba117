@@ -62,20 +62,21 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         title.setText("실시간버스위치");
         title.setVisibility(View.VISIBLE);
 
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    getPackageName(), PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.e("MY KEY HASH:",
-//                        Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//
-//        } catch (NoSuchAlgorithmException e) {
-//
-//        }
+        //패키지 명 출력
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.e("MY KEY HASH:",
+                        Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
 
         MapLayout mapLayout = new MapLayout(this);
         mMapView = mapLayout.getMapView();
