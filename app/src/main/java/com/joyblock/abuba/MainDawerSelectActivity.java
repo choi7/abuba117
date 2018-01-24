@@ -532,6 +532,7 @@ public class MainDawerSelectActivity extends BaseActivity
 //                    JSONObject json4 = new JSONObject(json3.getString(""));
                     editor = pref.edit();
                     editor.putString("kindergarden_class_name", json4.getString("kindergarden_class_name"));
+                    editor.putString("seq_kids", json4.getString("seq_kids"));
                     editor.putString("seq_kindergarden", json4.getString("seq_kindergarden"));
                     editor.putString("kindergarden_name", json4.getString("kindergarden_name"));
                     editor.putString("rep_flag", json4.getString("rep_flag"));
@@ -541,6 +542,7 @@ public class MainDawerSelectActivity extends BaseActivity
                     editor.putString("kids_name", json4.getString("kids_name"));
                     editor.commit();
                     Log.d("반환값 : ", pref.getString("kindergarden_class_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+                    Log.d("반환값 : ", pref.getString("seq_kids", "업"));
                     Log.d("반환값 : ", pref.getString("seq_kindergarden", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
                     Log.d("반환값 : ", pref.getString("kindergarden_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
                     Log.d("반환값 : ", pref.getString("rep_flag", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));

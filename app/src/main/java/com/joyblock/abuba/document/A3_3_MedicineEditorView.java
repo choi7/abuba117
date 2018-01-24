@@ -1,11 +1,14 @@
 package com.joyblock.abuba.document;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,8 +40,9 @@ public class A3_3_MedicineEditorView extends BaseActivity {
     Integer checkInt;
     TextView pushText, timeText;
     String seq_user_parent, seq_kindergarden, seq_kindergarden_class, seq_kids, Symptom,
-            medicine_type, dosage, dosage_time,
-            keep_method, uniqueness, year, day, month, files;
+            medicine_type, dosage, dosage_time, kindergarden_class_name,
+            keep_method, uniqueness, year, day, month, files, kindergarden_name, kids_name;
+    String getTime, getday, getmonth, getyear;
     EditText symptomEditText, medicineTypeEditText, medicationCapacityEditText,
             medicationTimeEditText, specialNoteEditText;
 
@@ -47,10 +51,9 @@ public class A3_3_MedicineEditorView extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_a3_3__medicine_editor_view);
 
-        long now = System.currentTimeMillis();
-        Date date = new Date(now);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-        String getTime = sdf.format(date);
+
+        Timeget();
+
         findviewbyid();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
@@ -63,20 +66,21 @@ public class A3_3_MedicineEditorView extends BaseActivity {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
 
-
-        String class_name = pref.getString("kindergarden_class_name","");
-        pref.getString("seq_kindergarden","");
-        pref.getString("kindergarden_name","");
-        pref.getString("name_title","");
-        String name = pref.getString("name","");
-        String kids_name = pref.getString("kids_name","");
+        seq_kindergarden_class = "1";
+        seq_user_parent = pref.getString("seq_user", "");
+        kindergarden_class_name = pref.getString("kindergarden_class_name", "");
+        seq_kindergarden = pref.getString("seq_kindergarden", "");
+        kindergarden_name = pref.getString("kindergarden_name", "");
+        pref.getString("name_title", "");
+        String name = pref.getString("name", "");
+        kids_name = pref.getString("kids_name", "");
+        seq_kids = pref.getString("seq_kids", "");
 
         timeText.setText(getTime + " " + name);
 
         TextView title = ((TextView) findViewById(R.id.titleName));
-        title.setText(kids_name+"("+class_name+")");
+        title.setText(kids_name + "(" + kindergarden_class_name + ")");
         title.setVisibility(View.VISIBLE);
-
 
 
         Log.d("반환값 : ", pref.getString("kindergarden_class_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
@@ -86,8 +90,7 @@ public class A3_3_MedicineEditorView extends BaseActivity {
         Log.d("반환값 : ", pref.getString("name_title", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
         Log.d("반환값 : ", pref.getString("name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
         Log.d("반환값 : ", pref.getString("kids_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-
-
+        Log.d("반환값 : ", pref.getString("seq_kids", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
 
 
         constraintLayout1.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +99,7 @@ public class A3_3_MedicineEditorView extends BaseActivity {
                 checkImage1.setImageDrawable(getResources().getDrawable(R.drawable.ch_on));
                 checkImage2.setImageDrawable(getResources().getDrawable(R.drawable.ch_off));
                 checkInt = 0;
+                keep_method = "상온";
             }
         });
 
@@ -105,6 +109,39 @@ public class A3_3_MedicineEditorView extends BaseActivity {
                 checkImage1.setImageDrawable(getResources().getDrawable(R.drawable.ch_off));
                 checkImage2.setImageDrawable(getResources().getDrawable(R.drawable.ch_on));
                 checkInt = 1;
+                keep_method = "냉장";
+            }
+        });
+
+        pushText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder nd = new AlertDialog.Builder(A3_3_MedicineEditorView.this);
+                nd.setMessage("등록하시겠습니까")
+                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Symptom = symptomEditText.getText().toString();
+                                medicine_type = medicineTypeEditText.getText().toString();
+                                dosage = medicationCapacityEditText.getText().toString();
+                                dosage_time = medicationTimeEditText.getText().toString();
+//                                keep_method = symptomEditText.getText().toString();
+                                uniqueness = specialNoteEditText.getText().toString();
+//                                year month day files
+                                files = "";
+                                new InsertMedicationRequest(seq_user_parent, seq_kindergarden,
+                                        seq_kindergarden_class, seq_kids, Symptom, medicine_type,
+                                        dosage, dosage_time, keep_method, uniqueness, getyear, getmonth, getday)
+                                        .execute();
+
+                                Intent intent = new Intent(A3_3_MedicineEditorView.this, A3_1_Medicine_Parent.class);
+                                A3_3_MedicineEditorView.this.startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setPositiveButton("취소", null)
+                        .create()
+                        .show();
             }
         });
 
@@ -120,14 +157,14 @@ public class A3_3_MedicineEditorView extends BaseActivity {
         //투약의뢰서 등록
         public InsertMedicationRequest(String seq_user_parent, String seq_kindergarden, String seq_kindergarden_class,
                                        String seq_kids, String Symptom, String medicine_type, String dosage, String dosage_time,
-                                       String keep_method, String uniqueness, String year, String day, String month, String files) {
+                                       String keep_method, String uniqueness, String year, String day, String month) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
                     .add("seq_user_parent", seq_user_parent)
                     .add("seq_kindergarden", seq_kindergarden)
                     .add("seq_kindergarden_class", seq_kindergarden_class)
                     .add("seq_kids", seq_kids)
-                    .add("Symptom", Symptom)
+                    .add("symptom", Symptom)
                     .add("medicine_type", medicine_type)
                     .add("dosage", dosage)
                     .add("dosage_time", dosage_time)
@@ -136,7 +173,6 @@ public class A3_3_MedicineEditorView extends BaseActivity {
                     .add("year", year)
                     .add("month", month)
                     .add("day", day)
-                    .add("files", files)
                     .build();
 
             request = new okhttp3.Request.Builder()
@@ -199,6 +235,22 @@ public class A3_3_MedicineEditorView extends BaseActivity {
         medicationCapacityEditText = (EditText) findViewById(R.id.medicationCapacityEditText);
         medicationTimeEditText = (EditText) findViewById(R.id.medicationTimeEditText);
         specialNoteEditText = (EditText) findViewById(R.id.specialNoteEditText);
+
+    }
+
+    public void Timeget() {
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat day = new SimpleDateFormat("dd");
+        SimpleDateFormat month = new SimpleDateFormat("MM");
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
+        getTime = sdf.format(date);
+        getday = day.format(date);
+        getmonth = month.format(date);
+        getyear = year.format(date);
+        Log.d("시간은" , getday+""+getmonth+""+getyear);
+
 
     }
 

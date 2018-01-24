@@ -7,39 +7,39 @@
 
 
     <TextView
-        android:id="@+id/textView111"
+        android:id="@+id/a3_1_ListView_TimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="23.25dp"
         android:layout_marginTop="8dp"
-        android:text="2017.01.05(수)"
-        android:textSize="10dp"
-        android:textColor="#000000"
         android:fontFamily="@font/nanumsquareregular"
+        android:text="2017.01.05(수)"
+        android:textColor="#000000"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView113"
+        android:id="@+id/a3_1ListView_nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:textSize="13.75dp"
-        android:text="김다정(호랑이반)"
         android:fontFamily="@font/nanumsquarebold"
+        android:text="김다정(호랑이반)"
         android:textColor="#000000"
+        android:textSize="13.75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView14"
+        android:id="@+id/a3_1ListView_CheckImageView"
         android:layout_width="37dp"
         android:layout_height="21.5dp"
         android:layout_marginBottom="8dp"
