@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.album;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -15,6 +15,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.CheckPeopleListActivity;
+import com.joyblock.abuba.CommentActivity;
+import com.joyblock.abuba.CustomDialogModifyAndDel;
+import com.joyblock.abuba.MainDawerSelectActivity;
+import com.joyblock.abuba.R;
 
 /**
  * Created by hyoshinchoi on 2018. 1. 23..
