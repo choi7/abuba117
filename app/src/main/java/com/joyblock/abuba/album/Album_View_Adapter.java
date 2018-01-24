@@ -1,18 +1,12 @@
 package com.joyblock.abuba.album;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 import com.squareup.picasso.Picasso;
@@ -70,6 +64,8 @@ public class Album_View_Adapter extends BaseAdapter implements Serializable {
         }
 //        name.setText(list.get(pos).getName());
         Picasso.with(context).load(list.get(position).name).into(name);
+//        name.setScaleType(ImageView.ScaleType.CENTER);
+//        name.setAdjustViewBounds(true);
 
 
         return convertView;

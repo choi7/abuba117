@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.content.ClipData;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.drm.DrmStore;
 import android.graphics.Bitmap;
@@ -33,9 +35,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,7 +104,7 @@ public class P_3_Album_Editor extends BaseActivity {
         setContentView(R.layout.layout_p_3_album_editor);
 
 
-        activity=this;
+        activity = this;
 
         titleText = (EditText) findViewById(R.id.titleText);
         inText = (EditText) findViewById(R.id.inText);
@@ -120,8 +124,7 @@ public class P_3_Album_Editor extends BaseActivity {
 //                ArrayList<File> arrayList = new ArrayList<>();
                 ImagePicker.create(P_3_Album_Editor.this).showCamera(false).limit(10).start();
 //                Log.d("arrayList", String.valueOf(arrayList));
-                album_view_adapter.notifyDataSetChanged();
-                album_iamge_listview.deferNotifyDataSetChanged();
+
             }
         });
 
@@ -132,7 +135,10 @@ public class P_3_Album_Editor extends BaseActivity {
         replyCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imageChange) {
+                album_view_adapter.notifyDataSetChanged();
+                album_iamge_listview.deferNotifyDataSetChanged();
+
+                if (imageChange) {
                     replyCheck.setImageDrawable(getResources().getDrawable(R.drawable.del));
                     is_reply = "n";
                     imageChange = false;
@@ -150,11 +156,51 @@ public class P_3_Album_Editor extends BaseActivity {
             checkPermissions();
         }
 
+
+        //리소스를 Uri로 변환하기
+        Resources resources = this.getResources();
+        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + resources.getResourcePackageName(R.drawable.alarm_image) + '/' + resources.getResourceTypeName(R.drawable.alarm_image) + '/' + resources.getResourceEntryName(R.drawable.alarm_image));
+
         album_view_adapter = new Album_View_Adapter();
+//        album_iamge_listview.setAdapter(album_view_adapter);
+//        album_view_adapter.addItem(uri);
+//        album_view_adapter.addItem(uri);
+//        album_view_adapter.addItem(uri);
+//        album_view_adapter.addItem(uri);
+//        album_view_adapter.addItem(uri);
+        setListViewHeightBasedOnChildren(album_iamge_listview);
+
+
 
     }
+    //설문지 항목 리스트가 추가 될때마다 스크롤이 되는데 이때 스크롤을 없애고 공간을 늘리는 메소드
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            //listItem.measure(0, 0);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
+
+        listView.requestLayout();
+    }
+
 
     TextView title;
+
     public void actionbarCustom() {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff66ccff));
@@ -163,13 +209,13 @@ public class P_3_Album_Editor extends BaseActivity {
         title = (TextView) findViewById(R.id.titleName);
         title.setText("전체");
 
-        seq_user = pref.getString("seq_user","없음");
-        seq_kindergarden = pref.getString("seq_kindergarden","없음");
+        seq_user = pref.getString("seq_user", "없음");
+        seq_kindergarden = pref.getString("seq_kindergarden", "없음");
 
         title.setVisibility(View.VISIBLE);
-        title.setOnClickListener(new View.OnClickListener(){
+        title.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
                 new P_3_Album_Editor.SelectKindergardenClassList(seq_kindergarden).execute();
 
@@ -217,10 +263,10 @@ public class P_3_Album_Editor extends BaseActivity {
                                 maintitle = titleText.getText().toString();
                                 intext = inText.getText().toString();
 
-                                Log.d("타이틀" , maintitle);
-                                Log.d("sub타이틀" , intext);
+                                Log.d("타이틀", maintitle);
+                                Log.d("sub타이틀", intext);
 
-                                P_3_Album_Editor.InsertNotice buyTask = new P_3_Album_Editor.InsertNotice(seq_user,seq_kindergarden,is_reply,maintitle, intext);
+                                P_3_Album_Editor.InsertNotice buyTask = new P_3_Album_Editor.InsertNotice(seq_user, seq_kindergarden, is_reply, maintitle, intext);
                                 buyTask.execute();
 
                             }
@@ -241,14 +287,10 @@ public class P_3_Album_Editor extends BaseActivity {
     }
 
 
-
     class InsertNotice extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody1;
-
-
-
 
 
         public InsertNotice(String seq_user, String seq_kindergarden, String is_reply, String title, String content) {
@@ -263,7 +305,7 @@ public class P_3_Album_Editor extends BaseActivity {
             // nowDate 변수에 값을 저장한다.
             String formatDate = sdfNow.format(date);
 
-            imageName = seq_user + "_" +seq_kindergarden + ".png";
+            imageName = seq_user + "_" + seq_kindergarden + ".png";
 
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
@@ -275,7 +317,7 @@ public class P_3_Album_Editor extends BaseActivity {
                     .addFormDataPart("is_reply", is_reply)
                     .addFormDataPart("title", title)
                     .addFormDataPart("content", content)
-                    .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, image))
+                    .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
                     .build();
 
             request = new okhttp3.Request.Builder()
@@ -317,10 +359,10 @@ public class P_3_Album_Editor extends BaseActivity {
 //                    System.out.println(json1);
                     Intent intent = new Intent(P_3_Album_Editor.this, NoticeActivity.class);
                     P_3_Album_Editor.this.startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "등록완료.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "등록완료.", Toast.LENGTH_LONG).show();
                     finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "잠시 후에 재시도 해주세요.",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "잠시 후에 재시도 해주세요.", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -332,7 +374,7 @@ public class P_3_Album_Editor extends BaseActivity {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/selectKindergardenClassList.do";
+        String url = "http://58.229.208.246/Ububa/selectKindergardenClassList.do";
 
         public SelectKindergardenClassList(String seq_kindergarden) {
             client = new OkHttpClient();
@@ -345,7 +387,7 @@ public class P_3_Album_Editor extends BaseActivity {
                     .build();
         }
 
-        public SelectKindergardenClassList(String seq_kindergarden,String page) {
+        public SelectKindergardenClassList(String seq_kindergarden, String page) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
                     .add("seq_kindergarden", seq_kindergarden)
@@ -378,22 +420,22 @@ public class P_3_Album_Editor extends BaseActivity {
             try {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                classList=new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"),R6_SelectKindergardenClassList[].class);
+                classList = new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"), R6_SelectKindergardenClassList[].class);
 
                 View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
                 // 해당 뷰에 리스트뷰 호출
-                listview = (ListView)view.findViewById(R.id.notice_popup_listview);
+                listview = (ListView) view.findViewById(R.id.notice_popup_listview);
                 // 리스트뷰에 어댑터 설정
-                adapter=new BanListViewAdapter();
+                adapter = new BanListViewAdapter();
                 listview.setAdapter(adapter);
                 adapter.addItem("전체");
-                for(R6_SelectKindergardenClassList list:classList){
+                for (R6_SelectKindergardenClassList list : classList) {
                     adapter.addItem(list.kindergarden_class_name);
                 }
                 adapter.notifyDataSetChanged();
 
                 // 반 다이얼로그 생성
-                banListDialogBuilder= new AlertDialog.Builder(activity);
+                banListDialogBuilder = new AlertDialog.Builder(activity);
                 // 리스트뷰 설정된 레이아웃
                 banListDialogBuilder.setView(view);
 
@@ -401,19 +443,19 @@ public class P_3_Album_Editor extends BaseActivity {
 //                banListDialogBuilder.setPositiveButton("확인", null);
 
                 // 반 다이얼로그 보기
-                banListDialogInterface=banListDialogBuilder.show();
+                banListDialogInterface = banListDialogBuilder.show();
 
                 //반 다이얼로그 이벤트 처리
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        BanListViewItem item= adapter.list.get(position);
+                        BanListViewItem item = adapter.list.get(position);
 
 
-                        seq_kindergarden_class=position==0?"0":classList[position-1].seq_kindergarden_class;
+                        seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
                         banListDialogInterface.dismiss();
                         title.setText(item.getName());
-                        Toast.makeText(getApplicationContext(), position==0?"전체":item.getName(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
                     }
                 });
             } catch (Exception e) {
@@ -421,7 +463,6 @@ public class P_3_Album_Editor extends BaseActivity {
             }
         }
     }
-
 
 
     String mImageCaptureName;
@@ -443,7 +484,7 @@ public class P_3_Album_Editor extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         Log.d("imagesss", String.valueOf(data.getData()));
-        if(ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             List<com.esafirm.imagepicker.model.Image> images = ImagePicker.getImages(data);
             com.esafirm.imagepicker.model.Image image = ImagePicker.getFirstImageOrNull(data);
             Log.d("images", String.valueOf(images));
@@ -455,7 +496,6 @@ public class P_3_Album_Editor extends BaseActivity {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
-
 
 
         if (resultCode == RESULT_OK) {
@@ -481,15 +521,15 @@ public class P_3_Album_Editor extends BaseActivity {
 
 
         for (int i = 0, l = images.size(); i < l; i++) {
-            Log.d("getpath",images.get(i).getPath());
+            Log.d("getpath", images.get(i).getPath());
 //            stringBuffer.append(images.get(i).getPath()).append("\n");
             fileName = images.get(i).getPath();
             Uri fileUrl = Uri.parse(fileName);
             String filePath = fileUrl.getPath();
-            Cursor c = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, "_data = '"+filePath+"'",null,null);
+            Cursor c = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, "_data = '" + filePath + "'", null, null);
             c.moveToNext();
             int id = c.getInt(c.getColumnIndex("_id"));
-            Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,id);
+            Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
             inText.setText(stringBuffer.toString());
 
             sendPicture(uri);
@@ -519,18 +559,18 @@ public class P_3_Album_Editor extends BaseActivity {
             bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-            if(bitmap1.getByteCount() > 100000) {
+            if (bitmap1.getByteCount() > 100000) {
 //                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
-                bitmap1.compress( PNG, 1, stream) ;
-                image=stream.toByteArray();
+                bitmap1.compress(PNG, 1, stream);
+                image = stream.toByteArray();
             } else {
-                bitmap1.compress( PNG, 100, stream) ;
-                image=stream.toByteArray();
+                bitmap1.compress(PNG, 100, stream);
+                image = stream.toByteArray();
 
             }
 
-            Log.d("Tag","size"+image.length);
-            Log.d("Tag","size"+bitmap1.getByteCount());
+            Log.d("Tag", "size" + image.length);
+            Log.d("Tag", "size" + bitmap1.getByteCount());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -544,8 +584,6 @@ public class P_3_Album_Editor extends BaseActivity {
         */
 
 
-
-
 //        image = bitmapToByteArray(bitmap1);
 
         Drawable d = new BitmapDrawable(getResources(), bitmap1);
@@ -553,6 +591,7 @@ public class P_3_Album_Editor extends BaseActivity {
 
 
         album_view_adapter.addItem(data);
+        setListViewHeightBasedOnChildren(album_iamge_listview);
 
 
         Log.d("albumimage", "ss");
@@ -563,10 +602,10 @@ public class P_3_Album_Editor extends BaseActivity {
 
     //사진의 절대경로 구하기
     private String getRealPathFromURI(Uri contentUri) {
-        int column_index=0;
+        int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
         return cursor.getString(column_index);
@@ -598,11 +637,11 @@ public class P_3_Album_Editor extends BaseActivity {
     }
 
     //안드로이드 7.0 부터는 앱권한이 적용되지 않아 유저한테 직접 권한을 받는 메소드
-    public void checkPermissions(){
+    public void checkPermissions() {
 
         if (ContextCompat.checkSelfPermission(P_3_Album_Editor.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED||
+                != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(P_3_Album_Editor.this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -627,7 +666,7 @@ public class P_3_Album_Editor extends BaseActivity {
                 // arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED ){
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
                     // permission was granted.
 
@@ -642,9 +681,6 @@ public class P_3_Album_Editor extends BaseActivity {
 
         }
     }
-
-
-
 
 
 }

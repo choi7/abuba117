@@ -58,7 +58,11 @@
             <ListView
                 android:id="@+id/p_3_Album_Editor_ListView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:divider="@null"
+
+                android:dividerHeight="0dp"
+                />
 
             <EditText
                 android:id="@+id/inText"
