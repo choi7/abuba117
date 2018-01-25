@@ -3,7 +3,173 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.bus.A2_3_1_route_registration_point_list">
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView500"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView500">
+
+        <Button
+            android:id="@+id/btn_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#9966FF"
+            android:fontFamily="@font/nanumsquarebold"
+            android:onClick="clickLeft"
+            android:text="등원"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textView499"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF" />
+
+
+        <Button
+            android:id="@+id/btn_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#9966FF"
+            android:fontFamily="@font/nanumsquarebold"
+            android:onClick="clickRight"
+            android:text="하원"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/a3_1ClassConstraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="43.5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:background="#FFFFFF"
+        >
+
+        <TextView
+            android:id="@+id/textView95"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24.25dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="반"
+            android:textColor="#C8C9CA"
+            android:textSize="13.75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="24.25dp" />
+
+        <TextView
+            android:id="@+id/a3_1_Class_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="전체"
+            android:textColor="#000000"
+            android:textSize="13.75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="17.5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/document_list_tap"
+            android:layout_marginRight="17.5dp" />
+
+        <TextView
+            android:id="@+id/textView97"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12.75dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="검색"
+            android:textColor="#C8C9CA"
+            android:textSize="13.75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView95"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="12.75dp" />
+
+        <TextView
+            android:id="@+id/textView99"
+            android:layout_width="match_parent"
+            android:layout_height="0.25dp"
+            android:background="#C8C9CA"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/class_name"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:background="#FFFFFF"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>-->
+
+    <TextView
+        android:id="@+id/textView94"
+        android:layout_width="match_parent"
+        android:layout_height="3.75dp"
+        android:background="#C8C9CA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout" />
+
+    <ListView
+        android:id="@+id/listview_point"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toTopOf="@+id/PageNavigationView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView94">
+
+    </ListView>
+
+    <com.joyblock.abuba.bottomtabbar
+        android:id="@+id/PageNavigationView1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></com.joyblock.abuba.bottomtabbar>
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>

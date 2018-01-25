@@ -41,11 +41,11 @@ public class A2_1_boading_management extends BaseActivity{
     BoardingListViewAdapter adapter;
     BanListViewAdapter class_adapter;
     ListView listview,class_listview;
-    Activity activity;
+//    Activity activity;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity=this;
+//        activity=this;
         flag=true;// 승/하차 플래그
         setContentView(R.layout.layout_a2_1_boading_management);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
