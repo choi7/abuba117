@@ -27,7 +27,6 @@ public class A2_1_boading_management extends BaseActivity{
 
 
     String str_boarding;
-    SharedPreferences.Editor editor;
     boolean flag;
 
 
@@ -35,9 +34,6 @@ public class A2_1_boading_management extends BaseActivity{
 
 
     CustomListViewDialog dialog;
-
-//    AlertDialog.Builder classListDialogBuilder;//,modDelDialogBuidler;
-//    DialogInterface classListDialogInterface;//,modeDelDialogInteface;
 
     ConstraintLayout class_ConstraintLayout;
 
@@ -157,9 +153,8 @@ public class A2_1_boading_management extends BaseActivity{
         title.setText("승차관리");
         title.setVisibility(View.VISIBLE);
 
-        String str_class="호랑이";
         TextView textview_class_name= (TextView) findViewById(R.id.a3_1_Class_TextView);
-        textview_class_name.setText(str_class+"반");
+        textview_class_name.setText("전체");
         textview_class_name.setVisibility(View.VISIBLE);
 
 //
