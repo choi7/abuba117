@@ -51,19 +51,7 @@ public class A3_2_MedicineView extends BaseActivity {
         Intent intent = getIntent();
         String seq_medication_request = intent.getStringExtra("seq_medication_request");
         Log.d("ee",seq_medication_request);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbarcustom);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
-        }
-        if (Build.VERSION.SDK_INT >= 23) {
-            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
-        }
-        title=((TextView)findViewById(R.id.titleName));
 
-        title.setVisibility(View.VISIBLE);
 
         new selectMedicationRequestOne(seq_medication_request).execute();
 
