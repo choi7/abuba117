@@ -36,6 +36,9 @@ import com.joyblock.abuba.alarm.Alarm;
 import com.joyblock.abuba.album.Album;
 import com.joyblock.abuba.api_message.R17_SelectMyKidsList;
 
+import com.joyblock.abuba.api_message.R18_InsertSurvey;
+import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
+import com.joyblock.abuba.api_message.R8_SelectMykindergardenList;
 import com.joyblock.abuba.calendar.CalendarActivity;
 import com.joyblock.abuba.document.A1_DocumentSelect;
 import com.joyblock.abuba.login.LoginActivity;
@@ -61,7 +64,6 @@ public class MainDawerSelectActivity extends BaseActivity
 
     SharedPreferences.Editor editor;
     String seq_user;
-
     String url = "http://58.229.208.246/Ububa/selectMyKindergardenList.do";
 
     //protected
@@ -73,10 +75,13 @@ public class MainDawerSelectActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
 
-        seq_user = pref.getString("seq_user","없음");
+//        seq_user = pref.getString("seq_user","없음");
+        seq_user=app.seq_user;
 
         new BuyTask(seq_user).execute();
         new BuyTasks(seq_user).execute();
+
+
 
 
         /*
@@ -386,7 +391,7 @@ public class MainDawerSelectActivity extends BaseActivity
         }
     }
 
-
+    int page1=1;
     public class BuyTask extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
@@ -396,6 +401,7 @@ public class MainDawerSelectActivity extends BaseActivity
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
                     .add("seq_user", seq_user)
+                    .add("page",page1+"")
                     .build();
             request = new okhttp3.Request.Builder()
                     .url(url)
@@ -420,7 +426,7 @@ public class MainDawerSelectActivity extends BaseActivity
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            Log.d("TAG", json);
+            Log.d("PARK", json);
             try {
                 JSONObject jsonResponse = new JSONObject(json);
                 System.out.println(jsonResponse);
@@ -430,30 +436,44 @@ public class MainDawerSelectActivity extends BaseActivity
                 if (ss == 200) {
                     String resultCode = jsonResponse.getString("resultCode");
                     String resultMsg = jsonResponse.getString("resultMsg");
-                    Log.d("resultCode : ", resultCode);
-                    Log.d("resultMsg : ", resultMsg);
+//                    Log.d("resultCode : ", resultCode);
+//                    Log.d("resultMsg : ", resultMsg);
+
+
+
 
 //                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
 //                    System.out.println(json);
 //                    JSONObject json2 = new JSONObject(json1.getString("user"));
 //                    System.out.println(json2);
-                    JSONArray json3 = new JSONArray(jsonResponse.getString("my_kindergarden_list"));
-                    System.out.print("xx");
-                    System.out.print(json3);
-                    System.out.print("xx");
-                    JSONObject json4 = new JSONObject(json3.getString(0));
-                    Log.d("json4", String.valueOf(json4));
-//                    JSONObject json4 = new JSONObject(json3.getString(""));
-                    editor = pref.edit();
-                    editor.putString("kindergarden_class_name", json4.getString("kindergarden_class_name"));
-                    editor.putString("seq_kindergarden", json4.getString("seq_kindergarden"));
-                    editor.putString("kindergarden_name", json4.getString("kindergarden_name"));
-                    editor.putString("rep_flag", json4.getString("rep_flag"));
-                    editor.commit();
-                    Log.d("반환값 : ", pref.getString("kindergarden_class_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("seq_kindergarden", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("kindergarden_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("rep_flag", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+//                    JSONArray json3 = new JSONArray(jsonResponse.getString("my_kindergarden_list"));
+//                    JSONObject json4 = new JSONObject(json3.getString(0));
+////                    JSONObject json4 = new JSONObject(json3.getString(""));
+
+
+
+                    R8_SelectMykindergardenList[] list=new GsonBuilder().create().fromJson(jsonResponse.getString("my_kindergarden_list"),R8_SelectMykindergardenList[].class);
+                    if(list.length>0) {
+                        for (int i = 0; i < list.length; i++)
+                            app.my_kindergarden_list.add(list[i]);
+                        page1++;
+
+                        new BuyTask(seq_user).execute();
+                    }else{
+
+                        editor = pref.edit();
+                        editor.putString("kindergarden_class_name", app.my_kindergarden_list.get(0).kindergarden_class_name);//json4.getString("kindergarden_class_name"));
+                        editor.putString("seq_kindergarden", app.my_kindergarden_list.get(0).seq_kindergarden);//json4.getString("seq_kindergarden"));
+                        editor.putString("kindergarden_name",app.my_kindergarden_list.get(0).kindergarden_name);// json4.getString("kindergarden_name"));
+                        editor.putString("rep_flag", app.my_kindergarden_list.get(0).rep_flag);//json4.getString("rep_flag"));
+                        editor.commit();
+
+                        String seq_kindergarden=app.my_kindergarden_list.get(0).seq_kindergarden;
+                        new SelectKindergardenClassList(seq_kindergarden).execute();
+
+
+                    }
+
 
                 } else if (ss == 102) {
                 }
@@ -465,8 +485,9 @@ public class MainDawerSelectActivity extends BaseActivity
     }
 
 
-    R17_SelectMyKidsList[] r17_selectMyKidsLists;
+    int page_num=1;
     class BuyTasks extends AsyncTask<Void, Void, String> {
+
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
@@ -475,6 +496,7 @@ public class MainDawerSelectActivity extends BaseActivity
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
                     .add("seq_user", seq_user)
+                    .add("page", page_num+"")
                     .build();
             request = new okhttp3.Request.Builder()
                     .url("http://58.229.208.246/Ububa/selectMyKidsList.do")
@@ -512,9 +534,10 @@ public class MainDawerSelectActivity extends BaseActivity
                     Log.d("resultCode : ", resultCode);
                     Log.d("resultMsg : ", resultMsg);
 
-                    r17_selectMyKidsLists=new GsonBuilder().create().fromJson(jsonResponse.getString("my_kids_list"),R17_SelectMyKidsList[].class);
-                    Log.d("detail" , String.valueOf(r17_selectMyKidsLists));
-                    Log.d("details" , String.valueOf(r17_selectMyKidsLists.length));
+
+//                    r17_selectMyKidsLists=new GsonBuilder().create().fromJson(jsonResponse.getString("my_kids_list"),R17_SelectMyKidsList[].class);
+//                    Log.d("detail" , String.valueOf(r17_selectMyKidsLists));
+//                    Log.d("details" , String.valueOf(r17_selectMyKidsLists.length));
 //                    notice_detail_seq_user = detail.seq_user;
 //                    intentPutExtraModifyData = jsonResponse.getString(message_key);
 
@@ -523,33 +546,44 @@ public class MainDawerSelectActivity extends BaseActivity
 //                    System.out.println(json);
 //                    JSONObject json2 = new JSONObject(json1.getString("user"));
 //                    System.out.println(json2);
-                    JSONArray json3 = new JSONArray(jsonResponse.getString("my_kids_list"));
-                    System.out.print("sdf");
-                    System.out.print(json3);
-                    System.out.print("sdf");
-                    JSONObject json4 = new JSONObject(json3.getString(0));
-                    Log.d("json4", String.valueOf(json4));
-//                    JSONObject json4 = new JSONObject(json3.getString(""));
-                    editor = pref.edit();
-                    editor.putString("kindergarden_class_name", json4.getString("kindergarden_class_name"));
-                    editor.putString("seq_kids", json4.getString("seq_kids"));
-                    editor.putString("seq_kindergarden", json4.getString("seq_kindergarden"));
-                    editor.putString("kindergarden_name", json4.getString("kindergarden_name"));
-                    editor.putString("rep_flag", json4.getString("rep_flag"));
-                    editor.putString("kids_image", json4.getString("kids_image"));
-                    editor.putString("name_title", json4.getString("name_title"));
-                    editor.putString("name", json4.getString("name"));
-                    editor.putString("kids_name", json4.getString("kids_name"));
-                    editor.commit();
-                    Log.d("반환값 : ", pref.getString("kindergarden_class_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("seq_kids", "업"));
-                    Log.d("반환값 : ", pref.getString("seq_kindergarden", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("kindergarden_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("rep_flag", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("kids_image", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("name_title", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    Log.d("반환값 : ", pref.getString("kids_name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+//                    JSONArray json3 = new JSONArray(jsonResponse.getString("my_kids_list"));
+//                    System.out.print("sdf");
+//                    System.out.print(json3);
+//                    System.out.print("sdf");
+//                    JSONObject json4 = new JSONObject(json3.getString(0));
+//                    Log.d("json4", String.valueOf(json4));
+////                    JSONObject json4 = new JSONObject(json3.getString(""));
+//                    editor = pref.edit();
+//                    editor.putString("kindergarden_class_name", json4.getString("kindergarden_class_name"));
+//                    editor.putString("seq_kids", json4.getString("seq_kids"));
+//                    editor.putString("seq_kindergarden", json4.getString("seq_kindergarden"));
+//                    editor.putString("kindergarden_name", json4.getString("kindergarden_name"));
+//                    editor.putString("rep_flag", json4.getString("rep_flag"));
+//                    editor.putString("kids_image", json4.getString("kids_image"));
+//                    editor.putString("name_title", json4.getString("name_title"));
+//                    editor.putString("name", json4.getString("name"));
+//                    editor.putString("kids_name", json4.getString("kids_name"));
+//                    editor.commit();
+
+                    R17_SelectMyKidsList[] r17_selectMyKidsLists=new GsonBuilder().create().fromJson(jsonResponse.getString("my_kids_list"),R17_SelectMyKidsList[].class);
+                    if(r17_selectMyKidsLists.length>0) {
+                        for (int i = 0; i < r17_selectMyKidsLists.length; i++)
+                            app.my_kids_list.add(r17_selectMyKidsLists[i]);
+                        page_num++;
+                        new BuyTasks(seq_user).execute();
+                    }else{editor = pref.edit();
+                        editor.putString("kindergarden_class_name", app.my_kids_list.get(0).kindergarden_class_name);//json4.getString("kindergarden_class_name"));
+                        editor.putString("seq_kids", app.my_kids_list.get(0).seq_kids);//json4.getString("seq_kids"));
+                        editor.putString("seq_kindergarden",app.my_kids_list.get(0).seq_kindergarden);// json4.getString("seq_kindergarden"));
+                        editor.putString("kindergarden_name", app.my_kids_list.get(0).kindergarden_name);//json4.getString("kindergarden_name"));
+                        editor.putString("rep_flag", app.my_kids_list.get(0).rep_flag);//json4.getString("rep_flag"));
+                        editor.putString("kids_image", app.my_kids_list.get(0).kids_image);//json4.getString("kids_image"));
+                        editor.putString("name_title", app.my_kids_list.get(0).name_title);//json4.getString("name_title"));
+                        editor.putString("name", app.my_kids_list.get(0).name);//json4.getString("name"));
+                        editor.putString("kids_name", app.my_kids_list.get(0).kids_name);//json4.getString("kids_name"));
+                        editor.commit();
+                    }
+
 
                 } else if (ss == 102) {
                 }
@@ -557,6 +591,77 @@ public class MainDawerSelectActivity extends BaseActivity
                 e.printStackTrace();
             }
 
+        }
+    }
+
+
+    int page3=1;
+    class SelectKindergardenClassList extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+        String url = "http://58.229.208.246/Ububa/selectKindergardenClassList.do";
+
+        public SelectKindergardenClassList(String seq_kindergarden) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_kindergarden", seq_kindergarden)
+                    .add("page", page3+"")
+                    .build();
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+        public SelectKindergardenClassList(String seq_kindergarden, String page) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_kindergarden", seq_kindergarden)
+                    .add("page", page)
+                    .build();
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("TAG", json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                R6_SelectKindergardenClassList[] list = new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"), R6_SelectKindergardenClassList[].class);
+                if(list.length>0) {
+                    for (int i = 0; i < list.length; i++)
+                        app.kindergarden_class_list.add(list[i]);
+                    page3++;
+                    new SelectKindergardenClassList(app.my_kindergarden_list.get(0).seq_kindergarden).execute();
+                }else{
+
+                }
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
