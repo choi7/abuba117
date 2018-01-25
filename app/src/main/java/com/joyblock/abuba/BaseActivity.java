@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.joyblock.abuba.data.MyApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -46,13 +47,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     public SharedPreferences pref;
     public Typeface NanumSquareBold,NanumSquareExtraBold,NanumSquareLight,NanumSquareRegular;
 
+    public MyApplication app;
+
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gson=new GsonBuilder().create();
-
+        app=(MyApplication)getApplicationContext();
         //액션바가 있을때 하단 명암 제거
         try {
             getSupportActionBar().setElevation(0);

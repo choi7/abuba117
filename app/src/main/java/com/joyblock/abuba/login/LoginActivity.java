@@ -39,7 +39,7 @@ public class LoginActivity extends BaseActivity {
     Button loginButton, registerButton;
     ConstraintLayout LoginLayout;
     String fullurl11 = "http://58.229.208.246/Ububa/login.do?";
-    String id, autoId, autoPassword;
+    String id;
     BuyTask buyTask;
     Boolean loginChecked = false;
     SharedPreferences.Editor editor;
@@ -63,7 +63,16 @@ public class LoginActivity extends BaseActivity {
         autoLoginCheckBox.setOnCheckedChangeListener(checkedChangeListener);
 
         //SharePreferences에 값이 저장되어 있는 id와 pass가 있을시 자동으로 로그인
-        autoLogin();
+        Log.d("AUTO","!"+pref.getString("id", " ")+" / "+pref.getString("password", " ")+"!");
+        if(pref.getBoolean("autoLogin", false)) {
+            idText.setText(pref.getString("id", " "));
+            passwordText.setText(pref.getString("password", " "));
+            autoLoginCheckBox.setChecked(true);
+            new BuyTask(pref.getString("id", " "), pref.getString("password", " ")).execute();
+        }
+
+
+//        autoLogin();
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -145,6 +154,16 @@ public class LoginActivity extends BaseActivity {
                     JSONObject json2 = new JSONObject(json1.getString("user"));
                     System.out.println(json2);
 
+
+                    app.name=json2.getString("name");
+                    app.phone_no=json2.getString("phone_no");
+                    app.authority=json2.getString("authority");
+                    app.seq_user=json2.getString("seq_user");
+                    app.push_yn=json2.getString("push_yn").equals("y");
+                    app.email=json2.getString("email");
+                    app.token=json2.getString("token");
+
+
                     editor = pref.edit();
                     editor.putString("name", json2.getString("name"));
                     editor.putString("phone_no", json2.getString("phone_no"));
@@ -153,12 +172,25 @@ public class LoginActivity extends BaseActivity {
                     editor.putString("push_yn", json2.getString("push_yn"));
                     editor.putString("email", json2.getString("email"));
                     editor.putString("token", json2.getString("token"));
-                    editor.putString("id", idText.getText().toString());
-                    editor.putString("password", passwordText.getText().toString());
+                    boolean auto=autoLoginCheckBox.isChecked();
+                    editor.putBoolean("autoLogin", auto);
+                    editor.putString("id", auto?idText.getText().toString():"");
+                    editor.putString("password", auto?passwordText.getText().toString():"");
                     editor.commit();
-                    Log.d("반환값 : ", pref.getString("name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-                    autoId = pref.getString("id", null);
-                    autoPassword = pref.getString("password", null);
+//                    Log.d("반환값 : ", pref.getString("name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+//                    autoId = pref.getString("id", null);
+//                    autoPassword = pref.getString("password", null);
+
+                    if(pref.getBoolean("autoLogin", false)) {
+                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                        // save id, password to Database
+                        Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
+                        LoginActivity.this.startActivity(intent);
+                        finish();
+                        return;
+                    }
+
+
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                     builder.setMessage("로그인에 성공하였습니다.")
@@ -188,55 +220,55 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private boolean loginValidation(String id, String password) {
-        if (pref.getString("id", " ").equals(id) && pref.getString("password", " ").equals(password)) {
-            // login success
-            return true;
-        } else if (pref.getString("id", "").equals(null)) {
-            // sign in first
-            Toast.makeText(LoginActivity.this, "Please Sign in first", Toast.LENGTH_LONG).show();
-            return false;
-        } else {
-            // login failed
-            return false;
-        }
-    }
+//    private boolean loginValidation(String id, String password) {
+//        if (pref.getString("id", " ").equals(id) && pref.getString("password", " ").equals(password)) {
+//            // login success
+//            return true;
+//        } else if (pref.getString("id", "").equals(null)) {
+//            // sign in first
+//            Toast.makeText(LoginActivity.this, "Please Sign in first", Toast.LENGTH_LONG).show();
+//            return false;
+//        } else {
+//            // login failed
+//            return false;
+//        }
+//    }
 
     //자동 로그인 체크박스 선택시  SharePreferences에 저장되어 있는 아이디와 비밀번호가 일치하는지를 확인하여
     //로그인 액티비티에서 바로 실행될때 자동 로그인하여 메인 액티비티로 이동하는 기능
-    public void autoLogin() {
-        //처음 로그인시 autoLogin안에 데이터가 있지 않으면 else로 넘어가서 자동로그인이 되지 않음.
-        //또한 자동 로그인 체크 박스에 체크가 되어 있으면 SharePreferences안에 있는 autoLogin 값을
-        //true로 리턴 시켜줘서 if를 true 값으로 진행시킴
-        if (pref.getBoolean("autoLogin", false)) {
-            idText.setText(pref.getString("id", " "));
-            passwordText.setText(pref.getString("password", " "));
-            autoLoginCheckBox.setChecked(true);
-            String id = idText.getText().toString();
-            String password = passwordText.getText().toString();
-            //로그인 버튼 클릭시 SharePreferences 안에 저장되는 값을 가지고 와서 loginValidation에 적용시켜
-            //현재 입력된 id, pass값을 비교하여 값이 일치하면 true값을 반영하게 됨.
-            Boolean validation = loginValidation(id, password);
-            if (validation) {
-                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
-                // save id, password to Database
-                Log.d("login : ", String.valueOf(loginChecked));
-                Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
-                LoginActivity.this.startActivity(intent);
-                finish();
-                if (loginChecked) {
-                    // if autoLogin Checked, save values
-                    editor.putString("id", autoId);
-                    editor.putString("password", autoPassword);
-                    editor.commit();
-                }
-            } else {
-                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
-        }
-    }
+//    public void autoLogin() {
+//        //처음 로그인시 autoLogin안에 데이터가 있지 않으면 else로 넘어가서 자동로그인이 되지 않음.
+//        //또한 자동 로그인 체크 박스에 체크가 되어 있으면 SharePreferences안에 있는 autoLogin 값을
+//        //true로 리턴 시켜줘서 if를 true 값으로 진행시킴
+//        if (pref.getBoolean("autoLogin", false)) {
+//            idText.setText(pref.getString("id", " "));
+//            passwordText.setText(pref.getString("password", " "));
+//            autoLoginCheckBox.setChecked(true);
+//            String id = idText.getText().toString();
+//            String password = passwordText.getText().toString();
+//            //로그인 버튼 클릭시 SharePreferences 안에 저장되는 값을 가지고 와서 loginValidation에 적용시켜
+//            //현재 입력된 id, pass값을 비교하여 값이 일치하면 true값을 반영하게 됨.
+//            Boolean validation = loginValidation(id, password);
+//            if (validation) {
+//                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+//                // save id, password to Database
+//                Log.d("login : ", String.valueOf(loginChecked));
+//                Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
+//                LoginActivity.this.startActivity(intent);
+//                finish();
+//                if (loginChecked) {
+//                    // if autoLogin Checked, save values
+//                    editor.putString("id", id);
+//                    editor.putString("password", password);
+//                    editor.commit();
+//                }
+//            } else {
+//                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+//            }
+//        } else {
+//            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
 
     public void findViewbyIdSet() {

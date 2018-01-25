@@ -6,6 +6,6 @@ package com.joyblock.abuba.api_message;
 
 public class R17_SelectMyKidsList {
 
-    public String kindergarden_class_name, kids_image, seq_kindergarden, name_title, name, rep_flag, kids_name, kindergarden_name;
+    public String kindergarden_class_name, kids_image, seq_kids, seq_kindergarden, name_title, name, rep_flag, kids_name, kindergarden_name;
 
 }
