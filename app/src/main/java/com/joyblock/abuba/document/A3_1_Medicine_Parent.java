@@ -49,7 +49,7 @@ public class A3_1_Medicine_Parent extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_a3_1_medicine_parent);
 
-        
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

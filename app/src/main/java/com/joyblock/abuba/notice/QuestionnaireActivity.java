@@ -315,9 +315,8 @@ public class QuestionnaireActivity extends BaseActivity {
                     .addFormDataPart("year", year)
                     .addFormDataPart("month", month)
                     .addFormDataPart("day", day)
-                    .addFormDataPart("c_survey_vote", size+"")
-
-                    .build();
+                    .addFormDataPart("c_survey_vote", size+"");
+//                    .build();
 
             for(int i=0;i<size;i++) {
                 QuestionnaireListViewAdapter.Data data=list.get(i);

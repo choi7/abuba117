@@ -3,7 +3,7 @@
     package="com.joyblock.abuba">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -102,7 +102,7 @@
         <activity android:name=".document.A4_2_HomeCommingEditorView_Parent" />
         <activity android:name=".album.Album" />
         <activity android:name=".alarm.Alarm" />
-        <activity android:name=".test_park.A0_bus"/>
+        <activity android:name=".test_park.A0_bus" />
         <activity android:name=".test_park.A1_1_bus_location" />
         <activity android:name=".test_park.A2_1_boading_management" />
         <activity android:name=".test_park.A2_2_1_route_change_list" />
@@ -117,7 +117,9 @@
         <activity android:name=".test_park.A3_1_student_guidance_bus_list" />
         <activity android:name=".test_park.A3_2_student_guidance_select_point" />
         <activity android:name=".test_park.A3_3_student_guidance_point_detail" />
-        <activity android:name=".album.P_3_Album_Editor"></activity>
+        <activity android:name=".album.P_3_Album_Editor" />
+        <activity android:name=".test1Activity"></activity>
+        <activity android:name=".A3_3_MedicineSign"></activity>
     </application>
 
 </manifest>

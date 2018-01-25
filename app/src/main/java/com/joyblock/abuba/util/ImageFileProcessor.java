@@ -38,7 +38,7 @@ public class ImageFileProcessor{
     public Uri photoUri;
     int order;
     public String mImageCaptureName,currentPhotoPath;
-    byte[] byteArray;
+    public byte[] byteArray;
 //    Activity activity;
 //
 //    public ImageFileProcessor(Activity activity){

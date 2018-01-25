@@ -27,6 +27,10 @@ public class A3_ListViewAdapterCustom extends BaseAdapter implements Serializabl
     ListViewHolders holder;
     Context context;
 
+    public class ListViewHolders {
+        ImageView documentCellCheckImageView;
+        TextView documentCellClassText, documentCellNameText;
+    }
 
     public A3_ListViewAdapterCustom (Context context) {
         this.context = context;
@@ -67,11 +71,24 @@ public class A3_ListViewAdapterCustom extends BaseAdapter implements Serializabl
             holder.documentCellClassText=documentCellClassText;
             documentCellCheckImageView = (ImageView) convertView.findViewById(R.id.documentCellCheckImageView);
             holder.documentCellCheckImageView=documentCellCheckImageView;
-        }else{
-            holder=(ListViewHolders)convertView.getTag();
-            documentCellNameText=holder.documentCellNameText;
-            documentCellClassText=holder.documentCellClassText;
-            documentCellCheckImageView=holder.documentCellCheckImageView;
+        }else {
+            try {
+                holder = (ListViewHolders) convertView.getTag();
+                documentCellNameText = holder.documentCellNameText;
+                documentCellClassText = holder.documentCellClassText;
+                documentCellCheckImageView = holder.documentCellCheckImageView;
+
+            } catch (NullPointerException e) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.documentlistviewcellcustom, parent, false);
+                holder = new ListViewHolders();
+                documentCellNameText = (TextView) convertView.findViewById(R.id.documentCellNameText);
+                holder.documentCellNameText = documentCellNameText;
+                documentCellClassText = (TextView) convertView.findViewById(R.id.documentCellClassText);
+                holder.documentCellClassText = documentCellClassText;
+                documentCellCheckImageView = (ImageView) convertView.findViewById(R.id.documentCellCheckImageView);
+                holder.documentCellCheckImageView = documentCellCheckImageView;
+            }
         }
 
 //        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
@@ -131,9 +148,6 @@ public class A3_ListViewAdapterCustom extends BaseAdapter implements Serializabl
         }
     }
 
-    private class ListViewHolders {
-        ImageView documentCellCheckImageView;
-        TextView documentCellClassText, documentCellNameText;
-    }
+
 
 }

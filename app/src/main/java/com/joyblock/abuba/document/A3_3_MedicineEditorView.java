@@ -4,34 +4,35 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.util.ImageFileProcessor;
+import com.joyblock.abuba.util.TimeConverter;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import okhttp3.FormBody;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okio.Buffer;
 
 public class A3_3_MedicineEditorView extends BaseActivity {
 
@@ -45,6 +46,10 @@ public class A3_3_MedicineEditorView extends BaseActivity {
     String getTime, getday, getmonth, getyear;
     EditText symptomEditText, medicineTypeEditText, medicationCapacityEditText,
             medicationTimeEditText, specialNoteEditText;
+
+    ImageFileProcessor imageFileProcessor = new ImageFileProcessor();
+    byte[] bytes;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -145,42 +150,88 @@ public class A3_3_MedicineEditorView extends BaseActivity {
             }
         });
 
+        medicinePhotoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageFileProcessor.selectGallery(A3_3_MedicineEditorView.this, 100);
+            }
+        });
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 100) {
+//                imageFileProcessor.sendPicture(data.getData(), medicinePhotoImageView, A3_3_MedicineEditorView.this);
+                Object[] objects = imageFileProcessor.getDrawableAndByteArray(data.getData(), A3_3_MedicineEditorView.this);
+                bytes = (byte[]) objects[1];
+                Drawable drawable = (Drawable) objects[0];
+                medicinePhotoImageView.setImageDrawable(drawable);
+
+//                byte[] byteArray = imageFileProcessor.byteArray;
+            }
+
+
+        }
+
+    }
 
     class InsertMedicationRequest extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
         String url = "http://58.229.208.246/Ububa/insertMedicationRequest.do";
+        MultipartBody.Builder builder;
 
         //투약의뢰서 등록
         public InsertMedicationRequest(String seq_user_parent, String seq_kindergarden, String seq_kindergarden_class,
                                        String seq_kids, String Symptom, String medicine_type, String dosage, String dosage_time,
-                                       String keep_method, String uniqueness, String year, String day, String month) {
+                                       String keep_method, String uniqueness, String year, String month, String day) {
             client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_user_parent", seq_user_parent)
-                    .add("seq_kindergarden", seq_kindergarden)
-                    .add("seq_kindergarden_class", seq_kindergarden_class)
-                    .add("seq_kids", seq_kids)
-                    .add("symptom", Symptom)
-                    .add("medicine_type", medicine_type)
-                    .add("dosage", dosage)
-                    .add("dosage_time", dosage_time)
-                    .add("keep_method", keep_method)
-                    .add("uniqueness", uniqueness)
-                    .add("year", year)
-                    .add("month", month)
-                    .add("day", day)
-                    .build();
+            builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+//            formBody = new MultipartBody.Builder().setType(MultipartBody.FORM)//new FormBody.Builder()
+            builder.addFormDataPart("seq_user_parent", seq_user_parent)
+                    .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                    .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
+                    .addFormDataPart("seq_kids", seq_kids)
+                    .addFormDataPart("symptom", Symptom)
+                    .addFormDataPart("medicine_type", medicine_type)
+                    .addFormDataPart("dosage", dosage)
+                    .addFormDataPart("dosage_time", dosage_time)
+                    .addFormDataPart("keep_method", keep_method)
+                    .addFormDataPart("uniqueness", uniqueness)
+                    .addFormDataPart("year", year)
+                    .addFormDataPart("month", month)
+                    .addFormDataPart("day", day)
+                .addFormDataPart("files[0]", TimeConverter.getFileTime() + ".png", RequestBody.create(MultipartBody.FORM, bytes))
+                .addFormDataPart("files[1]", TimeConverter.getFileTime() + ".png", RequestBody.create(MultipartBody.FORM, bytes));
+//                    .build();
+//
+//            if(bytes.length > 1) {
+//
+//            }
+
+            formBody = builder.build();
 
             request = new okhttp3.Request.Builder()
                     .url(url)
                     .post(formBody)
                     .build();
+
+            printRequest("ap18");
         }
 
+        void printRequest(String tag) {
+            try {
+                final Buffer buffer = new Buffer();
+                formBody.writeTo(buffer);
+                Log.d(tag+" request", buffer.readUtf8());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -228,7 +279,7 @@ public class A3_3_MedicineEditorView extends BaseActivity {
         medicinePhotoImageView = (ImageView) findViewById(R.id.medicinePhotoImageView);
 
         pushText = (TextView) findViewById(R.id.medicineViewPushText);
-        timeText = (TextView) findViewById(R.id.textView120);
+        timeText = (TextView) findViewById(R.id.a3_2_timeText);
 
         symptomEditText = (EditText) findViewById(R.id.symptomEditText);
         medicineTypeEditText = (EditText) findViewById(R.id.medicineTypeEditText);
@@ -249,7 +300,7 @@ public class A3_3_MedicineEditorView extends BaseActivity {
         getday = day.format(date);
         getmonth = month.format(date);
         getyear = year.format(date);
-        Log.d("시간은" , getday+""+getmonth+""+getyear);
+        Log.d("시간은", getday + "" + getmonth + "" + getyear);
 
 
     }

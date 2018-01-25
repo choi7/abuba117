@@ -24,11 +24,14 @@ import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CalendarCustomDialong_document;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.api_message.R13_SelectNoticeList;
 import com.joyblock.abuba.api_message.R34_SelectMedicationRequestList;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
 import com.joyblock.abuba.notice.BanListViewAdapter;
 import com.joyblock.abuba.notice.BanListViewItem;
+import com.joyblock.abuba.util.TimeConverter;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -50,7 +53,7 @@ public class A3_1_Medicine extends BaseActivity {
     Integer year, month, day;
     TextView dayText, title, classText;
     Activity activity;
-    String seq_kindergarden, seq_kindergarden_class;
+    String seq_kindergarden, seq_kindergarden_class, string_year, string_month, string_day, seq_medication_request;
     BanListViewAdapter adapter;
     AlertDialog.Builder banListDialogBuilder;//,modDelDialogBuidler;
     DialogInterface banListDialogInterface;//,modeDelDialogInteface;
@@ -63,7 +66,6 @@ public class A3_1_Medicine extends BaseActivity {
         setContentView(R.layout.layout_a3_1_medicine);
 
         activity = this;
-
 
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -92,24 +94,28 @@ public class A3_1_Medicine extends BaseActivity {
         String getTime = year.format(date);
         String getTime1 = month.format(date);
         String getTime2 = day.format(date);
-        dayText.setText(getTime + "년 " +getTime1+"월 "+getTime2 +"일");
+        dayText.setText(getTime + "년 " + getTime1 + "월 " + getTime2 + "일");
+
+
 
 
         mainlistView = (ListView) findViewById(R.id.a3_1_listview);
-        a3_listViewAdapterCustom = new A3_ListViewAdapterCustom(getBaseContext());
+//        a3_listViewAdapterCustom = new A3_ListViewAdapterCustom(getBaseContext());
 
-        a3_listViewAdapterCustom.addItem("김철수","병아리반",getResources().getDrawable(R.drawable.no_check));
-        a3_listViewAdapterCustom.addItem("김철수","병아리반",getResources().getDrawable(R.drawable.no_check));
-        a3_listViewAdapterCustom.addItem("김철수","병아리반",getResources().getDrawable(R.drawable.no_check));
-        a3_listViewAdapterCustom.addItem("김철수","병아리반",getResources().getDrawable(R.drawable.no_check));
-        mainlistView.setAdapter(a3_listViewAdapterCustom);
-        Log.d("ee", String.valueOf(a3_listViewAdapterCustom.getCount()));
+//        a3_listViewAdapterCustom.addItem("김철수", "병아리반", getResources().getDrawable(R.drawable.no_check));
+//        a3_listViewAdapterCustom.addItem("김철수", "병아리반", getResources().getDrawable(R.drawable.no_check));
+//        a3_listViewAdapterCustom.addItem("김철수", "병아리반", getResources().getDrawable(R.drawable.no_check));
+//        a3_listViewAdapterCustom.addItem("김철수", "병아리반", getResources().getDrawable(R.drawable.no_check));
+//        mainlistView.setAdapter(a3_listViewAdapterCustom);
+
+        new SelectKindergardenClassList(seq_kindergarden, getTime, getTime1, getTime2).execute();
+//        Log.d("ee", String.valueOf(a3_listViewAdapterCustom.getCount()));
 
         mainlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(A3_1_Medicine.this, A3_2_MedicineView.class);
-//                intent.putExtra("seq_notice",r34_selectMedicationRequestList[position].seq_medication_request);
+                intent.putExtra("seq_medication_request",r34_selectMedicationRequestList[position].seq_medication_request);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
@@ -228,7 +234,15 @@ public class A3_1_Medicine extends BaseActivity {
         } else {
             months = String.valueOf(month);
         }
+
+        string_day = days;
+        string_month = months;
+        string_year = String.valueOf(year);
+
         dayText.setText(year + "년 " + months + "월 " + days + "일 ");
+
+        new SelectKindergardenClassList(seq_kindergarden, string_year, string_month, string_day).execute();
+
         mCustomDialog1.dismiss();
     }
 
@@ -238,6 +252,7 @@ public class A3_1_Medicine extends BaseActivity {
         okhttp3.Request request;
         RequestBody formBody;
         String url = "http://58.229.208.246/Ububa/selectKindergardenClassList.do";
+        Integer integer;
 
         public SelectKindergardenClassList(String seq_kindergarden) {
             client = new OkHttpClient();
@@ -248,6 +263,7 @@ public class A3_1_Medicine extends BaseActivity {
                     .url(url)
                     .post(formBody)
                     .build();
+            integer = 0;
         }
 
         public SelectKindergardenClassList(String seq_kindergarden, String page) {
@@ -260,7 +276,27 @@ public class A3_1_Medicine extends BaseActivity {
                     .url(url)
                     .post(formBody)
                     .build();
+            integer = 1;
         }
+
+        //투약의뢰서 조회(목록)
+        public SelectKindergardenClassList(String seq_kindergarden, String year,
+                                           String month, String day) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_kindergarden", seq_kindergarden)
+//                    .add("seq_kindergarden_class", seq_kindergarden_class)
+                    .add("year", year)
+                    .add("month", month)
+                    .add("day", day)
+                    .build();
+            request = new okhttp3.Request.Builder()
+                    .url("http://58.229.208.246/Ububa/selectMedicationRequestList.do")
+                    .post(formBody)
+                    .build();
+            integer = 2;
+        }
+
 
         @Override
         protected String doInBackground(Void... params) {
@@ -280,50 +316,83 @@ public class A3_1_Medicine extends BaseActivity {
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
             Log.d("TAG", json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                classList = new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"), R6_SelectKindergardenClassList[].class);
 
-                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
-                // 해당 뷰에 리스트뷰 호출
-                listview = (ListView) view.findViewById(R.id.notice_popup_listview);
-                // 리스트뷰에 어댑터 설정
-                adapter = new BanListViewAdapter();
-                listview.setAdapter(adapter);
-                adapter.addItem("전체");
-                for (R6_SelectKindergardenClassList list : classList) {
-                    adapter.addItem(list.kindergarden_class_name);
-                }
-                adapter.notifyDataSetChanged();
 
-                // 반 다이얼로그 생성
-                banListDialogBuilder = new AlertDialog.Builder(activity);
-                // 리스트뷰 설정된 레이아웃
-                banListDialogBuilder.setView(view);
+            switch (integer) {
+                case 0:
+                    try {
+                        JSONObject jsonResponse = new JSONObject(json);
+                        Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                        classList = new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"), R6_SelectKindergardenClassList[].class);
+
+                        View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
+                        // 해당 뷰에 리스트뷰 호출
+                        listview = (ListView) view.findViewById(R.id.notice_popup_listview);
+                        // 리스트뷰에 어댑터 설정
+                        adapter = new BanListViewAdapter();
+                        listview.setAdapter(adapter);
+                        adapter.addItem("전체");
+                        for (R6_SelectKindergardenClassList list : classList) {
+                            adapter.addItem(list.kindergarden_class_name);
+                        }
+                        adapter.notifyDataSetChanged();
+
+                        // 반 다이얼로그 생성
+                        banListDialogBuilder = new AlertDialog.Builder(activity);
+                        // 리스트뷰 설정된 레이아웃
+                        banListDialogBuilder.setView(view);
 
 //                // 확인버튼
 //                banListDialogBuilder.setPositiveButton("확인", null);
 
-                // 반 다이얼로그 보기
-                banListDialogInterface = banListDialogBuilder.show();
+                        // 반 다이얼로그 보기
+                        banListDialogInterface = banListDialogBuilder.show();
 
-
-                //반 다이얼로그 이벤트 처리
-                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        BanListViewItem item = adapter.list.get(position);
-                        seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
-                        classText.setText(item.getName());
-                        Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
-                        banListDialogInterface.dismiss();
+                        //반 다이얼로그 이벤트 처리
+                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                BanListViewItem item = adapter.list.get(position);
+                                seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+                                classText.setText(item.getName());
+                                Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+                                banListDialogInterface.dismiss();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
+
+                    break;
+                case 1:
+
+
+                    break;
+                case 2:
+
+                    try {
+                        JSONObject jsonResponse = new JSONObject(json);
+                        Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                        r34_selectMedicationRequestList = new GsonBuilder().create().fromJson(jsonResponse.getString("medication_request_list"), R34_SelectMedicationRequestList[].class);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    a3_listViewAdapterCustom = new A3_ListViewAdapterCustom(getBaseContext());
+                    mainlistView.setAdapter(a3_listViewAdapterCustom);
+
+                    for (int i = 0; i < r34_selectMedicationRequestList.length; i++) {
+                        R34_SelectMedicationRequestList list = r34_selectMedicationRequestList[i];
+                        Log.d("list", String.valueOf(list));
+                        Log.d("lists", String.valueOf(list.kids_name));
+                        Log.d("listss", String.valueOf(list.kindergarden_class_name));
+//                        adapter.addItem(list.file_path, list.title, TimeConverter.convert(list.reg_date), list.name);
+                        a3_listViewAdapterCustom.addItem(list.kids_name, list.kindergarden_class_name, getResources().getDrawable(R.drawable.no_check));
+                        a3_listViewAdapterCustom.notifyDataSetChanged();
+
+                    }
+                    break;
             }
         }
-    }
 
+    }
 }
