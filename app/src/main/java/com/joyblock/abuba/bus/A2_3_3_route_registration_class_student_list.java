@@ -1,13 +1,13 @@
-package com.joyblock.abuba.test_park;
+package com.joyblock.abuba.bus;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.joyblock.abuba.R;
-public class A2_2_6_route_change_select_point extends AppCompatActivity {
+public class A2_3_3_route_registration_class_student_list extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_a2_2_6_route_change_select_point);
+        setContentView(R.layout.layout_a2_3_3_route_registration_class_student_list);
     }
 }

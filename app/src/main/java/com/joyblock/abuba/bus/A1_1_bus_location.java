@@ -1,4 +1,4 @@
-package com.joyblock.abuba.test_park;
+package com.joyblock.abuba.bus;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,9 +8,7 @@ import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -19,17 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.map.MapApiConst;
 
-import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapLayout;
-import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapView;
 
 import java.security.MessageDigest;

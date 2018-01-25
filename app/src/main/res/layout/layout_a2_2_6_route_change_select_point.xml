@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.test_park.A2_2_6_route_change_select_point">
+    tools:context="com.joyblock.abuba.bus.A2_2_6_route_change_select_point">
 
 </android.support.constraint.ConstraintLayout>

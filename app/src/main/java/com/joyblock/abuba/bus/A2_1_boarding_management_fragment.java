@@ -1,30 +1,14 @@
-package com.joyblock.abuba.test_park;
+package com.joyblock.abuba.bus;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.R;
-import com.joyblock.abuba.api_message.R26_SelectEducationalPlanList;
-import com.joyblock.abuba.document.A2_3_EducationPlanDetailActivity;
-import com.joyblock.abuba.util.TimeConverter;
-
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 
 
 /**

@@ -1,9 +1,7 @@
-package com.joyblock.abuba.test_park;
+package com.joyblock.abuba.bus;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

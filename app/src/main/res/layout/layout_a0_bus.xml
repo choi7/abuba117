@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.test_park.A0_bus">
+    tools:context="com.joyblock.abuba.bus.A0_bus">
 
     <ListView
         android:id="@+id/documentSelectListView"
