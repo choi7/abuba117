@@ -218,6 +218,7 @@ public class NoticeDetailActivity extends BaseActivity {
             Log.d("response : ",json);
             try {
                 JSONObject jsonResponse = new JSONObject(json);
+                System.out.println("반환되는 값 : " + jsonResponse);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
 
                 detail=new GsonBuilder().create().fromJson(jsonResponse.getString("notice"),R14_SelectNoticeOne.class);

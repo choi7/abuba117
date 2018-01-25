@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.joyblock.abuba.A3_4_MedicineCheck"
+    android:background="#FFFFFF"
+    >
+
+
+    <TextView
+        android:id="@+id/textView124"
+        android:layout_width="wrap_content"
+        android:fontFamily="@font/nanumsquarebold"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="의뢰하신 내용대로 투약하였음을 보고드립니다."
+        android:textColor="#000000"
+        android:textSize="14.5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView125"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="13.5dp"
+        android:fontFamily="@font/nanumsquarebold"
+        android:text="2018.01.03 교사 김윤아"
+        android:textColor="#595757"
+        android:textSize="11.25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView128" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:background="@drawable/view_style_option"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="57.75dp"
+        android:layout_marginEnd="21.25dp"
+        android:layout_marginStart="21.25dp"
+        android:layout_marginTop="28.5dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="memo"
+        android:gravity="left|top"
+        android:padding="12.5dp"
+        android:fontFamily="@font/nanumsquarebold"
+        android:textSize="11.25dp"
+        android:textColor="#B4B4B5"
+
+        app:layout_constraintBottom_toTopOf="@+id/textView126"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView125" />
+
+    <TextView
+        android:id="@+id/textView126"
+        android:layout_width="180dp"
+        android:layout_height="43.5dp"
+        android:background="#595757"
+        android:fontFamily="@font/nanumsquarebold"
+        android:gravity="center"
+        android:text="보    류"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/PageNavigationView_medicine_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView127"
+        android:layout_width="180dp"
+        android:layout_height="43.5dp"
+        android:background="#E73828"
+        android:fontFamily="@font/nanumsquarebold"
+        android:gravity="center"
+        android:text="전    송"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/textView126"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView126" />
+
+    <com.joyblock.abuba.bottomtabbar
+        android:id="@+id/PageNavigationView_medicine_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></com.joyblock.abuba.bottomtabbar>
+
+    <TextView
+        android:id="@+id/textView128"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="(투약보고서는 실제 투약 후 작성될 수 있습니다. 양해부탁드립니다.)"
+        android:textColor="#000000"
+        android:textSize="11.5dp"
+        android:fontFamily="@font/nanumsquarebold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView124" />
+
+</android.support.constraint.ConstraintLayout>

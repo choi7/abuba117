@@ -290,7 +290,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/medicinePhotoImageView"
+        android:id="@+id/medicinePhotoImageView1"
         android:layout_width="196.5dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/textView107"
@@ -302,7 +302,7 @@
         android:id="@+id/medicineViewPushText"
         android:layout_width="match_parent"
         android:layout_height="43.5dp"
-        android:text="투약완료"
+        android:text="완    료"
         android:background="#E73828"
         android:textColor="#FFFFFF"
         android:gravity="center"

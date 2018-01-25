@@ -118,8 +118,9 @@
         <activity android:name=".test_park.A3_2_student_guidance_select_point" />
         <activity android:name=".test_park.A3_3_student_guidance_point_detail" />
         <activity android:name=".album.P_3_Album_Editor" />
-        <activity android:name=".test1Activity"></activity>
-        <activity android:name=".A3_3_MedicineSign"></activity>
+        <activity android:name=".test1Activity" />
+        <activity android:name=".A3_3_MedicineSign" />
+        <activity android:name=".A3_4_MedicineCheck"></activity>
     </application>
 
 </manifest>
