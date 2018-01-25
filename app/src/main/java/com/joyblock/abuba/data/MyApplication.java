@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.data;
 
 import android.app.Application;
 import android.graphics.Typeface;
@@ -10,8 +10,4 @@ import android.graphics.Typeface;
 public class MyApplication extends Application {
 
     public String seq_user;
-
-
-
-
 }
