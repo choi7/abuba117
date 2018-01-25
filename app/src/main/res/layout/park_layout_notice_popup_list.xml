@@ -6,7 +6,7 @@
 
     <ListView
         android:id="@+id/notice_popup_listview"
-        android:layout_width="match_parent"
+        android:layout_width="244dp"
         android:layout_height="320dip" />
 
 
