@@ -19,7 +19,7 @@
     </ListView>
 
     <TextView
-        android:id="@+id/textview_ok"
+        android:id="@+id/medicineViewPushText"
         android:layout_width="match_parent"
         android:layout_height="43.5dp"
         android:background="#E73828"

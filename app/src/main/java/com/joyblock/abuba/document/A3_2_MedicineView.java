@@ -158,7 +158,7 @@ public class A3_2_MedicineView extends BaseActivity {
         methodOfKeepingText = (TextView) findViewById(R.id.methodOfKeepingText);
         specialNoteText = (TextView) findViewById(R.id.specialNoteText);
         a3_2_timeText = (TextView) findViewById(R.id.a3_2_timeText);
-        medicineViewPushText = (TextView) findViewById(R.id.textview_ok);
+        medicineViewPushText = (TextView) findViewById(R.id.medicineViewPushText);
         medicinePhotoImageView = (ImageView) findViewById(R.id.medicinePhotoImageView1);
     }
 
