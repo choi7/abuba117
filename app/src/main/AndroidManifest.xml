@@ -124,7 +124,8 @@
         <activity android:name=".C_1_1_Calendar" />
         <activity android:name=".C_3_1_CalendarEditor" />
         <activity android:name=".album.P_2_AlbumView" />
-        <activity android:name=".C_2_2_CarteEditor"></activity>
+        <activity android:name=".C_2_2_CarteEditor" />
+        <activity android:name=".C2_3_CarteView"></activity>
     </application>
 
 </manifest>

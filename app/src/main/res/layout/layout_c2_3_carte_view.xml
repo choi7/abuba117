@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.C_2_2_CarteEditor"
+    tools:context="com.joyblock.abuba.C2_3_CarteView"
     android:background="#FFFFFF"
     >
 
@@ -16,8 +16,9 @@
         android:text="2018. 01. 05"
         android:textColor="#000000"
         android:textSize="13.75dp"
-        app:layout_constraintBottom_toTopOf="@+id/editText5"
+        app:layout_constraintBottom_toTopOf="@+id/textView148"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,7 +102,7 @@
         android:layout_width="0dp"
         android:layout_height="0.25dp"
         android:layout_marginTop="43.5dp"
-        android:background="#EEEEEF"
+        android:background="#AFAFAF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -111,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.25dp"
         android:layout_marginTop="43.5dp"
-        android:background="#EEEEEF"
+        android:background="#AFAFAF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView148" />
@@ -123,7 +124,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="43.5dp"
-        android:background="#EEEEEF"
+        android:background="#AFAFAF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView149" />
@@ -135,7 +136,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="43.5dp"
-        android:background="#EEEEEF"
+        android:background="#AFAFAF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView150" />
@@ -148,22 +149,22 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="43.5dp"
-        android:background="#EEEEEF"
+        android:background="#AFAFAF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView151" />
 
     <TextView
-    android:id="@+id/textView153"
-    android:layout_width="match_parent"
-    android:layout_height="0.25dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="43.5dp"
-    android:background="#EEEEEF"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView152" />
+        android:id="@+id/textView153"
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="43.5dp"
+        android:background="#AFAFAF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView152" />
 
 
     <TextView
@@ -173,7 +174,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="43.5dp"
-        android:background="#EEEEEF"
+        android:background="#AFAFAF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView153" />
@@ -185,125 +186,107 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="43.5dp"
-        android:background="#EEEEEF"
+        android:background="#AFAFAF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView154" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText5"
-        android:layout_width="0dp"
-        android:layout_height="43.5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:background="@drawable/view_style_option"
-        android:ems="10"
         android:fontFamily="@font/nanumsquarebold"
-        android:inputType="textPersonName"
+        android:text="점심식사"
+        android:textColor="#000000"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/textView149"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView140"
         app:layout_constraintTop_toBottomOf="@+id/textView148"
         android:layout_marginLeft="32dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText7"
-        android:layout_width="0dp"
-        android:layout_height="43.5dp"
-        android:background="@drawable/view_style_option"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="잡곡밥"
+        android:textColor="#000000"
         android:fontFamily="@font/nanumsquarebold"
-        android:inputType="textPersonName"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/textView150"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/textView149" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText8"
-        android:layout_width="0dp"
-        android:layout_height="43.5dp"
-        android:background="@drawable/view_style_option"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="소고기국"
+        android:textColor="#000000"
         android:fontFamily="@font/nanumsquarebold"
-        android:inputType="textPersonName"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView151"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/textView150" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText9"
-        android:layout_width="0dp"
-        android:layout_height="43.5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/view_style_option"
-        android:ems="10"
+        android:text="어묵볶음"
+        android:textColor="#000000"
         android:fontFamily="@font/nanumsquarebold"
-        android:inputType="textPersonName"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/textView152"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/textView151" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText10"
-        android:layout_width="0dp"
-        android:layout_height="43.5dp"
-        android:background="@drawable/view_style_option"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시금치나물"
+        android:textColor="#000000"
         android:fontFamily="@font/nanumsquarebold"
-        android:inputType="textPersonName"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/textView153"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/textView152" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText11"
-        android:layout_width="0dp"
-        android:layout_height="43.5dp"
-        android:background="@drawable/view_style_option"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="김치"
+        android:textColor="#000000"
         android:fontFamily="@font/nanumsquarebold"
-        android:inputType="textPersonName"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/textView154"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/textView153" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText12"
-        android:layout_width="0dp"
-        android:layout_height="43.5dp"
-        android:background="@drawable/view_style_option"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="딸기잼+식빵"
+        android:textColor="#000000"
         android:fontFamily="@font/nanumsquarebold"
-        android:inputType="textPersonName"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/textView155"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/textView154" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText13"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/view_style_option"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="요구르트 1인 1병\n해당음식 알러지 부작용 있는 경우\n대체 반찬으로 조미김 준비"
+        android:textColor="#000000"
         android:fontFamily="@font/nanumsquarebold"
-        android:inputType="textPersonName"
         android:textSize="13.75dp"
-        android:gravity="top|left"
-        android:paddingTop="4dp"
-        android:paddingLeft="4dp"
         app:layout_constraintBottom_toTopOf="@+id/noticeditbottom2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/textView155" />
 
@@ -326,5 +309,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"></com.joyblock.abuba.bottomtabbar>
+
 
 </android.support.constraint.ConstraintLayout>

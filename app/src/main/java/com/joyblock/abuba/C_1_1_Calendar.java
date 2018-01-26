@@ -124,7 +124,8 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
                         .setPositiveButton("식단표", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                Intent intent = new Intent(C_1_1_Calendar.this, C_2_2_CarteEditor.class);
+                                C_1_1_Calendar.this.startActivity(intent);
                             }
                         }).create().show();
             }
