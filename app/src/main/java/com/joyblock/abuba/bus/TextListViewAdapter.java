@@ -19,8 +19,8 @@ import java.util.ArrayList;
 /**
  * Created by NSER-00 on 2017-07-25.
  */
-//한개의 텍스트만 있는 리스트 뷰 정의
-public class Text1ListViewAdapter extends BaseAdapter implements Serializable {
+//텍스트만 있는 리스트뷰 어댑터 정의
+public class TextListViewAdapter extends BaseAdapter implements Serializable {
 
     int[] textview_id={R.id.listview_text1,R.id.listview_text2};//,R.id.listview_text3};
 
@@ -28,7 +28,7 @@ public class Text1ListViewAdapter extends BaseAdapter implements Serializable {
     int int_layout;
     int size;
 
-    public Text1ListViewAdapter(int size,int int_layout){
+    public TextListViewAdapter(int size, int int_layout){
         this.size=size;
         this.int_layout=int_layout;
     }

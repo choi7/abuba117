@@ -5,22 +5,19 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
-import com.joyblock.abuba.notice.BanListViewAdapter;
 
 public class  A2_2_5_route_change_select_bus extends BaseActivity {
     String authority;
 
-    Text1ListViewAdapter adapter;
+    TextListViewAdapter adapter;
     ListView listView;
 
     @Override
@@ -46,7 +43,7 @@ public class  A2_2_5_route_change_select_bus extends BaseActivity {
 //
 //
         listView = findViewById(R.id.listview);
-        adapter = new Text1ListViewAdapter(2,R.layout.row_bus);
+        adapter = new TextListViewAdapter(2,R.layout.row_bus);
         listView.setAdapter(adapter);
 //        for(String str:list)
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
@@ -92,6 +89,11 @@ public class  A2_2_5_route_change_select_bus extends BaseActivity {
 //        });
 
 
+    }
+
+    public void clickNext(View v){
+        Intent intent = new Intent(A2_2_5_route_change_select_bus.this, A2_2_6_route_change_select_point.class);
+        A2_2_5_route_change_select_bus.this.startActivity(intent);
     }
 
 

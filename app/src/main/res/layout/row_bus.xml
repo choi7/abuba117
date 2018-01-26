@@ -11,6 +11,7 @@
         android:layout_weight="1"
         android:fontFamily="@font/nanumsquarebold"
         android:gravity="center"
+        android:paddingLeft="23.25dp"
         android:text="text1"
         android:textSize="13.75dp" />
 
