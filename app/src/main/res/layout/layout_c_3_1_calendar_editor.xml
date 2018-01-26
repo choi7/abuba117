@@ -107,9 +107,15 @@
                         android:id="@+id/textView133"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        tools:layout_editor_absoluteX="16dp"
-                        tools:layout_editor_absoluteY="13dp" />
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="8dp"
+                        android:text="시작"
+                        android:textColor="#000000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="17dp" />
 
                     <TextView
                         android:id="@+id/textView137"
@@ -118,7 +124,10 @@
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="17dp"
                         android:layout_marginTop="8dp"
-                        android:text="TextView"
+                        android:fontFamily="@font/nanumsquareregular"
+                        android:textSize="12.5dp"
+                        android:text="1월 5일 (금) 오전 8:00"
+                        android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -141,18 +150,27 @@
                         android:id="@+id/textView135"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        tools:layout_editor_absoluteX="9dp"
-                        tools:layout_editor_absoluteY="0dp" />
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="8dp"
+                        android:text="종료"
+                        android:textColor="#000000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="17dp" />
 
                     <TextView
                         android:id="@+id/textView138"
-                        android:layout_width="63dp"
-                        android:layout_height="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="17dp"
                         android:layout_marginTop="8dp"
-                        android:text="TextView"
+                        android:fontFamily="@font/nanumsquareregular"
+                        android:text="1월 5일 (금) 오전 10:00"
+                        android:textSize="12.5dp"
+                        android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -176,17 +194,31 @@
                         android:id="@+id/textView136"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        tools:layout_editor_absoluteX="15dp"
-                        tools:layout_editor_absoluteY="10dp" />
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="8dp"
+                        android:text="장소"
+                        android:textColor="#000000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="8dp" />
 
                     <TextView
                         android:id="@+id/textView139"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
-                        tools:layout_editor_absoluteX="159dp"
-                        tools:layout_editor_absoluteY="10dp" />
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/nanumsquareregular"
+                        android:text="창원시 마산회원구 합성옛길 288"
+                        android:textSize="12.5dp"
+                        android:textColor="#000000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView22"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginRight="8dp" />
 
                     <ImageView
                         android:id="@+id/imageView22"

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,7 +24,7 @@ import com.joyblock.abuba.notice.QuestionnaireActivity;
 import com.joyblock.abuba.notice.QuestionnaireListViewAdapter;
 import com.joyblock.abuba.util.ImageFileProcessor;
 
-public class C_3_1_CalendarEditor extends AppCompatActivity {
+public class C_3_1_CalendarEditor extends BaseActivity {
 
     EditText titleText, inText;
     Boolean imageChange = true, touchImage = true; // imageChange1 = true;
@@ -44,7 +45,7 @@ public class C_3_1_CalendarEditor extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_c_3_1_calendar_editor);
 
@@ -69,15 +70,6 @@ public class C_3_1_CalendarEditor extends AppCompatActivity {
 //        replyCheck.setVisibility(View.VISIBLE);
         questTimeSettingImageView = (ImageView) findViewById(R.id.questionTimeSettingImageView);
 
-        timeImage = (ImageView) findViewById(R.id.timeImageView);
-        timeImage.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-//                mCustomDialog = new CalendarCustomDialogActivity(QuestionnaireActivity.this);
-//                mCustomDialog.show();
-            }
-        });
 
         actionbarCustom();
 
