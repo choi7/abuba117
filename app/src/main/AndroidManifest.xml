@@ -122,7 +122,9 @@
         <activity android:name=".document.A_4_3_HomeComming_Sign_Parent" />
         <activity android:name=".document.A5_1_Attendance" />
         <activity android:name=".C_1_1_Calendar" />
-        <activity android:name=".C_3_1_CalendarEditor"></activity>
+        <activity android:name=".C_3_1_CalendarEditor" />
+        <activity android:name=".album.P_2_AlbumView" />
+        <activity android:name=".C_2_2_CarteEditor"></activity>
     </application>
 
 </manifest>

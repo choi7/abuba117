@@ -46,7 +46,7 @@ public class C_3_1_CalendarEditor extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); 
         setContentView(R.layout.layout_c_3_1_calendar_editor);
 
         titleText = (EditText) findViewById(R.id.titleText);

@@ -42,19 +42,19 @@ public class P_2_AlbumView extends BaseActivity {
         setContentView(R.layout.layout_p_2_albumview);
         seq_notice=getIntent().getStringExtra("seq_notice");
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff66ccff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
+            getWindow().setStatusBarColor(Color.parseColor("#66CCFF"));
         }
         if (Build.VERSION.SDK_INT >= 23) {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
 
         TextView title = (TextView) findViewById(R.id.titleName);
-        title.setText("공지사항");
+        title.setText("사진앨범");
         title.setVisibility(View.VISIBLE);
         //에디트 텍스트를 누르면 등록텍스트가 활성화할려고 등록함 현재 gone
         commentregister = (TextView) findViewById(R.id.commentPushText1);

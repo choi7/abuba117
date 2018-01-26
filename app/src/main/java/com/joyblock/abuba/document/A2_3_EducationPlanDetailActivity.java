@@ -49,12 +49,12 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
         plan_str=getIntent().getStringExtra("plan_str");
 
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
+            getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
         }
         if (Build.VERSION.SDK_INT >= 23) {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));

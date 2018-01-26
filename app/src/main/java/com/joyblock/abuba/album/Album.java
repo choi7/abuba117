@@ -75,19 +75,19 @@ public class Album extends BaseActivity {
 //        mAdapters.addItem("ddd","ddd");
 //        mAdapters.addItem("ddd","ddd");
 //        mAdapters.addItem("ddd","ddd");
-        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "이쁜이들이에요", "아무개", "2018.01.01");
-        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "이쁜이들이에요", "아무개", "2018.01.01");
-        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "이쁜이들이에요", "아무개", "2018.01.01");
-        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "이쁜이들이에요", "아무개", "2018.01.01");
-        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "이쁜이들이에요", "아무개", "2018.01.01");
-        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "이쁜이들이에요", "아무개", "2018.01.01");
-        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "이쁜이들이에요", "아무개", "2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "소풍사진이에요", "아무개", "2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "소풍사진이에요", "아무개", "2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "소풍사진이에요", "아무개", "2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "소풍사진이에요", "아무개", "2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "소풍사진이에요", "아무개", "2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "소풍사진이에요", "아무개", "2018.01.01");
+        mAdapters.addItem(getResources().getDrawable(R.drawable.no_check), "노랑반", "소풍사진이에요", "아무개", "2018.01.01");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("포지션은", String.valueOf(position));
-                Intent intent = new Intent(Album.this, NoticeEditorActivity.class);
+                Intent intent = new Intent(Album.this, P_2_AlbumView.class);
                 Album.this.startActivity(intent);
             }
         });
@@ -279,8 +279,8 @@ public class Album extends BaseActivity {
                     Log.d("onInterceptTouchEvent", String.valueOf(e));
                     View child = rv.findChildViewUnder(e.getX(), e.getY());
                     if (child != null && gestureDetector.onTouchEvent(e)) {
-                        Intent intent = new Intent(Album.this, NoticeEditorActivity.class);
-                        Log.d("onInterceptTouchEvent", "ttest");
+                        Intent intent = new Intent(Album.this, P_2_AlbumView.class);
+//                        Log.d("onInterceptTouchEvent", "ttest");
                         Album.this.startActivity(intent);
                     }
                     return false;
