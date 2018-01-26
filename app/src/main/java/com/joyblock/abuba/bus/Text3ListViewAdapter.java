@@ -20,7 +20,8 @@ import java.util.ArrayList;
  * Created by NSER-00 on 2017-07-25.
  */
 
-public class BoardingListViewAdapter extends BaseAdapter implements Serializable {
+//3개의 텍스트가 있는 리스트 뷰 정의
+public class Text3ListViewAdapter extends BaseAdapter implements Serializable {
 
     public ArrayList<ListViewItem> list= new ArrayList<ListViewItem>();
     BaseActivity activity;
@@ -29,9 +30,9 @@ public class BoardingListViewAdapter extends BaseAdapter implements Serializable
     int id_on=R.drawable.ok_check,id_off=R.drawable.no_check;
     boolean bool_boarding_type_on;
 
-    public BoardingListViewAdapter(){}
+    public Text3ListViewAdapter(){}
 
-    public BoardingListViewAdapter(boolean bool_boarding_type_on){
+    public Text3ListViewAdapter(boolean bool_boarding_type_on){
         this.bool_boarding_type_on=bool_boarding_type_on;
     }
 

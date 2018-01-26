@@ -1,6 +1,7 @@
 package com.joyblock.abuba.bus;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -108,6 +109,7 @@ public class A2_2_1_route_change_list extends BaseActivity {
                 });
             }
         });
+
     }
 
 
@@ -132,22 +134,33 @@ public class A2_2_1_route_change_list extends BaseActivity {
         ImageView imageView = (ImageView) findViewById(R.id.editorImage);
         imageView.setVisibility(View.VISIBLE);
 
-        adapter = new BoardingListViewAdapter();
+        adapter = new BoardingListViewAdapter(true);
 
         listview = (ListView)findViewById(R.id.listview_boarding);
 
         listview.setAdapter(adapter);
         adapter.addItem("호랑이반","박준수",false );
+        adapter.addItem("호랑이반","최효신",true  );
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BoardingListViewAdapter.ListViewItem item = adapter.list.get(position);
+                Intent intent = new Intent( A2_2_1_route_change_list.this, A2_2_2_route_change_detail.class);
+                intent.putExtra("name",item.getStrName());
+                A2_2_1_route_change_list.this.startActivity(intent);
+            }
+        });
 //        imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Intent intent = new Intent(A2_1_EducationPlan.this, A2_2_EducationPlanEditor.class);
+//                Intent intent = new Intent(A2_2_1_route_change_list.this, A2_2_2_route_change_detail.class);
 //                intent.putExtra("plan_flag",plan_flag);
-//                A2_1_EducationPlan.this.startActivity(intent);
+//                A2_2_1_route_change_list.this.startActivity(intent);
 //                finish();
 //            }
 //        });
-//
+
 //        ImageView backImage = (ImageView) findViewById(R.id.backImage);
 //        backImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
