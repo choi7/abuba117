@@ -75,7 +75,7 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
 
         switch (frament_no) {
             case 1:
-                // '출석 리스트 fragment' 호출
+                // '일정표 fragment' 호출
                 fragmentCalendar = new FragmentCalendar();
                 fragmentCalendar.app = app;
                 fragmentCalendar.setPref(pref);
@@ -84,12 +84,22 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
                 break;
 
             case 2:
-                // '결석 fragment' 호출
+                fragmentCalendar = new FragmentCalendar();
+                fragmentCalendar.app = app;
+                fragmentCalendar.setPref(pref);
+                transaction.replace(R.id.fragment_container1, fragmentCalendar);
+                transaction.commit();
+
+
+
+                // 식단표 fragment' 호출
+                /*
                 fragment2 = new FragmentAbsence();
                 fragment2.app = app;
                 fragment2.setPref(pref);
                 transaction.replace(R.id.fragment_container1, fragment2);
                 transaction.commit();
+                */
                 break;
         }
 
