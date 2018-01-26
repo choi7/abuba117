@@ -83,120 +83,124 @@
                 android:id="@+id/constraintLayout2"
                 android:layout_width="332dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/voteboxcolor"
                 app:layout_constraintBottom_toTopOf="@+id/textView85"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inText">
 
-                <TextView
-                    android:id="@+id/textView86"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.25dp"
-                    android:layout_marginBottom="45dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:background="#C8C9CA"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView87"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8.5dp"
-                    android:layout_marginStart="8.5dp"
-                    android:textSize="12.5dp"
-                    android:text="마감시간 설정"
-                    android:fontFamily="@font/nanumsquarebold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/timeImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView86" />
-
-                <TextView
-                    android:id="@+id/textView88"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="13.75dp"
-                    android:layout_marginLeft="8.5dp"
-                    android:layout_marginStart="8.5dp"
-                    android:fontFamily="@font/nanumsquarebold"
-                    android:textSize="12.5dp"
-                    android:text="항목 추가"
-                    app:layout_constraintBottom_toTopOf="@+id/textView86"
-                    app:layout_constraintStart_toEndOf="@+id/questionListViewInsertImageView" />
-
-                <ImageView
-                    android:id="@+id/questionTimeSettingImageView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="14dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView86"
-                    app:srcCompat="@drawable/ch_off"
-                    android:layout_marginRight="14dp" />
-
-                <ImageView
-                    android:id="@+id/timeImageView"
-                    android:layout_width="17.5dp"
-                    android:layout_height="17.5dp"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginStart="14dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView86"
-                    app:srcCompat="@drawable/time" />
-
-                <ImageView
-                    android:id="@+id/questionListViewInsertImageView"
-                    android:layout_width="17.5dp"
-                    android:layout_height="17.5dp"
-                    android:layout_marginBottom="13.75dp"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginStart="14dp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView86"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/plus" />
-
                 <android.support.constraint.ConstraintLayout
-                    android:id="@+id/constraintLayout3"
+                    android:id="@+id/constraintLayout8"
                     android:layout_width="304dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_height="44dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView88"
+                    android:layout_marginTop="15.5dp"
+                    android:background="@drawable/votelistviewcellcustom"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.387"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ListView
-                        android:id="@+id/questListview"
-                        android:layout_width="304dp"
+                    <TextView
+                        android:id="@+id/textView133"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:divider="@null"
-                        android:dividerHeight="0dp"
+                        android:text="TextView"
+                        tools:layout_editor_absoluteX="16dp"
+                        tools:layout_editor_absoluteY="13dp" />
+
+                    <TextView
+                        android:id="@+id/textView137"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="17dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginRight="17dp" />
                 </android.support.constraint.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/deadLineTimeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout9"
+                    android:layout_width="304dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/votelistviewcellcustom"
                     android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/nanumsquarebold"
-                    android:textSize="12.5dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="5.25dp"
+                    app:layout_constraintEnd_toEndOf="@+id/constraintLayout8"
+                    app:layout_constraintStart_toStartOf="@+id/constraintLayout8"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
+
+                    <TextView
+                        android:id="@+id/textView135"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        tools:layout_editor_absoluteX="9dp"
+                        tools:layout_editor_absoluteY="0dp" />
+
+                    <TextView
+                        android:id="@+id/textView138"
+                        android:layout_width="63dp"
+                        android:layout_height="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="17dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginRight="17dp" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout10"
+                    android:layout_width="304dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/votelistviewcellcustom"
+                    android:layout_marginBottom="15.5dp"
+                    android:layout_marginTop="5.25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/questionTimeSettingImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView86"
-                    android:layout_marginRight="8dp" />
+                    app:layout_constraintEnd_toEndOf="@+id/constraintLayout9"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/constraintLayout9"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
+
+                    <TextView
+                        android:id="@+id/textView136"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        tools:layout_editor_absoluteX="15dp"
+                        tools:layout_editor_absoluteY="10dp" />
+
+                    <TextView
+                        android:id="@+id/textView139"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TextView"
+                        tools:layout_editor_absoluteX="159dp"
+                        tools:layout_editor_absoluteY="10dp" />
+
+                    <ImageView
+                        android:id="@+id/imageView22"
+                        android:layout_width="14.5dp"
+                        android:layout_height="21dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="17dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/calendar_nevi"
+                        android:layout_marginRight="17dp" />
+                </android.support.constraint.ConstraintLayout>
             </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
