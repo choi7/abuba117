@@ -570,9 +570,10 @@ public class MainDawerSelectActivity extends BaseActivity
                         page_num++;
                         new BuyTasks(seq_user).execute();
                     }else{editor = pref.edit();
+                    if(app.my_kids_list.size()>0) {
                         editor.putString("kindergarden_class_name", app.my_kids_list.get(0).kindergarden_class_name);//json4.getString("kindergarden_class_name"));
                         editor.putString("seq_kids", app.my_kids_list.get(0).seq_kids);//json4.getString("seq_kids"));
-                        editor.putString("seq_kindergarden",app.my_kids_list.get(0).seq_kindergarden);// json4.getString("seq_kindergarden"));
+                        editor.putString("seq_kindergarden", app.my_kids_list.get(0).seq_kindergarden);// json4.getString("seq_kindergarden"));
                         editor.putString("kindergarden_name", app.my_kids_list.get(0).kindergarden_name);//json4.getString("kindergarden_name"));
                         editor.putString("rep_flag", app.my_kids_list.get(0).rep_flag);//json4.getString("rep_flag"));
                         editor.putString("kids_image", app.my_kids_list.get(0).kids_image);//json4.getString("kids_image"));
@@ -580,6 +581,7 @@ public class MainDawerSelectActivity extends BaseActivity
                         editor.putString("name", app.my_kids_list.get(0).name);//json4.getString("name"));
                         editor.putString("kids_name", app.my_kids_list.get(0).kids_name);//json4.getString("kids_name"));
                         editor.commit();
+                    }
                     }
 
 
