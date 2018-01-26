@@ -35,7 +35,7 @@ public class C_3_1_CalendarEditor extends BaseActivity {
     TextView deadLineText;
     CalendarCustomDialogActivity mCustomDialog;
 
-    String seq_user,seq_kindergarden,seq_kindergarden_class;
+    String seq_user,seq_kindergarden,seq_kindergarden_class, is_reply="y";
     Integer year, month, day;
     private final int CAMERA_CODE = 1111, GALLERY_CODE = 1112;
 //    private Uri photoUri;
@@ -75,10 +75,6 @@ public class C_3_1_CalendarEditor extends BaseActivity {
 
         mListView11 = (ListView) findViewById(R.id.questListview);
         mAdapter11 = new QuestionnaireListViewAdapter(this);
-        mListView11.setAdapter(mAdapter11);
-        mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
-        mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
-        mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
 
 //        setListViewHeightBasedOnChildren(mListView11);
 
@@ -98,15 +94,6 @@ public class C_3_1_CalendarEditor extends BaseActivity {
 
 
         ImageView imageView = (ImageView) findViewById(R.id.questionListViewInsertImageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAdapter11.addItem(getResources().getDrawable(R.drawable.pho), "");
-                Log.d("투표항목수 : ", String.valueOf(mAdapter11.getCount()));
-                mListView11.setAdapter(mAdapter11);
-//                setListViewHeightBasedOnChildren(mListView11);
-            }
-        });
 
 //        seq_user = pref.getString("seq_user", "");
 //        seq_kindergarden = pref.getString("seq_kindergarden", "");
@@ -119,7 +106,7 @@ public class C_3_1_CalendarEditor extends BaseActivity {
 
     public void actionbarCustom() {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xffff9900));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         TextView title = (TextView) findViewById(R.id.titleName);
@@ -177,11 +164,28 @@ public class C_3_1_CalendarEditor extends BaseActivity {
 
 
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
+            getWindow().setStatusBarColor(Color.parseColor("#ff9900"));
         }
         if (Build.VERSION.SDK_INT >= 23) {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
+
+        final ImageView replyCheck = (ImageView) findViewById(R.id.replyCheckImage);
+        replyCheck.setVisibility(View.VISIBLE);
+        replyCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(imageChange) {
+                    replyCheck.setImageDrawable(getResources().getDrawable(R.drawable.del));
+                    is_reply = "n";
+                    imageChange = false;
+                } else {
+                    replyCheck.setImageDrawable(getResources().getDrawable(R.drawable.ch_off));
+                    is_reply = "y";
+                    imageChange = true;
+                }
+            }
+        });
     }
 
 }

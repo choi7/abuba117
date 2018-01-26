@@ -64,7 +64,7 @@
                 android:ems="10"
                 android:fontFamily="@font/nanumsquarebold"
                 android:gravity="left|top"
-                android:hint="내용을 작성해 주세요\n\n\n\n"
+                android:hint="내용을 작성해 주세요\n\n\n\n\n\n\n\n\n\n"
                 android:inputType="textMultiLine"
                 android:paddingLeft="22.5dp"
                 android:paddingTop="22.5dp"

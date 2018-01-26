@@ -28,7 +28,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
     private final int FRAGMENT1 = 1;
     private final int FRAGMENT2 = 2;
 
-    private Button bt_tab1, bt_tab2;
+    private TextView bt_tab1, bt_tab2;
     String seq_user;
 
 
@@ -37,13 +37,17 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main11);
 
-        bt_tab1 = (Button)findViewById(R.id.bt_tab11);
-        bt_tab2 = (Button)findViewById(R.id.bt_tab22);
+        bt_tab1 = (TextView)findViewById(R.id.bt_tab11);
+        bt_tab2 = (TextView)findViewById(R.id.bt_tab22);
 
 
 
         bt_tab1.setOnClickListener(this);
         bt_tab2.setOnClickListener(this);
+        bt_tab1.setBackgroundColor(Color.parseColor("#0086FF"));
+        bt_tab2.setBackgroundColor(Color.parseColor("#0099FF"));
+        bt_tab1.setTypeface(NanumSquareExtraBold);
+        bt_tab2.setTypeface(NanumSquareRegular);
 
 
 
@@ -71,15 +75,20 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()){
             case R.id.bt_tab11 :
                 // '버튼1' 클릭 시 '프래그먼트1' 호출
-                bt_tab1.setBackgroundColor(Color.parseColor("#0099FF"));
-                bt_tab2.setBackgroundColor(Color.parseColor("#0086FF"));
+                bt_tab2.setBackgroundColor(Color.parseColor("#0099FF"));
+                bt_tab1.setBackgroundColor(Color.parseColor("#0086FF"));
+                bt_tab1.setTypeface(NanumSquareExtraBold);
+                bt_tab2.setTypeface(NanumSquareRegular);
+
                 callFragment(FRAGMENT1);
                 break;
 
             case R.id.bt_tab22 :
                 // '버튼2' 클릭 시 '프래그먼트2' 호출
-                bt_tab1.setBackgroundColor(Color.parseColor("#0086FF"));
-                bt_tab2.setBackgroundColor(Color.parseColor("#0099FF"));
+                bt_tab2.setBackgroundColor(Color.parseColor("#0086FF"));
+                bt_tab1.setBackgroundColor(Color.parseColor("#0099FF"));
+                bt_tab2.setTypeface(NanumSquareExtraBold);
+                bt_tab1.setTypeface(NanumSquareRegular);
                 callFragment(FRAGMENT2);
                 break;
         }

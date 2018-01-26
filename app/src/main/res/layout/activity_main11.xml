@@ -9,7 +9,7 @@
         android:id="@+id/textView500"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#FFFFFF"
+        android:background="#0086FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,30 +25,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView500">
 
-        <Button
-            android:id="@+id/bt_tab11"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#0099FF"
+            android:id="@+id/bt_tab11"
+            android:textSize="13.75dp"
             android:fontFamily="@font/nanumsquarebold"
             android:text="공지사항"
+            android:gravity="center"
             android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/textView499"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#FFFFFF" />
+            android:background="#0086FF" />
 
-        <Button
+        <TextView
             android:id="@+id/bt_tab22"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#0099FF"
+            android:textSize="13.75dp"
+            android:gravity="center"
             android:fontFamily="@font/nanumsquarebold"
-            android:text="설문지"
+            android:text="설문"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>

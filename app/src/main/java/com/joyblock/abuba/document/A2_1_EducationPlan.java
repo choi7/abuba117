@@ -42,6 +42,13 @@ public class A2_1_EducationPlan extends BaseActivity {
         month=true;// 월간/주간 플래그
         setContentView(R.layout.activity_education);
 
+        TextView btnm=(TextView)findViewById(R.id.bt_week);
+        TextView btn=(TextView)findViewById(R.id.bt_month);
+        btn.setBackgroundColor(Color.parseColor("#7C48F9"));
+        btnm.setBackgroundColor(Color.parseColor("#9966FF"));
+        btn.setTypeface(NanumSquareExtraBold);
+        btnm.setTypeface(NanumSquareRegular);
+
 
         editor=pref.edit();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -148,11 +155,23 @@ public class A2_1_EducationPlan extends BaseActivity {
     public void showMonthList(View v){
         plan_flag="m";
         callFragment(plan_flag);
+        TextView btnm=(TextView)findViewById(R.id.bt_week);
+        TextView btn=(TextView)findViewById(R.id.bt_month);
+        btn.setBackgroundColor(Color.parseColor("#7C48F9"));
+        btnm.setBackgroundColor(Color.parseColor("#9966FF"));
+        btn.setTypeface(NanumSquareExtraBold);
+        btnm.setTypeface(NanumSquareRegular);
     }
 
     public void showWeekList(View v){
         plan_flag="w";
         callFragment(plan_flag);
+        TextView btnm=(TextView)findViewById(R.id.bt_week);
+        TextView btn=(TextView)findViewById(R.id.bt_month);
+        btn.setBackgroundColor(Color.parseColor("#9966FF"));
+        btnm.setBackgroundColor(Color.parseColor("#7C48F9"));
+        btn.setTypeface(NanumSquareRegular);
+        btnm.setTypeface(NanumSquareExtraBold);
     }
 
 
@@ -165,37 +184,37 @@ public class A2_1_EducationPlan extends BaseActivity {
     }
 
     class InsertEducationPlan extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/insertEducationalPlan.do";
+                    OkHttpClient client;
+                    okhttp3.Request request;
+                    RequestBody formBody;
+                    String url="http://58.229.208.246/Ububa/insertEducationalPlan.do";
 
         public InsertEducationPlan(String seq_user,String seq_kindergarden,String plan_flag,String title,String content,String files) {
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_user", seq_user)
-                    .add("seq_kindergarden", seq_kindergarden)
-                    .add("plan_flag", plan_flag)
-                    .add("title", title)
-                    .add("content", content)
-                    .build();
-            request = new okhttp3.Request.Builder()
-                    .url(url)
-                    .post(formBody)
-                    .build();
-        }
+                        client = new OkHttpClient();
+                        formBody = new FormBody.Builder()
+                                .add("seq_user", seq_user)
+                                .add("seq_kindergarden", seq_kindergarden)
+                                .add("plan_flag", plan_flag)
+                                .add("title", title)
+                                .add("content", content)
+                                .build();
+                        request = new okhttp3.Request.Builder()
+                                .url(url)
+                                .post(formBody)
+                                .build();
+                    }
 
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
+                    @Override
+                    protected String doInBackground(Void... params) {
+                        try {
+                            okhttp3.Response response = client.newCall(request).execute();
+                            if (!response.isSuccessful()) {
+                                return null;
+                            }
+                            return response.body().string();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return null;
             }
         }
 

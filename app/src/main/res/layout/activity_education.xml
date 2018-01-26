@@ -9,7 +9,7 @@
         android:id="@+id/textView500"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#FFFFFF"
+        android:background="#7C48F9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,33 +25,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView500">
 
-        <Button
+        <TextView
             android:id="@+id/bt_month"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#9966FF"
             android:fontFamily="@font/nanumsquarebold"
             android:onClick="showMonthList"
             android:text="월간"
-            android:textColor="#FFFFFF" />
+            android:gravity="center"
+            android:textSize="13.75dp"
+            android:textColor="#FFFFFF"
+            />
+
 
         <TextView
             android:id="@+id/textView499"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#FFFFFF" />
+            android:background="#7C48F9" />
 
-        <Button
+        <TextView
             android:id="@+id/bt_week"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="13.75dp"
             android:background="#9966FF"
             android:fontFamily="@font/nanumsquarebold"
             android:onClick="showWeekList"
             android:text="주간"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"  />
+
 
     </LinearLayout>
 
