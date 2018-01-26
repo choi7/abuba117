@@ -198,7 +198,7 @@ public class A4_2_HomeCommingEditorView_Parent extends BaseActivity {
 
         pushText = (TextView) findViewById(R.id.textview_ok);
         timeText = (TextView) findViewById(R.id.a3_2_timeText);
-        medicineViewPushText = (TextView) findViewById(R.id.medicineViewPushText);
+//        medicineViewPushText = (TextView) findViewById(R.id.medicine);
 
         symptomEditText = (EditText) findViewById(R.id.symptomEditText);
         medicineTypeEditText = (EditText) findViewById(R.id.medicineTypeEditText);
