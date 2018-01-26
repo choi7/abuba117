@@ -175,7 +175,7 @@ public class A3_3_MedicineEditorView extends BaseActivity {
         checkImage2 = (ImageView) findViewById(R.id.a3_3_temp2ImageView);
         medicinePhotoImageView = (ImageView) findViewById(R.id.medicinePhotoImageView);
 
-        pushText = (TextView) findViewById(R.id.medicineViewPushText);
+        pushText = (TextView) findViewById(R.id.textview_ok);
         timeText = (TextView) findViewById(R.id.a3_2_timeText);
 
         symptomEditText = (EditText) findViewById(R.id.symptomEditText);
