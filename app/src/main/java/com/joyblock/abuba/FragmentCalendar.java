@@ -1,6 +1,7 @@
 package com.joyblock.abuba;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.calendar.CalendarActivity;
 import com.joyblock.abuba.data.MyApplication;
@@ -84,6 +87,16 @@ public class FragmentCalendar extends Fragment {
                 Log.d("포지션은 : ", String.valueOf(position));
             }
         });
+
+        ImageView fragment_c_1_1_List_Change_ImageView = (ImageView) rootView.findViewById(R.id.fragment_c_1_1_List_Change_ImageView);
+        fragment_c_1_1_List_Change_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
+//                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         return rootView;
     }

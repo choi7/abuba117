@@ -156,20 +156,16 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
                 // '버튼1' 클릭 시 '프래그먼트1' 호출
                 bt_tab1.setBackgroundColor(Color.parseColor("#FF7300"));
                 textView126.setTypeface(NanumSquareExtraBold);
-
                 bt_tab2.setBackgroundColor(Color.parseColor("#FF9900"));
                 textView129.setTypeface(NanumSquareRegular);
-
                 callFragment(FRAGMENT1);
                 break;
             case R.id.bt_tab220:
                 // '버튼2' 클릭 시 '프래그먼트2' 호출
                 bt_tab1.setBackgroundColor(Color.parseColor("#FF9900"));
                 textView126.setTypeface(NanumSquareRegular);
-
                 bt_tab2.setBackgroundColor(Color.parseColor("#FF7300"));
                 textView129.setTypeface(NanumSquareExtraBold);
-
                 callFragment(FRAGMENT2);
                 break;
         }

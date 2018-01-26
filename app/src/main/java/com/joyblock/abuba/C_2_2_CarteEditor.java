@@ -29,7 +29,6 @@ public class C_2_2_CarteEditor extends BaseActivity {
         actionbarCustom();
     }
 
-
     TextView title;
 
     public void actionbarCustom() {

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="47.5dp">
+
+    <TextView
+        android:id="@+id/textView156"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="17.75dp"
+        android:layout_marginTop="8dp"
+        android:textSize="10dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:textColor="#000000"
+        android:text="5일"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="17.75dp" />
+
+    <TextView
+        android:id="@+id/textView157"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="8dp"
+        android:textSize="10dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:textColor="#000000"
+        android:text="금요일"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView156"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
+
+    <TextView
+        android:id="@+id/textView158"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="8dp"
+        android:textSize="10dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:textColor="#000000"
+        android:text="10시~\n  12시"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView157"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="14dp" />
+
+    <TextView
+        android:id="@+id/textView159"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="21.25dp"
+        android:layout_marginTop="8dp"
+        android:textSize="10dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:textColor="#000000"
+        android:text="창원시\n마산회원구"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView158"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="21.25dp" />
+
+    <TextView
+        android:id="@+id/textView160"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="35.5dp"
+        android:layout_marginStart="31.5dp"
+        android:textSize="10dp"
+        android:fontFamily="@font/nanumsquareregular"
+        android:textColor="#000000"
+        android:text="동계장기자랑"
+        app:layout_constraintEnd_toStartOf="@+id/imageView23"
+        app:layout_constraintStart_toEndOf="@+id/textView159"
+        tools:layout_editor_absoluteY="15dp"
+        android:layout_marginRight="35.5dp"
+        android:layout_marginLeft="31.5dp" />
+
+    <ImageView
+        android:id="@+id/imageView23"
+        android:layout_width="32dp"
+        android:layout_height="18dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/save_image" />
+</android.support.constraint.ConstraintLayout>
