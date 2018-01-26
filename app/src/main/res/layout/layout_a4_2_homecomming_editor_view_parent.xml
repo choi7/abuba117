@@ -185,6 +185,7 @@
         android:fontFamily="@font/nanumsquarebold"
         android:text="금일 자녀의 귀가를 선생님께 의뢰합니다.\n귀가로 인한 책임은 의뢰자가 집니다."
         android:textAlignment="center"
+
         android:textColor="#C8C9CA"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/a3_2_timeText"

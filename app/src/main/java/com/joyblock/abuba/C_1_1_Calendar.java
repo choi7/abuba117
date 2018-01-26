@@ -117,7 +117,8 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
                         .setNegativeButton("일정표", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                Intent intent = new Intent(C_1_1_Calendar.this, C_3_1_CalendarEditor.class);
+                                C_1_1_Calendar.this.startActivity(intent);
                             }
                         })
                         .setPositiveButton("식단표", new DialogInterface.OnClickListener() {

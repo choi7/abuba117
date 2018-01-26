@@ -205,7 +205,7 @@ public class A4_2_HomeCommingEditorView_Parent extends BaseActivity {
         medicationCapacityEditText = (EditText) findViewById(R.id.medicationCapacityEditText);
         medicationTimeEditText = (EditText) findViewById(R.id.medicationTimeEditText);
         specialNoteEditText = (EditText) findViewById(R.id.specialNoteEditText);
-    
+
     }
 
     public void Timeget() {
