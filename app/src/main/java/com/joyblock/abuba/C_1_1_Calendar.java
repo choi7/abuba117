@@ -1,5 +1,7 @@
 package com.joyblock.abuba;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -110,7 +112,20 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
         editorImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(C_1_1_Calendar.this);
+                builder.setMessage("작성하실 메뉴를 선택하세요.")
+                        .setNegativeButton("일정표", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
+                            }
+                        })
+                        .setPositiveButton("식단표", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).create().show();
             }
         });
 

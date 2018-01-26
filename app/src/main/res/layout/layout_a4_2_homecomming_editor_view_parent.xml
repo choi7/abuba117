@@ -200,6 +200,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/nanumsquarebold"
+
         android:text="2018.01.03 김태희"
         android:textColor="#C8C9CA"
         android:textSize="10dp"
