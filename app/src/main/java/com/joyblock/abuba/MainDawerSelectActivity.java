@@ -160,7 +160,7 @@ public class MainDawerSelectActivity extends BaseActivity
 //                        finish();
                         break;
                     case "일정관리" :
-                        Intent s3 = new Intent(MainDawerSelectActivity.this, CalendarActivity.class);
+                        Intent s3 = new Intent(MainDawerSelectActivity.this, C_1_1_Calendar.class);
                         MainDawerSelectActivity.this.startActivity(s3);
 //                        finish();
                         break;

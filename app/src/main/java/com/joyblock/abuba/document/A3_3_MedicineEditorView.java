@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
@@ -17,23 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.joyblock.abuba.A3_3_MedicineSign;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.util.ImageFileProcessor;
-import com.joyblock.abuba.util.TimeConverter;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import okhttp3.FormBody;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okio.Buffer;
 
 public class A3_3_MedicineEditorView extends BaseActivity {
 

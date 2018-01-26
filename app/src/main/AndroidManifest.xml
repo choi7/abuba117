@@ -85,7 +85,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".document.A1_DocumentSelect" />
-        <activity android:name=".document.A5_1_Attendance" />
         <activity android:name=".document.A4_1_HomeComming" />
         <activity android:name=".document.A2_1_EducationPlan" />
         <activity android:name=".document.A2_2_EducationPlanEditor" />
@@ -118,9 +117,12 @@
         <activity android:name=".bus.A3_2_student_guidance_select_point" />
         <activity android:name=".bus.A3_3_student_guidance_point_detail" />
         <activity android:name=".album.P_3_Album_Editor" />
-        <activity android:name=".test1Activity" />
-        <activity android:name=".A3_3_MedicineSign" />
-        <activity android:name=".A3_4_MedicineCheck"></activity>
+        <activity android:name=".document.A3_3_MedicineSign" />
+        <activity android:name=".document.A3_4_MedicineCheck" />
+        <activity android:name=".document.A_4_3_HomeComming_Sign_Parent" />
+        <activity android:name=".document.A5_1_Attendance" />
+        <activity android:name=".C_1_1_Calendar" />
+        <activity android:name=".C_3_1_CalendarEditor"></activity>
     </application>
 
 </manifest>

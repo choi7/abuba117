@@ -214,17 +214,17 @@
         app:layout_constraintBottom_toTopOf="@+id/textView107"
         app:layout_constraintStart_toStartOf="@+id/symptomEditText"
         app:layout_constraintTop_toBottomOf="@+id/textView100"
-        app:srcCompat="@drawable/ch_on" />
+        app:srcCompat="@null" />
 
     <TextView
         android:id="@+id/medicineViewPushText"
         android:layout_width="match_parent"
         android:layout_height="43.5dp"
-        android:text="귀가완료"
         android:background="#E73828"
-        android:textColor="#FFFFFF"
-        android:gravity="center"
         android:fontFamily="@font/nanumsquarebold"
+        android:gravity="center"
+        android:text="보내기"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/PageNavigationView_medicine_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -314,7 +314,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/a3_3_temp1ImageView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="8dp" />
 
         <ImageView
             android:id="@+id/a3_3_temp1ImageView"
@@ -359,7 +360,8 @@
         android:layout_marginStart="23.75dp"
         app:layout_constraintBottom_toBottomOf="@+id/a_3_3Checktemp1ConstraintLayout"
         app:layout_constraintStart_toEndOf="@+id/a_3_3Checktemp1ConstraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/a_3_3Checktemp1ConstraintLayout">
+        app:layout_constraintTop_toTopOf="@+id/a_3_3Checktemp1ConstraintLayout"
+        android:layout_marginLeft="23.75dp">
 
         <TextView
             android:id="@+id/textView115"
@@ -373,7 +375,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/a3_3_temp2ImageView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="8dp" />
 
         <ImageView
             android:id="@+id/a3_3_temp2ImageView"
@@ -392,7 +395,8 @@
         android:layout_marginStart="23.75dp"
         app:layout_constraintBottom_toBottomOf="@+id/a_3_3Checktemp1ConstraintLayout"
         app:layout_constraintStart_toEndOf="@+id/a_3_3Checktemp2ConstraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/a_3_3Checktemp1ConstraintLayout">
+        app:layout_constraintTop_toTopOf="@+id/a_3_3Checktemp1ConstraintLayout"
+        android:layout_marginLeft="23.75dp">
 
         <TextView
             android:id="@+id/textView117"
@@ -406,7 +410,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/a3_3_temp3ImageView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="8dp" />
 
         <ImageView
             android:id="@+id/a3_3_temp3ImageView"

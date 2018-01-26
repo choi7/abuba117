@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.document;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -6,34 +6,31 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.joyblock.abuba.document.A3_1_Medicine;
-import com.joyblock.abuba.notice.NoticeEditorActivity;
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.Mypainter;
+import com.joyblock.abuba.R;
 import com.joyblock.abuba.util.TimeConverter;
 
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,10 +42,14 @@ import okio.Buffer;
 
 import static android.graphics.Bitmap.CompressFormat.PNG;
 
-public class A3_3_MedicineSign extends BaseActivity {
+/**
+ * Created by BLUE on 2018-01-26.
+ */
+
+public class A_4_3_HomeComming_Sign_Parent extends BaseActivity {
 
     Mypainter mypainter;
-    TextView textView111, textView12, title, timeText;
+    TextView textView111, textView12, title, timeText, textView113;
     boolean aBoolean = true;
     String seq_user_parent, seq_kindergarden, seq_kindergarden_class, seq_kids, symptom,
             medicine_type, dosage, dosage_time, kindergarden_class_name,
@@ -59,10 +60,10 @@ public class A3_3_MedicineSign extends BaseActivity {
     public byte[] byteArray;
     byte[] objects;
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.layout_a3_3_medicine_sign);
 
         Timeget();
@@ -72,11 +73,11 @@ public class A3_3_MedicineSign extends BaseActivity {
         seq_kindergarden = intent.getStringExtra("seq_kindergarden");
         seq_kindergarden_class = intent.getStringExtra("seq_kindergarden_class");
         seq_kids = intent.getStringExtra("seq_kids");
-        symptom = intent.getStringExtra("symptom");
-        medicine_type = intent.getStringExtra("medicine_type");
-        dosage = intent.getStringExtra("dosage");
-        dosage_time = intent.getStringExtra("dosage_time");
-        keep_method = intent.getStringExtra("keep_method");
+        symptom = intent.getStringExtra("home_reason");
+        medicine_type = intent.getStringExtra("home_time");
+        dosage = intent.getStringExtra("home_method");
+        dosage_time = intent.getStringExtra("companion");
+        keep_method = intent.getStringExtra("tel_no");
         uniqueness = intent.getStringExtra("uniqueness");
         getyear = intent.getStringExtra("getyear");
         getmonth = intent.getStringExtra("getmonth");
@@ -86,6 +87,8 @@ public class A3_3_MedicineSign extends BaseActivity {
 
         textView111 = (TextView) findViewById(R.id.textView111);
         textView12 = (TextView) findViewById(R.id.textViewtjaud);
+        textView113 = (TextView) findViewById(R.id.textView113);
+        textView113.setText("금일 자녀의 귀가를 선생님께 의뢰합니다.\n귀가로 인한 책임은 의뢰자가 집니다.");
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
@@ -119,27 +122,29 @@ public class A3_3_MedicineSign extends BaseActivity {
 //                mypainter.Open(getExternalPath() + "sign-img.jpg");
                 objects = BitmapToByte(bitmap);
 //                System.gc();
-                new InsertMedicationRequest(seq_user_parent, seq_kindergarden,
+                new A_4_3_HomeComming_Sign_Parent.InsertHomeRequest(seq_user_parent, seq_kindergarden,
                         seq_kindergarden_class, seq_kids, symptom, medicine_type,
                         dosage, dosage_time, keep_method, uniqueness, getyear, getmonth, getday)
                         .execute();
                 Log.d("bitmapsssss", "ssssssss");
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(A3_3_MedicineSign.this);
-                builder.setMessage("투약을 의뢰했습니다.")
+                AlertDialog.Builder builder = new AlertDialog.Builder(A_4_3_HomeComming_Sign_Parent.this);
+                builder.setMessage("귀가를 신청했습니다.")
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getApplicationContext(), A3_1_Medicine.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getApplicationContext(), A3_1_Medicine_Parent.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
 
-                        finish();
-                    }
-                }).create().show();
+                                finish();
+                            }
+                        }).create().show();
             }
         });
+
     }
+
 
     //액티비티 화면 터치시 발생되는 이벤트
     @Override
@@ -218,17 +223,17 @@ public class A3_3_MedicineSign extends BaseActivity {
         return byteArray;
     }
 
-    class InsertMedicationRequest extends AsyncTask<Void, Void, String> {
+    class InsertHomeRequest extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url = "http://58.229.208.246/Ububa/insertMedicationRequest.do";
+        String url = "http://58.229.208.246/Ububa/insertHomeRequest.do";
         MultipartBody.Builder builder;
 
-        //투약의뢰서 등록
-        public InsertMedicationRequest(String seq_user_parent, String seq_kindergarden, String seq_kindergarden_class,
-                                       String seq_kids, String Symptom, String medicine_type, String dosage, String dosage_time,
-                                       String keep_method, String uniqueness, String year, String month, String day) {
+        //귀가동의서 등록
+        public InsertHomeRequest(String seq_user_parent, String seq_kindergarden, String seq_kindergarden_class,
+                                       String seq_kids, String home_reason, String home_time, String home_method, String companion,
+                                       String tel_no, String uniqueness, String year, String month, String day) {
             client = new OkHttpClient();
             builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 //            formBody = new MultipartBody.Builder().setType(MultipartBody.FORM)//new FormBody.Builder()
@@ -236,11 +241,11 @@ public class A3_3_MedicineSign extends BaseActivity {
                     .addFormDataPart("seq_kindergarden", seq_kindergarden)
                     .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
                     .addFormDataPart("seq_kids", seq_kids)
-                    .addFormDataPart("symptom", Symptom)
-                    .addFormDataPart("medicine_type", medicine_type)
-                    .addFormDataPart("dosage", dosage)
-                    .addFormDataPart("dosage_time", dosage_time)
-                    .addFormDataPart("keep_method", keep_method)
+                    .addFormDataPart("home_reason", home_reason)
+                    .addFormDataPart("home_time", home_time)
+                    .addFormDataPart("home_method", home_method)
+                    .addFormDataPart("companion", companion)
+                    .addFormDataPart("tel_no", tel_no)
                     .addFormDataPart("uniqueness", uniqueness)
                     .addFormDataPart("year", year)
                     .addFormDataPart("month", month)
@@ -263,7 +268,7 @@ public class A3_3_MedicineSign extends BaseActivity {
             printRequest("ap18");
         }
 
-               void printRequest(String tag) {
+        void printRequest(String tag) {
             try {
                 final Buffer buffer = new Buffer();
                 formBody.writeTo(buffer);
@@ -325,6 +330,5 @@ public class A3_3_MedicineSign extends BaseActivity {
 
 
     }
-
 
 }

@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
-import com.joyblock.abuba.A3_4_MedicineCheck;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
-import com.joyblock.abuba.api_message.R13_SelectNoticeList;
-import com.joyblock.abuba.api_message.R34_SelectMedicationRequestList;
 import com.joyblock.abuba.api_message.R35_SelectMedicationRequestOne;
-import com.joyblock.abuba.util.ImageFileProcessor;
-import com.joyblock.abuba.util.TimeConverter;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -63,9 +57,11 @@ public class A3_2_MedicineView extends BaseActivity {
         findviewid();
         Intent intent = getIntent();
         String seq_medication_request = intent.getStringExtra("seq_medication_request");
-        Log.d("ee", seq_medication_request);
+//        Log.d("ee", seq_medication_request);
 
-        new selectMedicationRequestOne(seq_medication_request).execute();
+
+        //주석처리
+//        new selectMedicationRequestOne(seq_medication_request).execute();
 
         medicineViewPushText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +72,10 @@ public class A3_2_MedicineView extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent loginIntent = new Intent(A3_2_MedicineView.this, A3_4_MedicineCheck.class);
+//                                loginIntent.putExtra("kid_name", list.kids_name);
+//                                loginIntent.putExtra("time", list.year + "." + list.month + "." + list.day + " ");
+
+
                                 A3_2_MedicineView.this.startActivity(loginIntent);
                                 finish();
                             }

@@ -2,17 +2,24 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="51.5dp"
-    android:layout_height="82.5dp"
-    android:orientation="vertical">
+    android:layout_height="81dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/calendar_line"
+    >
 
     <TextView
         android:id="@+id/tv_item_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|left"
-        android:paddingLeft="2dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
         android:text="sd"
-        android:textSize="11dp" />
+        android:textColor="#000000"
+        android:fontFamily="@font/nanumsquareregular"
+        android:textSize="10dp"
+        android:background="#FFFFFF"/>
 
     <TextView
         android:id="@+id/textView41"
@@ -20,6 +27,11 @@
         android:layout_height="match_parent"
         android:text="t"
         android:textAlignment="center"
-        android:textSize="7.5dp" />
+        android:gravity="center"
+        android:textSize="7.5dp"
+        android:textColor="#58BDB8"
+        android:fontFamily="@font/nanumsquareregular"
+        android:background="#FFFFFF"
+        />
 
 </LinearLayout>

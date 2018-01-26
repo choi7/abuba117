@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.joyblock.abuba.C_3_1_CalendarEditor">
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/textView90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/titleText"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:background="@drawable/view_style_option"
+                android:ems="10"
+                android:fontFamily="@font/nanumsquarebold"
+                android:gravity="left|center"
+                android:hint="제목을 작성해 주세요"
+                android:inputType="textPersonName"
+                android:paddingLeft="22.5dp"
+                android:textSize="13.75dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView79"
+                android:layout_width="match_parent"
+                android:layout_height="0.25dp"
+                android:background="#C8C9CA"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleText" />
+
+            <ImageView
+                android:id="@+id/editorimageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView79"
+                android:layout_gravity="center"
+                app:srcCompat="@android:color/background_light" />
+
+            <EditText
+                android:id="@+id/inText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/view_style_option"
+                android:ems="10"
+                android:fontFamily="@font/nanumsquarebold"
+                android:gravity="left|top"
+                android:hint="내용을 작성해 주세요\n\n\n\n"
+                android:inputType="textMultiLine"
+                android:paddingLeft="22.5dp"
+                android:paddingTop="22.5dp"
+                android:selectAllOnFocus="false"
+                android:singleLine="true"
+                android:textSize="13.75dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editorimageView" />
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="332dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/voteboxcolor"
+                app:layout_constraintBottom_toTopOf="@+id/textView85"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inText">
+
+                <TextView
+                    android:id="@+id/textView86"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.25dp"
+                    android:layout_marginBottom="45dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="#C8C9CA"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView87"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8.5dp"
+                    android:layout_marginStart="8.5dp"
+                    android:textSize="12.5dp"
+                    android:text="마감시간 설정"
+                    android:fontFamily="@font/nanumsquarebold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/timeImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView86" />
+
+                <TextView
+                    android:id="@+id/textView88"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="13.75dp"
+                    android:layout_marginLeft="8.5dp"
+                    android:layout_marginStart="8.5dp"
+                    android:fontFamily="@font/nanumsquarebold"
+                    android:textSize="12.5dp"
+                    android:text="항목 추가"
+                    app:layout_constraintBottom_toTopOf="@+id/textView86"
+                    app:layout_constraintStart_toEndOf="@+id/questionListViewInsertImageView" />
+
+                <ImageView
+                    android:id="@+id/questionTimeSettingImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView86"
+                    app:srcCompat="@drawable/ch_off"
+                    android:layout_marginRight="14dp" />
+
+                <ImageView
+                    android:id="@+id/timeImageView"
+                    android:layout_width="17.5dp"
+                    android:layout_height="17.5dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginStart="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView86"
+                    app:srcCompat="@drawable/time" />
+
+                <ImageView
+                    android:id="@+id/questionListViewInsertImageView"
+                    android:layout_width="17.5dp"
+                    android:layout_height="17.5dp"
+                    android:layout_marginBottom="13.75dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginStart="14dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView86"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/plus" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
+                    android:layout_width="304dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView88"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ListView
+                        android:id="@+id/questListview"
+                        android:layout_width="304dp"
+                        android:layout_height="wrap_content"
+                        android:divider="@null"
+                        android:dividerHeight="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </android.support.constraint.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/deadLineTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/nanumsquarebold"
+                    android:textSize="12.5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/questionTimeSettingImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView86"
+                    android:layout_marginRight="8dp" />
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <com.joyblock.abuba.notice.NoticeEditBottom2
+        android:id="@+id/noticeditbottom2"
+        android:layout_width="360dp"
+        android:layout_height="43.5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/PageNavigationView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></com.joyblock.abuba.notice.NoticeEditBottom2>
+
+    <com.joyblock.abuba.bottomtabbar
+        android:id="@+id/PageNavigationView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></com.joyblock.abuba.bottomtabbar>
+
+    <TextView
+        android:id="@+id/textView90"
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:background="#C8C9CA"
+        app:layout_constraintBottom_toTopOf="@+id/noticeditbottom2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

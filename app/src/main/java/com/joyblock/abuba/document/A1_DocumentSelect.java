@@ -79,7 +79,11 @@ public class A1_DocumentSelect extends BaseActivity {
                         break;
                         //출석부
                     case 3 :
-                        A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A5_1_Attendance.class));
+                        if(!authority.equals("ROLE_PARENTS")) {
+                            A1_DocumentSelect.this.startActivity(new Intent(A1_DocumentSelect.this, A5_1_Attendance.class));
+                        }
+                        break;
+                    default:
                         break;
                         /*
                     case "알림" :

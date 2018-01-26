@@ -39,7 +39,7 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
 
     R20_SelectSurveyList[] surveyList;
 
-    void setPref(SharedPreferences pref){
+    public void setPref(SharedPreferences pref){
         this.pref=pref;
     }
 

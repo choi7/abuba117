@@ -41,7 +41,7 @@ public class FragmentNotice extends android.support.v4.app.Fragment {
 
     R13_SelectNoticeList[] noticeList;
     
-    void setPref(SharedPreferences pref){
+    public void setPref(SharedPreferences pref){
         this.pref=pref;
     }
 

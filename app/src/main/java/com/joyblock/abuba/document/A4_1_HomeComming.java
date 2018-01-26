@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CalendarCustomDialong_document;
+import com.joyblock.abuba.CustomListViewDialog;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.api_message.R34_SelectMedicationRequestList;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
@@ -41,7 +42,7 @@ import okhttp3.RequestBody;
 
 public class A4_1_HomeComming extends BaseActivity {
 
-    ListView mainlistView, listview;
+    ListView mainlistView, listview, class_listview;
     R34_SelectMedicationRequestList[] r34_selectMedicationRequestList;
     A3_ListViewAdapterCustom a3_listViewAdapterCustom;
     CalendarCustomDialong_document mCustomDialog1;
@@ -55,6 +56,10 @@ public class A4_1_HomeComming extends BaseActivity {
     DialogInterface banListDialogInterface;//,modeDelDialogInteface;
 
     R6_SelectKindergardenClassList[] classList;
+
+    BanListViewAdapter class_adapter;
+    CustomListViewDialog dialog;
+    int int_selected_class;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -285,6 +290,31 @@ public class A4_1_HomeComming extends BaseActivity {
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
                 classList = new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"), R6_SelectKindergardenClassList[].class);
 
+
+                //어댑터 생성 후 customListViewDialog에 반 리스트를 보여준다.
+                class_adapter = new BanListViewAdapter();
+                dialog = new CustomListViewDialog(A4_1_HomeComming.this,class_adapter);
+                class_adapter.addItem("전체");
+                for (R6_SelectKindergardenClassList list : app.kindergarden_class_list) {
+                    class_adapter.addItem(list.kindergarden_class_name);
+                }
+                class_adapter.notifyDataSetChanged();
+                dialog.show();
+
+                //반 다이얼로그 이벤트 처리
+                class_listview=dialog.getListView();
+                class_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        BanListViewItem item = class_adapter.list.get(position);
+                        int_selected_class=position;
+                        //seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+                        classText.setText(item.getName());
+                        Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
+                /*
                 View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
                 // 해당 뷰에 리스트뷰 호출
                 listview = (ListView) view.findViewById(R.id.notice_popup_listview);
@@ -320,6 +350,7 @@ public class A4_1_HomeComming extends BaseActivity {
                         banListDialogInterface.dismiss();
                     }
                 });
+                */
             } catch (Exception e) {
                 e.printStackTrace();
             }
