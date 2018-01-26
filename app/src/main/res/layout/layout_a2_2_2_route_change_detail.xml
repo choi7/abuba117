@@ -121,7 +121,8 @@
                 android:textColor="#000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout"
+                tools:text="곰돌이 1호차" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,7 +165,8 @@
                 android:textColor="#000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout"
+                tools:text="자이아파트 정문" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -220,7 +222,8 @@
                 android:textColor="#000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout"
+                tools:text="곰돌이 1호차" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -263,7 +266,8 @@
                 android:textColor="#000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout"
+                tools:text="자이아파트 정문" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.joyblock.abuba.bus;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -36,7 +37,7 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
 
     TextView classText;
 
-    BoardingListViewAdapter adapter;
+    TextListViewAdapter adapter;
     BanListViewAdapter class_adapter;
     ListView listview,class_listview;
     //    Activity activity;
@@ -135,6 +136,35 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
                         dialog.dismiss();
                     }
                 });
+            }
+        });
+
+
+        listview = findViewById(R.id.listview_point);
+        adapter = new TextListViewAdapter(2,R.layout.row_bus);
+        listview.setAdapter(adapter);
+//        for(String str:list)
+//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
+//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
+//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
+        String[] item={"1지점","편의점 앞"};
+        adapter.addItem(item);
+        String[] item1={"2지점","진선여고 앞"};
+        adapter.addItem(item1);
+
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextListViewAdapter.Item item = adapter.list.get(position);
+                int_selected_class=position;
+                Intent intent = new Intent( A2_3_1_route_registration_point_list.this, A2_3_2_route_registration_point_student_list.class);
+//                intent.putExtra("name",item.getStrName());
+                A2_3_1_route_registration_point_list.this.startActivity(intent);
+                //seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+//                classText.setText(item.getName());
+//                Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+//                dialog.dismiss();
             }
         });
 
