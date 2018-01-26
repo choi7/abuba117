@@ -1,5 +1,6 @@
 package com.joyblock.abuba.bus;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -20,6 +21,9 @@ import com.joyblock.abuba.R;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
 import com.joyblock.abuba.notice.BanListViewAdapter;
 import com.joyblock.abuba.notice.BanListViewItem;
+import com.joyblock.abuba.util.StringArray;
+
+import org.w3c.dom.Text;
 
 public class A3_1_student_guidance_bus_list extends BaseActivity {
     String str_boarding;
@@ -35,7 +39,7 @@ public class A3_1_student_guidance_bus_list extends BaseActivity {
 
     TextView classText;
 
-    BoardingListViewAdapter adapter;
+    TextListViewAdapter adapter;
     BanListViewAdapter class_adapter;
     ListView listview, class_listview;
 
@@ -99,7 +103,48 @@ public class A3_1_student_guidance_bus_list extends BaseActivity {
 //        });
 
 
-        str_boarding = "m";
+                class_adapter = new BanListViewAdapter();
+                dialog = new CustomListViewDialog(A3_1_student_guidance_bus_list.this, class_adapter);
+                class_adapter.addItem("등원");
+                class_adapter.addItem("하원");
+
+                class_adapter.notifyDataSetChanged();
+                dialog.show();
+
+                //반 다이얼로그 이벤트 처리
+                class_listview = dialog.getListView();
+                class_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        listview = findViewById(R.id.listview);
+                        adapter = new TextListViewAdapter(3, R.layout.row_bus);
+                        listview.setAdapter(adapter);
+                        adapter.addItem(StringArray.getStringArray("5지점","곰돌이 1호차","10명"));
+                        adapter.addItem(StringArray.getStringArray("6지점","곰돌이 2호차","15명"));
+                        adapter.addItem(StringArray.getStringArray("7지점","곰돌이 3호차","7명"));
+                        adapter.addItem(StringArray.getStringArray("4지점","호랑이 1호차","7명"));
+                        adapter.addItem(StringArray.getStringArray("6지점","호랑이 2호차","8명"));
+                        adapter.addItem(StringArray.getStringArray("3지점","호랑이 3호차","10명"));
+                        listview.setVisibility(View.VISIBLE);
+                        TextView red=(TextView)findViewById(R.id.textview_red);
+                        red.setVisibility(View.VISIBLE);
+//        for(String str:list)
+//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
+//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
+//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
+
+
+//                        BanListViewItem item = class_adapter.list.get(position);
+//                        int_selected_class = position;
+//                        //seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+//                        classText.setText(item.getName());
+//                        Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+
+
+                        dialog.dismiss();
+                    }
+                });
 //
 //
 //        class_ConstraintLayout = (ConstraintLayout) findViewById(R.id.a3_1ClassConstraintLayout);
@@ -134,5 +179,10 @@ public class A3_1_student_guidance_bus_list extends BaseActivity {
 //                });
 //            }
 //        });
+    }
+
+    public void clickRed(View v){
+        Intent intent = new Intent(A3_1_student_guidance_bus_list.this, A3_2_student_guidance_select_point.class);
+        A3_1_student_guidance_bus_list.this.startActivity(intent);
     }
 }
