@@ -1,6 +1,7 @@
 package com.joyblock.abuba.bus;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
@@ -28,12 +30,16 @@ public class BoardingListViewAdapter extends BaseAdapter implements Serializable
     Context context;
     int id_on=R.drawable.ok_check,id_off=R.drawable.no_check;
     boolean bool_boarding_type_on;
+    int int_layout;
 
-    public BoardingListViewAdapter(){}
-
-    public BoardingListViewAdapter(boolean bool_boarding_type_on){
+    public BoardingListViewAdapter(int int_layout,boolean bool_boarding_type_on){
+        this.int_layout=int_layout;
         this.bool_boarding_type_on=bool_boarding_type_on;
     }
+
+//    public BoardingListViewAdapter(boolean bool_boarding_type_on){
+//        this.bool_boarding_type_on=bool_boarding_type_on;
+//    }
 
 //    public BoardingListViewAdapter(Drawable drawable_on,Drawable drawable_off){
 //        this.drawable_on=drawable_on;
@@ -73,10 +79,10 @@ public class BoardingListViewAdapter extends BaseAdapter implements Serializable
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.documentlistviewcellcustom, parent, false);
-            textview_class= (TextView) convertView.findViewById(R.id.documentCellClassText);
-            textview_name = (TextView) convertView.findViewById(R.id.documentCellNameText);
-            imageview_boarding = (ImageView) convertView.findViewById(R.id.documentCellCheckImageView);
+            convertView = inflater.inflate(int_layout, parent, false);
+            textview_class= (TextView) convertView.findViewById(R.id.listview_text1);
+            textview_name = (TextView) convertView.findViewById(R.id.listview_text2);
+            imageview_boarding = (ImageView) convertView.findViewById(R.id.listview_image1);
             boarding_type1=(ImageView) convertView.findViewById(R.id.boarding_type1);
             boarding_type2=(ImageView) convertView.findViewById(R.id.boarding_type2);
             boarding_type3=(ImageView) convertView.findViewById(R.id.boarding_type3);
@@ -96,6 +102,14 @@ public class BoardingListViewAdapter extends BaseAdapter implements Serializable
             holder.boarding_type2=boarding_type2;
             holder.boarding_type3=boarding_type3;
             convertView.setTag(holder);
+
+            ImageView imageview_tel=(ImageView)convertView.findViewById(R.id.imageview_tel);
+            if(imageview_tel!=null)
+                imageview_tel.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View v){
+                        Toast.makeText(v.getContext(),pos+"",Toast.LENGTH_SHORT).show();
+                    }
+                });
         }else{
             holder=(ListViewHolder)convertView.getTag();
             textview_class=holder.textview_class;
@@ -120,6 +134,13 @@ public class BoardingListViewAdapter extends BaseAdapter implements Serializable
         //위젯에 반, 이름, 탑승/미탑승 반영
         textview_class.setText(listViewItem.getStrClass());
         textview_name.setText(listViewItem.getStrName());
+        if(listViewItem.bool_selected) {
+            textview_class.setTextColor(Color.BLUE);
+            textview_name.setTextColor(Color.BLUE);
+        }else{
+            textview_class.setTextColor(Color.BLACK);
+            textview_name.setTextColor(Color.BLACK);
+        }
         if(!bool_boarding_type_on) {
             Picasso.with(context).load(listViewItem.getBoolBoarding() ? id_on : id_off).into(imageview_boarding);
         }else {
@@ -136,7 +157,21 @@ public class BoardingListViewAdapter extends BaseAdapter implements Serializable
             }
         }
 
+
+
         return convertView;
+    }
+
+    void setSelected(int int_position){
+        for(ListViewItem item:list)
+            item.setSelected(false);
+        list.get(int_position).setSelected(true);
+        notifyDataSetChanged();
+    }
+
+    void setBoarding(int int_position,boolean bool_boarding){
+        list.get(int_position).setBoarding(bool_boarding);
+        notifyDataSetChanged();
     }
 
     public void addItem(String str_class,String str_name,boolean bool_boarding) {
@@ -146,19 +181,24 @@ public class BoardingListViewAdapter extends BaseAdapter implements Serializable
     private class ListViewHolder {
         ImageView imageview_boarding,boarding_type1,boarding_type2,boarding_type3;
         TextView textview_class,textview_name;
-
     }
 
     public class ListViewItem{
 
         private String str_class,str_name;
         private boolean bool_boarding;
+        private boolean bool_selected;
 
         public ListViewItem(String str_class,String str_name,boolean bool_boarding){
             this.str_class=str_class;
             this.str_name=str_name;
             this.bool_boarding=bool_boarding;
         }
+
+        void setSelected(boolean bool_selected){this.bool_selected=bool_selected;}
+
+        void setBoarding(boolean bool_boarding){this.bool_boarding=bool_boarding;}
+
 
         public String getStrClass(){
             return str_class;

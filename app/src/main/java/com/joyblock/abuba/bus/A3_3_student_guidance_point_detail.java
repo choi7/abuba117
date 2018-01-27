@@ -12,13 +12,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 public class A3_3_student_guidance_point_detail extends BaseActivity {
     String authority;
 
-    TextListViewAdapter adapter;
+    BoardingListViewAdapter adapter;
     ListView listView;
 
     @Override
@@ -43,42 +44,44 @@ public class A3_3_student_guidance_point_detail extends BaseActivity {
         authority = pref.getString("authority","");
 //
 //
-        listView = findViewById(R.id.listview);
-        adapter = new TextListViewAdapter( 4,R.layout.row_point);
+        adapter = new BoardingListViewAdapter(R.layout.row_boarding_list_tel,false);
+
+        listView = (ListView)findViewById(R.id.listview);
+
         listView.setAdapter(adapter);
-//        for(String str:list)
-//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
-//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
-//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
-        adapter.addItem("1지점","편의점 앞","경남 창원시 마산회원구 구암동 123-12번지","2명");
-        adapter.addItem("2지점","진선여고 앞","경남 창원시 마산회원구 구암동 123-12번지","2명");
-        adapter.addItem("3지점","역삼아이파크 1단지 정문","경남 창원시 마산회원구 구암동 123-12번지","1명");
-        adapter.addItem("4지점","역삼아이파크 1단지 후문","경남 창원시 마산회원구 구암동 123-12번지","3명");
-        adapter.addItem("5지점","갤러리아포레 정문","경남 창원시 마산회원구 구암동 123-12번지","2명");
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent=new Intent(A3_3_student_guidance_point_detail.this,A3_3_student_guidance_point_detail.class);
-//                startActivity(intent);
-//            }
-//        });
-
-
-
+        adapter.addItem("박준수","호랑이반",false );
+        adapter.addItem("최효신","호랑이반",true  );
+        adapter.addItem("이영애","호랑이반",true  );
+        adapter.addItem("박효신","호랑이반",false  );
+        adapter.addItem("이병헌","호랑이반",true  );
+        adapter.addItem("트와이스","호랑이반",true  );
+////        for(String str:list)
+////        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
+////        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
+////        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
+//        adapter.addItem("1지점","편의점 앞","경남 창원시 마산회원구 구암동 123-12번지","2명");
+//        adapter.addItem("2지점","진선여고 앞","경남 창원시 마산회원구 구암동 123-12번지","2명");
+//        adapter.addItem("3지점","역삼아이파크 1단지 정문","경남 창원시 마산회원구 구암동 123-12번지","1명");
+//        adapter.addItem("4지점","역삼아이파크 1단지 후문","경남 창원시 마산회원구 구암동 123-12번지","3명");
+//        adapter.addItem("5지점","갤러리아포레 정문","경남 창원시 마산회원구 구암동 123-12번지","2명");
+//
+////        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+////            @Override
+////            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+////                Intent intent=new Intent(A3_3_student_guidance_point_detail.this,A3_3_student_guidance_point_detail.class);
+////                startActivity(intent);
+////            }
+////        });
+//
+//
+//
     }
-
-
+//
+//
     public void clickRed(View view){
 //        Intent intent=new Intent(A3_3_student_guidance_point_detail.this,A3_3_student_guidance_point_detail.class);
-//        startActivity(intent);
-        adapter = new TextListViewAdapter(4,R.layout.row_point);
-        listView.setAdapter(adapter);
-        adapter.addItem("1지점","편의점 앞","경남 창원시 마산회원구 구암동 123-12번지","2명");
-        adapter.addItem("2지점","진선여고 앞","경남 창원시 마산회원구 구암동 123-12번지","2명");
-        adapter.addItem("3지점","역삼아이파크 1단지 정문","경남 창원시 마산회원구 구암동 123-12번지","1명");
-        adapter.addItem("4지점","역삼아이파크 1단지 후문","경남 창원시 마산회원구 구암동 123-12번지","3명");
-        adapter.addItem("5지점","갤러리아포레 정문","경남 창원시 마산회원구 구암동 123-12번지","2명");
+//        startActivity(intent);\
+        Toast.makeText(view.getContext(),"다음 지점의 탑승자 목록이 나옵니다.",Toast.LENGTH_SHORT).show();
     }
 
     @Override

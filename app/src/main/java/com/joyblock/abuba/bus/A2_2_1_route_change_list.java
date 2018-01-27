@@ -134,7 +134,7 @@ public class A2_2_1_route_change_list extends BaseActivity {
         ImageView imageView = (ImageView) findViewById(R.id.editorImage);
         imageView.setVisibility(View.VISIBLE);
 
-        adapter = new BoardingListViewAdapter(true);
+        adapter = new BoardingListViewAdapter(R.layout.row_boarding_list ,true);
 
         listview = (ListView)findViewById(R.id.listview_boarding);
 

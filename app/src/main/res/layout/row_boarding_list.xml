@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <TextView
+        android:id="@+id/listview_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23.75dp"
+        android:fontFamily="@font/nanumsquarebold"
+        android:text="호랑이반"
+        android:textColor="#000000"
+        android:textSize="13.75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="23.75dp" />
+
+    <TextView
+        android:id="@+id/listview_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumsquarebold"
+        android:text="김철수"
+        android:textColor="#000000"
+        android:textSize="13.75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/listview_image1"
+        android:layout_width="37dp"
+        android:layout_height="21.5dp"
+        android:layout_marginEnd="14.25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/no_check" />
+
+    <ImageView
+        android:id="@+id/boarding_type1"
+        android:layout_width="21.5dp"
+        android:layout_height="21.5dp"
+        android:layout_marginEnd="70dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/boarding_to_shcool"
+        android:layout_marginRight="70dp" />
+
+    <ImageView
+        android:id="@+id/boarding_type2"
+        android:layout_width="21.5dp"
+        android:layout_height="21.5dp"
+        android:layout_marginEnd="45dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/boarding_to_shcool"
+        android:layout_marginRight="45dp" />
+
+    <ImageView
+        android:id="@+id/boarding_type3"
+        android:layout_width="21.5dp"
+        android:layout_height="21.5dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/boarding_to_home"
+        android:layout_marginRight="20dp" />
+</android.support.constraint.ConstraintLayout>

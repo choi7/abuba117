@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.R;
 
@@ -24,6 +27,8 @@ public class A2_1_boarding_management_fragment extends android.support.v4.app.Fr
     ListView listView;
 
     String plan_flag;
+
+    int int_selected=-51;
 
 
     void setFlag(String plan_flag){
@@ -63,14 +68,21 @@ public class A2_1_boarding_management_fragment extends android.support.v4.app.Fr
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_document_education_plan, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.layout_a2_1_boarding_management_fragment, container, false);
 
-        adapter = new BoardingListViewAdapter();
+        adapter = new BoardingListViewAdapter(R.layout.row_boarding_list,false);
 
         listView = rootView.findViewById(R.id.planListView);
 
         listView.setAdapter(adapter);
-        adapter.addItem("호랑이반","박준수",false );
+        adapter.addItem("호랑이반","김철수",false );
+        adapter.addItem("호랑이반","김영미",false );
+        adapter.addItem("호랑이반","김미영",true );
+        adapter.addItem("호랑이반","이영호",true );
+        adapter.addItem("호랑이반","정현",true );
+        adapter.addItem("호랑이반","이종석",false );
+
+
 
 //        String seq_kindergarden=pref.getString("seq_kindergarden","없음");
 //        String seq_kindergarden_class=pref.getString("seq_kindergarden_class","없음");
@@ -84,99 +96,41 @@ public class A2_1_boarding_management_fragment extends android.support.v4.app.Fr
 //        }
 
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getContext(), A2_3_EducationPlanDetailActivity.class);
-//                intent.putExtra("seq_educational_plan",message[position].seq_educational_plan);
-//                intent.putExtra("plan_str",plan_flag.equals("m")?"월간":"주간");
-//                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//
-//                startActivity(intent);
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adapter.setSelected(position);
+                int_selected=position;
+            }
+        });
         adapter.notifyDataSetChanged();
 
+        TextView left=(TextView)rootView.findViewById(R.id.textview_left);
+        TextView right=(TextView)rootView.findViewById(R.id.textview_right);
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setBoarding(false);
+            }
+        });
+
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setBoarding(true);
+            }
+        });
 //        new BuyTask(seq_kindergarden,plan_flag).execute();
         return rootView;
-
-
 //        return inflater.inflate(R.layout.noticelistviewcustom, container, false);
-
-
     }
 
-//    R26_SelectEducationalPlanList[] message;
-//    class BuyTask extends AsyncTask<Void, Void, String> {
-//
-//        OkHttpClient client;
-//        okhttp3.Request request;
-//        RequestBody formBody;
-//        String api="selectEducationalPlanList";
-//
-//
-//        //해당 반 공지 조회
-//        public BuyTask(String seq_kindergarden, String plan_flag) {
-//            client = new OkHttpClient();
-//            formBody = new FormBody.Builder()
-//                    .add("seq_kindergarden", seq_kindergarden)
-//                    .add("plan_flag", plan_flag)
-//                    .build();
-//
-//            request = new okhttp3.Request.Builder()
-//                    .url("http://58.229.208.246/Ububa/"+api+".do")
-//                    .post(formBody)
-//                    .build();
-//        }
-//
-//        //해당 반 공지 조회
-//        public BuyTask(String seq_kindergarden, String plan_flag,String page) {
-//            client = new OkHttpClient();
-//            formBody = new FormBody.Builder()
-//                    .add("seq_kindergarden", seq_kindergarden)
-//                    .add("plan_flag", plan_flag)
-//                    .add("page", page)
-//                    .build();
-//
-//            request = new okhttp3.Request.Builder()
-//                    .url("http://58.229.208.246/Ububa/"+api+".do")
-//                    .post(formBody)
-//                    .build();
-//        }
-//
-//
-//        @Override
-//        protected String doInBackground(Void... params) {
-//            try {
-//                okhttp3.Response response = client.newCall(request).execute();
-//                if (!response.isSuccessful()) {
-//                    return null;
-//                }
-//                return response.body().string();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String json) {
-//            super.onPostExecute(json);
-//            Log.d("TAG", json);
-//            try {
-//                JSONObject jsonResponse = new JSONObject(json);
-//                System.out.println("반환되는 값 : " + jsonResponse);
-//                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-//                message=new GsonBuilder().create().fromJson(jsonResponse.getString("educational_plan_list"),R26_SelectEducationalPlanList[].class);
-//                for(R26_SelectEducationalPlanList list:message)
-//                    adapter.addItem(list.file_path,list.title, TimeConverter.convert(list.reg_date),"API 수정 필요");
-//                adapter.notifyDataSetChanged();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//    }
-
+    void setBoarding(boolean bool_boarding){
+        if(int_selected<0)
+            Toast.makeText(getContext(),"아이를 먼저 선택해주세요.",Toast.LENGTH_SHORT).show();
+        else {
+            adapter.setBoarding(int_selected,bool_boarding);
+        }
+    }
 
 }
