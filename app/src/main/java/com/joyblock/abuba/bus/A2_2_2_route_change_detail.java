@@ -22,7 +22,8 @@ public class A2_2_2_route_change_detail extends BaseActivity {
     String str_boarding;
     boolean flag;
 
-
+    String[] str_bus={"곰돌이 1호차","곰돌이 2호차","곰돌이 3호차","호랑이 1호차","호랑이 2호차","호랑이 3호차"};
+    String[] str_point={"편의점 앞","진선여고 앞","역삼아이파크 1단지 정문","역삼아이파크 1단지 후문","갤러리아포레 정문","평생체험학습관"};
     int int_selected_class;
 
 
@@ -57,18 +58,9 @@ public class A2_2_2_route_change_detail extends BaseActivity {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
 
-//        editor=pref.edit();
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String seq_user = app.seq_user;
-        String seq_kindergarden = app.my_kindergarden_list.get(0).seq_kindergarden;
-        String notice_title = "긴급공지";
-        String content = "내용없음";
-        String files = "no files";
-
-        //classText = (TextView) findViewById(R.id.a3_1_Class_TextView);
 
         TextView title = (TextView) findViewById(R.id.titleName);
-        title.setText("등원지도");
+        title.setText("김철수");
         title.setVisibility(View.VISIBLE);
 
 
@@ -96,7 +88,6 @@ public class A2_2_2_route_change_detail extends BaseActivity {
 //        });
 
 
-        str_boarding = "m";
 //
 //
 //        class_ConstraintLayout = (ConstraintLayout) findViewById(R.id.a3_1ClassConstraintLayout);

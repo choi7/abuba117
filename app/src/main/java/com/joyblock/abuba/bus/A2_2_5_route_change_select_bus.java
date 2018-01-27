@@ -8,21 +8,28 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 
 public class  A2_2_5_route_change_select_bus extends BaseActivity {
+    public static A2_2_5_route_change_select_bus A2_2_5_route;
+
     String authority;
 
     TextListViewAdapter adapter;
     ListView listView;
 
+    int int_selected=-1;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        A2_2_5_route=A2_2_5_route_change_select_bus.this;
         setContentView(R.layout.layout_a2_2_5_route_change_select_bus);
         Log.d("BAN LIST",app.kindergarden_class_list.get(0).kindergarden_class_name);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -49,51 +56,31 @@ public class  A2_2_5_route_change_select_bus extends BaseActivity {
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
-        String[] item={"5지점","곰돌이 1호차"};
-        adapter.addItem(item);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                Toast.makeText(getApplicationContext(), Integer.toString(position),Toast.LENGTH_LONG).show();
-//
-//                switch (adapter.getItem(position).getTitle()) {
-//                    case "실시간버스위치" :
-////                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-//                        A0_bus.this.startActivity(new Intent(A0_bus.this, A1_1_bus_location.class));
-//                        break;
-//                    case "노선관리":
-//                        toggleItems();
-////                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-////                        A0_bus.this.startActivity(new Intent(A0_bus.this, A1_1_bus_location.class));
-//                        break;
-//                    case "승차관리" :
-////                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-//                        A0_bus.this.startActivity(new Intent(A0_bus.this, A2_1_boading_management.class));
-//                        break;
-//                    case "노선변경" :
-////                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-//                        A0_bus.this.startActivity(new Intent(A0_bus.this, A2_2_1_route_change_list.class));
-//                        break;
-//                    case "노선등록" :
-////                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-//                        A0_bus.this.startActivity(new Intent(A0_bus.this, A2_3_1_route_registration_point_list.class));
-//                        break;
-//                    case "등원지도" :
-////                        Toast.makeText(getApplicationContext(),list[position],list[position].length()).show();
-//                        A0_bus.this.startActivity(new Intent(A0_bus.this, A3_1_student_guidance_bus_list.class));
-//                        break;
-//
-//                }
-//
-//            }
-//        });
+        adapter.addItem("6지점","곰돌이 1호차");
+        adapter.addItem("6지점","곰돌이 2호차");
+        adapter.addItem("6지점","곰돌이 3호차");
+        adapter.addItem("6지점","호랑이 1호차");
+        adapter.addItem("6지점","호랑이 2호차");
+        adapter.addItem("6지점","호랑이 3호차");
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adapter.setSelected(position);
+                int_selected=position;
+            }
+        });
 
 
     }
 
     public void clickNext(View v){
-        Intent intent = new Intent(A2_2_5_route_change_select_bus.this, A2_2_6_route_change_select_point.class);
-        A2_2_5_route_change_select_bus.this.startActivity(intent);
+        if(int_selected<0)
+            Toast.makeText(A2_2_5_route_change_select_bus.this,"차량을 선택해주세요.",Toast.LENGTH_SHORT).show();
+        else {
+            Intent intent = new Intent(A2_2_5_route_change_select_bus.this, A2_2_6_route_change_select_point.class);
+            intent.putExtra("int_bus", int_selected);
+            A2_2_5_route_change_select_bus.this.startActivity(intent);
+        }
     }
 
 

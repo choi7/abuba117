@@ -50,10 +50,8 @@ public class A2_3_2_route_registration_point_student_list extends BaseActivity {
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
-        String[] item = {"호랑이반", "김철수"};
-        adapter.addItem(item);
-        String[] item1 = {"코끼리반", "김민석"};
-        adapter.addItem(item1);
+        adapter.addItem("호랑이반", "김철수");
+        adapter.addItem("코끼리반", "김민석");
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -6,99 +6,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-
-    <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:id="@+id/a3_1ClassConstraintLayout"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="43.5dp"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/a3_1DayConstraintLayout"-->
-        <!--android:background="#FFFFFF"-->
-        <!--&gt;-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/textView95"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="24.25dp"-->
-            <!--android:fontFamily="@font/nanumsquarebold"-->
-            <!--android:text="반"-->
-            <!--android:textColor="#C8C9CA"-->
-            <!--android:textSize="13.75dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--android:layout_marginLeft="24.25dp" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/a3_1_Class_TextView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--android:layout_marginStart="8dp"-->
-            <!--android:text="전체"-->
-            <!--android:textColor="#000000"-->
-            <!--android:textSize="13.75dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/imageView17"-->
-            <!--android:layout_width="16dp"-->
-            <!--android:layout_height="16dp"-->
-            <!--android:layout_marginEnd="17.5dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--app:srcCompat="@drawable/document_list_tap"-->
-            <!--android:layout_marginRight="17.5dp" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/textView97"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="12.75dp"-->
-            <!--android:fontFamily="@font/nanumsquarebold"-->
-            <!--android:text="검색"-->
-            <!--android:textColor="#C8C9CA"-->
-            <!--android:textSize="13.75dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintStart_toEndOf="@+id/textView95"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--android:layout_marginLeft="12.75dp" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/textView99"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0.25dp"-->
-            <!--android:background="#C8C9CA"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent" />-->
-    <!--</android.support.constraint.ConstraintLayout>-->
-
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
 
         <TextView
             android:id="@+id/textView130"
             android:layout_width="match_parent"
             android:layout_height="43.50dp"
             android:background="#8dc21f"
+            android:fontFamily="@font/nanumsquareextrabold"
             android:gravity="center_vertical"
-            android:paddingLeft="38dp"
+            android:paddingLeft="33dp"
             android:text="등 원"
-            android:textColor="#ffffff"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout" />
+            android:textColor="#ffffff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#000000" />
 
         <LinearLayout
             android:id="@+id/layout_bus_name_to_shcool"
@@ -112,17 +41,13 @@
                 android:id="@+id/textview_bus_name_to_school"
                 android:layout_width="match_parent"
                 android:layout_height="43.50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_weight="1"
+                android:fontFamily="@font/nanumsquarebold"
                 android:gravity="center_vertical"
-                android:paddingLeft="38dp"
-                android:textColor="#000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout"
-                tools:text="곰돌이 1호차" />
+                android:paddingLeft="33dp"
+                android:text="곰돌이 1호차"
+                android:textColor="#000000" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,9 +65,15 @@
                     android:layout_alignParentRight="true"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/document_next_image" />
+
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#000000" />
 
         <LinearLayout
             android:id="@+id/layout_point_to_shchool"
@@ -156,17 +87,12 @@
                 android:id="@+id/textview_point_to_shchool"
                 android:layout_width="match_parent"
                 android:layout_height="43.50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_weight="1"
+                android:fontFamily="@font/nanumsquarebold"
                 android:gravity="center_vertical"
-                android:paddingLeft="38dp"
-                android:textColor="#000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout"
-                tools:text="자이아파트 정문" />
+                android:paddingLeft="33dp"
+                android:text="자이아파트 정문"
+                android:textColor="#000000" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -193,13 +119,16 @@
             android:layout_width="match_parent"
             android:layout_height="43.50dp"
             android:background="#f7b52c"
+            android:fontFamily="@font/nanumsquareextrabold"
             android:gravity="center_vertical"
-            android:paddingLeft="38dp"
+            android:paddingLeft="33dp"
             android:text="하 원"
-            android:textColor="#ffffff"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout" />
+            android:textColor="#ffffff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#000000" />
 
         <LinearLayout
             android:id="@+id/layout__bus_name_to_home"
@@ -213,17 +142,12 @@
                 android:id="@+id/textview_bus_name_to_home"
                 android:layout_width="match_parent"
                 android:layout_height="43.50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_weight="1"
+                android:fontFamily="@font/nanumsquarebold"
                 android:gravity="center_vertical"
-                android:paddingLeft="38dp"
-                android:textColor="#000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout"
-                tools:text="곰돌이 1호차" />
+                android:paddingLeft="33dp"
+                android:text="곰돌이 1호차"
+                android:textColor="#000000" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -246,6 +170,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#000000" />
+
+        <LinearLayout
             android:id="@+id/layout_point_to_home"
             android:layout_width="match_parent"
             android:layout_height="43.5dp"
@@ -261,13 +190,12 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_weight="1"
+                android:fontFamily="@font/nanumsquarebold"
                 android:gravity="center_vertical"
-                android:paddingLeft="38dp"
+                android:paddingLeft="33dp"
+                android:text="자이아파트 정문"
                 android:textColor="#000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout"
-                tools:text="자이아파트 정문" />
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -294,28 +222,46 @@
             android:layout_width="match_parent"
             android:layout_height="43.50dp"
             android:background="#2ca6e0"
+            android:fontFamily="@font/nanumsquareextrabold"
             android:gravity="center_vertical"
-            android:paddingLeft="38dp"
+            android:paddingLeft="33dp"
             android:text="추 가"
-            android:textColor="#ffffff"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/a3_1ClassConstraintLayout" />
+            android:textColor="#ffffff" />
 
-        <ListView
-            android:id="@+id/listview_another_boarding"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/PageNavigationView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView94"
-            app:layout_constraintVertical_bias="0.0">
 
-        </ListView>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="#000000" />
+
+    <ListView
+        android:id="@+id/listview_another_boarding"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/textview_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout"
+        app:layout_constraintVertical_bias="0.0">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textview_red"
+        android:layout_width="match_parent"
+        android:layout_height="43.50dp"
+        android:background="#ff6666"
+        android:fontFamily="@font/nanumsquareextrabold"
+        android:gravity="center"
+        android:paddingLeft="33dp"
+        android:text="확 인"
+        app:layout_constraintBottom_toTopOf="@id/PageNavigationView2"
+        android:textColor="#ffffff" />
+
 
     <com.joyblock.abuba.bottomtabbar
         android:id="@+id/PageNavigationView2"

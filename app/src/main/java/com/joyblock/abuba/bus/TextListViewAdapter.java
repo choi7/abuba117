@@ -1,6 +1,7 @@
 package com.joyblock.abuba.bus;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,8 +91,11 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
 //        }
 
         //위젯에 반, 이름, 탑승/미탑승 반영
-        for(int i=0;i<size;i++)
+
+        for(int i=0;i<size;i++) {
             textview[i].setText(item.getStringArray()[i]);
+            textview[i].setTextColor(item.bool_selected?Color.BLUE:Color.BLACK);
+        }
 
         return convertView;
     }
@@ -116,21 +120,26 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
     }
 
 
-    public void addItem(String[] str_arr) {
-        list.add(new Item(str_arr));
+    void setSelected(int int_position){
+        for(Item item:list)
+            item.bool_selected=false;
+        list.get(int_position).bool_selected=true;
+        notifyDataSetChanged();
     }
+
+
 
     private class ListViewHolder {
         TextView[] textview=new TextView[size];
+
     }
 
     public class Item {
         private String[] str_arr={""};
+        private boolean bool_selected;
 
-        public Item(String[] str_arr){
-//            this.str_arr=new String[size];
-            this.str_arr=str_arr;
-        }
+
+        public Item(String[] str_arr){this.str_arr=str_arr;}
 
         public String[] getStringArray(){
             return str_arr;

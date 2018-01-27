@@ -120,12 +120,12 @@ public class A3_1_student_guidance_bus_list extends BaseActivity {
                         listview = findViewById(R.id.listview);
                         adapter = new TextListViewAdapter(3, R.layout.row_bus);
                         listview.setAdapter(adapter);
-                        adapter.addItem(StringArray.getStringArray("5지점","곰돌이 1호차","10명"));
-                        adapter.addItem(StringArray.getStringArray("6지점","곰돌이 2호차","15명"));
-                        adapter.addItem(StringArray.getStringArray("7지점","곰돌이 3호차","7명"));
-                        adapter.addItem(StringArray.getStringArray("4지점","호랑이 1호차","7명"));
-                        adapter.addItem(StringArray.getStringArray("6지점","호랑이 2호차","8명"));
-                        adapter.addItem(StringArray.getStringArray("3지점","호랑이 3호차","10명"));
+                        adapter.addItem("5지점","곰돌이 1호차","10명");
+                        adapter.addItem("6지점","곰돌이 2호차","15명");
+                        adapter.addItem("7지점","곰돌이 3호차","7명");
+                        adapter.addItem("4지점","호랑이 1호차","7명");
+                        adapter.addItem("6지점","호랑이 2호차","8명");
+                        adapter.addItem("3지점","호랑이 3호차","10명");
                         listview.setVisibility(View.VISIBLE);
                         TextView red=(TextView)findViewById(R.id.textview_red);
                         red.setVisibility(View.VISIBLE);

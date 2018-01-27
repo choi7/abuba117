@@ -147,10 +147,8 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
-        String[] item={"1지점","편의점 앞"};
-        adapter.addItem(item);
-        String[] item1={"2지점","진선여고 앞"};
-        adapter.addItem(item1);
+        adapter.addItem("1지점","편의점 앞");
+        adapter.addItem("2지점","진선여고 앞");
 
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
