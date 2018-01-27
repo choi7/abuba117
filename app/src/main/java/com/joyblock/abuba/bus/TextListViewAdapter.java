@@ -22,7 +22,8 @@ import java.util.ArrayList;
 //텍스트만 있는 리스트뷰 어댑터 정의
 public class TextListViewAdapter extends BaseAdapter implements Serializable {
 
-    int[] textview_id={R.id.listview_text1,R.id.listview_text2,R.id.listview_text3};
+    //필요한 만큼 텍스트 뷰를 증가시면 된다.
+    int[] textview_id={R.id.listview_text1,R.id.listview_text2,R.id.listview_text3,R.id.listview_text4};
 
     public ArrayList<Item> list= new ArrayList<>();
     int int_layout;
@@ -95,6 +96,7 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
         return convertView;
     }
 
+    //필요에 따라 addItem을 정의한다.
     public void addItem(String str1) {
         String[] array={str1};
         list.add(new Item(array));
@@ -105,6 +107,11 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
     }
     public void addItem(String str1,String str2,String str3) {
         String[] array={str1,str2,str3};
+        list.add(new Item(array));
+    }
+
+    public void addItem(String str1,String str2,String str3,String str4) {
+        String[] array={str1,str2,str3,str4};
         list.add(new Item(array));
     }
 
