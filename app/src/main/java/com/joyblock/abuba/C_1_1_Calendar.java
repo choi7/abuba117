@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
     FragmentAbsence fragment2;
 
     FragmentCalendar fragmentCalendar;
+    FragmentCarter fragmentCarter;
 
 
     @Override
@@ -84,22 +86,11 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
                 break;
 
             case 2:
-                fragmentCalendar = new FragmentCalendar();
-                fragmentCalendar.app = app;
-                fragmentCalendar.setPref(pref);
-                transaction.replace(R.id.fragment_container1, fragmentCalendar);
+                fragmentCarter = new FragmentCarter();
+                fragmentCarter.app = app;
+                fragmentCarter.setPref(pref);
+                transaction.replace(R.id.fragment_container1, fragmentCarter);
                 transaction.commit();
-
-
-
-                // 식단표 fragment' 호출
-                /*
-                fragment2 = new FragmentAbsence();
-                fragment2.app = app;
-                fragment2.setPref(pref);
-                transaction.replace(R.id.fragment_container1, fragment2);
-                transaction.commit();
-                */
                 break;
         }
 

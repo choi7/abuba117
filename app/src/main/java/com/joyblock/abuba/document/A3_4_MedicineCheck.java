@@ -71,7 +71,7 @@ public class A3_4_MedicineCheck extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();
                             }
-                        }).setPositiveButton("취소", null)
+                        }).setNegativeButton("취소", null)
                         .create().show();
             }
         });
@@ -86,7 +86,7 @@ public class A3_4_MedicineCheck extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 finish();
                             }
-                        }).setPositiveButton("취소", null)
+                        }).setNegativeButton("취소", null)
                         .create().show();
             }
         });

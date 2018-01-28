@@ -281,14 +281,14 @@
     <TextView
         android:id="@+id/editText13"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:fontFamily="@font/nanumsquarebold"
         android:text="요구르트 1인 1병\n해당음식 알러지 부작용 있는 경우\n대체 반찬으로 조미김 준비"
         android:textColor="#000000"
-        android:fontFamily="@font/nanumsquarebold"
         android:textSize="13.75dp"
         app:layout_constraintBottom_toTopOf="@+id/noticeditbottom2"
         app:layout_constraintStart_toStartOf="@+id/editText5"
-        app:layout_constraintTop_toBottomOf="@+id/textView155" />
+        app:layout_constraintTop_toTopOf="@+id/textView147" />
 
     <com.joyblock.abuba.notice.NoticeEditBottom2
         android:id="@+id/noticeditbottom2"

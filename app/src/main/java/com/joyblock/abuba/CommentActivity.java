@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class CommentActivity extends BaseActivity implements Serializable {
     CommentListVieaAdapter commentListVieaAdapter;
     InputMethodManager imm;
     String seq_notice, flag, page = "1";
+    Intent intent;
 
     @Override
     protected void onPostResume() {
@@ -54,33 +56,19 @@ public class CommentActivity extends BaseActivity implements Serializable {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
+        intent = getIntent();
+        Customactionbar();
 
-        Intent intent = getIntent();
-        seq_notice = intent.getStringExtra("seq_notice");
-        flag = intent.getStringExtra("flag");
+
+
 
         commentPushText = (TextView) findViewById(R.id.commentPushText);
         allCommentListView = (ListView) findViewById(R.id.allCommentListView);
         commentEditText = (EditText) findViewById(R.id.commentEditText);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbarcustom);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
-        }
-        if (Build.VERSION.SDK_INT >= 23) {
-            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
-        }
 
-        TextView title = (TextView) findViewById(R.id.titleName);
-        title.setText("댓글");
-        title.setVisibility(View.VISIBLE);
 
-        Reply insertReply = new Reply(seq_notice, flag, page);
-        insertReply.execute();
 
         commentListVieaAdapter = new CommentListVieaAdapter(getApplicationContext());
 
@@ -91,7 +79,6 @@ public class CommentActivity extends BaseActivity implements Serializable {
 
         titleCount = (TextView) findViewById(R.id.titleCountText);
         titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
-
 
 
         commentPushText.setOnClickListener(new View.OnClickListener() {
@@ -128,12 +115,64 @@ public class CommentActivity extends BaseActivity implements Serializable {
         });
 
 
-
     }
+
+    public void Customactionbar() {
+
+        String seq_activity = intent.getStringExtra("activity");
+        switch (seq_activity) {
+            case "C2_3_CarteView":
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xffff9900));
+                if (Build.VERSION.SDK_INT >= 21) {
+                    getWindow().setStatusBarColor(Color.parseColor("#FF9900"));
+                }
+                break;
+            case "C3_2_CalendarView":
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xffff9900));
+                if (Build.VERSION.SDK_INT >= 21) {
+                    getWindow().setStatusBarColor(Color.parseColor("#FF9900"));
+                }
+                break;
+            default:
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+                if (Build.VERSION.SDK_INT >= 21) {
+                    getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
+                }
+                seq_notice = intent.getStringExtra("seq_notice");
+                flag = intent.getStringExtra("flag");
+                Reply insertReply = new Reply(seq_notice, flag, page);
+                insertReply.execute();
+                break;
+        }
+
+
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
+        }
+
+        TextView title = (TextView) findViewById(R.id.titleName);
+        title.setText("댓글");
+        title.setVisibility(View.VISIBLE);
+
+        ImageView backImage = (ImageView) findViewById(R.id.backImage);
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
 
     R28_InsertReply insertReply;
     R29_DeleteReply deleteReply;
     R30_SelectReplyList[] selectReplyList;
+
     class Reply extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
@@ -230,10 +269,10 @@ public class CommentActivity extends BaseActivity implements Serializable {
                             break;
                         case 1: //댓글 조회
 //                            selectReplyList = new GsonBuilder().create().fromJson(jsonResponse.getString(message_key), R30_SelectReplyList.class);
-                            selectReplyList = new GsonBuilder().create().fromJson(jsonResponse.getString(message_key),R30_SelectReplyList[].class);
+                            selectReplyList = new GsonBuilder().create().fromJson(jsonResponse.getString(message_key), R30_SelectReplyList[].class);
                             Log.d("detail114", String.valueOf(selectReplyList));
-                            for(int i=0;i<selectReplyList.length;i++) {
-                                R30_SelectReplyList list=selectReplyList[i];
+                            for (int i = 0; i < selectReplyList.length; i++) {
+                                R30_SelectReplyList list = selectReplyList[i];
 //                                commentListVieaAdapter.addItem(list.file_path, list.title, TimeConverter.convert(list.reg_date), list.name);
                                 commentListVieaAdapter.addItem(list.content, TimeConverter.convert(list.reg_date), list.name);
                             }

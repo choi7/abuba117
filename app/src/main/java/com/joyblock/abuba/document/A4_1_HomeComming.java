@@ -112,7 +112,7 @@ public class A4_1_HomeComming extends BaseActivity {
         mainlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(A4_1_HomeComming.this, A3_2_MedicineView.class);
+                Intent intent = new Intent(A4_1_HomeComming.this, A4_2_HomeCommingView.class);
 //                intent.putExtra("seq_notice",r34_selectMedicationRequestList[position].seq_medication_request);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);

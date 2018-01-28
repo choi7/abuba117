@@ -18,15 +18,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.joyblock.abuba.bus.TextListViewAdapter;
-import com.joyblock.abuba.calendar.CalendarActivity;
 import com.joyblock.abuba.data.MyApplication;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,39 +30,37 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by BLUE on 2018-01-26.
+ * Created by BLUE on 2018-01-28.
  */
 
-public class FragmentCalendar extends Fragment {
+public class FragmentCarter extends Fragment {
+
+
     SharedPreferences pref;
     private TextView tvDate;
-    GridAdapter gridAdapter;
+    private GridAdapter gridAdapter;
     private ArrayList<String> dayList;
     private GridView gridView;
-    private ListView c_1_1_listview;
     private Calendar mCal;
 
 
     public MyApplication app;
-    public void setPref(SharedPreferences pref){
-        this.pref=pref;
+
+    public void setPref(SharedPreferences pref) {
+        this.pref = pref;
     }
+
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_c_1_1_calendar, container, false);
-
-
-
-        final ConstraintLayout constraintLayout = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout7);
-        final ConstraintLayout constraintLayout1 = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout8);
-
+        ConstraintLayout constraintLayout = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout7);
         tvDate = (TextView) rootView.findViewById(R.id.tv_date);
         gridView = (GridView) rootView.findViewById(R.id.calendar_Gridview);
-        c_1_1_listview = (ListView) rootView.findViewById(R.id.c_1_1_listview);
         constraintLayout.setVisibility(View.VISIBLE);
         gridView.setVisibility(View.VISIBLE);
+
         long now = System.currentTimeMillis();
         final Date date = new Date(now);
         //연,월,일을 따로 저장
@@ -100,46 +92,15 @@ public class FragmentCalendar extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("포지션은 : ", String.valueOf(position));
-                Intent intent = new Intent(getContext(), C3_2_CalendarView.class);
-                FragmentCalendar.this.startActivity(intent);
+                Intent intent = new Intent(getContext(), C2_3_CarteView.class);
+                FragmentCarter.this.startActivity(intent);
             }
         });
-
-        TextListViewAdapter adapter=new TextListViewAdapter(5,R.layout.custom_cell_c_1_2_calendar_view);
-        c_1_1_listview.setAdapter(adapter);
-        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-
-
 
         ImageView fragment_c_1_1_List_Change_ImageView = (ImageView) rootView.findViewById(R.id.fragment_c_1_1_List_Change_ImageView);
         fragment_c_1_1_List_Change_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                constraintLayout.setVisibility(View.GONE);
-                constraintLayout1.setVisibility(View.VISIBLE);
-                gridView.setVisibility(View.GONE);
-                c_1_1_listview.setVisibility(View.VISIBLE);
-
-//                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
-//                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        ImageView imageView21 = (ImageView) rootView.findViewById(R.id.imageView21);
-        imageView21.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                constraintLayout.setVisibility(View.VISIBLE);
-                constraintLayout1.setVisibility(View.GONE);
-                gridView.setVisibility(View.VISIBLE);
-                c_1_1_listview.setVisibility(View.GONE);
-
 //                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
 //                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();
             }
@@ -153,7 +114,6 @@ public class FragmentCalendar extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-
 
     private void setCalendarDate(int month) {
         mCal.set(Calendar.MONTH, month - 1);
@@ -214,13 +174,25 @@ public class FragmentCalendar extends Fragment {
             Integer today = mCal.get(Calendar.DAY_OF_MONTH);
             String sToday = String.valueOf(today);
             if (sToday.equals(getItem(position))) { //오늘 day 텍스트 컬러 변경
-                holder.tvItemGridView.setTextColor(getResources().getColor(R.color.colorAccent));
+//                holder.tvItemGridView.setTextColor(getResources().getColor(R.color.colorAccent));
+                holder.tvItemGridViewContent.setBackgroundColor(Color.parseColor("#E3F5FF"));
+                holder.tvItemGridView.setBackgroundColor(Color.parseColor("#E3F5FF"));
+
             }
-//            if(!(position % 7 == 0 || position+1 % 7 == 0)) {
-                holder.tvItemGridViewContent.setText("동계방학");
+
+
+            //임의 날짜
+            if(position % 7 == 0) {holder.tvItemGridView.setTextColor(Color.parseColor("#C30D23"));}
+            if((position+1) % 7 == 0) {holder.tvItemGridView.setTextColor(Color.parseColor("#036EB7"));}
+            if(!(position % 7 == 0)&&!((position+1) % 7 == 0)) {
+                holder.tvItemGridViewContent.setText("쌀밥\n미역국\n불고기\n시금치\n김치");
                 holder.tvItemGridViewContent.setBackgroundColor(Color.parseColor("#F5FFFE"));
                 holder.tvItemGridView.setBackgroundColor(Color.parseColor("#F5FFFE"));
-//            }
+            } else {
+                holder.tvItemGridViewContent.setText("");
+            }
+
+
 
             return convertView;
         }

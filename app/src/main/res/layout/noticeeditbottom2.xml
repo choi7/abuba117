@@ -55,6 +55,7 @@
         android:layout_marginStart="16dp"
         android:background="@null"
         android:ems="10"
+        android:textSize="13.75dp"
         android:hint="댓글을 남겨주세요"
         android:inputType="textPersonName"
         android:visibility="gone"

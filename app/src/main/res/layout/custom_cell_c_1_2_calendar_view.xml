@@ -7,7 +7,7 @@
     android:layout_height="47.5dp">
 
     <TextView
-        android:id="@+id/textView156"
+        android:id="@+id/listview_text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -23,7 +23,7 @@
         android:layout_marginLeft="17.75dp" />
 
     <TextView
-        android:id="@+id/textView157"
+        android:id="@+id/listview_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -34,12 +34,12 @@
         android:textColor="#000000"
         android:text="금요일"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView156"
+        app:layout_constraintStart_toEndOf="@+id/listview_text1"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="8dp" />
 
     <TextView
-        android:id="@+id/textView158"
+        android:id="@+id/listview_text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -50,12 +50,12 @@
         android:textColor="#000000"
         android:text="10시~\n  12시"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView157"
+        app:layout_constraintStart_toEndOf="@+id/listview_text2"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="14dp" />
 
     <TextView
-        android:id="@+id/textView159"
+        android:id="@+id/listview_text4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -66,25 +66,23 @@
         android:textColor="#000000"
         android:text="창원시\n마산회원구"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView158"
+        app:layout_constraintStart_toEndOf="@+id/listview_text3"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="21.25dp" />
 
     <TextView
-        android:id="@+id/textView160"
+        android:id="@+id/listview_text5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="35.5dp"
         android:layout_marginStart="31.5dp"
-        android:textSize="10dp"
         android:fontFamily="@font/nanumsquareregular"
-        android:textColor="#000000"
         android:text="동계장기자랑"
+        android:textColor="#000000"
+        android:textSize="10dp"
         app:layout_constraintEnd_toStartOf="@+id/imageView23"
-        app:layout_constraintStart_toEndOf="@+id/textView159"
-        tools:layout_editor_absoluteY="15dp"
-        android:layout_marginRight="35.5dp"
-        android:layout_marginLeft="31.5dp" />
+        app:layout_constraintStart_toEndOf="@+id/listview_text4"
+        tools:layout_editor_absoluteY="15dp" />
 
     <ImageView
         android:id="@+id/imageView23"

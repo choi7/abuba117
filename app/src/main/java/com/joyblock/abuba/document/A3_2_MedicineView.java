@@ -61,7 +61,7 @@ public class A3_2_MedicineView extends BaseActivity {
 
 
         //주석처리
-//        new selectMedicationRequestOne(seq_medication_request).execute();
+        new selectMedicationRequestOne(seq_medication_request).execute();
 
         medicineViewPushText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,8 +72,8 @@ public class A3_2_MedicineView extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent loginIntent = new Intent(A3_2_MedicineView.this, A3_4_MedicineCheck.class);
-//                                loginIntent.putExtra("kid_name", list.kids_name);
-//                                loginIntent.putExtra("time", list.year + "." + list.month + "." + list.day + " ");
+                                loginIntent.putExtra("kid_name", list.kids_name);
+                                loginIntent.putExtra("time", list.year + "." + list.month + "." + list.day + " ");
 
 
                                 A3_2_MedicineView.this.startActivity(loginIntent);

@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/calendar_linearLayout"
     android:layout_width="51.5dp"
     android:layout_height="81dp"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@drawable/calendar_line"
-    >
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_item_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|left"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/nanumsquareregular"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
         android:text="sd"
         android:textColor="#000000"
-        android:fontFamily="@font/nanumsquareregular"
-        android:textSize="10dp"
-        android:background="#FFFFFF"/>
+        android:textSize="10dp" />
 
     <TextView
-        android:id="@+id/textView41"
+        android:id="@+id/tv_item_gridvew_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/nanumsquareregular"
+        android:gravity="center"
         android:text="t"
         android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="7.5dp"
         android:textColor="#58BDB8"
-        android:fontFamily="@font/nanumsquareregular"
-        android:background="#FFFFFF"
-        />
+        android:textSize="7.5dp" />
 
 </LinearLayout>
