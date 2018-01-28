@@ -84,6 +84,9 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapLayout);
 
+
+
+
 //        authority = pref.getString("authority","");
     }
 
