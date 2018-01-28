@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -136,7 +137,8 @@
         <activity
             android:name=".C3_2_CalendarView"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".C_3_1_CalendarEditor_TimeSetting"></activity>
+        <activity android:name=".C_3_1_CalendarEditor_TimeSetting" />
+        <activity android:name=".C_3_1_CalendarEditor_PlaceSetting" />
     </application>
 
 </manifest>
