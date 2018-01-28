@@ -74,6 +74,14 @@ public class C_3_1_CalendarEditor extends BaseActivity {
         });
         constraintLayout10 = (ConstraintLayout) findViewById(R.id.constraintLayout10);
 
+        constraintLayout10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(C_3_1_CalendarEditor.this, C_3_1_CalendarEditor_PlaceSetting.class);
+                C_3_1_CalendarEditor.this.startActivity(intent);
+            }
+        });
+
         pictureRegister.setVisibility(View.VISIBLE);
 
         pictureRegister.setOnClickListener(new View.OnClickListener() {
