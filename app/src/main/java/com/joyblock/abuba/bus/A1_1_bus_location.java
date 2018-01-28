@@ -119,13 +119,13 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
         try {
-//            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-//                    100, // 통지사이의 최소 시간간격 (miliSecond)
-//                    1, // 통지사이의 최소 변경거리 (m)
-//                    mLocationListener);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
+                    5000, // 통지사이의 최소 시간간격 (miliSecond)
+                    10, // 통지사이의 최소 변경거리 (m)
+                    mLocationListener);
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
-                    100, // 통지사이의 최소 시간간격 (miliSecond)
-                    1, // 통지사이의 최소 변경거리 (m)
+                    5000, // 통지사이의 최소 시간간격 (miliSecond)
+                    10, // 통지사이의 최소 변경거리 (m)
                     mLocationListener);
         } catch(SecurityException e){
             e.printStackTrace();
@@ -143,9 +143,10 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
             Log.d("test", "onLocationChanged, location:" + location);
+//            location.
             longitude = location.getLongitude(); //경도
             latitude = location.getLatitude();   //위도
-            logView.setText(longitude+"/"+latitude);
+            logView.setText(location.toString());//latitude+"/"+longitude);//+location.getProvider().toString());
             mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
             if(!once) {
                 MapPOIItem marker = new MapPOIItem();
@@ -156,6 +157,7 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
                 marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
 
                 mMapView.addPOIItem(marker);
+
                 once=!once;
             }
 //            geovariable.setLatitude(latitude); // 클래스 변수에 위도 대입
@@ -177,10 +179,6 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
             Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
-
-    public interface aaa extends LocationListener {
-
-    }
 
 
 
