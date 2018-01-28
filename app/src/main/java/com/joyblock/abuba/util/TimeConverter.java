@@ -25,6 +25,7 @@ public class TimeConverter {
 //        // nowDate 변수에 값을 저장한다.
 //        String formatDate = sdfNow.format(date);
 
+
         return now+"";
     }
 }
