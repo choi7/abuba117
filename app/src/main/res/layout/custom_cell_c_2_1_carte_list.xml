@@ -29,7 +29,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView162"
+        android:id="@+id/endDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView168" />
 
     <TextView
-        android:id="@+id/textView164"
+        android:id="@+id/endDate1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanumsquareregular"
@@ -63,7 +63,7 @@
         android:textColor="#595757"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView169"
-        app:layout_constraintStart_toStartOf="@+id/textView162"
+        app:layout_constraintStart_toStartOf="@+id/endDate"
         app:layout_constraintTop_toBottomOf="@+id/textView168" />
 
     <TextView
@@ -75,7 +75,7 @@
         android:textColor="#595757"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView162"
+        app:layout_constraintStart_toStartOf="@+id/endDate"
         app:layout_constraintTop_toBottomOf="@+id/textView169" />
 
     <TextView
@@ -88,7 +88,7 @@
         android:textSize="10dp"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/textView168"
-        app:layout_constraintStart_toEndOf="@+id/textView162"
+        app:layout_constraintStart_toEndOf="@+id/endDate"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout11"
         android:layout_marginLeft="17dp" />
 

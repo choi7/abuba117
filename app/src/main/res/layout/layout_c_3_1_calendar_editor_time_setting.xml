@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.joyblock.abuba.C_3_1_CalendarEditor_TimeSetting">
+
+    <com.joyblock.abuba.PmTimePicker
+        android:id="@+id/pmTimePicker"
+        android:layout_width="330dp"
+        android:layout_height="148dp"
+        android:timePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView173">
+
+    </com.joyblock.abuba.PmTimePicker>
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="시작"
+            android:textColor="#E95513"
+            android:textSize="13.75dp"
+            app:layout_constraintBottom_toTopOf="@+id/startDate1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/startDate1"
+            android:layout_width="165dp"
+            android:layout_height="1.75dp"
+            android:layout_marginBottom="8dp"
+            android:background="#E95513"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout12"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout12">
+
+        <TextView
+            android:id="@+id/endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="종료"
+            android:textColor="#717071"
+            android:textSize="13.75dp"
+            app:layout_constraintBottom_toTopOf="@+id/endDate1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/endDate1"
+            android:layout_width="165dp"
+            android:layout_height="1.75dp"
+            android:layout_marginBottom="8dp"
+            android:background="#717071"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout14"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout14">
+
+        <TextView
+            android:id="@+id/textView167"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="취소"
+            android:textColor="#3399CC"
+            android:textSize="12.5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/pmTimePicker"
+        app:layout_constraintTop_toBottomOf="@+id/textView174">
+
+        <TextView
+            android:id="@+id/textView171"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="완료"
+            android:textColor="#3399CC"
+            android:textSize="12.5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView173"
+        android:layout_width="330dp"
+        android:layout_height="0.25dp"
+        android:layout_marginTop="56.5dp"
+        android:background="#717071"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c_3_1_calendar_girdview" />
+
+    <TextView
+        android:id="@+id/textView174"
+        android:layout_width="330dp"
+        android:layout_height="0.25dp"
+        android:background="#717071"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pmTimePicker" />
+
+    <TextView
+        android:id="@+id/textView175"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/nanumsquareextrabold"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout17"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout16"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout12" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout16"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView175"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout12"
+        app:layout_constraintTop_toTopOf="@+id/textView175">
+
+        <ImageView
+            android:id="@+id/imageView26"
+            android:layout_width="6dp"
+            android:layout_height="12.75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/calendar_left" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout17"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView175"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout13"
+        app:layout_constraintTop_toTopOf="@+id/textView175">
+
+        <ImageView
+            android:id="@+id/imageView27"
+            android:layout_width="6dp"
+            android:layout_height="12.75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/calendar_right" />
+    </android.support.constraint.ConstraintLayout>
+
+    <GridView
+        android:id="@+id/c_3_1_calendar_girdview"
+        android:layout_width="330dp"
+        android:layout_height="174.5dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:numColumns="7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView175" />
+
+</android.support.constraint.ConstraintLayout>
