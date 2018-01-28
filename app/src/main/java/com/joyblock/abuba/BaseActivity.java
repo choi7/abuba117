@@ -74,6 +74,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         NanumSquareRegular=Typeface.createFromAsset(getAssets(), "NanumSquareRegular.ttf");
         pref = getSharedPreferences("pref", MODE_PRIVATE);
 
+//        try{
+//            ImageView backImage = (ImageView) findViewById(R.id.backImage);
+//            backImage.setOnClickListener(new View.OnClickListener() {
+//            });
+//        } catch (NullPointerException ex){
+//
+//        }
+
+    }
+
+    public void clickBack(View v){
+        finish();
     }
 
 
