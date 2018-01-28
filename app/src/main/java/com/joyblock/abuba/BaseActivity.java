@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public MyApplication app;
 
-
+    double latitude,longitude;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,5 +88,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         finish();
     }
 
+
+    public void processLocation(double latitude,double longitude){
+        this.latitude=latitude;
+        this.longitude=longitude;
+    }
 
 }
