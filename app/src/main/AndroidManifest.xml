@@ -122,15 +122,19 @@
         <activity android:name=".document.A_4_3_HomeComming_Sign_Parent" />
         <activity android:name=".document.A5_1_Attendance" />
         <activity android:name=".C_1_1_Calendar" />
-        <activity android:name=".C_3_1_CalendarEditor"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".C_3_1_CalendarEditor"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".album.P_2_AlbumView" />
-        <activity android:name=".C_2_2_CarteEditor"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".C_2_2_CarteEditor"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".C2_3_CarteView" />
-        <activity android:name=".document.A4_2_HomeCommingView"></activity>
-        <activity android:name=".C3_2_CalendarView"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+        <activity android:name=".document.A4_2_HomeCommingView" />
+        <activity
+            android:name=".C3_2_CalendarView"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".C_3_1_CalendarEditor_TimeSetting"></activity>
     </application>
 
 </manifest>

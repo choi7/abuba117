@@ -137,11 +137,11 @@
             android:layout_width="18.5dp"
             android:layout_height="14dp"
             android:layout_marginEnd="11.25dp"
+            android:layout_marginRight="11.25dp"
             android:layout_marginTop="11.25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/c11calendar"
-            android:layout_marginRight="11.25dp" />
+            app:srcCompat="@drawable/c11calendar" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -165,18 +165,66 @@
 
     </GridView>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout9"
+        android:layout_width="match_parent"
+        android:layout_height="43.5dp"
+        android:background="#EEEEEF"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_date5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/nanumsquareregular"
+            android:text="2018.01"
+            android:textColor="#000000"
+            android:textSize="15.75dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView142"
+            android:layout_width="12.5dp"
+            android:layout_height="5.75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_date5"
+            app:layout_constraintStart_toStartOf="@+id/tv_date5"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date5"
+            app:srcCompat="@drawable/a_b" />
+
+        <ImageView
+            android:id="@+id/imageView22"
+            android:layout_width="14.5dp"
+            android:layout_height="14.5dp"
+            android:layout_marginEnd="11.25dp"
+            android:layout_marginRight="11.25dp"
+            android:layout_marginTop="11.25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/listview" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout8"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#EEEEEF"
-android:visibility="gone"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/calendarLinear"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:background="#EEEEEF"
@@ -186,7 +234,7 @@ android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/tv_date3"
+                android:id="@+id/calendardel1"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -198,6 +246,7 @@ android:visibility="gone"
                 android:textSize="11dp" />
 
             <TextView
+                android:id="@+id/calendardel2"
                 android:layout_width="40.5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -209,6 +258,7 @@ android:visibility="gone"
                 android:textSize="11dp" />
 
             <TextView
+                android:id="@+id/calendardel3"
                 android:layout_width="42.75dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -220,6 +270,7 @@ android:visibility="gone"
                 android:textSize="11dp" />
 
             <TextView
+                android:id="@+id/calendardel4"
                 android:layout_width="82.5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -231,6 +282,7 @@ android:visibility="gone"
                 android:textSize="11dp" />
 
             <TextView
+                android:id="@+id/calendardel5"
                 android:layout_width="97.5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -242,6 +294,7 @@ android:visibility="gone"
                 android:textSize="11dp" />
 
             <TextView
+                android:id="@+id/calendardel6"
                 android:layout_width="56.5dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -286,23 +339,24 @@ android:visibility="gone"
             android:layout_width="14.5dp"
             android:layout_height="14.5dp"
             android:layout_marginEnd="11.25dp"
+            android:layout_marginRight="11.25dp"
             android:layout_marginTop="11.25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/listview"
-            android:layout_marginRight="11.25dp" />
+            app:srcCompat="@drawable/listview" />
 
     </android.support.constraint.ConstraintLayout>
 
     <ListView
         android:id="@+id/c_1_1_listview"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#FFFFFF"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout9" />
 
 </android.support.constraint.ConstraintLayout>

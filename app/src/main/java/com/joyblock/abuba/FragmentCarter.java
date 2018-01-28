@@ -18,8 +18,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.joyblock.abuba.bus.TextListViewAdapter;
 import com.joyblock.abuba.data.MyApplication;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +43,7 @@ public class FragmentCarter extends Fragment {
     private GridAdapter gridAdapter;
     private ArrayList<String> dayList;
     private GridView gridView;
+    private ListView carterListview;
     private Calendar mCal;
 
 
@@ -55,7 +58,20 @@ public class FragmentCarter extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_c_1_1_calendar, container, false);
-        ConstraintLayout constraintLayout = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout7);
+        final ConstraintLayout constraintLayout = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout7);
+        final ConstraintLayout constraintLayout1 = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout8);
+        final ConstraintLayout constraintLayout2 = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout9);
+
+
+//        LinearLayout calendarLinear = (LinearLayout) rootView.findViewById(R.id.calendarLinear);
+//        calendarLinear.setVisibility(View.GONE);
+
+//        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_CONSTRAINT_WRAP, ConstraintLayout.LayoutParams.MATCH_CONSTRAINT);
+//        constraintLayout1.setLayoutParams(lp);
+
+//        calendarLinear.setLayoutParams(lp);
+
+        carterListview = (ListView) rootView.findViewById(R.id.c_1_1_listview);
         tvDate = (TextView) rootView.findViewById(R.id.tv_date);
         gridView = (GridView) rootView.findViewById(R.id.calendar_Gridview);
         constraintLayout.setVisibility(View.VISIBLE);
@@ -67,7 +83,7 @@ public class FragmentCarter extends Fragment {
         final SimpleDateFormat curYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
         final SimpleDateFormat curMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
         final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
-        tvDate.setText(curYearFormat.format(date) + "/" + curMonthFormat.format(date));
+        tvDate.setText(curYearFormat.format(date) + "." + curMonthFormat.format(date));
 
         dayList = new ArrayList<String>();
 //        dayList.add("SUN");
@@ -97,10 +113,49 @@ public class FragmentCarter extends Fragment {
             }
         });
 
+        TextListViewAdapter adapter=new TextListViewAdapter(4,R.layout.custom_cell_c_2_1_carte_list);
+        carterListview.setAdapter(adapter);
+        adapter.addItem("01/03 (수)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+        adapter.addItem("01/04 (목)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+        adapter.addItem("01/05 (금)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+        adapter.addItem("01/06 (월)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+        adapter.addItem("01/06 (화)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+        adapter.addItem("01/06 (수)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+        adapter.addItem("01/06 (목)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+        carterListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), C2_3_CarteView.class);
+                FragmentCarter.this.startActivity(intent);
+            }
+        });
+
+
         ImageView fragment_c_1_1_List_Change_ImageView = (ImageView) rootView.findViewById(R.id.fragment_c_1_1_List_Change_ImageView);
         fragment_c_1_1_List_Change_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                constraintLayout.setVisibility(View.GONE);
+                constraintLayout1.setVisibility(View.GONE);
+                constraintLayout2.setVisibility(View.VISIBLE);
+                gridView.setVisibility(View.GONE);
+                carterListview.setVisibility(View.VISIBLE);
+//                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
+//                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageView imageView21 = (ImageView) rootView.findViewById(R.id.imageView22);
+        imageView21.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                constraintLayout.setVisibility(View.VISIBLE);
+                constraintLayout1.setVisibility(View.GONE);
+                constraintLayout2.setVisibility(View.GONE);
+                gridView.setVisibility(View.VISIBLE);
+                carterListview.setVisibility(View.GONE);
+
 //                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
 //                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();
             }
