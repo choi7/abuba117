@@ -26,8 +26,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.EobubaLocationListener;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.map.MapApiConst;
 
@@ -47,6 +49,7 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
     private static final int MENU_MAP_MOVE = Menu.FIRST + 2;
 
     private static final String LOG_TAG = "MapViewDemoActivity";
+
 
 
     TextView logView;
@@ -115,70 +118,97 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
         // LocationManager 객체를 얻어온다
 
-
+        EobubaLocationListener gps=new EobubaLocationListener(this);
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
         try {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
                     5000, // 통지사이의 최소 시간간격 (miliSecond)
                     10, // 통지사이의 최소 변경거리 (m)
-                    mLocationListener);
+                    gps);//mLocationListener);
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
                     5000, // 통지사이의 최소 시간간격 (miliSecond)
                     10, // 통지사이의 최소 변경거리 (m)
-                    mLocationListener);
+                    gps);//mLocationListener);
         } catch(SecurityException e){
             e.printStackTrace();
         }
 
+    }
 
+
+    MapPOIItem marker;
+    public void clickPresentLocation(View v){
+        if(latitude*longitude==0){
+            Toast.makeText(this,"GPS가 수신되지 않습니다.",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+        logView.setText(latitude+"/"+longitude);//+location.getProvider().toString());
+//        if(map_point_present!=null)
+        if(marker!=null)
+            mMapView.removePOIItem(marker);
+
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName("현재위치");
+
+        marker.setTag(0);
+        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        mMapView.addPOIItem(marker);
 
 
     }
-    double longitude,latitude;
-    boolean once=false;
-    private final LocationListener mLocationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            //여기서 위치값이 갱신되면 이벤트가 발생한다.
-            //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
+//    public void processLocation(double latitude,double longitude){
+//        super.processLocation(latitude,longitude);
+//    }
 
-            Log.d("test", "onLocationChanged, location:" + location);
-//            location.
-            longitude = location.getLongitude(); //경도
-            latitude = location.getLatitude();   //위도
-            logView.setText(location.toString());//latitude+"/"+longitude);//+location.getProvider().toString());
-            mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
-            if(!once) {
-                MapPOIItem marker = new MapPOIItem();
-                marker.setItemName("Default Marker");
-                marker.setTag(0);
-                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
-                marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-
-                mMapView.addPOIItem(marker);
-
-                once=!once;
-            }
-//            geovariable.setLatitude(latitude); // 클래스 변수에 위도 대입
-//            geovariable.setLongitube(longitude);  // 클래스 변수에 경도 대입
-        }
-
-        public void onProviderDisabled(String provider) {
-            // Disabled시
-            Log.d("test", "onProviderDisabled, provider:" + provider);
-        }
-
-        public void onProviderEnabled(String provider) {
-            // Enabled시
-            Log.d("test", "onProviderEnabled, provider:" + provider);
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            // 변경시
-            Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
-        }
-    };
+//    double longitude,latitude;
+//    boolean once=false;
+//    private final LocationListener mLocationListener = new LocationListener() {
+//        public void onLocationChanged(Location location) {
+//            //여기서 위치값이 갱신되면 이벤트가 발생한다.
+//            //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
+//
+//            Log.d("test", "onLocationChanged, location:" + location);
+////            location.
+//            longitude = location.getLongitude(); //경도
+//            latitude = location.getLatitude();   //위도
+//            logView.setText(location.toString());//latitude+"/"+longitude);//+location.getProvider().toString());
+//            mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+//            if(!once) {
+//                MapPOIItem marker = new MapPOIItem();
+//                marker.setItemName("Default Marker");
+//                marker.setTag(0);
+//                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+//                marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+//                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+//
+//                mMapView.addPOIItem(marker);
+//
+//                once=!once;
+//            }
+////            geovariable.setLatitude(latitude); // 클래스 변수에 위도 대입
+////            geovariable.setLongitube(longitude);  // 클래스 변수에 경도 대입
+//        }
+//
+//        public void onProviderDisabled(String provider) {
+//            // Disabled시
+//            Log.d("test", "onProviderDisabled, provider:" + provider);
+//        }
+//
+//        public void onProviderEnabled(String provider) {
+//            // Enabled시
+//            Log.d("test", "onProviderEnabled, provider:" + provider);
+//        }
+//
+//        public void onStatusChanged(String provider, int status, Bundle extras) {
+//            // 변경시
+//            Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
+//        }
+//    };
 
 
 

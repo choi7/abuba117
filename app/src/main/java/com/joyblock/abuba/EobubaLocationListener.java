@@ -22,6 +22,7 @@ public class EobubaLocationListener implements LocationListener {
         //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
         Log.d("location", "onLocationChanged, location:" + location);
+        activity.processLocation(location.getLatitude(),location.getLongitude());
 
 //            location.
 //        longitude = location.getLongitude(); //경도

@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public MyApplication app;
 
-    double latitude,longitude;
+    public double latitude,longitude;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

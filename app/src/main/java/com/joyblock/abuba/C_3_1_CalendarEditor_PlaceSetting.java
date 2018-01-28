@@ -1,9 +1,11 @@
 package com.joyblock.abuba;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
@@ -23,7 +25,9 @@ import com.joyblock.abuba.notice.CalendarCustomDialogActivity;
 import com.joyblock.abuba.notice.QuestionnaireListViewAdapter;
 import com.joyblock.abuba.util.ImageFileProcessor;
 
+import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 import net.daum.mf.map.api.MapLayout;
 
@@ -73,10 +77,57 @@ public class C_3_1_CalendarEditor_PlaceSetting extends BaseActivity implements M
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapLayout);
 
-
-
-
+        EobubaLocationListener gps=new EobubaLocationListener(this);
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
+        try {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
+                    5000, // 통지사이의 최소 시간간격 (miliSecond)
+                    10, // 통지사이의 최소 변경거리 (m)
+                    gps);//mLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
+                    5000, // 통지사이의 최소 시간간격 (miliSecond)
+                    10, // 통지사이의 최소 변경거리 (m)
+                    gps);//mLocationListener);
+        } catch(SecurityException e){
+            e.printStackTrace();
+        }
     }
+    boolean once;
+    MapPOIItem marker = new MapPOIItem();
+    public void processLocation(double latitude,double longitude){
+        if(!once&&latitude*longitude!=0){
+            MapPoint point=MapPoint.mapPointWithGeoCoord(latitude, longitude);
+            mMapView.setMapCenterPoint(point, true);
+//        if(map_point_present!=null)
+            MapReverseGeoCoder reverseGeoCoder = new MapReverseGeoCoder("LOCAL_API_KEY", point, reverseGeoCodingResultListener, this);
+            reverseGeoCoder.startFindingAddress();
+
+
+            marker.setItemName(reverseGeoCoder.toString());
+            marker.setTag(0);
+            marker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+            marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            mMapView.addPOIItem(marker);
+            once=!once;
+        }
+    }
+
+    private final MapReverseGeoCoder.ReverseGeoCodingResultListener reverseGeoCodingResultListener=new MapReverseGeoCoder.ReverseGeoCodingResultListener() {
+        @Override
+        public void onReverseGeoCoderFoundAddress(MapReverseGeoCoder mapReverseGeoCoder, String s) {
+            marker.setItemName(s);
+
+        }
+
+        @Override
+        public void onReverseGeoCoderFailedToFindAddress(MapReverseGeoCoder mapReverseGeoCoder) {
+            marker.setItemName(mapReverseGeoCoder.toString());
+
+
+        }
+    };
 
     public void actionbarCustom() {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
