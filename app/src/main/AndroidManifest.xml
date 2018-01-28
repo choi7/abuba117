@@ -116,7 +116,9 @@
         <activity android:name=".bus.A3_1_student_guidance_bus_list" />
         <activity android:name=".bus.A3_2_student_guidance_select_point" />
         <activity android:name=".bus.A3_3_student_guidance_point_detail" />
-        <activity android:name=".album.P_3_Album_Editor" />
+        <activity android:name=".album.P_3_Album_Editor"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
         <activity android:name=".document.A3_3_MedicineSign" />
         <activity android:name=".document.A3_4_MedicineCheck" />
         <activity android:name=".document.A_4_3_HomeComming_Sign_Parent" />

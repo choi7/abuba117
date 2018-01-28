@@ -37,7 +37,8 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
     GridAdapter gridAdapter;
     private ArrayList<String> dayList;
     TextView tvDate, startDate, startDate1, endDate, endDate1;
-    Integer nextAndBack = 1;
+    Integer nextAndBack = 1, gridSeletorNum, gridSeletorNumBefore;
+    String startday, startmonth, startyear, endday, endmonth, endyear;
 
 
     @Override
@@ -74,34 +75,59 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
         setCalendarDate(mCal.get(java.util.Calendar.MONTH) + 1);
         gridAdapter = new GridAdapter(C_3_1_CalendarEditor_TimeSetting.this, dayList);
         gridView.setAdapter(gridAdapter);
+        //달력터치시
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("포지션은 : ", String.valueOf(position));
+                if (nextAndBack == 1) {
+                    startday = String.valueOf(position);
+                } else {
+                    endday = String.valueOf(position);
+                }
 
+//                gridSeletorNum = position;
+//                view.setBackgroundColor(Color.parseColor("F3FFFE"));
+//                gridSeletorNumBefore = position;
 
             }
         });
-
+        //시작버튼
         constraintLayout1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startDate.setTextColor(Color.parseColor("#717071"));
-                startDate1.setBackgroundColor(Color.parseColor("#717071"));
-                endDate.setTextColor(Color.parseColor("#E95513"));
-                endDate1.setBackgroundColor(Color.parseColor("#E95513"));
-            }
-        });
-        constraintLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 endDate.setTextColor(Color.parseColor("#717071"));
                 endDate1.setBackgroundColor(Color.parseColor("#717071"));
                 startDate.setTextColor(Color.parseColor("#E95513"));
                 startDate1.setBackgroundColor(Color.parseColor("#E95513"));
+                nextAndBack = 1;
             }
         });
-
+        //종료버튼
+        constraintLayout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDate.setTextColor(Color.parseColor("#717071"));
+                startDate1.setBackgroundColor(Color.parseColor("#717071"));
+                endDate.setTextColor(Color.parseColor("#E95513"));
+                endDate1.setBackgroundColor(Color.parseColor("#E95513"));
+                nextAndBack = 0;
+            }
+        });
+        //완료버튼
+        constraintLayout3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        //취소버튼
+        constraintLayout4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

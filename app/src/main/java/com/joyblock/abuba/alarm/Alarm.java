@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.document.A3_2_MedicineView;
 
 import java.util.ArrayList;
 
@@ -62,6 +64,14 @@ public class Alarm extends BaseActivity {
         mAdapter.addItem("김민석 투약의뢰서가 등록되었습니다.","2018/01/02");
         mAdapter.addItem("김민석 투약의뢰서가 등록되었습니다.","2018/01/02");
         mAdapter.addItem("김민석 투약의뢰서가 등록되었습니다.","2018/01/02");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Alarm.this, A3_2_MedicineView.class);
+                Alarm.this.startActivity(intent);
+            }
+        });
 
     }
 

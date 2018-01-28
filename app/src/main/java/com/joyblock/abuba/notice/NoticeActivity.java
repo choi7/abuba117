@@ -139,7 +139,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
 
                 AlertDialog.Builder nd = new AlertDialog.Builder(NoticeActivity.this);
                 nd.setMessage("작성하실 게시판을 선택하세요")
-                        .setPositiveButton("공지", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("공지", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(NoticeActivity.this, NoticeEditorActivity.class);
@@ -147,7 +147,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
                                 finish();
                             }
                         })
-                        .setNegativeButton("설문지", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("설문지", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(NoticeActivity.this, QuestionnaireActivity.class);

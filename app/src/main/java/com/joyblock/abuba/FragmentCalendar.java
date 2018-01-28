@@ -45,7 +45,7 @@ public class FragmentCalendar extends Fragment {
     GridAdapter gridAdapter;
     private ArrayList<String> dayList;
     private GridView gridView;
-    private ListView c_1_1_listview;
+    private ListView c_1_1_listview, listView2;
     private Calendar mCal;
 
 
@@ -67,6 +67,8 @@ public class FragmentCalendar extends Fragment {
         tvDate = (TextView) rootView.findViewById(R.id.tv_date);
         gridView = (GridView) rootView.findViewById(R.id.calendar_Gridview);
         c_1_1_listview = (ListView) rootView.findViewById(R.id.c_1_1_listview);
+        c_1_1_listview.setVisibility(View.GONE);
+        listView2 = (ListView) rootView.findViewById(R.id.listView2);
         constraintLayout.setVisibility(View.VISIBLE);
         gridView.setVisibility(View.VISIBLE);
         long now = System.currentTimeMillis();
@@ -106,7 +108,7 @@ public class FragmentCalendar extends Fragment {
         });
 
         TextListViewAdapter adapter=new TextListViewAdapter(5,R.layout.custom_cell_c_1_2_calendar_view);
-        c_1_1_listview.setAdapter(adapter);
+        listView2.setAdapter(adapter);
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
@@ -114,7 +116,7 @@ public class FragmentCalendar extends Fragment {
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-        c_1_1_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), C3_2_CalendarView.class);
@@ -130,7 +132,8 @@ public class FragmentCalendar extends Fragment {
                 constraintLayout.setVisibility(View.GONE);
                 constraintLayout1.setVisibility(View.VISIBLE);
                 gridView.setVisibility(View.GONE);
-                c_1_1_listview.setVisibility(View.VISIBLE);
+                c_1_1_listview.setVisibility(View.GONE);
+                listView2.setVisibility(View.VISIBLE);
 
 //                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
 //                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();
@@ -145,6 +148,7 @@ public class FragmentCalendar extends Fragment {
                 constraintLayout1.setVisibility(View.GONE);
                 gridView.setVisibility(View.VISIBLE);
                 c_1_1_listview.setVisibility(View.GONE);
+                listView2.setVisibility(View.GONE);
 
 //                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
 //                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();

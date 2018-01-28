@@ -13,7 +13,6 @@
         android:layout_height="148dp"
         android:timePickerMode="spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView173">
 
@@ -147,7 +146,7 @@
         android:id="@+id/textView173"
         android:layout_width="330dp"
         android:layout_height="0.25dp"
-        android:layout_marginTop="56.5dp"
+        android:layout_marginTop="20dp"
         android:background="#717071"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -166,7 +165,7 @@
         android:id="@+id/textView175"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/nanumsquareextrabold"
         android:text="TextView"
         android:textColor="#000000"
@@ -222,5 +221,17 @@
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView175" />
+
+    <com.joyblock.abuba.bottomtabbar
+        android:id="@+id/PageNavigationView10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#FFFFFF"
+        ></com.joyblock.abuba.bottomtabbar>
 
 </android.support.constraint.ConstraintLayout>

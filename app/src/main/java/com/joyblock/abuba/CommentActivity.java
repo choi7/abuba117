@@ -60,14 +60,10 @@ public class CommentActivity extends BaseActivity implements Serializable {
         Customactionbar();
 
 
-
-
         commentPushText = (TextView) findViewById(R.id.commentPushText);
         allCommentListView = (ListView) findViewById(R.id.allCommentListView);
         commentEditText = (EditText) findViewById(R.id.commentEditText);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-
 
 
         commentListVieaAdapter = new CommentListVieaAdapter(getApplicationContext());
@@ -120,6 +116,14 @@ public class CommentActivity extends BaseActivity implements Serializable {
     public void Customactionbar() {
 
         String seq_activity = intent.getStringExtra("activity");
+        if(seq_activity == null) {
+            seq_activity = "";
+        }
+        seq_notice = intent.getStringExtra("seq_notice");
+        flag = intent.getStringExtra("flag");
+        if(flag != null) {
+            seq_activity = flag;
+        }
         switch (seq_activity) {
             case "C2_3_CarteView":
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xffff9900));
@@ -133,18 +137,22 @@ public class CommentActivity extends BaseActivity implements Serializable {
                     getWindow().setStatusBarColor(Color.parseColor("#FF9900"));
                 }
                 break;
+            case "n":
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff66ccff));
+                if (Build.VERSION.SDK_INT >= 21) {
+                    getWindow().setStatusBarColor(Color.parseColor("#66CCFF"));
+                }
+                break;
             default:
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
                 if (Build.VERSION.SDK_INT >= 21) {
                     getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
                 }
-                seq_notice = intent.getStringExtra("seq_notice");
-                flag = intent.getStringExtra("flag");
+
                 Reply insertReply = new Reply(seq_notice, flag, page);
                 insertReply.execute();
                 break;
         }
-
 
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

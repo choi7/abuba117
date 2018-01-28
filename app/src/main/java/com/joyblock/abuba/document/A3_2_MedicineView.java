@@ -59,7 +59,10 @@ public class A3_2_MedicineView extends BaseActivity {
         String seq_medication_request = intent.getStringExtra("seq_medication_request");
 //        Log.d("ee", seq_medication_request);
 
-
+        //임시로 넣어놓음
+        if(seq_medication_request == null) {
+            seq_medication_request = "17";
+        }
         //주석처리
         new selectMedicationRequestOne(seq_medication_request).execute();
 

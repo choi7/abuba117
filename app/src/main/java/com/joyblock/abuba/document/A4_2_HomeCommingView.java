@@ -1,11 +1,13 @@
 package com.joyblock.abuba.document;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +37,22 @@ public class A4_2_HomeCommingView extends BaseActivity {
         TextView title=((TextView)findViewById(R.id.titleName));
         title.setText("김철수");
         title.setVisibility(View.VISIBLE);
+
+
+        TextView medicineViewPushText = (TextView) findViewById(R.id.medicineViewPushText);
+        medicineViewPushText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(A4_2_HomeCommingView.this);
+                builder.setMessage("귀가완료하시겠습니까?")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        }).setNegativeButton("취소",null).create().show();
+            }
+        });
 
     }
 }
