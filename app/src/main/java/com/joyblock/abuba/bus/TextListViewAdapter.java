@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class TextListViewAdapter extends BaseAdapter implements Serializable {
 
     //필요한 만큼 텍스트 뷰를 증가시면 된다.
-    int[] textview_id={R.id.listview_text1,R.id.listview_text2,R.id.listview_text3,R.id.listview_text4};
+    int[] textview_id={R.id.listview_text1,R.id.listview_text2,R.id.listview_text3,R.id.listview_text4,R.id.listview_text5};
 
     public ArrayList<Item> list= new ArrayList<>();
     int int_layout;
@@ -119,12 +119,21 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
         list.add(new Item(array));
     }
 
+    public void addItem(String str1,String str2,String str3,String str4,String str5) {
+        String[] array={str1,str2,str3,str4,str5};
+        list.add(new Item(array));
+    }
+
 
     void setSelected(int int_position){
         for(Item item:list)
             item.bool_selected=false;
         list.get(int_position).bool_selected=true;
         notifyDataSetChanged();
+    }
+
+    String[] getString(int int_position){
+        return list.get(int_position).str_arr;
     }
 
 

@@ -38,7 +38,7 @@ public class A2_3_3_route_registration_class_student_list extends BaseActivity {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
         TextView title = ((TextView) findViewById(R.id.titleName));
-        title.setText("차량선택");
+        title.setText("코끼리반");
         title.setVisibility(View.VISIBLE);
 
         authority = pref.getString("authority", "");
@@ -53,6 +53,11 @@ public class A2_3_3_route_registration_class_student_list extends BaseActivity {
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
         adapter.addItem("웅성우");
         adapter.addItem("박지훈");
+        adapter.addItem("박우진");
+        adapter.addItem("강민현");
+        adapter.addItem("박진영");
+        adapter.addItem("김종대");
+        adapter.addItem("변백현");
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -94,8 +99,8 @@ public class A2_3_3_route_registration_class_student_list extends BaseActivity {
     }
 
     public void clickRed(View v) {
-        Intent intent = new Intent(A2_3_3_route_registration_class_student_list.this, A2_3_2_route_registration_point_student_list.class);
-        A2_3_3_route_registration_class_student_list.this.startActivity(intent);
+//        Intent intent = new Intent(A2_3_3_route_registration_class_student_list.this, A2_3_2_route_registration_point_student_list.class);
+//        A2_3_3_route_registration_class_student_list.this.startActivity(intent);
         finish();
     }
 

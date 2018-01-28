@@ -76,7 +76,7 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
         title.setVisibility(View.VISIBLE);
 
         TextView textview_class_name= (TextView) findViewById(R.id.a3_1_Class_TextView);
-        textview_class_name.setText("전체");
+        textview_class_name.setText("곰돌이 1호차");
         textview_class_name.setVisibility(View.VISIBLE);
 
 //
@@ -116,10 +116,17 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
                 //어댑터 생성 후 customListViewDialog에 반 리스트를 보여준다.
                 class_adapter = new BanListViewAdapter();
                 dialog = new CustomListViewDialog(A2_3_1_route_registration_point_list.this,class_adapter);
-                class_adapter.addItem("전체");
-                for (R6_SelectKindergardenClassList list : app.kindergarden_class_list) {
-                    class_adapter.addItem(list.kindergarden_class_name);
-                }
+//                class_adapter.addItem("전체");
+                class_adapter.addItem("곰돌이 1호차");
+                class_adapter.addItem("곰돌이 2호차");
+                class_adapter.addItem("곰돌이 3호차");
+                class_adapter.addItem("호랑이 1호차");
+                class_adapter.addItem("호랑이 2호차");
+                class_adapter.addItem("호랑이 3호차");
+
+//                for (R6_SelectKindergardenClassList list : app.kindergarden_class_list) {
+//                    class_adapter.addItem(list.kindergarden_class_name);
+//                }
                 class_adapter.notifyDataSetChanged();
                 dialog.show();
 
@@ -132,7 +139,7 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
                         int_selected_class=position;
                         //seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
                         classText.setText(item.getName());
-                        Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), item.getName(), Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
                 });
@@ -141,14 +148,15 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
 
 
         listview = findViewById(R.id.listview_point);
-        adapter = new TextListViewAdapter(2,R.layout.row_bus);
+        adapter = new TextListViewAdapter(3,R.layout.row_point );
         listview.setAdapter(adapter);
 //        for(String str:list)
-//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
-//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
-//        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
-        adapter.addItem("1지점","편의점 앞");
-        adapter.addItem("2지점","진선여고 앞");
+        adapter.addItem("1지점","편의점 앞","경남 창원시 마산회원구 구암동 123-12번지");
+        adapter.addItem("2지점","진선여고 앞","경남 창원시 마산회원구 구암동 123-12번지");
+        adapter.addItem("3지점","역삼아이파크 1단지 정문","경남 창원시 마산회원구 구암동 123-12번지");
+        adapter.addItem("4지점","역삼아이파크 1단지 후문","경남 창원시 마산회원구 구암동 123-12번지");
+        adapter.addItem("5지점","갤러리아포레 정문","경남 창원시 마산회원구 구암동 123-12번지");
+        adapter.addItem("6지점","평생체험학습관","경남 창원시 마산회원구 구암동 123-12번지");
 
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

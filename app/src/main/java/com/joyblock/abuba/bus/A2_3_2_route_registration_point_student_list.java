@@ -9,11 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.CustomListViewDialog;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.notice.BanListViewAdapter;
+import com.joyblock.abuba.notice.BanListViewItem;
+
 public class A2_3_2_route_registration_point_student_list extends BaseActivity {
 
     String authority;
@@ -37,7 +43,7 @@ public class A2_3_2_route_registration_point_student_list extends BaseActivity {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
         TextView title = ((TextView) findViewById(R.id.titleName));
-        title.setText("차량선택");
+        title.setText("1지점 - 편의점 앞");
         title.setVisibility(View.VISIBLE);
 
         authority = pref.getString("authority", "");
@@ -52,6 +58,11 @@ public class A2_3_2_route_registration_point_student_list extends BaseActivity {
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
         adapter.addItem("호랑이반", "김철수");
         adapter.addItem("코끼리반", "김민석");
+        adapter.addItem("토끼반", "박찬열");
+        adapter.addItem("호랑이반", "오세훈");
+        adapter.addItem("코끼리반", "도경수");
+        adapter.addItem("토끼반", "김준면");
+        adapter.addItem("호랑이반", "김수호");
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -92,9 +103,39 @@ public class A2_3_2_route_registration_point_student_list extends BaseActivity {
 
     }
 
+
+    int int_selected_class;
     public void clickRed(View v) {
-        Intent intent = new Intent(A2_3_2_route_registration_point_student_list.this, A2_3_3_route_registration_class_student_list.class);
-        A2_3_2_route_registration_point_student_list.this.startActivity(intent);
+        TextListViewAdapter class_adapter= new TextListViewAdapter(1,R.layout.row_center_text1_center_nauamsquare_bold_55pt);
+        final CustomListViewDialog dialog = new CustomListViewDialog(A2_3_2_route_registration_point_student_list.this,class_adapter);
+//                class_adapter.addItem("전체");
+        class_adapter.addItem("전체");
+        class_adapter.addItem("호랑이반");
+        class_adapter.addItem("코끼리반");
+        class_adapter.addItem("토끼반");
+
+//                for (R6_SelectKindergardenClassList list : app.kindergarden_class_list) {
+//                    class_adapter.addItem(list.kindergarden_class_name);
+//                }
+        class_adapter.notifyDataSetChanged();
+        dialog.show();
+
+        //반 다이얼로그 이벤트 처리
+        ListView class_listview=dialog.getListView();
+        class_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                int_selected_class=position;
+                //seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+                Toast.makeText(getApplicationContext(), adapter.getString(position)[0], Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+                Intent intent = new Intent(A2_3_2_route_registration_point_student_list.this, A2_3_3_route_registration_class_student_list.class);
+                A2_3_2_route_registration_point_student_list.this.startActivity(intent);
+            }
+        });
+
+
     }
 
 

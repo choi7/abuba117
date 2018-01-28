@@ -16,6 +16,8 @@ public class CustomListViewDialog extends Dialog {
     ListView listview;
     BaseAdapter adapter;
 
+    int int_layout_id=R.layout.custom_listview_dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +27,7 @@ public class CustomListViewDialog extends Dialog {
         lpWindow.dimAmount = 0.8f;
         getWindow().setAttributes(lpWindow);
 
-        setContentView(R.layout.custom_listview_dialog);
+        setContentView(int_layout_id);
 
         listview=(ListView)findViewById(R.id.custom_listview);
         listview.setAdapter(adapter);
@@ -57,6 +59,12 @@ public class CustomListViewDialog extends Dialog {
     public CustomListViewDialog(Context context,BaseAdapter adapter) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.adapter=adapter;
+    }
+
+    public CustomListViewDialog(Context context,BaseAdapter adapter,int int_layout_id) {
+        super(context, android.R.style.Theme_Translucent_NoTitleBar);
+        this.adapter=adapter;
+        this.int_layout_id=int_layout_id;
     }
 
     // 클릭버튼이 확인과 취소 두개일때 생성자 함수로 이벤트를 받는다
