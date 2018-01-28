@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,7 @@ public class C_3_1_CalendarEditor extends BaseActivity {
     private final int CAMERA_CODE = 1111, GALLERY_CODE = 1112;
 //    private Uri photoUri;
 //    byte[] image;
+    ConstraintLayout constraintLayout8, constraintLayout9, constraintLayout10;
 
     ImageFileProcessor image_file_processor=new ImageFileProcessor();
 
@@ -54,6 +56,23 @@ public class C_3_1_CalendarEditor extends BaseActivity {
 
         ImageView pictureRegister = (ImageView) findViewById(R.id.pictureRegisterimageView);
         questionnaireImage = (ImageView) findViewById(R.id.editorimageView);
+        constraintLayout8 = (ConstraintLayout) findViewById(R.id.constraintLayout8);
+        constraintLayout8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(C_3_1_CalendarEditor.this, C_3_1_CalendarEditor_TimeSetting.class);
+                C_3_1_CalendarEditor.this.startActivity(intent);
+            }
+        });
+        constraintLayout9 = (ConstraintLayout) findViewById(R.id.constraintLayout9);
+        constraintLayout9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(C_3_1_CalendarEditor.this, C_3_1_CalendarEditor_TimeSetting.class);
+                C_3_1_CalendarEditor.this.startActivity(intent);
+            }
+        });
+        constraintLayout10 = (ConstraintLayout) findViewById(R.id.constraintLayout10);
 
         pictureRegister.setVisibility(View.VISIBLE);
 

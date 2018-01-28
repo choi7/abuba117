@@ -15,10 +15,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView161"
+            android:id="@+id/listview_text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:layout_marginStart="30dp"
             android:fontFamily="@font/nanumsquarebold"
             android:text="01/03 (수)"
@@ -44,25 +43,25 @@
         android:layout_marginLeft="30dp" />
 
     <TextView
-        android:id="@+id/textView163"
+        android:id="@+id/listview_text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="계란/고구마"
         android:fontFamily="@font/nanumsquareregular"
-        android:textSize="10dp"
+        android:text="계란/고구마"
         android:textColor="#000000"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView169"
-        app:layout_constraintStart_toStartOf="@+id/textView166"
+        app:layout_constraintStart_toStartOf="@+id/listview_text2"
         app:layout_constraintTop_toBottomOf="@+id/textView168" />
 
     <TextView
         android:id="@+id/textView164"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="간         식"
         android:fontFamily="@font/nanumsquareregular"
-        android:textSize="10dp"
+        android:text="간       식"
         android:textColor="#595757"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView169"
         app:layout_constraintStart_toStartOf="@+id/textView162"
         app:layout_constraintTop_toBottomOf="@+id/textView168" />
@@ -71,16 +70,16 @@
         android:id="@+id/textView165"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="메         모"
         android:fontFamily="@font/nanumsquareregular"
-        android:textSize="10dp"
+        android:text="메       모"
         android:textColor="#595757"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView162"
         app:layout_constraintTop_toBottomOf="@+id/textView169" />
 
     <TextView
-        android:id="@+id/textView166"
+        android:id="@+id/listview_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
@@ -94,15 +93,15 @@
         android:layout_marginLeft="17dp" />
 
     <TextView
-        android:id="@+id/textView167"
+        android:id="@+id/listview_text4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="알러기 원아 확인필요"
         android:fontFamily="@font/nanumsquareregular"
-        android:textSize="10dp"
+        android:text="알러기 원아 확인필요"
         android:textColor="#000000"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView166"
+        app:layout_constraintStart_toStartOf="@+id/listview_text2"
         app:layout_constraintTop_toBottomOf="@+id/textView169" />
 
     <TextView

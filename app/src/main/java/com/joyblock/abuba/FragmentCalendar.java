@@ -75,7 +75,7 @@ public class FragmentCalendar extends Fragment {
         final SimpleDateFormat curYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
         final SimpleDateFormat curMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
         final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
-        tvDate.setText(curYearFormat.format(date) + "/" + curMonthFormat.format(date));
+        tvDate.setText(curYearFormat.format(date) + "." + curMonthFormat.format(date));
 
         dayList = new ArrayList<String>();
 //        dayList.add("SUN");
@@ -114,7 +114,13 @@ public class FragmentCalendar extends Fragment {
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
         adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-
+        c_1_1_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), C3_2_CalendarView.class);
+                FragmentCalendar.this.startActivity(intent);
+            }
+        });
 
 
         ImageView fragment_c_1_1_List_Change_ImageView = (ImageView) rootView.findViewById(R.id.fragment_c_1_1_List_Change_ImageView);
@@ -216,6 +222,9 @@ public class FragmentCalendar extends Fragment {
             if (sToday.equals(getItem(position))) { //오늘 day 텍스트 컬러 변경
                 holder.tvItemGridView.setTextColor(getResources().getColor(R.color.colorAccent));
             }
+
+            if(position % 7 == 0) {holder.tvItemGridView.setTextColor(Color.parseColor("#C30D23"));}
+            if((position+1) % 7 == 0) {holder.tvItemGridView.setTextColor(Color.parseColor("#036EB7"));}
 //            if(!(position % 7 == 0 || position+1 % 7 == 0)) {
                 holder.tvItemGridViewContent.setText("동계방학");
                 holder.tvItemGridViewContent.setBackgroundColor(Color.parseColor("#F5FFFE"));
