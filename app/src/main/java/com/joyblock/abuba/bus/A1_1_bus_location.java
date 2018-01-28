@@ -119,10 +119,10 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
         try {
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
-                    100, // 통지사이의 최소 시간간격 (miliSecond)
-                    1, // 통지사이의 최소 변경거리 (m)
-                    mLocationListener);
+//            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, // 등록할 위치제공자
+//                    100, // 통지사이의 최소 시간간격 (miliSecond)
+//                    1, // 통지사이의 최소 변경거리 (m)
+//                    mLocationListener);
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자
                     100, // 통지사이의 최소 시간간격 (miliSecond)
                     1, // 통지사이의 최소 변경거리 (m)
@@ -177,6 +177,10 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
             Log.d("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
+
+    public interface aaa extends LocationListener {
+
+    }
 
 
 
