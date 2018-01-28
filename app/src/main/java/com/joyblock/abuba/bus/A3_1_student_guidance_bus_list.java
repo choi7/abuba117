@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CustomListViewDialog;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
 import com.joyblock.abuba.notice.BanListViewAdapter;
 import com.joyblock.abuba.notice.BanListViewItem;
@@ -180,9 +181,26 @@ public class A3_1_student_guidance_bus_list extends BaseActivity {
 //            }
 //        });
     }
-
+    TextDialog mCustomDialog;
     public void clickRed(View v){
+        mCustomDialog = new TextDialog(A3_1_student_guidance_bus_list.this,R.layout.dialog_ok_cancle);
+
+        mCustomDialog.setTexts(new String[]{"곰돌이 1호차\n차량지도를 시작하시겠습니까?","취소","확인"});
+        mCustomDialog.show();
+
+
+//        Intent intent = new Intent(A3_1_student_guidance_bus_list.this, A3_2_student_guidance_select_point.class);
+//        A3_1_student_guidance_bus_list.this.startActivity(intent);
+    }
+
+    public void clickTextView2(View v){
+        mCustomDialog.dismiss();
+
+    }
+    public void clickTextView3(View v){
+        mCustomDialog.dismiss();
         Intent intent = new Intent(A3_1_student_guidance_bus_list.this, A3_2_student_guidance_select_point.class);
         A3_1_student_guidance_bus_list.this.startActivity(intent);
+
     }
 }
