@@ -135,7 +135,8 @@
         <activity
             android:name=".C3_2_CalendarView"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".C_3_1_CalendarEditor_TimeSetting"></activity>
+        <activity android:name=".C_3_1_CalendarEditor_TimeSetting" />
+        <activity android:name=".C_3_1_CalendarEditor_PlaceSetting" />
     </application>
 
 </manifest>
