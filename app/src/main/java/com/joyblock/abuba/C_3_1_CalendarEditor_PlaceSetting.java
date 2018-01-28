@@ -1,16 +1,16 @@
 package com.joyblock.abuba;
 
+import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
+import android.support.v13.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.joyblock.abuba.map.EobubaLocationListener;
 import com.joyblock.abuba.map.MapApiConst;
 import com.joyblock.abuba.notice.CalendarCustomDialogActivity;
 import com.joyblock.abuba.notice.QuestionnaireListViewAdapter;
@@ -77,6 +78,20 @@ public class C_3_1_CalendarEditor_PlaceSetting extends BaseActivity implements M
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapLayout);
 
+        int permissionCheck1 = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+        if(permissionCheck1 == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.INTERNET},1);
+
+        int permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if(permissionCheck2 == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},1);
+
+        int permissionCheck3 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if(permissionCheck3 == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION},1);
+        // LocationManager 객체를 얻어온다
+
+
         EobubaLocationListener gps=new EobubaLocationListener(this);
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
@@ -93,14 +108,14 @@ public class C_3_1_CalendarEditor_PlaceSetting extends BaseActivity implements M
             e.printStackTrace();
         }
     }
-    boolean once;
+    boolean once=false;
     MapPOIItem marker = new MapPOIItem();
     public void processLocation(double latitude,double longitude){
-        if(!once&&latitude*longitude!=0){
+        if(!once&&(latitude*longitude!=0)){
             MapPoint point=MapPoint.mapPointWithGeoCoord(latitude, longitude);
             mMapView.setMapCenterPoint(point, true);
 //        if(map_point_present!=null)
-            MapReverseGeoCoder reverseGeoCoder = new MapReverseGeoCoder("LOCAL_API_KEY", point, reverseGeoCodingResultListener, this);
+            MapReverseGeoCoder reverseGeoCoder = new MapReverseGeoCoder(MapApiConst.DAUM_MAPS_ANDROID_APP_API_KEY, point, reverseGeoCodingResultListener, this);
             reverseGeoCoder.startFindingAddress();
 
 
@@ -117,13 +132,15 @@ public class C_3_1_CalendarEditor_PlaceSetting extends BaseActivity implements M
     private final MapReverseGeoCoder.ReverseGeoCodingResultListener reverseGeoCodingResultListener=new MapReverseGeoCoder.ReverseGeoCodingResultListener() {
         @Override
         public void onReverseGeoCoderFoundAddress(MapReverseGeoCoder mapReverseGeoCoder, String s) {
+            mapReverseGeoCoder.toString();
+            //onFinishReverseGeoCoding(s);
             marker.setItemName(s);
 
         }
 
         @Override
         public void onReverseGeoCoderFailedToFindAddress(MapReverseGeoCoder mapReverseGeoCoder) {
-            marker.setItemName(mapReverseGeoCoder.toString());
+            marker.setItemName("주소 찾기 실패");
 
 
         }

@@ -87,14 +87,14 @@ public class P_2_AlbumView extends BaseActivity {
             }
         });
 
-        checkPeopleListImage = (ImageView) findViewById(R.id.checkPushImageView);
-        checkPeopleListImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(P_2_AlbumView.this, CheckPeopleListActivity.class);
-                P_2_AlbumView.this.startActivity(intent);
-            }
-        });
+//        checkPeopleListImage = (ImageView) findViewById(R.id.checkPushImageView);
+//        checkPeopleListImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(P_2_AlbumView.this, CheckPeopleListActivity.class);
+//                P_2_AlbumView.this.startActivity(intent);
+//            }
+//        });
 
 
         noticeTitle=(TextView)findViewById(R.id.noticeDetailTitleText);

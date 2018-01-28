@@ -37,7 +37,7 @@
         android:id="@+id/textview_next"
         android:layout_width="match_parent"
         android:layout_height="43.5dp"
-        android:background="#E73828"
+        android:background="#ff6666"
         android:fontFamily="@font/nanumsquarebold"
         android:gravity="center"
         android:onClick="clickNext"

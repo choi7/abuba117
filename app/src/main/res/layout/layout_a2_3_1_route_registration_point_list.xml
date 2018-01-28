@@ -9,7 +9,7 @@
         android:id="@+id/textView500"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#FFFFFF"
+        android:background="#2baf7f"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,17 +30,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#9966FF"
+            android:background="#2baf7f"
             android:fontFamily="@font/nanumsquarebold"
             android:onClick="clickLeft"
             android:text="등원"
             android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/textView499"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF" />
 
 
         <Button
@@ -48,11 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#9966FF"
+            android:background="#33cc99"
             android:fontFamily="@font/nanumsquarebold"
             android:onClick="clickRight"
             android:text="하원"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 

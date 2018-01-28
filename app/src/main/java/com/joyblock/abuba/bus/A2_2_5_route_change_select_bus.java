@@ -33,7 +33,7 @@ public class  A2_2_5_route_change_select_bus extends BaseActivity {
         setContentView(R.layout.layout_a2_2_5_route_change_select_bus);
         Log.d("BAN LIST",app.kindergarden_class_list.get(0).kindergarden_class_name);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         if (Build.VERSION.SDK_INT >= 21) {

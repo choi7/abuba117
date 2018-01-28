@@ -28,7 +28,7 @@ public class A2_1_boarding_management_fragment extends android.support.v4.app.Fr
 
     String plan_flag;
 
-    int int_selected=-51;
+//    int int_selected=-51;
 
 
     void setFlag(String plan_flag){
@@ -99,8 +99,9 @@ public class A2_1_boarding_management_fragment extends android.support.v4.app.Fr
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.setSelected(position);
-                int_selected=position;
+                //adapter.setSelected(position);
+                adapter.toggleSelected(position);
+//                int_selected=position;
             }
         });
         adapter.notifyDataSetChanged();
@@ -126,10 +127,10 @@ public class A2_1_boarding_management_fragment extends android.support.v4.app.Fr
     }
 
     void setBoarding(boolean bool_boarding){
-        if(int_selected<0)
+        if(adapter.isNotSelected())
             Toast.makeText(getContext(),"아이를 먼저 선택해주세요.",Toast.LENGTH_SHORT).show();
         else {
-            adapter.setBoarding(int_selected,bool_boarding);
+            adapter.setBoardingSelected(bool_boarding);
         }
     }
 

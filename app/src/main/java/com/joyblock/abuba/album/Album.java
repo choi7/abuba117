@@ -209,12 +209,12 @@ public class Album extends BaseActivity {
                 holder.title = (TextView) convertView.findViewById(R.id.noticeDetailTitleText);
                 holder.name = (TextView) convertView.findViewById(R.id.noticeDetailNameText);
                 holder.time = (TextView) convertView.findViewById(R.id.noticeDetailTimeText);
-                holder.text = (TextView) convertView.findViewById(R.id.textView27);
+//                holder.text = (TextView) convertView.findViewById(R.id.textView27);
                 TextView txt = (TextView) convertView.findViewById(R.id.textView91);
                 txt.setVisibility(View.GONE);
                 holder.userImage = (ImageView) convertView.findViewById(R.id.noticeDetailUserImage);
                 holder.insertAndDelete = (ImageView) convertView.findViewById(R.id.noticeDetailinsertAndDeleteText);
-                holder.checkPushImage = (ImageView) convertView.findViewById(R.id.checkPushImageView);
+//                holder.checkPushImage = (ImageView) convertView.findViewById(R.id.checkPushImageView);
                 mRecyclerView = (RecyclerView) convertView.findViewById(R.id.album_recyclerView);
                 mRecyclerView.setFocusable(false);
                 mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);

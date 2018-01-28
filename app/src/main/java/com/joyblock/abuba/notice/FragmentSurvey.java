@@ -194,7 +194,7 @@ public class FragmentSurvey extends android.support.v4.app.Fragment {
                 surveyList=new GsonBuilder().create().fromJson(jsonResponse.getString(message_key),R20_SelectSurveyList[].class);
                 //for(R13_SelectNoticeList list:noticeList)
                 for(int i=0;i<surveyList.length;i++) {
-                    R20_SelectSurveyList list=surveyList[i];
+                    R20_SelectSurveyList list=surveyList[surveyList.length-i-1];
                     adapter.addItem(/*list.file_path*/"", list.title, TimeConverter.convert(list.reg_date), "수정 요청");
                 }
                 adapter.notifyDataSetChanged();

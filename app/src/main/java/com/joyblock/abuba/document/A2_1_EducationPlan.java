@@ -130,7 +130,7 @@ public class A2_1_EducationPlan extends BaseActivity {
                 Intent intent = new Intent(A2_1_EducationPlan.this, A2_2_EducationPlanEditor.class);
                 intent.putExtra("plan_flag",plan_flag);
                 A2_1_EducationPlan.this.startActivity(intent);
-                finish();
+//                finish();
             }
         });
 
@@ -138,8 +138,8 @@ public class A2_1_EducationPlan extends BaseActivity {
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginIntent = new Intent(A2_1_EducationPlan.this, A1_DocumentSelect.class);
-                A2_1_EducationPlan.this.startActivity(loginIntent);
+//                Intent loginIntent = new Intent(A2_1_EducationPlan.this, A1_DocumentSelect.class);
+//                A2_1_EducationPlan.this.startActivity(loginIntent);
                 finish();
             }
         });

@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
@@ -28,7 +30,7 @@ public class A2_3_3_route_registration_class_student_list extends BaseActivity {
         setContentView(R.layout.layout_a2_3_3_route_registration_class_student_list);
         Log.d("BAN LIST", app.kindergarden_class_list.get(0).kindergarden_class_name);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -58,6 +60,15 @@ public class A2_3_3_route_registration_class_student_list extends BaseActivity {
         adapter.addItem("박진영");
         adapter.addItem("김종대");
         adapter.addItem("변백현");
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //adapter.setSelected(position);
+                adapter.toggleSelected(position);
+//                int_selected=position;
+            }
+        });
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,6 +112,7 @@ public class A2_3_3_route_registration_class_student_list extends BaseActivity {
     public void clickRed(View v) {
 //        Intent intent = new Intent(A2_3_3_route_registration_class_student_list.this, A2_3_2_route_registration_point_student_list.class);
 //        A2_3_3_route_registration_class_student_list.this.startActivity(intent);
+        Toast.makeText(v.getContext(),"탑승자 목록에 변경사항을 적용합니다.",Toast.LENGTH_SHORT).show();
         finish();
     }
 

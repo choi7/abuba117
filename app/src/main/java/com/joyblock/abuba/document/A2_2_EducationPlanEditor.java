@@ -138,7 +138,7 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
     TextView title;
     public void actionbarCustom() {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         title = (TextView) findViewById(R.id.titleName);
@@ -183,8 +183,8 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(A2_2_EducationPlanEditor.this, A2_1_EducationPlan.class);
-                                A2_2_EducationPlanEditor.this.startActivity(intent);
+//                                Intent intent = new Intent(A2_2_EducationPlanEditor.this, A2_1_EducationPlan.class);
+//                                A2_2_EducationPlanEditor.this.startActivity(intent);
 
                                 finish();
                             }
@@ -311,8 +311,8 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
                     System.out.println(userID + userPassword);
 //                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
 //                    System.out.println(json1);
-                    Intent intent = new Intent(A2_2_EducationPlanEditor.this, A2_1_EducationPlan.class);
-                    A2_2_EducationPlanEditor.this.startActivity(intent);
+//                    Intent intent = new Intent(A2_2_EducationPlanEditor.this, A2_1_EducationPlan.class);
+//                    A2_2_EducationPlanEditor.this.startActivity(intent);
                     Toast.makeText(getApplicationContext(), "등록완료.",Toast.LENGTH_LONG).show();
                     finish();
                 }else{

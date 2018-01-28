@@ -135,6 +135,28 @@ public class QuestionnaireDetailActivity extends BaseActivity {
 
     }
 
+    //수정버튼
+    private View.OnClickListener modifyListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            mCustomDialog.dismiss();
+//            Intent intent=new Intent(NoticeDetailActivity.this,NoticeEditorModifyActivity.class);
+//            intent.putExtra("ModifyData",intentPutExtraModifyData);
+//            NoticeDetailActivity.this.startActivity(intent);
+////            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            finish();
+        }
+    };
+
+
+
+
+    public void clickModDel(View v){
+        mCustomDialog = new CustomDialogModifyAndDel(QuestionnaireDetailActivity.this,
+                        modifyListener,
+                        delListener);
+                mCustomDialog.show();
+    }
+
     public void setNotice(String ban,String title, String name, String time, String content,boolean availabeReply){
         noticeBan.setText(ban);
         noticeTitle.setText(title);
@@ -153,9 +175,9 @@ public class QuestionnaireDetailActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(QuestionnaireDetailActivity.this, NoticeActivity.class);
-        QuestionnaireDetailActivity.this.startActivity(intent);
-        finish();
+//        Intent intent = new Intent(QuestionnaireDetailActivity.this, NoticeActivity.class);
+//        QuestionnaireDetailActivity.this.startActivity(intent);
+//        finish();
     }
 
     /*
@@ -339,14 +361,15 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         public void onClick(View v) {
             mCustomDialog.dismiss();
             AlertDialog.Builder nd = new AlertDialog.Builder(QuestionnaireDetailActivity.this);
-            nd.setMessage("수정하시겠습니까")
+            nd.setMessage("삭제하시겠습니까")
                     .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 //                            QuestionnaireDetailActivity.DeleteNotice buyTask = new QuestionnaireDetailActivity.DeleteNotice(seq_notice);
 //                            buyTask.execute();
-                            Intent intent = new Intent(QuestionnaireDetailActivity.this, QuestionnaireActivity.class);
-                            QuestionnaireDetailActivity.this.startActivity(intent);
+//                            Intent intent = new Intent(QuestionnaireDetailActivity.this, NoticeActivity.class);
+//                            intent.putExtra("fragment_num",2);
+//                            QuestionnaireDetailActivity.this.startActivity(intent);
                             finish();
                         }
                     })

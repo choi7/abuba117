@@ -132,6 +132,11 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
         notifyDataSetChanged();
     }
 
+    void toggleSelected(int int_position){
+        list.get(int_position).toggleSelected();
+        notifyDataSetChanged();
+    }
+
     String[] getString(int int_position){
         return list.get(int_position).str_arr;
     }
@@ -148,6 +153,9 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
         private boolean bool_selected;
 
 
+        void toggleSelected(){
+            bool_selected=!bool_selected;
+        }
         public Item(String[] str_arr){this.str_arr=str_arr;}
 
         public String[] getStringArray(){

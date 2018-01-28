@@ -12,24 +12,27 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.util.StringArray;
 
 public class A3_2_student_guidance_select_point extends BaseActivity {
     String authority;
-
+    public static A3_2_student_guidance_select_point activity;
     TextListViewAdapter adapter;
     ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity=this;
         setContentView(R.layout.layout_a3_2_student_guidance_select_point);
         Log.d("BAN LIST",app.kindergarden_class_list.get(0).kindergarden_class_name);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -57,6 +60,11 @@ public class A3_2_student_guidance_select_point extends BaseActivity {
         adapter.addItem("3지점","역삼아이파크 1단지 정문","경남 창원시 마산회원구 구암동 123-12번지","1명");
         adapter.addItem("4지점","역삼아이파크 1단지 후문","경남 창원시 마산회원구 구암동 123-12번지","3명");
         adapter.addItem("5지점","갤러리아포레 정문","경남 창원시 마산회원구 구암동 123-12번지","2명");
+
+        mCustomDialog = new TextDialog(A3_2_student_guidance_select_point.this,R.layout.dialog_ok_cancle);
+
+        mCustomDialog.setTexts(new String[]{"곰돌이 1호차\n차량지도를 시작하시겠습니까?","취소","확인"});
+        mCustomDialog.show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,6 +111,31 @@ public class A3_2_student_guidance_select_point extends BaseActivity {
 //            }
 //        });
 
+
+    }
+
+    TextDialog mCustomDialog;
+    public void clickRed(View v){
+        mCustomDialog = new TextDialog(A3_2_student_guidance_select_point.this,R.layout.dialog_ok_cancle);
+
+        mCustomDialog.setTexts(new String[]{"곰돌이 1호차\n차량지도를 시작하시겠습니까?","취소","확인"});
+        mCustomDialog.show();
+
+
+//        Intent intent = new Intent(A3_1_student_guidance_bus_list.this, A3_2_student_guidance_select_point.class);
+//        A3_1_student_guidance_bus_list.this.startActivity(intent);
+    }
+
+    public void clickTextView2(View v){
+        mCustomDialog.dismiss();
+        finish();
+
+    }
+    public void clickTextView3(View v){
+        mCustomDialog.dismiss();
+        Toast.makeText(A3_2_student_guidance_select_point.this,"해당 차량의 학부모 모두에게 알림 전송",Toast.LENGTH_LONG).show();
+//        Intent intent = new Intent(A3_2_student_guidance_select_point.this, A3_3_student_guidance_point_detail.class);
+//        A3_2_student_guidance_select_point.this.startActivity(intent);
 
     }
 

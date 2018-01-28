@@ -58,11 +58,14 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
 
 
     }
-
+    int num=1;
     @Override
     public void onResume(){
         super.onResume();
-        callFragment(getIntent().getIntExtra("fragment_num",1));
+
+//        int num=getIntent().getIntExtra("fragment_num",1);
+        setBtnColor(num);
+        callFragment(num);
         seq_user = pref.getString("seq_user", "sss");
         Log.d("seq : " , seq_user);
 
@@ -79,7 +82,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
                 bt_tab1.setBackgroundColor(Color.parseColor("#0086FF"));
                 bt_tab1.setTypeface(NanumSquareExtraBold);
                 bt_tab2.setTypeface(NanumSquareRegular);
-
+                num=1;
                 callFragment(FRAGMENT1);
                 break;
 
@@ -89,7 +92,29 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
                 bt_tab1.setBackgroundColor(Color.parseColor("#0099FF"));
                 bt_tab2.setTypeface(NanumSquareExtraBold);
                 bt_tab1.setTypeface(NanumSquareRegular);
+                num=2;
                 callFragment(FRAGMENT2);
+                break;
+        }
+
+    }
+
+    void setBtnColor(int i){
+        switch (i){
+            case 1 :
+                // '버튼1' 클릭 시 '프래그먼트1' 호출
+                bt_tab2.setBackgroundColor(Color.parseColor("#0099FF"));
+                bt_tab1.setBackgroundColor(Color.parseColor("#0086FF"));
+                bt_tab1.setTypeface(NanumSquareExtraBold);
+                bt_tab2.setTypeface(NanumSquareRegular);
+                break;
+
+            case 2 :
+                // '버튼2' 클릭 시 '프래그먼트2' 호출
+                bt_tab2.setBackgroundColor(Color.parseColor("#0086FF"));
+                bt_tab1.setBackgroundColor(Color.parseColor("#0099FF"));
+                bt_tab2.setTypeface(NanumSquareExtraBold);
+                bt_tab1.setTypeface(NanumSquareRegular);
                 break;
         }
 
@@ -144,7 +169,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(NoticeActivity.this, NoticeEditorActivity.class);
                                 NoticeActivity.this.startActivity(intent);
-                                finish();
+//                                finish();
                             }
                         })
                         .setPositiveButton("설문지", new DialogInterface.OnClickListener() {
@@ -152,7 +177,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(NoticeActivity.this, QuestionnaireActivity.class);
                                 NoticeActivity.this.startActivity(intent);
-                                finish();
+//                                finish();
                             }
                         })
                         .create()
@@ -165,8 +190,8 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginIntent = new Intent(NoticeActivity.this, MainDawerSelectActivity.class);
-                NoticeActivity.this.startActivity(loginIntent);
+//                Intent loginIntent = new Intent(NoticeActivity.this, MainDawerSelectActivity.class);
+//                NoticeActivity.this.startActivity(loginIntent);
                 finish();
             }
         });

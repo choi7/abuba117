@@ -27,7 +27,7 @@ public class A0_bus extends BaseActivity {
         setContentView(R.layout.layout_a0_bus);
         Log.d("BAN LIST",app.kindergarden_class_list.get(0).kindergarden_class_name);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -47,12 +47,12 @@ public class A0_bus extends BaseActivity {
         adapter = new A0_ListViewAdapter(NanumSquareBold);
         listView.setAdapter(adapter);
 //        for(String str:list)
-        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "실시간버스위치",getResources().getDrawable(R.drawable.document_next_image));
-        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선관리",getResources().getDrawable(R.drawable.document_next_image));
+        adapter.addItem(R.layout.row_bus_location1,getResources().getDrawable(R.drawable.a0_icon1), "실시간버스위치",getResources().getDrawable(R.drawable.document_next_image));
+        adapter.addItem(R.layout.row_bus_location1,getResources().getDrawable(R.drawable.a0_icon1), "노선관리",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image));
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image));
-        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "등원지도",getResources().getDrawable(R.drawable.document_next_image));
+        adapter.addItem(R.layout.row_bus_location1,getResources().getDrawable(R.drawable.a0_icon1), "등원지도",getResources().getDrawable(R.drawable.document_next_image));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -96,9 +96,9 @@ public class A0_bus extends BaseActivity {
     boolean toggle=false;
     void toggleItems(){
         if(!toggle){
-            adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선등록",getResources().getDrawable(R.drawable.document_next_image),2);
-            adapter.addItem(getResources().getDrawable(R.drawable.document_image), "노선변경",getResources().getDrawable(R.drawable.document_next_image),2);
-            adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image),2);
+            adapter.addItem(R.layout.row_bus_location2,getResources().getDrawable(R.drawable.a0_icon2), "노선등록",getResources().getDrawable(R.drawable.document_next_image),2);
+            adapter.addItem(R.layout.row_bus_location2,getResources().getDrawable(R.drawable.a0_icon2), "노선변경",getResources().getDrawable(R.drawable.document_next_image),2);
+            adapter.addItem(R.layout.row_bus_location2,getResources().getDrawable(R.drawable.a0_icon2), "승차관리",getResources().getDrawable(R.drawable.document_next_image),2);
         }else{
             adapter.removeItem(2);
             adapter.removeItem(2);

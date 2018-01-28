@@ -37,7 +37,7 @@ public class A2_1_boading_management extends BaseActivity{
     ConstraintLayout class_ConstraintLayout;
 
     TextView classText;
-
+    TextView btn_left,btn_right;
     BoardingListViewAdapter adapter;
     BanListViewAdapter class_adapter;
     ListView listview,class_listview;
@@ -49,7 +49,7 @@ public class A2_1_boading_management extends BaseActivity{
         flag=true;// 승/하차 플래그
         setContentView(R.layout.layout_a2_1_boading_management);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
 
@@ -77,6 +77,9 @@ public class A2_1_boading_management extends BaseActivity{
         str_boarding="m";
         callFragment(str_boarding);
 
+        btn_left=(TextView)findViewById(R.id.btn_left);
+        btn_right=(TextView)findViewById(R.id.btn_right);
+
 
         class_ConstraintLayout = (ConstraintLayout) findViewById(R.id.a3_1ClassConstraintLayout);
 
@@ -94,6 +97,7 @@ public class A2_1_boading_management extends BaseActivity{
                 }
                 class_adapter.notifyDataSetChanged();
                 dialog.show();
+                Toast.makeText(A2_1_boading_management.this,"원장님만 반을 선택할 수 있습니다.",Toast.LENGTH_LONG).show();
 
                 //반 다이얼로그 이벤트 처리
                 class_listview=dialog.getListView();
@@ -145,7 +149,7 @@ public class A2_1_boading_management extends BaseActivity{
     public void actionbarCustom() {
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         TextView title = (TextView) findViewById(R.id.titleName);
@@ -158,7 +162,7 @@ public class A2_1_boading_management extends BaseActivity{
 
 //
         ImageView imageView = (ImageView) findViewById(R.id.editorImage);
-        imageView.setVisibility(View.VISIBLE);
+//        imageView.setVisibility(View.VISIBLE);
 //        imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -189,11 +193,19 @@ public class A2_1_boading_management extends BaseActivity{
 
     public void clickLeft(View v){
         str_boarding="m";
+        btn_left.setBackgroundColor(Color.parseColor("#2baf7f"));
+        btn_right.setBackgroundColor(Color.parseColor("#33cc99"));
+        btn_left.setTypeface(NanumSquareExtraBold);
+        btn_right.setTypeface(NanumSquareRegular);
         callFragment(str_boarding);
     }
 
     public void clickRight(View v){
         str_boarding="w";
+        btn_right.setBackgroundColor(Color.parseColor("#2baf7f"));
+        btn_left.setBackgroundColor(Color.parseColor("#33cc99"));
+        btn_right.setTypeface(NanumSquareExtraBold);
+        btn_left.setTypeface(NanumSquareRegular);
         callFragment(str_boarding);
     }
 

@@ -238,7 +238,7 @@
 
     <ListView
         android:id="@+id/listview_another_boarding"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/textview_red"
@@ -257,10 +257,9 @@
         android:background="#ff6666"
         android:fontFamily="@font/nanumsquareextrabold"
         android:gravity="center"
-        android:paddingLeft="33dp"
-        android:text="확 인"
-        app:layout_constraintBottom_toTopOf="@id/PageNavigationView2"
-        android:textColor="#ffffff" />
+        android:text="확    인"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@id/PageNavigationView2" />
 
 
     <com.joyblock.abuba.bottomtabbar

@@ -117,7 +117,7 @@ public class A2_2_1_route_change_list extends BaseActivity {
     public void actionbarCustom() {
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         TextView title = (TextView) findViewById(R.id.titleName);
@@ -126,21 +126,26 @@ public class A2_2_1_route_change_list extends BaseActivity {
 
 //        String str_class="전체";
         TextView textview_class_name= (TextView) findViewById(R.id.a3_1_Class_TextView);
-        textview_class_name.setText("전체");
+        textview_class_name.setText("호랑이반");
         int_selected_class=0;
         textview_class_name.setVisibility(View.VISIBLE);
 
 //
         ImageView imageView = (ImageView) findViewById(R.id.editorImage);
-        imageView.setVisibility(View.VISIBLE);
+//        imageView.setVisibility(View.VISIBLE);
 
         adapter = new BoardingListViewAdapter(R.layout.row_boarding_list ,true);
 
         listview = (ListView)findViewById(R.id.listview_boarding);
 
         listview.setAdapter(adapter);
-        adapter.addItem("호랑이반","박준수",false );
-        adapter.addItem("호랑이반","최효신",true  );
+        adapter.addItem("호랑이반","김철수",false );
+        adapter.addItem("호랑이반","김민석",true  );
+        adapter.addItem("호랑이반","박찬열",true  );
+        adapter.addItem("호랑이반","오세훈",true  );
+        adapter.addItem("호랑이반","도경수",true  );
+        adapter.addItem("호랑이반","김준연",true  );
+        adapter.addItem("호랑이반","김수호",true  );
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

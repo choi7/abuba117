@@ -55,12 +55,14 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
         final Context context = parent.getContext();
         ImageView iconImageView,iconImageView1;
         TextView titleTextView;
+
+        Item listViewItem = listViewItems.get(position);
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.park_fragment_document_listview_item, parent, false);
+            convertView = inflater.inflate(listViewItem.int_layout, parent, false);
             holder=new ListViewHolder();
-
+//            R.layout.park_fragment_document_listview_item
             // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
             iconImageView = (ImageView) convertView.findViewById(R.id.imageView_item);
             holder.iconImageView=iconImageView;
@@ -76,7 +78,7 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
                 iconImageView1 = holder.iconImageView1;
             }catch(NullPointerException e){
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.park_fragment_document_listview_item, parent, false);
+                convertView = inflater.inflate(listViewItem.int_layout, parent, false);
                 holder=new ListViewHolder();
                 iconImageView = (ImageView) convertView.findViewById(R.id.imageView_item);
                 holder.iconImageView=iconImageView;
@@ -88,7 +90,7 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
         }
 
 //        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        Item listViewItem = listViewItems.get(position);
+
 
         titleTextView.setTypeface(font);
         if(!listViewItem.a){
@@ -114,23 +116,24 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
     }
 
 
-    public void addItem(Drawable icon, String title, Drawable icon1,int index) {
+    public void addItem(int int_layout,Drawable icon, String title, Drawable icon1,int index) {
         Item item = new Item();
 
         item.setIcon(icon);
         item.setTitle(title);
         item.setIcon1(icon1);
+        item.setLayout(int_layout);
 
         listViewItems.add(index,item);
     }
 
-    public void addItem(Drawable icon, String title, Drawable icon1) {
+    public void addItem(int int_layout,Drawable icon, String title, Drawable icon1) {
         Item item = new Item();
 
         item.setIcon(icon);
         item.setTitle(title);
         item.setIcon1(icon1);
-
+        item.setLayout(int_layout);
         listViewItems.add(item);
     }
     private class ListViewHolder {
@@ -139,6 +142,8 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
     }
 
     public class Item {
+
+        int int_layout;
 
         private Drawable iconDrawable ;
         private String titleStr ;
@@ -151,6 +156,7 @@ public class A0_ListViewAdapter extends BaseAdapter implements Serializable {
         public void setTitle(String title) {
             titleStr = title ;
         }
+        public void setLayout(int int_layout){this.int_layout=int_layout;}
 
         public void setIcon1(Drawable icon) {
             iconDrawable1 = icon ;

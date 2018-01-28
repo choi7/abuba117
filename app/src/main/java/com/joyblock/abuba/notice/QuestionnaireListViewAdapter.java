@@ -3,9 +3,12 @@ package com.joyblock.abuba.notice;
 import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +30,18 @@ public class QuestionnaireListViewAdapter extends BaseActivity implements ListAd
     Activity activity;
 //    private Context mContext = null;
     ImageFileProcessor ifp=new ImageFileProcessor();
+
     public ArrayList<Data> data_list = new ArrayList<Data>();
+
+    public int getSize(){
+        int size=0;
+        for(Data list:data_list){
+            if(list.bool_image||!(list.mTitle.equals("")))
+                size++;
+        }
+        Log.d("size",size+"");
+        return size;
+    }
 
     public QuestionnaireListViewAdapter(Activity activity) {
         super();
@@ -54,6 +68,7 @@ public class QuestionnaireListViewAdapter extends BaseActivity implements ListAd
     public void setIcon(int position,Drawable icon,byte[] image_byte_array){
         Data item=(Data)getItem(position);
         item.image_byte_array=image_byte_array;
+        item.bool_image=true;
         item.mIcon=icon;
 
     }
@@ -183,6 +198,7 @@ public class QuestionnaireListViewAdapter extends BaseActivity implements ListAd
         public Drawable mIcon;
         //제목
         public String mTitle;
+        boolean bool_image;
 
         public byte[] image_byte_array;
 

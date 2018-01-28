@@ -1,5 +1,6 @@
 package com.joyblock.abuba;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class TextDialog extends Dialog {
     int int_layout;
     String[] str_array;
     TextView[] textview=new TextView[int_size];
-
+    Activity activity;
     // 클릭버튼이 하나일때 생성자 함수로 클릭이벤트를 받는다.
     public TextDialog(Context context,int int_layout) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
@@ -66,6 +67,14 @@ public class TextDialog extends Dialog {
 //                textview[i].setText(str_array[i]);
 //        }
         this.str_array=str_array;
+    }
+    public void setActivity(Activity activity){
+        this.activity=activity;
+    }
+
+    public void onBackPressed(){
+        super.onBackPressed();
+        activity.finish();
     }
 
 }

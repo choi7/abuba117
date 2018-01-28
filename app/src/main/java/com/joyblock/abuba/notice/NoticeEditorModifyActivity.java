@@ -80,11 +80,12 @@ public class NoticeEditorModifyActivity extends BaseActivity {
 
         Intent intent = getIntent();
         String modifyData = intent.getStringExtra("ModifyData");
-        Log.d("modifyData ", modifyData);
+        Log.d("ModifyData ", modifyData);
         detail = new GsonBuilder().create().fromJson(modifyData, R14_SelectNoticeOne.class);
         seq_notice = detail.seq_notice;
         seq_kindergarden_class = detail.seq_kindergarden_class;
         file_path = detail.file_path;
+        Log.d("file_path",file_path);
         content = detail.content;
         is_reply = detail.is_reply;
         titles = detail.title;
@@ -96,8 +97,11 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         inText = (EditText) findViewById(R.id.inText);
         inText.setText(content);
         editorImage = (ImageView) findViewById(R.id.questionnaireImage);
-        Picasso.with(NoticeEditorModifyActivity.this).load(file_path).into(editorImage);
-        editorImage.setVisibility(View.VISIBLE);
+        if(!file_path.equals("")) {
+//            editorImage = (ImageView) findViewById(R.id.questionnaireImage);
+            Picasso.with(NoticeEditorModifyActivity.this).load(file_path).into(editorImage);
+            editorImage.setVisibility(View.VISIBLE);
+        }
 
 
         ImageView pictureRegister = (ImageView) findViewById(R.id.pictureRegisterimageView);
@@ -175,8 +179,8 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(NoticeEditorModifyActivity.this, NoticeActivity.class);
-                                NoticeEditorModifyActivity.this.startActivity(intent);
+//                                Intent intent = new Intent(NoticeEditorModifyActivity.this, NoticeActivity.class);
+//                                NoticeEditorModifyActivity.this.startActivity(intent);
 
                                 finish();
                             }
@@ -248,7 +252,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
             Log.d("값들", seq_notice+""+is_reply+""+seq_kindergarden_class+""+title+""+content + "" + file_path);
-            Log.d("값들", file_path+""+image);
+            Log.d("값들", file_path.toString()+""+image);
 
 
             formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -332,8 +336,8 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                     System.out.println(userID + userPassword);
 //                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
 //                    System.out.println(json1);
-                    Intent intent = new Intent(NoticeEditorModifyActivity.this, NoticeActivity.class);
-                    NoticeEditorModifyActivity.this.startActivity(intent);
+//                    Intent intent = new Intent(NoticeEditorModifyActivity.this, NoticeActivity.class);
+//                    NoticeEditorModifyActivity.this.startActivity(intent);
                     Toast.makeText(getApplicationContext(), "등록완료.", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
@@ -556,12 +560,13 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         }
 
 
-        editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
+            editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
 //        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
-        editorImage.setVisibility(View.VISIBLE);
-        editorImage.setScaleType(ImageView.ScaleType.CENTER);
+            editorImage.setVisibility(View.VISIBLE);
+            editorImage.setScaleType(ImageView.ScaleType.CENTER);
 
-        editorImage.setAdjustViewBounds(true);
+            editorImage.setAdjustViewBounds(true);
+
 //        image = bitmapToByteArray(bitmap1);
 
     }

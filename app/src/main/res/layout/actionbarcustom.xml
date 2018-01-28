@@ -73,18 +73,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/backImage"
-        android:layout_width="9.5dp"
+
+    <LinearLayout
+        android:layout_width="30dp"
         android:layout_height="20.25dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
+        android:onClick="clickBack"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/r" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backImage"
+            android:layout_width="9.5dp"
+            android:layout_height="20.25dp"
+            app:srcCompat="@drawable/r" />
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/editorTextLeft"

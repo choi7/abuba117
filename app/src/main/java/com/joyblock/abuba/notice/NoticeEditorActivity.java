@@ -182,8 +182,8 @@ public class NoticeEditorActivity extends BaseActivity {
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
-                                NoticeEditorActivity.this.startActivity(intent);
+//                                Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
+//                                NoticeEditorActivity.this.startActivity(intent);
 
                                 finish();
                             }
@@ -260,15 +260,24 @@ public class NoticeEditorActivity extends BaseActivity {
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
-
-            formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("seq_user", seq_user)
-                    .addFormDataPart("seq_kindergarden", seq_kindergarden)
-                    .addFormDataPart("is_reply", is_reply)
-                    .addFormDataPart("title", title)
-                    .addFormDataPart("content", content)
-                    .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, image))
-                    .build();
+            try {
+                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("seq_user", seq_user)
+                        .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                        .addFormDataPart("is_reply", is_reply)
+                        .addFormDataPart("title", title)
+                        .addFormDataPart("content", content)
+                        .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
+                        .build();
+            }catch(NullPointerException e){
+                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("seq_user", seq_user)
+                        .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                        .addFormDataPart("is_reply", is_reply)
+                        .addFormDataPart("title", title)
+                        .addFormDataPart("content", content)
+                        .build();
+            }
 
             request = new okhttp3.Request.Builder()
                     .url("http://58.229.208.246/Ububa/insertNotice.do")
@@ -307,8 +316,8 @@ public class NoticeEditorActivity extends BaseActivity {
                     System.out.println(userID + userPassword);
 //                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
 //                    System.out.println(json1);
-                    Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
-                    NoticeEditorActivity.this.startActivity(intent);
+//                    Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
+//                    NoticeEditorActivity.this.startActivity(intent);
                     Toast.makeText(getApplicationContext(), "등록완료.",Toast.LENGTH_LONG).show();
                     finish();
                 }else{

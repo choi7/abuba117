@@ -1,10 +1,11 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.map;
 
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.joyblock.abuba.BaseActivity;
 
 
 /**

@@ -1,18 +1,14 @@
 package com.joyblock.abuba.bus;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.support.v13.app.ActivityCompat;
@@ -22,17 +18,18 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
-import com.joyblock.abuba.EobubaLocationListener;
+import com.joyblock.abuba.TextDialog;
+import com.joyblock.abuba.map.EobubaLocationListener;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.map.MapApiConst;
 
+import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapLayout;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -52,7 +49,6 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
 
 
 
-    TextView logView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +56,7 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         setContentView(R.layout.layout_a1_1_bus_location);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -102,7 +98,7 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         mapViewContainer.addView(mapLayout);
 
 
-        logView = (TextView) findViewById(R.id.textView41);
+
 
 
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
@@ -145,7 +141,6 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         }
 
         mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
-        logView.setText(latitude+"/"+longitude);//+location.getProvider().toString());
 //        if(map_point_present!=null)
         if(marker!=null)
             mMapView.removePOIItem(marker);
@@ -158,12 +153,64 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
         marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
         mMapView.addPOIItem(marker);
+    }
 
+    boolean first=true;
+    public void processLocation(double latitude,double longitude){
+        super.processLocation(latitude,longitude);
+        if(first&&latitude*longitude!=0){
+            mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
+//        if(map_point_present!=null)
+            if(marker!=null)
+                mMapView.removePOIItem(marker);
+
+            MapPOIItem marker = new MapPOIItem();
+            marker.setItemName("현재위치");
+            marker.setTag(0);
+            marker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+            marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            mMapView.addPOIItem(marker);
+
+            for(int i=0;i<5;i++){
+                MapPOIItem marker1 = new MapPOIItem();
+                marker1.setItemName((i+1)+" 지점");
+                marker1.setTag(0);
+                MapPoint mp=MapPoint.mapPointWithGeoCoord(latitude+0.002*(i+1), longitude-0.002*(i+1));
+                marker1.setMapPoint(mp);
+                marker1.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                marker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                MapCircle circle1 = new MapCircle(
+                        mp, // center
+                        100, // radius
+                        Color.argb(128, 255, 0, 0), // strokeColor
+                        Color.argb(128, 0, 255, 0) // fillColor
+                );
+                circle1.setTag(1234);
+                mMapView.addCircle(circle1);
+                mMapView.addPOIItem(marker1);
+            }
+            mMapView.zoomIn(true);
+            mMapView.zoomIn(true);
+            first=false;
+        }
 
     }
-//    public void processLocation(double latitude,double longitude){
-//        super.processLocation(latitude,longitude);
-//    }
+    TextDialog mCustomDialog;
+    public void clickCall(View v){
+        mCustomDialog = new TextDialog(A1_1_bus_location.this,R.layout.dialog_call);
+        mCustomDialog.setTexts(new String[]{"인솔 교사와 통화 보호자","취소","통화"});
+        mCustomDialog.show();
+    }
+
+    public void clickTextView2(View v){
+        mCustomDialog.dismiss();
+    }
+    public void clickTextView3(View v){
+        mCustomDialog.dismiss();
+        Toast.makeText(v.getContext(), "인솔  교사와 통화를 시작합니다.", Toast.LENGTH_SHORT).show();
+    }
 
 //    double longitude,latitude;
 //    boolean once=false;
@@ -390,13 +437,13 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
     @Override
     public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
 
-        MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("DaumMapLibrarySample");
-        alertDialog.setMessage(String.format("Double-Tap on (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
-        alertDialog.setPositiveButton("OK", null);
-        alertDialog.show();
+//        MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
+//
+//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+//        alertDialog.setTitle("DaumMapLibrarySample");
+//        alertDialog.setMessage(String.format("Double-Tap on (%f,%f)", mapPointGeo.latitude, mapPointGeo.longitude));
+//        alertDialog.setPositiveButton("OK", null);
+//        alertDialog.show();
     }
 
     @Override

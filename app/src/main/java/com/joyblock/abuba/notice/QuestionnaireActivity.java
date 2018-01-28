@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.util.ImageFileProcessor;
@@ -48,7 +49,7 @@ public class QuestionnaireActivity extends BaseActivity {
     CalendarCustomDialogActivity mCustomDialog;
 
     String seq_user,seq_kindergarden,seq_kindergarden_class;
-    Integer year, month, day;
+    Integer year=0, month=0, day=0;
     private final int CAMERA_CODE = 1111, GALLERY_CODE = 1112;
 //    private Uri photoUri;
 //    byte[] image;
@@ -180,8 +181,8 @@ public class QuestionnaireActivity extends BaseActivity {
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(QuestionnaireActivity.this, NoticeActivity.class);
-                                QuestionnaireActivity.this.startActivity(intent);
+//                                Intent intent = new Intent(QuestionnaireActivity.this, NoticeActivity.class);
+//                                QuestionnaireActivity.this.startActivity(intent);
 
                                 finish();
                             }
@@ -206,16 +207,21 @@ public class QuestionnaireActivity extends BaseActivity {
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String survey_title=titleText.getText().toString()
-                                        ,survey_content=inText.getText().toString();
+                                if(mAdapter11.getSize()<2)
+                                    Toast.makeText(QuestionnaireActivity.this,"최소 2개 이상의 항목을 설정하세요.",Toast.LENGTH_LONG).show();
+                                else if(year*month*day==0)
+                                    Toast.makeText(QuestionnaireActivity.this,"날짜를 설정하세요.",Toast.LENGTH_LONG).show();
+                                else{
+                                    String survey_title = titleText.getText().toString(), survey_content = inText.getText().toString();
 
-                                new InsertSurvey(seq_user,seq_kindergarden,seq_kindergarden_class,
-                                        survey_title,survey_content,year+"",month+"",day+"",mAdapter11.data_list).execute();
+                                    new InsertSurvey(seq_user, seq_kindergarden, seq_kindergarden_class,
+                                            survey_title, survey_content, year + "", month + "", day + "", mAdapter11.data_list).execute();
 
-                                Intent intent = new Intent(QuestionnaireActivity.this, NoticeActivity.class);
-                                intent.putExtra("fragment_num",2);
-                                QuestionnaireActivity.this.startActivity(intent);
-                                finish();
+//                                Intent intent = new Intent(QuestionnaireActivity.this, NoticeActivity.class);
+//                                intent.putExtra("fragment_num",2);
+//                                QuestionnaireActivity.this.startActivity(intent);
+                                    finish();
+                                }
                             }
                         })
                         .setPositiveButton("취소", null)

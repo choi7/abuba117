@@ -70,9 +70,23 @@ public class ListViewAdapter extends BaseAdapter implements Serializable {
             holder.iconImageView1=iconImageView1;
         }else{
             holder=(ListViewHolder)convertView.getTag();
-            iconImageView=holder.iconImageView;
-            titleTextView=holder.titleTextView;
-            iconImageView1=holder.iconImageView1;
+            try {
+                iconImageView = holder.iconImageView;
+                titleTextView = holder.titleTextView;
+                iconImageView1 = holder.iconImageView1;
+            }catch(NullPointerException e){
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.park_fragment_document_listview_item, parent, false);
+                holder=new ListViewHolder();
+
+                // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
+                iconImageView = (ImageView) convertView.findViewById(R.id.imageView_item);
+                holder.iconImageView=iconImageView;
+                titleTextView = (TextView) convertView.findViewById(R.id.textView_item);
+                holder.titleTextView=titleTextView;
+                iconImageView1 = (ImageView) convertView.findViewById(R.id.imageView_item1);
+                holder.iconImageView1=iconImageView1;
+            }
         }
 
 //        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득

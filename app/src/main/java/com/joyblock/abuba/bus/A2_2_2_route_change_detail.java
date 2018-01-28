@@ -33,9 +33,9 @@ public class A2_2_2_route_change_detail extends BaseActivity {
 
     TextView classText;
 
-    BoardingListViewAdapter adapter;
+    TextListViewAdapter adapter1;
     BanListViewAdapter class_adapter;
-    ListView listview, class_listview;
+    ListView listview1, class_listview;
 
     //    Activity activity;
     @Override
@@ -45,7 +45,7 @@ public class A2_2_2_route_change_detail extends BaseActivity {
         flag = true;// 승/하차 플래그
         setContentView(R.layout.layout_a2_2_2_route_change_detail);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -66,7 +66,7 @@ public class A2_2_2_route_change_detail extends BaseActivity {
 
 //
         ImageView imageView = (ImageView) findViewById(R.id.editorImage);
-        imageView.setVisibility(View.VISIBLE);
+//        imageView.setVisibility(View.VISIBLE);
 //        imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -86,6 +86,16 @@ public class A2_2_2_route_change_detail extends BaseActivity {
 //                finish();
 //            }
 //        });
+
+        listview1 = (ListView) findViewById(R.id.listview_another_boarding);
+
+        adapter1 = new TextListViewAdapter(1, R.layout.row_route_detail);
+        listview1.setAdapter(adapter1);
+
+        adapter1.addItem("등원");
+        adapter1.addItem("월,수,금");
+        adapter1.addItem("곰돌이 2호차");
+        adapter1.addItem("효성아파트 후문");
 
 
 //

@@ -33,7 +33,7 @@ public class A2_3_2_route_registration_point_student_list extends BaseActivity {
         setContentView(R.layout.layout_a2_3_2_route_registration_point_student_list);
         Log.d("BAN LIST", app.kindergarden_class_list.get(0).kindergarden_class_name);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -120,6 +120,7 @@ public class A2_3_2_route_registration_point_student_list extends BaseActivity {
         class_adapter.notifyDataSetChanged();
         dialog.show();
 
+        Toast.makeText(v.getContext(),"원장님 전용화면 입니다.",Toast.LENGTH_SHORT).show();
         //반 다이얼로그 이벤트 처리
         ListView class_listview=dialog.getListView();
         class_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

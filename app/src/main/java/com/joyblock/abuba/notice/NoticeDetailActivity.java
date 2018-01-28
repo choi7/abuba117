@@ -67,7 +67,7 @@ public class NoticeDetailActivity extends BaseActivity {
         commentregister = (TextView) findViewById(R.id.commentPushText1);
 
         EditText et = (EditText) findViewById(R.id.editTexttt);
-        et.setVisibility(View.VISIBLE);
+//        et.setVisibility(View.VISIBLE);
 
         insertAndDelete = (ImageView) findViewById(R.id.noticeDetailinsertAndDeleteText);
         detailImage=(ImageView) findViewById(R.id.detailImageView);
@@ -94,14 +94,14 @@ public class NoticeDetailActivity extends BaseActivity {
             }
         });
 
-        checkPeopleListImage = (ImageView) findViewById(R.id.checkPushImageView);
-        checkPeopleListImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NoticeDetailActivity.this, CheckPeopleListActivity.class);
-                NoticeDetailActivity.this.startActivity(intent);
-            }
-        });
+//        checkPeopleListImage = (ImageView) findViewById(R.id.checkPushImageView);
+//        checkPeopleListImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(NoticeDetailActivity.this, CheckPeopleListActivity.class);
+//                NoticeDetailActivity.this.startActivity(intent);
+//            }
+//        });
 
 
         noticeTitle=(TextView)findViewById(R.id.noticeDetailTitleText);
@@ -140,6 +140,13 @@ public class NoticeDetailActivity extends BaseActivity {
 
     }
 
+    public void clickModDel(View v){
+        mCustomDialog = new CustomDialogModifyAndDel(NoticeDetailActivity.this,
+                modifyListener,
+                delListener);
+        mCustomDialog.show();
+    }
+
     public void setNotice(String ban,String title, String name,String time,String content,boolean availabeReply){
         noticeBan.setText(ban);
         noticeTitle.setText(title);
@@ -158,8 +165,8 @@ public class NoticeDetailActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
-        NoticeDetailActivity.this.startActivity(intent);
+//        Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
+//        NoticeDetailActivity.this.startActivity(intent);
         finish();
     }
 
@@ -237,9 +244,10 @@ public class NoticeDetailActivity extends BaseActivity {
                     insertAndDelete.setVisibility(View.INVISIBLE);
                     Log.d("sd ", "ee");
                 }
-
-                Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
-                detailImage.setVisibility(View.VISIBLE);
+                try {
+                    Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
+                    detailImage.setVisibility(View.VISIBLE);
+                }catch(Exception e){}
 
                 setNotice(detail.seq_kindergarden_class,detail.title,detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 //                for(R14_SelectNoticeOne list:noticeList)
@@ -334,8 +342,9 @@ public class NoticeDetailActivity extends BaseActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             NoticeDetailActivity.DeleteNotice buyTask = new NoticeDetailActivity.DeleteNotice(seq_notice);
                             buyTask.execute();
-                            Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
-                            NoticeDetailActivity.this.startActivity(intent);
+//                            Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
+//                            intent.putExtra("fragment_num",1);
+//                            NoticeDetailActivity.this.startActivity(intent);
                             finish();
                         }
                     })

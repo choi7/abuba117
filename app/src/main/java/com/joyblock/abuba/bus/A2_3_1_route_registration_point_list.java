@@ -37,6 +37,7 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
 
     TextView classText;
 
+    TextView btn_left,btn_right;
     TextListViewAdapter adapter;
     BanListViewAdapter class_adapter;
     ListView listview,class_listview;
@@ -48,7 +49,7 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
         flag=true;// 승/하차 플래그
         setContentView(R.layout.layout_a2_3_1_route_registration_point_list);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -81,7 +82,7 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
 
 //
         ImageView imageView = (ImageView) findViewById(R.id.editorImage);
-        imageView.setVisibility(View.VISIBLE);
+//        imageView.setVisibility(View.VISIBLE);
 //        imageView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -101,6 +102,9 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
 //                finish();
 //            }
 //        });
+
+        btn_left=(TextView)findViewById(R.id.btn_left);
+        btn_right=(TextView)findViewById(R.id.btn_right);
 
 
         str_boarding="m";
@@ -178,5 +182,18 @@ public class A2_3_1_route_registration_point_list extends BaseActivity {
 
 
 
+    }
+    public void clickLeft(View v){
+        btn_left.setBackgroundColor(Color.parseColor("#2baf7f"));
+        btn_right.setBackgroundColor(Color.parseColor("#33cc99"));
+        btn_left.setTypeface(NanumSquareExtraBold);
+        btn_right.setTypeface(NanumSquareRegular);
+    }
+
+    public void clickRight(View v){
+        btn_right.setBackgroundColor(Color.parseColor("#2baf7f"));
+        btn_left.setBackgroundColor(Color.parseColor("#33cc99"));
+        btn_right.setTypeface(NanumSquareExtraBold);
+        btn_left.setTypeface(NanumSquareRegular);
     }
 }

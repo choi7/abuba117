@@ -1,5 +1,6 @@
 package com.joyblock.abuba;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ public class CustomListViewDialog extends Dialog {
 
     int int_layout_id=R.layout.custom_listview_dialog;
 
+    boolean bool_finishi=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,16 +57,23 @@ public class CustomListViewDialog extends Dialog {
         return listview;
     }
 
+
+
     // 클릭버튼이 하나일때 생성자 함수로 클릭이벤트를 받는다.
     public CustomListViewDialog(Context context,BaseAdapter adapter) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.adapter=adapter;
     }
 
+    Activity activity;
     public CustomListViewDialog(Context context,BaseAdapter adapter,int int_layout_id) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.adapter=adapter;
         this.int_layout_id=int_layout_id;
+    }
+
+    public void setActivity(Activity activity){
+        this.activity=activity;
     }
 
     // 클릭버튼이 확인과 취소 두개일때 생성자 함수로 이벤트를 받는다
@@ -75,6 +84,15 @@ public class CustomListViewDialog extends Dialog {
 //        this.mTitle = title;
 //        this.mLeftClickListener = leftListener;
 //        this.mRightClickListener = rightListener;
-//    }
+
+    void setFinish(boolean bool_finishi){
+        this.bool_finishi=bool_finishi;
+    }
+
+    public void onBackPressed(){
+        super.onBackPressed();
+        activity.finish();
+
+    }
 
 }
