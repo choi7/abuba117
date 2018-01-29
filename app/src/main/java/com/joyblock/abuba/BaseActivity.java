@@ -64,10 +64,10 @@ public abstract class BaseActivity extends AppCompatActivity{
         app=(MyApplication)getApplicationContext();
         //액션바가 있을때 하단 명암 제거
         try {
-//            getSupportActionBar().setElevation(0);
+            getSupportActionBar().setElevation(0);
 //            getSupportActionBar().setDisplayShowCustomEnabled(true);
 //            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+//            getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         }catch (Exception e) {
             e.printStackTrace();
         }

@@ -21,8 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.api_message.R5_SelectKindergardenList;
+import com.joyblock.abuba.bus.TextListViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,9 +43,11 @@ public class SchoolRegister_1Activity extends BaseActivity {
     ArrayList<String> arraylistDetail = new ArrayList<>();
     ArrayList<String> arraylistSchool = new ArrayList<>();
     ArrayAdapter<String> mAdapters, mAdapterSi, mAdapterSchool;
+    TextListViewAdapter adapter;
     String addressD, addressS;
     ListView detailAddress;
     String ids, seq_kindergarden, ar1, ar2, addr_etc, tel_no, fullAddress, kindergarden_name;
+    R5_SelectKindergardenList[] r5_selectKindergardenList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,14 +64,10 @@ public class SchoolRegister_1Activity extends BaseActivity {
             // 21 버전 이상일 때
             getWindow().setStatusBarColor(Color.parseColor("#33CCCC"));
         }
-
-
         Intent intent = getIntent();
         ids = intent.getStringExtra("id");
 
-
-
-        detailAddress = (ListView) findViewById(R.id.detailAddressListview);
+        detailAddress = (ListView) findViewById(R.id.school_detailAddressListview);
         detailAddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,23 +75,13 @@ public class SchoolRegister_1Activity extends BaseActivity {
                 Intent intent = new Intent(SchoolRegister_1Activity.this, RegisterSchoolClassSelectActivity.class);
                 intent.putExtra("id",ids);
                 intent.putExtra("유치원", seq_kindergarden);
-                intent.putExtra("유치원주소", fullAddress);
-                intent.putExtra("유치원전화번호", tel_no);
+//                intent.putExtra("유치원주소", fullAddress);
+//                intent.putExtra("유치원전화번호", tel_no);
                 intent.putExtra("유치원이름", kindergarden_name);
-                System.out.println(arraylistSchool.get(position));
+//                System.out.println("lkj"+arraylistSchool.get(position));
                 SchoolRegister_1Activity.this.startActivity(intent);
             }
         });
-
-
-        /*
-        mAdapterSchool = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, arraylistSchool);
-        detailAddress.setAdapter(mAdapterSchool);
-        mAdapterSchool.add("어부바 유치원");
-        */
-
-
-
 
         addressDos = (Spinner) findViewById(R.id.spinner2);
         mAdapters = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, arraylist);
@@ -107,23 +98,18 @@ public class SchoolRegister_1Activity extends BaseActivity {
                 Toast.makeText(SchoolRegister_1Activity.this, arraylist.get(position) + "포지션 : " + addressD, Toast.LENGTH_LONG).show();
                 sicontact();
                 System.out.println(arraylistDetail);
-
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
 
         addressSi = (Spinner) findViewById(R.id.adressSiSpinner1);
 
         mAdapterSi = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, arraylistDetail);
         addressSi.setAdapter(mAdapterSi);
         mAdapterSi.add("시 선택");
-
 
         addressSi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -133,21 +119,12 @@ public class SchoolRegister_1Activity extends BaseActivity {
                     if(position != 0) {
                         schoolcontact();
 
-                        mAdapterSchool = new ArrayAdapter<String>(SchoolRegister_1Activity.this, R.layout.support_simple_spinner_dropdown_item, arraylistSchool);
-                        detailAddress.setAdapter(mAdapterSchool);
-                        System.out.println("rsdfsdf");
-                        System.out.println(arraylistSchool);
-                        System.out.println(arraylistSchool);
-                        System.out.println(arraylistSchool);
-                        System.out.println(arraylistSchool);
-                        System.out.println("sdfsdfsd");
-                        mAdapterSchool.notifyDataSetChanged();
-
+//                        mAdapterSchool = new ArrayAdapter<String>(SchoolRegister_1Activity.this, R.layout.support_simple_spinner_dropdown_item, arraylistSchool);
+                        //                        detailAddress.setAdapter(mAdapterSchool);
+                        adapter=new TextListViewAdapter(2,R.layout.custom_cell_school_register_1);
+                        detailAddress.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     }
-
-
-
-
             }
 
             @Override
@@ -155,8 +132,6 @@ public class SchoolRegister_1Activity extends BaseActivity {
 
             }
         });
-
-
 
         String ar = "ar1";
 
@@ -171,7 +146,6 @@ public class SchoolRegister_1Activity extends BaseActivity {
 
         docontact();
 
-
         //test용 버튼
         Button btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -182,34 +156,18 @@ public class SchoolRegister_1Activity extends BaseActivity {
                 nextResister2.putExtra("유치원",arraylistSchool);
 
                 SchoolRegister_1Activity.this.startActivity(nextResister2);
-
-
-
-
             }
         });
-
-
-
-
-//            sicontact();
-
-
-
-
 
     }
 
     public void docontact() {
-
-
         RequestQueue requestQueue = Volley.newRequestQueue(SchoolRegister_1Activity.this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, address, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 System.out.println(response);
                 System.out.println("위에껍니다");
-
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
                     System.out.println(jsonResponse);
@@ -217,19 +175,13 @@ public class SchoolRegister_1Activity extends BaseActivity {
                     System.out.println(rr);
                     System.out.println(response);
                     JSONArray jsonArray = jsonResponse.getJSONArray("area_list");
-
-
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject json_data = jsonArray.getJSONObject(i);
                         System.out.println(json_data.getString("ar_name"));
                         arraylist.add(json_data.getString("ar_name"));
 //                        mAdapters.add(json_data.getString("ar_name"));
-
                     }
-
-
                     System.out.println(arraylist);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -242,17 +194,6 @@ public class SchoolRegister_1Activity extends BaseActivity {
         });
         requestQueue.add(stringRequest);
         System.out.println(requestQueue);
-        System.out.println(requestQueue);
-        System.out.println(requestQueue);
-        System.out.println(requestQueue);
-        System.out.println(requestQueue);
-        System.out.println("전송후");
-        System.out.println("전송후");
-
-
-        System.out.println(arraylist);
-        System.out.println(arraylist);
-        System.out.println(arraylist);
         System.out.println(arraylist);
 
     }
@@ -322,7 +263,6 @@ public class SchoolRegister_1Activity extends BaseActivity {
             System.out.println(address1);
             System.out.println(address1);
             System.out.println(address1);
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -332,43 +272,16 @@ public class SchoolRegister_1Activity extends BaseActivity {
             @Override
             public void onResponse(String response) {
                 System.out.println(response);
-                System.out.println("위에껍니다");
-
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    System.out.println(jsonResponse);
-                    Integer rr = Integer.parseInt(jsonResponse.getString("resultCode"));
-                    System.out.println(rr);
-                    System.out.println(response);
-                    JSONArray jsonArray = jsonResponse.getJSONArray("kindergarden_list");
-//                    JSONObject json = (JSONObject) jsonArray.get(0);
-//                    arraylistSchool.add(json.getString("kindergarden_name"));
-
-                    ar1 = jsonArray.getJSONObject(0).getString("ar1");
-                    ar2 = jsonArray.getJSONObject(0).getString("ar2");
-                    addr_etc = jsonArray.getJSONObject(0).getString("addr_etc");
-                    tel_no = jsonArray.getJSONObject(0).getString("tel_no");
-
-                    System.out.println("dsfsdfsdfsdfdsf");
-                    System.out.println(ar1);
-                    System.out.println(ar2);
-                    System.out.println(addr_etc);
-                    System.out.println(tel_no);
-                    System.out.println("sdfsdfsdfdfsdfsdf");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject json_data = jsonArray.getJSONObject(i);
-                        System.out.println(json_data.getString("kindergarden_name"));
-//                        arraylistSchool.add(json_data.getString("kindergarden_name"));
+                    r5_selectKindergardenList =new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_list"),R5_SelectKindergardenList[].class);
+                    for(int i=0;i<r5_selectKindergardenList.length;i++) {
+                        R5_SelectKindergardenList list=r5_selectKindergardenList[i];
+                        adapter.addItem(list.kindergarden_name, list.ar1 +" "+ list.ar2+ " " + list.addr_etc + " / " + list.tel_no);
+                        seq_kindergarden = list.seq_kindergarden;
+                        kindergarden_name = list.kindergarden_name;
                     }
-
-                    seq_kindergarden = jsonArray.getJSONObject(0).getString("seq_kindergarden");
-                    kindergarden_name = jsonArray.getJSONObject(0).getString("kindergarden_name");
-                    mAdapterSchool.add(kindergarden_name);
-
-                    System.out.println(arraylistSchool);
-
+                    adapter.notifyDataSetChanged();
 
 
                 } catch (Exception e) {
@@ -378,14 +291,9 @@ public class SchoolRegister_1Activity extends BaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-
             }
         });
-
         requestQueue.add(stringRequest);
-//        mAdapterSchool.notifyDataSetChanged();
-
     }
 
 }

@@ -33,7 +33,7 @@
         android:layout_marginTop="8dp"
         android:text="Button"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/detailAddressListview"
+        app:layout_constraintBottom_toTopOf="@+id/school_detailAddressListview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
     <ListView
-        android:id="@+id/detailAddressListview"
+        android:id="@+id/school_detailAddressListview"
         android:layout_width="368dp"
         android:layout_height="389dp"
         app:layout_constraintEnd_toEndOf="parent"
