@@ -41,10 +41,7 @@
         <activity android:name=".notice.NoticeDetailActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".testActivity" />
-        <activity
-            android:name=".bus.BusLocationActivity"
-            android:label="@string/title_activity_bus_location"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".register.SchoolRegister_2Activity" />
         <activity android:name=".notice.NoticeEditorActivity" />
         <activity

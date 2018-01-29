@@ -1,6 +1,7 @@
 package com.joyblock.abuba;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -85,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void clickBack(View v){
-        finish();
+        ((Activity)(v.getContext())).finish();
     }
 
 
