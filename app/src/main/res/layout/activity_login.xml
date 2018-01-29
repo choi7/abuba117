@@ -107,15 +107,16 @@
     <TextView
         android:id="@+id/textView29"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="15dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="11.25dp"
-        android:fontFamily="@font/nanumsquareregular"
+        android:fontFamily="@font/nanumsquarebold"
         android:text="아이디 / 비밀번호 찾기"
         android:textColor="#036EB7"
+        android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        android:layout_marginRight="20dp" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -150,6 +151,7 @@
         android:layout_marginTop="2dp"
         android:fontFamily="@font/nanumsquareregular"
         android:scaleX="0.70"
+        android:visibility="gone"
         android:scaleY="0.70"
         android:text="자동로그인"
         android:textSize="16sp"
@@ -164,5 +166,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/login_bottom" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/loginButton"
+        app:layout_constraintTop_toTopOf="@+id/textView29">
+
+        <ImageView
+            android:id="@+id/provison_check_image1"
+            android:layout_width="12.5dp"
+            android:layout_height="12.5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/check_off" />
+
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nanumsquarebold"
+            android:text="자동로그인"
+            android:textColor="#595757"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/provison_check_image1"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

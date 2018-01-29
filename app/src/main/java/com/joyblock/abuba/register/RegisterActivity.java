@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -62,6 +63,7 @@ public class RegisterActivity extends BaseActivity {
     String fullurl = "http://58.229.208.246/Ububa/insertUser.do?";
     String fullurl12 = "http://58.229.208.246/Ububa/insertUser.do?";
     String job = "ROLE_TEACHER";
+    ImageView selectUserCheckIDImageView;
 
     SharedPreferences pref;
     BuyTask buyTask;
@@ -69,11 +71,18 @@ public class RegisterActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.layout_register);
 
         Intent intent = getIntent();
         job = intent.getStringExtra("authority");
 
+        selectUserCheckIDImageView = (ImageView) findViewById(R.id.selectUserCheckIDImageView);
+        selectUserCheckIDImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         addrresTextView = (TextView) findViewById(R.id.addressTextView);
         idText = (EditText) findViewById(R.id.idText);
@@ -95,7 +104,7 @@ public class RegisterActivity extends BaseActivity {
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cccc));
         TextView title = (TextView) findViewById(R.id.titleName);
-        title.setText("회원등록");
+        title.setText("회원가입");
         title.setVisibility(View.VISIBLE);
 
         if (Build.VERSION.SDK_INT >= 21) {
@@ -145,7 +154,7 @@ public class RegisterActivity extends BaseActivity {
 
 
 
-
+                                /*
                         new BuyTask(
                                 idText.getText().toString(),
                                 passwordText.getText().toString(),
@@ -155,6 +164,7 @@ public class RegisterActivity extends BaseActivity {
                                 phonenumberText.getText().toString(),
                                 emailText.getText().toString(),
                                 "0").execute();
+                                */
 
 
 
@@ -429,6 +439,79 @@ public class RegisterActivity extends BaseActivity {
                     System.out.println("Error");
                     System.out.println("Error");
                     System.out.println("Error");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public class selectUserReduplicationIdCheck extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+
+        public selectUserReduplicationIdCheck(String id) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("id", id)
+//                    .add("cu_num", cu_num + "")
+//                    .add("cu_price", cu_price + "")
+                    .build();
+            request = new okhttp3.Request.Builder()
+                    .url("http://58.229.208.246/Ububa/selectUserReduplicationIdCheck.do")
+                    .post(formBody)
+                    .build();
+        }
+
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("TAG", json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                if (ss == 200) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setMessage("등록 가능한 아이디입니다.")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                    RegisterActivity.this.startActivity(intent);
+                                    finish();
+                                }
+                            })
+                            .create()
+                            .show();
+                } else if (ss == 101) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setMessage("다른 아이디로 등록하세요")
+                            .setNegativeButton("확인", null)
+                            .create()
+                            .show();
+                } else if (ss == 301) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setMessage("이미 등록된 아이디입니다")
+                            .setNegativeButton("확인", null)
+                            .create()
+                            .show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
