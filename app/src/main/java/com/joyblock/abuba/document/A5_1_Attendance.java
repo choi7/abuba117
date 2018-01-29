@@ -97,6 +97,7 @@ public class A5_1_Attendance extends BaseActivity implements View.OnClickListene
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
         final TextView title = (TextView) findViewById(R.id.titleName);
         title.setText("출석부");
         title.setVisibility(View.VISIBLE);

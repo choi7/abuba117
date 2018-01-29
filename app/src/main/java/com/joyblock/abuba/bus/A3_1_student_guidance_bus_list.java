@@ -60,6 +60,7 @@ public class A3_1_student_guidance_bus_list extends BaseActivity {
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#9966FF"));

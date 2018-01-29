@@ -58,7 +58,7 @@ public class CommentActivity extends BaseActivity implements Serializable {
         setContentView(R.layout.activity_comment);
         intent = getIntent();
         Customactionbar();
-
+        addBacklistner();
 
         commentPushText = (TextView) findViewById(R.id.commentPushText);
         allCommentListView = (ListView) findViewById(R.id.allCommentListView);
@@ -166,14 +166,6 @@ public class CommentActivity extends BaseActivity implements Serializable {
         TextView title = (TextView) findViewById(R.id.titleName);
         title.setText("댓글");
         title.setVisibility(View.VISIBLE);
-
-        ImageView backImage = (ImageView) findViewById(R.id.backImage);
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
 

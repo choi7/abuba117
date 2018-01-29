@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
@@ -51,9 +52,10 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
 
 
 
+
         //액션바 및 상태바 커스텀
         actionbarCustom();
-
+        addBacklistner();
 
 
 
@@ -186,15 +188,15 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
-        ImageView backImage = (ImageView) findViewById(R.id.backImage);
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent loginIntent = new Intent(NoticeActivity.this, MainDawerSelectActivity.class);
-//                NoticeActivity.this.startActivity(loginIntent);
-                finish();
-            }
-        });
+//        LinearLayout linear= (LinearLayout) findViewById(R.id.back_linear);
+//        linear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent loginIntent = new Intent(NoticeActivity.this, MainDawerSelectActivity.class);
+////                NoticeActivity.this.startActivity(loginIntent);
+//                finish();
+//            }
+//        });
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
@@ -202,5 +204,6 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
     }
+
 
 }

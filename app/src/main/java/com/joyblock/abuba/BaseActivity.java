@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v13.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -42,7 +44,7 @@ import java.util.Date;
 
 import static android.graphics.Bitmap.CompressFormat.PNG;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity{
     RelativeLayout.LayoutParams rp;
     LinearLayout.LayoutParams lp;
     public Gson gson;
@@ -53,24 +55,33 @@ public abstract class BaseActivity extends AppCompatActivity {
     public MyApplication app;
 
     public double latitude,longitude;
+    private View v1;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gson=new GsonBuilder().create();
         app=(MyApplication)getApplicationContext();
         //액션바가 있을때 하단 명암 제거
         try {
-            getSupportActionBar().setElevation(0);
+//            getSupportActionBar().setElevation(0);
+//            getSupportActionBar().setDisplayShowCustomEnabled(true);
+//            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         }catch (Exception e) {
             e.printStackTrace();
         }
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        width = size.x;
-        height = size.y;
+
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+
+
+
+//        Display display = getWindowManager().getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+//        width = size.x;
+//        height = size.y;
         NanumSquareBold=Typeface.createFromAsset(getAssets(),"NanumSquareBold.ttf");
         NanumSquareExtraBold=Typeface.createFromAsset(getAssets(), "NanumSquareExtraBold.ttf");
         NanumSquareLight=Typeface.createFromAsset(getAssets(), "NanumSquareLight.ttf");
@@ -85,13 +96,23 @@ public abstract class BaseActivity extends AppCompatActivity {
 //
 //        }
 
+
+    }
+
+    public void addBacklistner(){
+        LinearLayout linear = (LinearLayout)findViewById(R.id.back_linear);
+        linear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent loginIntent = new Intent(NoticeActivity.this, MainDawerSelectActivity.class);
+//                NoticeActivity.this.startActivity(loginIntent);
+                finish();
+            }
+        });
     }
 
     public void clickBack1(View v1){
-
-//        Log.d("BACK","BACK");
-//        Toast.makeText(this,"앙대",Toast.LENGTH_LONG).show();
-//        ((Activity)getApplicationContext()).finish();
+        finish();
     }
 
 

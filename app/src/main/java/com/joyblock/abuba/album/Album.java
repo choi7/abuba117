@@ -53,6 +53,7 @@ public class Album extends BaseActivity {
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff66ccff));
         TextView title = (TextView) findViewById(R.id.titleName);
+        addBacklistner();
         title.setText("사진앨범");
         title.setVisibility(View.VISIBLE);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -138,9 +139,9 @@ public class Album extends BaseActivity {
         public TextView time;
         public ImageView userImage;
 
-        public TextView text;
+//        public TextView text;
         public ImageView insertAndDelete;
-        public ImageView checkPushImage;
+//        public ImageView checkPushImage;
     }
 
     public class ListDatas {
@@ -234,9 +235,9 @@ public class Album extends BaseActivity {
             holder.userImage.setImageDrawable(mData.userImage);
 
 
-            holder.text.setVisibility(View.GONE);
+//            holder.text.setVisibility(View.GONE);
             holder.insertAndDelete.setVisibility(View.GONE);
-            holder.checkPushImage.setVisibility(View.GONE);
+//            holder.checkPushImage.setVisibility(View.GONE);
 
             myDataset = new ArrayList<>();
             mAdapter = new MyAdapter(myDataset);

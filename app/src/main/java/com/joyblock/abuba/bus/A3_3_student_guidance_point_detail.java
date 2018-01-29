@@ -32,6 +32,7 @@ public class A3_3_student_guidance_point_detail extends BaseActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
         }

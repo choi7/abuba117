@@ -50,6 +50,7 @@ public class A2_2_2_route_change_detail extends BaseActivity {
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#9966FF"));

@@ -59,6 +59,7 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
         }
@@ -195,9 +196,9 @@ public class A1_1_bus_location extends BaseActivity implements MapView.OpenAPIKe
             mMapView.zoomIn(true);
             first=false;
         }
-
     }
     TextDialog mCustomDialog;
+
     public void clickCall(View v){
         mCustomDialog = new TextDialog(A1_1_bus_location.this,R.layout.dialog_call);
         mCustomDialog.setTexts(new String[]{"인솔 교사와 통화 보호자","취소","통화"});
