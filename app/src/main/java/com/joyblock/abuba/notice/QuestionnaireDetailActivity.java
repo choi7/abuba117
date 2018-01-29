@@ -47,6 +47,8 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+
+        addBacklistner();
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#0099FF"));

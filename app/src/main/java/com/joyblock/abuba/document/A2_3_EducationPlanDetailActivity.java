@@ -52,6 +52,7 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
@@ -70,16 +71,16 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
 
         insertAndDelete = (ImageView) findViewById(R.id.noticeDetailinsertAndDeleteText);
         detailImage=(ImageView) findViewById(R.id.detailImageView);
-        backImage=(ImageView) findViewById(R.id.backImage);
-
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(A2_3_EducationPlanDetailActivity.this, NoticeActivity.class);
-                A2_3_EducationPlanDetailActivity.this.startActivity(intent);
-                finish();
-            }
-        });
+//        backImage=(ImageView) findViewById(R.id.backImage);
+//
+//        backImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(A2_3_EducationPlanDetailActivity.this, NoticeActivity.class);
+//                A2_3_EducationPlanDetailActivity.this.startActivity(intent);
+//                finish();
+//            }
+//        });
 
         educationPlanTitle=(TextView)findViewById(R.id.noticeDetailTitleText);
         educationPlanAge=(TextView)findViewById(R.id.noticeDetailBanText);

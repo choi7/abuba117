@@ -52,6 +52,7 @@ public class NoticeDetailActivity extends BaseActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
@@ -73,14 +74,14 @@ public class NoticeDetailActivity extends BaseActivity {
         detailImage=(ImageView) findViewById(R.id.detailImageView);
         backImage=(ImageView) findViewById(R.id.backImage);
 
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
-                NoticeDetailActivity.this.startActivity(intent);
-                finish();
-            }
-        });
+//        backImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
+//                NoticeDetailActivity.this.startActivity(intent);
+//                finish();
+//            }
+//        });
 
         commentPushImage = (ImageView) findViewById(R.id.commentPushImage);
         commentPushImage.setVisibility(View.VISIBLE);
@@ -167,8 +168,11 @@ public class NoticeDetailActivity extends BaseActivity {
         super.onBackPressed();
 //        Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
 //        NoticeDetailActivity.this.startActivity(intent);
+
         finish();
     }
+
+
 
     /*
     //화면 상단 왼쪽에 있는 백 버튼 눌렀을때 실행되는 메소드

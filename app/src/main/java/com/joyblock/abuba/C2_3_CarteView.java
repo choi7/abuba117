@@ -32,6 +32,7 @@ public class C2_3_CarteView extends BaseActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xffff9900));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
         TextView title;
         title = (TextView) findViewById(R.id.titleName);
         title.setText("식단표");

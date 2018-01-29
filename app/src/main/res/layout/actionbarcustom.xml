@@ -75,12 +75,12 @@
 
 
     <LinearLayout
+        android:id="@+id/back_linear"
         android:layout_width="30dp"
         android:layout_height="20.25dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:onClick="clickBack1"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

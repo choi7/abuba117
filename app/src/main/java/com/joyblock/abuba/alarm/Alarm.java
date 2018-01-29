@@ -39,6 +39,7 @@ public class Alarm extends BaseActivity {
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xffff3366));
         TextView title = (TextView) findViewById(R.id.titleName);
         title.setText("알림");

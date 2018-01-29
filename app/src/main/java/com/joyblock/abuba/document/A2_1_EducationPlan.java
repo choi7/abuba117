@@ -117,9 +117,12 @@ public class A2_1_EducationPlan extends BaseActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
+        addBacklistner();
         final TextView title = (TextView) findViewById(R.id.titleName);
         title.setText("교육계획안");
         title.setVisibility(View.VISIBLE);
+
+
 
 //
         ImageView imageView = (ImageView) findViewById(R.id.editorImage);
@@ -134,15 +137,15 @@ public class A2_1_EducationPlan extends BaseActivity {
             }
         });
 
-        ImageView backImage = (ImageView) findViewById(R.id.backImage);
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent loginIntent = new Intent(A2_1_EducationPlan.this, A1_DocumentSelect.class);
-//                A2_1_EducationPlan.this.startActivity(loginIntent);
-                finish();
-            }
-        });
+//        ImageView backImage = (ImageView) findViewById(R.id.backImage);
+//        backImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent loginIntent = new Intent(A2_1_EducationPlan.this, A1_DocumentSelect.class);
+////                A2_1_EducationPlan.this.startActivity(loginIntent);
+//                finish();
+//            }
+//        });
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#9966FF"));

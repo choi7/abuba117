@@ -51,6 +51,7 @@ public class A2_3_2_route_registration_point_student_list extends BaseActivity {
 //
         listView = findViewById(R.id.listview);
         adapter = new TextListViewAdapter(2, R.layout.row_bus);
+        addBacklistner();
         listView.setAdapter(adapter);
 //        for(String str:list)
 //        adapter.addItem(getResources().getDrawable(R.drawable.document_image), "승차관리",getResources().getDrawable(R.drawable.document_next_image));
