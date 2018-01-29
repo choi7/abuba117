@@ -27,6 +27,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.data.MyApplication;
@@ -85,8 +87,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void clickBack(View v){
-        ((Activity)(v.getContext())).finish();
+    public void clickBack1(View v1){
+
+//        Log.d("BACK","BACK");
+//        Toast.makeText(this,"앙대",Toast.LENGTH_LONG).show();
+//        ((Activity)getApplicationContext()).finish();
     }
 
 
