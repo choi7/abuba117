@@ -74,6 +74,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+
     <LinearLayout
         android:layout_width="30dp"
         android:layout_height="20.25dp"
@@ -84,7 +85,8 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="4dp">
 
         <ImageView
             android:id="@+id/backImage"
