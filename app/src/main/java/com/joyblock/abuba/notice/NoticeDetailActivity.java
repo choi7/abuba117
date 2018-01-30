@@ -22,6 +22,7 @@ import com.joyblock.abuba.CheckPeopleListActivity;
 import com.joyblock.abuba.CommentActivity;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.util.TimeConverter;
 import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
 import com.squareup.picasso.Picasso;
@@ -41,6 +42,9 @@ public class NoticeDetailActivity extends BaseActivity {
     ImageView insertAndDelete, detailImage, backImage, commentPushImage, checkPeopleListImage;
     Activity activity;
     CustomDialogModifyAndDel mCustomDialog;
+    TextDialog mCustomDialogs;
+    boolean cancelAndRegister = true;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -338,6 +342,14 @@ public class NoticeDetailActivity extends BaseActivity {
     //삭제버튼
     private View.OnClickListener delListener = new View.OnClickListener() {
         public void onClick(View v) {
+
+            mCustomDialogs = new TextDialog(NoticeDetailActivity.this, R.layout.dialog_call);
+            mCustomDialogs.setTexts(new String[]{"정말로 삭제하시겠습니까?", "취소", "확인"});
+            mCustomDialogs.show();
+
+
+
+/*
             mCustomDialog.dismiss();
             AlertDialog.Builder nd = new AlertDialog.Builder(NoticeDetailActivity.this);
             nd.setMessage("정말로 삭제하시겠습니까")
@@ -355,9 +367,29 @@ public class NoticeDetailActivity extends BaseActivity {
                     .setPositiveButton("취소", null)
                     .create()
                     .show();
+                    */
         }
+
+
+
     };
 
+
+    public void clickTextView2(View v) {
+        mCustomDialogs.dismiss();
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialogs.dismiss();
+        mCustomDialog.dismiss();
+        NoticeDetailActivity.DeleteNotice buyTask = new NoticeDetailActivity.DeleteNotice(seq_notice);
+        buyTask.execute();
+        finish();
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialogs.dismiss();
+    }
 
 
 }

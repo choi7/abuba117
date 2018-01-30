@@ -35,7 +35,9 @@ import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.CustomListViewDialog;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
 import com.squareup.picasso.Picasso;
@@ -72,6 +74,10 @@ public class NoticeEditorModifyActivity extends BaseActivity {
     DialogInterface banListDialogInterface;//,modeDelDialogInteface;
     R6_SelectKindergardenClassList[] classList;
     R14_SelectNoticeOne detail;
+    TextDialog mCustomDialog;
+    boolean cancelAndRegister = true;
+    CustomListViewDialog dialog;
+    ImageView titleNameRightImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,6 +97,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         titles = detail.title;
 
         activity = this;
+
 
         titleText = (EditText) findViewById(R.id.titleText);
         titleText.setText(titles);
@@ -133,6 +140,8 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         });
 
         actionbarCustom();
+        titleNameRightImage = (ImageView) findViewById(R.id.titleNameRightImage);
+        titleNameRightImage.setVisibility(View.VISIBLE);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -174,20 +183,10 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         backText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeEditorModifyActivity.this);
-                nd.setMessage("작성을 취소하시겠습니까")
-                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-//                                Intent intent = new Intent(NoticeEditorModifyActivity.this, NoticeActivity.class);
-//                                NoticeEditorModifyActivity.this.startActivity(intent);
-
-                                finish();
-                            }
-                        })
-                        .setPositiveButton("취소", null)
-                        .create()
-                        .show();
+                cancelAndRegister = false;
+                mCustomDialog = new TextDialog(NoticeEditorModifyActivity.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"작성을 취소하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
             }
         });
 
@@ -200,6 +199,13 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cancelAndRegister = true;
+                mCustomDialog = new TextDialog(NoticeEditorModifyActivity.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"수정하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
+
+
+                /*
                 AlertDialog.Builder nd = new AlertDialog.Builder(NoticeEditorModifyActivity.this);
                 nd.setMessage("등록하시겠습니까")
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
@@ -218,6 +224,8 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                         .setPositiveButton("취소", null)
                         .create()
                         .show();
+
+                */
             }
         });
 
@@ -234,41 +242,6 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         okhttp3.Request request;
         RequestBody formBody1;
 
-        public UpdateNotice(String seq_notice, String is_reply, String seq_kindergarden_class, String title, String content, Boolean ss) {
-            client = new OkHttpClient();
-
-            // 현재시간을 msec 으로 구한다.
-            long now = System.currentTimeMillis();
-            // 현재시간을 date 변수에 저장한다.
-            Date date = new Date(now);
-            // 시간을 나타냇 포맷을 정한다 ( yyyy/MM/dd 같은 형태로 변형 가능 )
-            SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            // nowDate 변수에 값을 저장한다.
-            String formatDate = sdfNow.format(date);
-
-            imageName = formatDate + "_" + seq_user + "_" + seq_kindergarden + ".png";
-
-//            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
-//            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-
-            Log.d("값들", seq_notice+""+is_reply+""+seq_kindergarden_class+""+title+""+content + "" + file_path);
-            Log.d("값들", file_path.toString()+""+image);
-
-
-            formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("seq_notice", seq_notice)
-                    .addFormDataPart("is_reply", is_reply)
-                    .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
-                    .addFormDataPart("title", title)
-                    .addFormDataPart("content", content)
-                    .addFormDataPart("files", imageName,RequestBody.create(MultipartBody.FORM, image))
-                    .build();
-
-            request = new okhttp3.Request.Builder()
-                    .url("http://58.229.208.246/Ububa/updateNotice.do")
-                    .post(formBody1)
-                    .build();
-        }
 
         public UpdateNotice(String seq_notice, String is_reply, String seq_kindergarden_class, String title, String content) {
             client = new OkHttpClient();
@@ -281,22 +254,34 @@ public class NoticeEditorModifyActivity extends BaseActivity {
             SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             // nowDate 변수에 값을 저장한다.
             String formatDate = sdfNow.format(date);
-
-            imageName = formatDate + "_" + seq_user + "_" + seq_kindergarden + ".png";
-
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
             Log.d("값들", seq_notice+""+is_reply+""+seq_kindergarden_class+""+title+""+content + "" + file_path);
 
+            imageName = seq_user + "_" +seq_kindergarden + ".png";
 
-            formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("seq_notice", seq_notice)
-                    .addFormDataPart("is_reply", is_reply)
-                    .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
-                    .addFormDataPart("title", title)
-                    .addFormDataPart("content", content)
-                    .build();
+//            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
+//            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+
+            try {
+                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("seq_notice", seq_notice)
+                        .addFormDataPart("is_reply", is_reply)
+                        .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
+                        .addFormDataPart("title", title)
+                        .addFormDataPart("content", content)
+                        .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
+                        .build();
+            }catch(NullPointerException e){
+                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("seq_notice", seq_notice)
+                        .addFormDataPart("is_reply", is_reply)
+                        .addFormDataPart("seq_kindergarden_class", seq_kindergarden_class)
+                        .addFormDataPart("title", title)
+                        .addFormDataPart("content", content)
+                        .build();
+            }
 
             request = new okhttp3.Request.Builder()
                     .url("http://58.229.208.246/Ububa/updateNotice.do")
@@ -401,18 +386,21 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
                 classList = new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"), R6_SelectKindergardenClassList[].class);
 
-                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
+//                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
                 // 해당 뷰에 리스트뷰 호출
-                listview = (ListView) view.findViewById(R.id.notice_popup_listview);
+                listview = (ListView) findViewById(R.id.notice_popup_listview);
                 // 리스트뷰에 어댑터 설정
                 adapter = new BanListViewAdapter();
-                listview.setAdapter(adapter);
+//                listview.setAdapter(adapter);
+                dialog = new CustomListViewDialog(NoticeEditorModifyActivity.this,adapter);
                 adapter.addItem("전체");
                 for (R6_SelectKindergardenClassList list : classList) {
                     adapter.addItem(list.kindergarden_class_name);
                 }
                 adapter.notifyDataSetChanged();
+                dialog.show();
 
+                /*
                 // 반 다이얼로그 생성
                 banListDialogBuilder = new AlertDialog.Builder(activity);
                 // 리스트뷰 설정된 레이아웃
@@ -423,18 +411,22 @@ public class NoticeEditorModifyActivity extends BaseActivity {
 
                 // 반 다이얼로그 보기
                 banListDialogInterface = banListDialogBuilder.show();
-
+                */
+                listview=dialog.getListView();
                 //반 다이얼로그 이벤트 처리
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         BanListViewItem item = adapter.list.get(position);
-
-
                         seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
-                        banListDialogInterface.dismiss();
+//                        banListDialogInterface.dismiss();
                         title.setText(item.getName());
+                        titleNameRightImage.setVisibility(View.GONE);
+                        if (title.getText().toString() == "전체") {
+                            titleNameRightImage.setVisibility(View.VISIBLE);
+                        }
                         Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
                     }
                 });
             } catch (Exception e) {
@@ -698,5 +690,37 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
     }
 
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+
+        if(cancelAndRegister) {
+            //따로 사진을 바꾸지 않았으면 false 사진을 바꾼다면 sendPicture에서 modifyImageChange를 true바꿔줌
+//
+// if(modifyImageChange) {
+//                NoticeEditorModifyActivity.UpdateNotice buyTask = new NoticeEditorModifyActivity.UpdateNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString(), modifyImageChange);
+//                buyTask.execute();
+//            } else {
+                NoticeEditorModifyActivity.UpdateNotice buyTask = new NoticeEditorModifyActivity.UpdateNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString());
+                buyTask.execute();
+//            }
+        } else {
+            finish();
+        }
+
+
+
+
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+    }
 
 }
