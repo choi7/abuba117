@@ -51,7 +51,7 @@ public class A2_1_boading_management extends BaseActivity{
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff33cc99));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        addBacklistner();
+
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
@@ -73,6 +73,7 @@ public class A2_1_boading_management extends BaseActivity{
 
 
         actionbarCustom();
+        addBacklistner();
 
         str_boarding="m";
         callFragment(str_boarding);
