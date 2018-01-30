@@ -74,7 +74,8 @@ public class TextDialog extends Dialog {
 
     public void onBackPressed(){
         super.onBackPressed();
-        activity.finish();
+        if(activity!=null)
+            activity.finish();
     }
 
 }
