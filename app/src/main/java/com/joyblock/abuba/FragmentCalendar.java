@@ -20,13 +20,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.joyblock.abuba.bus.TextListViewAdapter;
-import com.joyblock.abuba.calendar.CalendarActivity;
+import com.joyblock.abuba.calendar.C3_2_CalendarView;
 import com.joyblock.abuba.data.MyApplication;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

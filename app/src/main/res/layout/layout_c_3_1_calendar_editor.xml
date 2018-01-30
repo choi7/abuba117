@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.C_3_1_CalendarEditor">
+    tools:context="com.joyblock.abuba.calendar.C_3_1_CalendarEditor">
 
     <ScrollView
         android:id="@+id/scrollView3"

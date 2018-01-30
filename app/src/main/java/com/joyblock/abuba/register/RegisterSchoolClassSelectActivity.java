@@ -52,7 +52,7 @@ public class RegisterSchoolClassSelectActivity extends BaseActivity {
 
     String classList = "http://58.229.208.246/Ububa/selectKindergardenClassList.do?";
     TextView schoolname, schoolclass;
-    String id, authority, garden_address, garden_name, alertmsg, getday, getmonth, getyear, getTime, seq_user, seq_kindergarden_class, req_flag, seq_kids;
+    String id, authority, garden_address, garden_name, alertmsg, getday, getmonth, getyear, getTime, seq_user, seq_kindergarden_class, req_flag, seq_kids, activity, kids_name, sex, birth_year, birth_month, birth_day, files, name_title;
     ArrayList<String> arraylistss = new ArrayList<>();
     ArrayAdapter<String> mAdapters;
     Integer seq_kindergarden;
@@ -72,12 +72,36 @@ public class RegisterSchoolClassSelectActivity extends BaseActivity {
         Timeget();
 
         Intent intent = getIntent();
+        activity = intent.getStringExtra("activity");
+        try {
+            switch (activity) {
+                case "ChildrenRegisterActivity":
+                    kids_name = intent.getStringExtra("kids_name");
+                    sex = intent.getStringExtra("sex");
+                    birth_year = intent.getStringExtra("birth_year");
+                    birth_month = intent.getStringExtra("birth_month");
+                    birth_day = intent.getStringExtra("birth_day");
+                    files = intent.getStringExtra("files");
+                    name_title = intent.getStringExtra("name_title");
+                    seq_kids = intent.getStringExtra("seq_kids");
+                    break;
+                case "":
+                    break;
+                case "s":
+                    break;
+                default:
+                    break;
+            }
+        } catch (NullPointerException e) {
+
+        }
 
         id = intent.getStringExtra("id");
-        String re_id = pref.getString("register_id","");
-        String re_pw = pref.getString("register_password","");
-        Log.d("reidpw" ,re_id + "" + re_pw);
-        new Login(re_id,re_pw).execute();
+        String re_id = pref.getString("register_id", "");
+        String re_pw = pref.getString("register_password", "");
+        Log.d("reidpw", re_id + "" + re_pw);
+        new Login(re_id, re_pw).execute();
+
         System.out.println("xxxxx");
         System.out.println(id);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -106,14 +130,16 @@ public class RegisterSchoolClassSelectActivity extends BaseActivity {
         schoolClassSpinner = (ListView) findViewById(R.id.schoolClassListView);
         adapter = new TextListViewAdapter(1, R.layout.custom_cell_register_school_class_select);
         schoolClassSpinner.setAdapter(adapter);
+        adapter.setToggleOn(false);
+//        adapter.addItem("보류(반을 모를 경우)");
         schoolClassSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mCustomDialogs = new TextDialog(RegisterSchoolClassSelectActivity.this, R.layout.dialog_call);
                 mCustomDialogs.setTexts(new String[]{alertmsg, "취소", "확인"});
                 mCustomDialogs.show();
-                mCustomDialogs.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#595757"));
-                mCustomDialogs.findViewById(R.id.textview3).setBackgroundColor(Color.parseColor("#E73828"));
+//                mCustomDialogs.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#595757"));
+//                mCustomDialogs.findViewById(R.id.textview3).setBackgroundColor(Color.parseColor("#E73828"));
                 String ss = r6_selectKindergardenClassList[position].seq_kindergarden;
             }
         });
@@ -124,11 +150,18 @@ public class RegisterSchoolClassSelectActivity extends BaseActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//
+//                mCustomDialogs = new TextDialog(RegisterSchoolClassSelectActivity.this, R.layout.dialog_one_check);
+//                mCustomDialogs.setTexts(new String[]{alertmsg, "확인"});
+//                mCustomDialogs.show();
+
+                /*
                 mCustomDialog = new CustomDialog(RegisterSchoolClassSelectActivity.this,
                         alertmsg,
                         leftListener,
                         rightListener);
                 mCustomDialog.show();
+                */
             }
         });
 
@@ -190,12 +223,27 @@ public class RegisterSchoolClassSelectActivity extends BaseActivity {
 
     public void clickTextView2(View v) {
         mCustomDialogs.dismiss();
-        Log.d("전부다", seq_kindergarden + " " + seq_user + " " + seq_kindergarden_class + " " + req_flag + " " + seq_kids);
+        Log.d("전부다", seq_kindergarden + " " + seq_user + " " + seq_kindergarden_class + " " + req_flag + " " + seq_kids + " " + authority);
     }
 
     public void clickTextView3(View v) {
         mCustomDialogs.dismiss();
-        new InserReqKindergardenApply(String.valueOf(seq_kindergarden), seq_user, seq_kindergarden_class, req_flag, seq_kids, getyear, getmonth, getday).execute();
+        switch (authority) {
+            case "ROLE_TEACHER":
+                req_flag = "t";
+                new InserReqKindergardenApply(String.valueOf(seq_kindergarden), seq_user, seq_kindergarden_class, req_flag, getyear, getmonth, getday).execute();
+
+                break;
+            case "ROLE_DIRECTOR_TEACHER":
+                break;
+            case "ROLE_PARENTS":
+                req_flag = "p";
+                String seq_kids = pref.getString("seq_kids","");
+                new InserReqKindergardenApply(String.valueOf(seq_kindergarden), seq_user, seq_kindergarden_class, req_flag, seq_kids, getyear, getmonth, getday).execute();
+                break;
+        }
+
+
     }
 
     class InserReqKindergardenApply extends AsyncTask<Void, Void, String> {
@@ -204,7 +252,7 @@ public class RegisterSchoolClassSelectActivity extends BaseActivity {
         RequestBody formBody;
         String url = "http://58.229.208.246/Ububa/inserReqKindergardenApply.do";
 
-        //승인요청(선생님, 자녀)
+        //승인요청(자녀)
         public InserReqKindergardenApply(String seq_kindergarden, String seq_user, String seq_kindergarden_class, String req_flag, String seq_kids, String year, String month, String day) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
@@ -213,6 +261,25 @@ public class RegisterSchoolClassSelectActivity extends BaseActivity {
                     .add("seq_kindergarden_class", seq_kindergarden_class)
                     .add("req_flag", req_flag)
                     .add("seq_kids", seq_kids)
+                    .add("year", year)
+                    .add("month", month)
+                    .add("day", day)
+                    .build();
+
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+        //승인요청(선생님)
+        public InserReqKindergardenApply(String seq_kindergarden, String seq_user, String seq_kindergarden_class, String req_flag, String year, String month, String day) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_kindergarden", seq_kindergarden)
+                    .add("seq_user", seq_user)
+                    .add("seq_kindergarden_class", seq_kindergarden_class)
+                    .add("req_flag", req_flag)
                     .add("year", year)
                     .add("month", month)
                     .add("day", day)
@@ -304,26 +371,18 @@ public class RegisterSchoolClassSelectActivity extends BaseActivity {
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
                 System.out.println(ss);
 
+                Log.d("sssa", jsonResponse.getString("retMap"));
+
                 if (ss == 200) {
-                    r2_login = new GsonBuilder().create().fromJson(jsonResponse.getString("retMap"), R2_Login.class);
+                    JSONObject jsonResponse1 = new JSONObject(jsonResponse.getString("retMap"));
+                    Log.d("jsonReponse1", String.valueOf(jsonResponse1));
+                    r2_login = new GsonBuilder().create().fromJson(jsonResponse1.getString("user"), R2_Login.class);
 //                    for(int i=0;i<r2_login.length;i++) {
 //                        R2_Login list=r2_login[i];
-                        authority = r2_login.authority;
-                        seq_user = String.valueOf(r2_login.seq_user);
+                    Log.d("r2_login", r2_login.authority);
+                    authority = r2_login.authority;
+                    seq_user = String.valueOf(r2_login.seq_user);
 //                    }
-                    switch (authority) {
-                        case "ROLE_TEACHER":
-                            req_flag = "t";
-                            break;
-                        case "ROLE_DIRECTOR_TEACHER":
-                            break;
-                        case "ROLE_PARENTS":
-                            req_flag = "p";
-                            break;
-                    }
-
-
-//
 //                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
 //                    System.out.println(json);
 //                    JSONObject json2 = new JSONObject(json1.getString("user"));

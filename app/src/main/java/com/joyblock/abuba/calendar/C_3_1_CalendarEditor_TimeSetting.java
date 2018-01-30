@@ -1,7 +1,6 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.calendar;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -20,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

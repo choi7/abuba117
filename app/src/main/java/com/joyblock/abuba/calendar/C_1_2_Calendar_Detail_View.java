@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.calendar;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.joyblock.abuba.R;
 import com.joyblock.abuba.data.MyApplication;
 
 import java.text.SimpleDateFormat;

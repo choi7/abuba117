@@ -5,8 +5,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.Preference;
@@ -32,10 +35,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.CircleTransform;
 import com.joyblock.abuba.R;
 
 import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.login.LoginActivity;
+import com.joyblock.abuba.util.ImageFileProcessor;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +63,7 @@ import okhttp3.RequestBody;
 
 public class RegisterActivity extends BaseActivity {
 
-    String userID, userPassword, userName, userBirtyday, userEmail, userPhoneNumber, nextaBoolean = "n", address, ar1, ar2, addr_etc, birthdays;
+    String userID, userPassword, userName, userBirtyday, userEmail, userPhoneNumber, nextaBoolean = "n", address, ar1, ar2, addr_etc, birthdays, authority;
     EditText idText, passwordText, passwordText2, nameText, emailText, phonenumberText;
     TextView addrresTextView, birthdayText;
     URL urlss1;
@@ -67,11 +73,35 @@ public class RegisterActivity extends BaseActivity {
     String fullurl = "http://58.229.208.246/Ububa/insertUser.do?";
     String fullurl12 = "http://58.229.208.246/Ububa/insertUser.do?";
     String job = "ROLE_TEACHER";
-    ImageView selectUserCheckIDImageView;
+    ImageView selectUserCheckIDImageView, profileImage;
+    ImageFileProcessor imageFileProcessor = new ImageFileProcessor();
 
     SharedPreferences.Editor editor;
     BuyTask buyTask;
     Boolean aBoolean = false;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Log.d("requestCode :", requestCode + "");
+            if (requestCode == 100) {
+                imageFileProcessor.sendPicture(data.getData(), profileImage, RegisterActivity.this); //갤러리에서 가져오기
+                Object[] drawable_byteArray = imageFileProcessor.getDrawableAndByteArray(data.getData(), RegisterActivity.this);
+                BitmapDrawable bitmap = (BitmapDrawable) drawable_byteArray[0];
+                Picasso.with(this).load(data.getData()).transform(new CircleTransform()).into(profileImage);
+//                Picasso.with(this).load((BitmapDrawable) drawable_byteArray[0]).into(profileImage);
+//                Picasso.with(this).load
+            } else {
+                Object[] drawable_byteArray = imageFileProcessor.getDrawableAndByteArray(data.getData(), RegisterActivity.this); //갤러리에서 가져오기
+//                mAdapter11.setIcon(requestCode,(Drawable) drawable_byteArray[0],(byte[])drawable_byteArray[1]);
+//                mListView11.setAdapter(mAdapter11);
+
+
+            }
+        }
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,11 +109,6 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.layout_register);
 
         Intent intent = getIntent();
-//        job = intent.getStringExtra("authority");
-
-
-
-
 
 
         selectUserCheckIDImageView = (ImageView) findViewById(R.id.selectUserCheckIDImageView);
@@ -95,6 +120,14 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
+        profileImage = (ImageView) findViewById(R.id.profileImage);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageFileProcessor.selectGallery(RegisterActivity.this, 100);
+//                imageFileProcessor.sendPicture();
+            }
+        });
         addrresTextView = (TextView) findViewById(R.id.addressTextView);
         addrresTextView.setText(intent.getStringExtra("address"));
         address = intent.getStringExtra("address");
@@ -111,13 +144,15 @@ public class RegisterActivity extends BaseActivity {
 //        birthdayText = (EditText) findViewById(R.id.birthdayText);
         birthdayText = (TextView) findViewById(R.id.emailText44);
         birthdayText.setText(intent.getStringExtra("birthday"));
-      birthdays = intent.getStringExtra("birthdays");
+        birthdays = intent.getStringExtra("birthdays");
 
         ar1 = intent.getStringExtra("addressD");
         ar2 = intent.getStringExtra("addressS");
         addr_etc = intent.getStringExtra("addressDetail");
+//        authority = intent.getStringExtra("authority");
+
         nextaBoolean = intent.getStringExtra("nextaBoolean");
-        if(nextaBoolean == null) {
+        if (nextaBoolean == null) {
             nextaBoolean = "n";
         }
         birthdayText.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +167,7 @@ public class RegisterActivity extends BaseActivity {
                             Date d = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                             userBirtyday = year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일";
                             birthdayText.setText(userBirtyday);
-                            birthdays = year+""+(monthOfYear+1)+""+dayOfMonth;
+                            birthdays = year + "" + (monthOfYear + 1) + "" + dayOfMonth;
                             Log.d("d", userBirtyday);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -182,7 +217,7 @@ public class RegisterActivity extends BaseActivity {
                 intent.putExtra("name", nameText.getText().toString());
                 intent.putExtra("phone", phonenumberText.getText().toString());
                 intent.putExtra("birthday", birthdayText.getText().toString());
-                intent.putExtra("birthdays",birthdays);
+                intent.putExtra("birthdays", birthdays);
                 intent.putExtra("email", emailText.getText().toString());
                 intent.putExtra("nextaBoolean", nextaBoolean);
                 intent.putExtra("whoActivity", "RegisterActivity");
@@ -204,9 +239,9 @@ public class RegisterActivity extends BaseActivity {
                 String email = emailText.getText().toString();
                 String ad = addrresTextView.getText().toString();
                 Log.d("sss", String.valueOf(!a.equals(null)));
-                if(a.equals(b) && nextaBoolean.equals("y") && !a.equals("") && !a.equals(null) && !phone.equals("")
+                if (a.equals(b) && nextaBoolean.equals("y") && !a.equals("") && !a.equals(null) && !phone.equals("")
                         && !phone.equals(null) && !name.equals("") && !name.equals(null) && !birtyday.equals("")
-                        && !birtyday.equals(null) && !email.equals("") && !email.equals(null) && !ad.equals("") && !ad.equals(null)){
+                        && !birtyday.equals(null) && !email.equals("") && !email.equals(null) && !ad.equals("") && !ad.equals(null)) {
                     editor = pref.edit();
                     editor.putString("register_id", idText.getText().toString());
                     editor.putString("register_password", passwordText.getText().toString());
@@ -219,25 +254,25 @@ public class RegisterActivity extends BaseActivity {
                     intent.putExtra("birthday", birthdayText.getText().toString());
                     intent.putExtra("birthdays", birthdays);
                     intent.putExtra("email", emailText.getText().toString());
-                    intent.putExtra("ar1",ar1);
-                    intent.putExtra("ar2",ar2);
-                    intent.putExtra("addr_etc",addr_etc);
+                    intent.putExtra("ar1", ar1);
+                    intent.putExtra("ar2", ar2);
+                    intent.putExtra("addr_etc", addr_etc);
                     RegisterActivity.this.startActivity(intent);
-                } else if(!(a.equals(b))){
+                } else if (!(a.equals(b))) {
                     mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
                     mCustomDialog.setTexts(new String[]{"비밀번호가 맞지 않습니다.", "확인"});
                     mCustomDialog.show();
-                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
-                } else if(nextaBoolean.equals("n")) {
+//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
+                } else if (nextaBoolean.equals("n")) {
                     mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
                     mCustomDialog.setTexts(new String[]{"아이디가 중복인지 확인하세요.", "확인"});
                     mCustomDialog.show();
-                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
+//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
                 } else {
                     mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
                     mCustomDialog.setTexts(new String[]{"정보를 입력해주세요", "확인"});
                     mCustomDialog.show();
-                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
+//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
                 }
 
 
@@ -601,7 +636,7 @@ public class RegisterActivity extends BaseActivity {
                     mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
                     mCustomDialog.setTexts(new String[]{"등록 가능한 아이디입니다.", "확인"});
                     mCustomDialog.show();
-                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
+//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
                     aBoolean = true;
                     nextaBoolean = "y";
 
@@ -609,12 +644,12 @@ public class RegisterActivity extends BaseActivity {
                     mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
                     mCustomDialog.setTexts(new String[]{"다른 아이디로 등록하세요.", "확인"});
                     mCustomDialog.show();
-                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
+//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
                 } else if (ss == 301) {
                     mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
                     mCustomDialog.setTexts(new String[]{"이미 등록된 아이디입니다.", "확인"});
                     mCustomDialog.show();
-                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
+//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -631,8 +666,8 @@ public class RegisterActivity extends BaseActivity {
         mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_call);
         mCustomDialog.setTexts(new String[]{"돌아가시겠습니까?", "취소", "확인"});
         mCustomDialog.show();
-        mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#595757"));
-        mCustomDialog.findViewById(R.id.textview3).setBackgroundColor(Color.parseColor("#E73828"));
+//        mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#595757"));
+//        mCustomDialog.findViewById(R.id.textview3).setBackgroundColor(Color.parseColor("#E73828"));
 
     }
 

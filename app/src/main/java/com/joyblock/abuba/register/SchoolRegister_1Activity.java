@@ -44,7 +44,7 @@ public class SchoolRegister_1Activity extends BaseActivity {
     ArrayList<String> arraylistSchool = new ArrayList<>();
     ArrayAdapter<String> mAdapters, mAdapterSi, mAdapterSchool;
     TextListViewAdapter adapter;
-    String addressD, addressS;
+    String addressD, addressS, kids_name, sex, birth_year, birth_month, birth_day, files, name_title, activity;
     ListView detailAddress;
     String ids, seq_kindergarden, ar1, ar2, addr_etc, tel_no, fullAddress, kindergarden_name;
     R5_SelectKindergardenList[] r5_selectKindergardenList;
@@ -66,6 +66,29 @@ public class SchoolRegister_1Activity extends BaseActivity {
         }
         Intent intent = getIntent();
         ids = intent.getStringExtra("id");
+        activity = intent.getStringExtra("activity");
+        try {
+            switch (activity) {
+                case "ChildrenRegisterActivity":
+                    kids_name = intent.getStringExtra("kids_name");
+                    sex = intent.getStringExtra("sex");
+                    birth_year = intent.getStringExtra("birth_year");
+                    birth_month = intent.getStringExtra("birth_month");
+                    birth_day = intent.getStringExtra("birth_day");
+                    files = intent.getStringExtra("files");
+                    name_title = intent.getStringExtra("name_title");
+                    break;
+                case "":
+                    break;
+                case "s":
+                    break;
+                default:
+                    break;
+            }
+        } catch (NullPointerException e) {
+
+        }
+
 
         detailAddress = (ListView) findViewById(R.id.school_detailAddressListview);
         detailAddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,12 +96,26 @@ public class SchoolRegister_1Activity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 fullAddress = ar1 + " " + ar2 + " " + addr_etc;
                 Intent intent = new Intent(SchoolRegister_1Activity.this, RegisterSchoolClassSelectActivity.class);
-                intent.putExtra("id",ids);
+                intent.putExtra("id", ids);
                 intent.putExtra("유치원", seq_kindergarden);
-//                intent.putExtra("유치원주소", fullAddress);
-//                intent.putExtra("유치원전화번호", tel_no);
                 intent.putExtra("유치원이름", kindergarden_name);
-//                System.out.println("lkj"+arraylistSchool.get(position));
+
+                try {
+                    if (activity.equals("ChildrenRegisterActivity")) {
+                        intent.putExtra("kids_name", kids_name);
+                        intent.putExtra("sex", sex);
+                        intent.putExtra("birth_year", birth_year);
+                        intent.putExtra("birth_month", birth_month);
+                        intent.putExtra("birth_day", birth_day);
+                        intent.putExtra("files", files);
+                        intent.putExtra("name_title", name_title);
+                        intent.putExtra("activity", "ChildrenRegisterActivity");
+                    }
+                }catch (NullPointerException e) {
+
+                }
+
+
                 SchoolRegister_1Activity.this.startActivity(intent);
             }
         });
@@ -116,15 +153,16 @@ public class SchoolRegister_1Activity extends BaseActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 addressS = arraylistDetail.get(position).toString();
 
-                    if(position != 0) {
-                        schoolcontact();
+                if (position != 0) {
+                    schoolcontact();
 
 //                        mAdapterSchool = new ArrayAdapter<String>(SchoolRegister_1Activity.this, R.layout.support_simple_spinner_dropdown_item, arraylistSchool);
-                        //                        detailAddress.setAdapter(mAdapterSchool);
-                        adapter=new TextListViewAdapter(2,R.layout.custom_cell_school_register_1);
-                        detailAddress.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    }
+                    //                        detailAddress.setAdapter(mAdapterSchool);
+                    adapter = new TextListViewAdapter(2, R.layout.custom_cell_school_register_1);
+                    adapter.setToggleOn(false);
+                    detailAddress.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -145,19 +183,6 @@ public class SchoolRegister_1Activity extends BaseActivity {
         System.out.println("전송전");
 
         docontact();
-
-        //test용 버튼
-        Button btn = (Button) findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent nextResister2 = new Intent(SchoolRegister_1Activity.this, SchoolRegister_2Activity.class);
-                nextResister2.putExtra("유치원",arraylistSchool);
-
-                SchoolRegister_1Activity.this.startActivity(nextResister2);
-            }
-        });
 
     }
 
@@ -274,10 +299,10 @@ public class SchoolRegister_1Activity extends BaseActivity {
                 System.out.println(response);
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    r5_selectKindergardenList =new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_list"),R5_SelectKindergardenList[].class);
-                    for(int i=0;i<r5_selectKindergardenList.length;i++) {
-                        R5_SelectKindergardenList list=r5_selectKindergardenList[i];
-                        adapter.addItem(list.kindergarden_name, list.ar1 +" "+ list.ar2+ " " + list.addr_etc + " / " + list.tel_no);
+                    r5_selectKindergardenList = new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_list"), R5_SelectKindergardenList[].class);
+                    for (int i = 0; i < r5_selectKindergardenList.length; i++) {
+                        R5_SelectKindergardenList list = r5_selectKindergardenList[i];
+                        adapter.addItem(list.kindergarden_name, list.ar1 + " " + list.ar2 + " " + list.addr_etc + " / " + list.tel_no);
                         seq_kindergarden = list.seq_kindergarden;
                         kindergarden_name = list.kindergarden_name;
                     }

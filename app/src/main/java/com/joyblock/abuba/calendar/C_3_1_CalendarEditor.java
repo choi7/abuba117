@@ -1,27 +1,24 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.calendar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.R;
 import com.joyblock.abuba.notice.CalendarCustomDialogActivity;
-import com.joyblock.abuba.notice.NoticeActivity;
-import com.joyblock.abuba.notice.QuestionnaireActivity;
 import com.joyblock.abuba.notice.QuestionnaireListViewAdapter;
 import com.joyblock.abuba.util.ImageFileProcessor;
 

@@ -1,6 +1,5 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.calendar;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,11 +7,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.CommentActivity;
+import com.joyblock.abuba.R;
 
 /**
  * Created by BLUE on 2018-01-28.

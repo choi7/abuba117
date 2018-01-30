@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joyblock.abuba.C2_3_CarteView"
+    tools:context="com.joyblock.abuba.calendar.C2_3_CarteView"
     android:background="#FFFFFF"
     >
 

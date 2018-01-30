@@ -127,4 +127,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.428" />
 
+    <ImageView
+        android:id="@+id/titleNameRightImage"
+        android:layout_width="12dp"
+        android:layout_height="6dp"
+        android:visibility="gone"
+        android:layout_marginStart="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/titleImageView"
+        app:layout_constraintStart_toEndOf="@+id/titleName"
+        app:layout_constraintTop_toTopOf="@+id/titleImageView"
+        app:srcCompat="@drawable/title_list_image" />
+
 </android.support.constraint.ConstraintLayout>

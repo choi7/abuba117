@@ -68,7 +68,7 @@ public class NoticeDetailActivity extends BaseActivity {
         commentregister = (TextView) findViewById(R.id.commentPushText1);
 
         EditText et = (EditText) findViewById(R.id.editTexttt);
-//        et.setVisibility(View.VISIBLE);
+        et.setVisibility(View.VISIBLE);
 
         insertAndDelete = (ImageView) findViewById(R.id.noticeDetailinsertAndDeleteText);
         detailImage=(ImageView) findViewById(R.id.detailImageView);

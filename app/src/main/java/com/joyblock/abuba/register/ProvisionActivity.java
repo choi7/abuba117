@@ -96,8 +96,8 @@ public class ProvisionActivity extends BaseActivity {
         mCustomDialog = new TextDialog(ProvisionActivity.this, R.layout.dialog_call);
         mCustomDialog.setTexts(new String[]{"돌아가시겠습니까?", "취소", "확인"});
         mCustomDialog.show();
-        mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#595757"));
-        mCustomDialog.findViewById(R.id.textview3).setBackgroundColor(Color.parseColor("#E73828"));
+//        mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#595757"));
+//        mCustomDialog.findViewById(R.id.textview3).setBackgroundColor(Color.parseColor("#E73828"));
 
     }
 
@@ -110,7 +110,7 @@ public class ProvisionActivity extends BaseActivity {
             mCustomDialog = new TextDialog(ProvisionActivity.this, R.layout.dialog_one_check);
             mCustomDialog.setTexts(new String[]{"모든 약관에 체크하세요", "확인"});
             mCustomDialog.show();
-            mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
+//            mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
 
         }
 

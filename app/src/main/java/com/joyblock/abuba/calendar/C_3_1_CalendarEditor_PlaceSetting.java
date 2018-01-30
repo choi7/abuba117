@@ -1,4 +1,4 @@
-package com.joyblock.abuba;
+package com.joyblock.abuba.calendar;
 
 import android.Manifest;
 import android.content.Context;
@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.R;
 import com.joyblock.abuba.map.EobubaLocationListener;
 import com.joyblock.abuba.map.MapApiConst;
 import com.joyblock.abuba.notice.CalendarCustomDialogActivity;

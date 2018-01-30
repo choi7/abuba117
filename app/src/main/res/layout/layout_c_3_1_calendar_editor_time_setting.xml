@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context="com.joyblock.abuba.C_3_1_CalendarEditor_TimeSetting">
+    tools:context="com.joyblock.abuba.calendar.C_3_1_CalendarEditor_TimeSetting">
 
     <com.joyblock.abuba.PmTimePicker
         android:id="@+id/pmTimePicker"

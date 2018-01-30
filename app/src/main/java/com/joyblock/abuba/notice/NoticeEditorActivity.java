@@ -35,7 +35,9 @@ import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.CustomListViewDialog;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
 
 import org.json.JSONObject;
@@ -64,8 +66,11 @@ public class NoticeEditorActivity extends BaseActivity {
     String noticeEditorPush = "http://58.229.208.246/Ububa/insertNotice.do";
     Boolean imageChange = true;
     EditText titleText, inText;
+    TextDialog mCustomDialog;
+    boolean cancelAndRegister = true;
+    ImageView titleNameRightImage;
 
-
+    CustomListViewDialog dialog;
 
     private Uri photoUri;
 
@@ -146,6 +151,8 @@ public class NoticeEditorActivity extends BaseActivity {
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         title = (TextView) findViewById(R.id.titleName);
         title.setText("전체");
+        titleNameRightImage = (ImageView) findViewById(R.id.titleNameRightImage);
+        titleNameRightImage.setVisibility(View.VISIBLE);
 
         seq_user = pref.getString("seq_user","없음");
         seq_kindergarden = pref.getString("seq_kindergarden","없음");
@@ -154,13 +161,7 @@ public class NoticeEditorActivity extends BaseActivity {
         title.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
-
-
                 new SelectKindergardenClassList(seq_kindergarden).execute();
-
-
-
 
             }
 
@@ -177,20 +178,10 @@ public class NoticeEditorActivity extends BaseActivity {
         backText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeEditorActivity.this);
-                nd.setMessage("작성을 취소하시겠습니까")
-                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-//                                Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
-//                                NoticeEditorActivity.this.startActivity(intent);
-
-                                finish();
-                            }
-                        })
-                        .setPositiveButton("취소", null)
-                        .create()
-                        .show();
+                cancelAndRegister = false;
+                mCustomDialog = new TextDialog(NoticeEditorActivity.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"작성을 취소하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
             }
         });
 
@@ -203,25 +194,10 @@ public class NoticeEditorActivity extends BaseActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeEditorActivity.this);
-                nd.setMessage("등록하시겠습니까")
-                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                maintitle = titleText.getText().toString();
-                                intext = inText.getText().toString();
-
-                                Log.d("타이틀" , maintitle);
-                                Log.d("sub타이틀" , intext);
-
-                                InsertNotice buyTask = new InsertNotice(seq_user,seq_kindergarden,is_reply,maintitle, intext);
-                                buyTask.execute();
-
-                            }
-                        })
-                        .setPositiveButton("취소", null)
-                        .create()
-                        .show();
+                cancelAndRegister = true;
+                mCustomDialog = new TextDialog(NoticeEditorActivity.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"등록하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
             }
         });
 
@@ -234,7 +210,7 @@ public class NoticeEditorActivity extends BaseActivity {
         }
     }
 
-    class InsertNotice extends AsyncTask<Void, Void, String> {
+    public class InsertNotice extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody1;
@@ -371,7 +347,7 @@ public class NoticeEditorActivity extends BaseActivity {
                 return null;
             }
         }
-
+        boolean flag=false;
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
@@ -381,18 +357,21 @@ public class NoticeEditorActivity extends BaseActivity {
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
                 classList=new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"),R6_SelectKindergardenClassList[].class);
 
-                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
+//                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
                 // 해당 뷰에 리스트뷰 호출
-                listview = (ListView)view.findViewById(R.id.notice_popup_listview);
+                listview = (ListView)findViewById(R.id.notice_popup_listview);
                 // 리스트뷰에 어댑터 설정
                 adapter=new BanListViewAdapter();
-                listview.setAdapter(adapter);
+//                listview.setAdapter(adapter);
+                dialog = new CustomListViewDialog(NoticeEditorActivity.this,adapter);
                 adapter.addItem("전체");
                 for(R6_SelectKindergardenClassList list:classList){
                     adapter.addItem(list.kindergarden_class_name);
                 }
                 adapter.notifyDataSetChanged();
+                dialog.show();
 
+                /*
                 // 반 다이얼로그 생성
                 banListDialogBuilder= new AlertDialog.Builder(activity);
                 // 리스트뷰 설정된 레이아웃
@@ -403,18 +382,26 @@ public class NoticeEditorActivity extends BaseActivity {
 
                 // 반 다이얼로그 보기
                 banListDialogInterface=banListDialogBuilder.show();
+                */
 
+                listview=dialog.getListView();
                 //반 다이얼로그 이벤트 처리
+
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        BanListViewItem item= adapter.list.get(position);
 
+                            BanListViewItem item = adapter.list.get(position);
+                            seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+//                        banListDialogInterface.dismiss();
+                            title.setText(item.getName());
+                            titleNameRightImage.setVisibility(View.GONE);
+                            if (title.getText().toString() == "전체") {
+                                titleNameRightImage.setVisibility(View.VISIBLE);
+                            }
+                            Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
 
-                        seq_kindergarden_class=position==0?"0":classList[position-1].seq_kindergarden_class;
-                        banListDialogInterface.dismiss();
-                        title.setText(item.getName());
-                        Toast.makeText(getApplicationContext(), position==0?"전체":item.getName(),Toast.LENGTH_LONG).show();
                     }
                 });
             } catch (Exception e) {
@@ -673,6 +660,35 @@ public class NoticeEditorActivity extends BaseActivity {
         return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
     }
 
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+        if(cancelAndRegister){
+            maintitle = titleText.getText().toString();
+            intext = inText.getText().toString();
+
+            Log.d("타이틀" , maintitle);
+            Log.d("sub타이틀" , intext);
+
+            InsertNotice buyTask = new InsertNotice(seq_user,seq_kindergarden,is_reply,maintitle, intext);
+            buyTask.execute();
+
+            finish();
+        } else {
+            finish();
+        }
+
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+    }
 
 
 }

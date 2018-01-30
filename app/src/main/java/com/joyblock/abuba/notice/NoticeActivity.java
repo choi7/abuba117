@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.MainDawerSelectActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 
 /**
  * Created by hyoshinchoi on 2018. 1. 10..
@@ -31,6 +32,7 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
 
     private TextView bt_tab1, bt_tab2;
     String seq_user;
+    TextDialog mCustomDialog;
 
 
     @Override
@@ -163,27 +165,9 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                AlertDialog.Builder nd = new AlertDialog.Builder(NoticeActivity.this);
-                nd.setMessage("작성하실 게시판을 선택하세요")
-                        .setNegativeButton("공지", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(NoticeActivity.this, NoticeEditorActivity.class);
-                                NoticeActivity.this.startActivity(intent);
-//                                finish();
-                            }
-                        })
-                        .setPositiveButton("설문지", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(NoticeActivity.this, QuestionnaireActivity.class);
-                                NoticeActivity.this.startActivity(intent);
-//                                finish();
-                            }
-                        })
-                        .create()
-                        .show();
+                mCustomDialog = new TextDialog(NoticeActivity.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"작성하실 게시판을 선택하세요", "공지", "설문지"});
+                mCustomDialog.show();
 
             }
         });
@@ -205,5 +189,22 @@ public class NoticeActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+        Intent intent = new Intent(NoticeActivity.this, NoticeEditorActivity.class);
+        NoticeActivity.this.startActivity(intent);
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+        Intent intent = new Intent(NoticeActivity.this, QuestionnaireActivity.class);
+        NoticeActivity.this.startActivity(intent);
+        finish();
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+    }
 
 }

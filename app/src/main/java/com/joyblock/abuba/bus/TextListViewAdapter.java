@@ -29,14 +29,16 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
     public ArrayList<Item> list= new ArrayList<>();
     int int_layout;
     int size;
+    boolean bool_toggle_on=true;
 
     public TextListViewAdapter(int size, int int_layout){
         this.size=size;
         this.int_layout=int_layout;
     }
 
-
-
+    public void setToggleOn(boolean bool_toggle_on){
+        this.bool_toggle_on=bool_toggle_on;
+    }
     @Override
     public int getCount() {
         return list.size();
@@ -94,7 +96,8 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
 
         for(int i=0;i<size;i++) {
             textview[i].setText(item.getStringArray()[i]);
-            textview[i].setTextColor(item.bool_selected?Color.BLUE:Color.BLACK);
+            if(bool_toggle_on)
+                textview[i].setTextColor(item.bool_selected?Color.BLUE:Color.BLACK);
         }
 
         return convertView;
@@ -143,7 +146,7 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
 
 
 
-    private class ListViewHolder {
+    public class ListViewHolder {
         TextView[] textview=new TextView[size];
 
     }

@@ -29,6 +29,7 @@
                 android:layout_height="47dp"
                 android:background="@drawable/view_style_option"
                 android:ems="10"
+                android:textCursorDrawable="@drawable/color_cursor"
                 android:fontFamily="@font/nanumsquarebold"
                 android:gravity="left|center"
                 android:hint="제목을 작성해 주세요"
@@ -50,9 +51,10 @@
 
             <ImageView
                 android:id="@+id/questionnaireImage"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView79"
                 app:srcCompat="@android:color/background_light" />
@@ -67,6 +69,7 @@
                 android:gravity="left|top"
                 android:hint="내용을 작성해 주세요\n\n\n\n\n\n\n\n\n\n"
                 android:inputType="textMultiLine"
+                android:textCursorDrawable="@drawable/color_cursor"
                 android:paddingLeft="22.5dp"
                 android:paddingTop="22.5dp"
                 android:selectAllOnFocus="false"
