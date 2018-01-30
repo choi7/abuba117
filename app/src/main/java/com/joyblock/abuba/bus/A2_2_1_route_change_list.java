@@ -51,7 +51,7 @@ public class A2_2_1_route_change_list extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        addBacklistner();
+
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
@@ -73,7 +73,7 @@ public class A2_2_1_route_change_list extends BaseActivity {
 
 
         actionbarCustom();
-
+        addBacklistner();
         str_boarding="m";
 
 

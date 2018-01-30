@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.joyblock.abuba.api.API;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 
@@ -24,6 +25,26 @@ public class A0_bus extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        API api=new API();
+//        api.API2("test0","test0");
+//        api.API3(app.seq_user,"어부바","","","","",null,"","","","120","30");
+//        api.API4("ar2","경상남도");
+
+
+
+
+//        try {
+//            api.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+
+        Log.d("API result","응답메시지 : "+api.getMessage());
+
+
+
         setContentView(R.layout.layout_a0_bus);
         Log.d("BAN LIST",app.kindergarden_class_list.get(0).kindergarden_class_name);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
