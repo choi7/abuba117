@@ -10,7 +10,7 @@ import java.util.Date;
 public class TimeConverter {
 
     static public String convert(String unixTime) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
         return dateFormat.format(new Date(Long.parseLong(unixTime))).toString();
     }
 

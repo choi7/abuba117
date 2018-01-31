@@ -48,7 +48,7 @@ import okhttp3.RequestBody;
 public class NoticeDetailActivity extends BaseActivity {
 
     TextView noticeTitle, noticeBan, noticeName, noticeTime, noticeContent, commentregister;//제목, 반, 작성자, 등록시간, 내용, 덧글등록
-    String seq_notice, notice_detail_seq_user, intentPutExtraModifyData, seq_user, seq_kids, flag;
+    String seq_notice, notice_detail_seq_user, intentPutExtraModifyData, seq_user, seq_kids, flag, seq_kindergarden_class;
     ImageView insertAndDelete, detailImage, backImage, commentPushImage, checkPeopleListImage;
     Activity activity;
     EditText et;
@@ -334,7 +334,7 @@ public class NoticeDetailActivity extends BaseActivity {
     }
 
     public void setNotice(String ban, String title, String name, String time, String content, boolean availabeReply) {
-        noticeBan.setText(ban);
+        noticeBan.setText(app.kindergarden_class_list.get(Integer.parseInt(seq_kindergarden_class)).kindergarden_class_name);
         noticeTitle.setText(title);
         noticeName.setText(name);
         noticeTime.setText(time);
@@ -430,6 +430,7 @@ public class NoticeDetailActivity extends BaseActivity {
                 detail = new GsonBuilder().create().fromJson(jsonResponse.getString("notice"), R14_SelectNoticeOne.class);
                 Log.d("detail", String.valueOf(detail));
                 notice_detail_seq_user = detail.seq_user;
+                seq_kindergarden_class = detail.seq_kindergarden_class;
                 intentPutExtraModifyData = jsonResponse.getString("notice");
 
                 Log.d("유저 시퀀스 ", notice_detail_seq_user);
