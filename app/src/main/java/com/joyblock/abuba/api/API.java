@@ -165,10 +165,43 @@ public class API extends Thread{
         waitResponse();
     }
 
-    public void API_15(String seq_notice){
+    public void API_15(String seq_user,String kids_name,String sex,String birth_year,String birth_month,String birth_day,byte[] files,String name_title){
         clearMessage();
         TAG+="15";
-        request=API14.getRequest(seq_notice);
+        request=API15.getRequest(seq_user,kids_name,sex,birth_year,birth_month,birth_day,files,name_title);
+        start();
+        waitResponse();
+    }
+
+    public void API_16(String seq_user,String seq_kids,String sex,String birth_year,String birth_month,String birth_day,byte[]files,String name_title,String kids_name){
+        clearMessage();
+        TAG+="16";
+        request=API16.getRequest(seq_user,seq_kids,sex,birth_year,birth_month,birth_day,files,name_title,kids_name);
+        start();
+        waitResponse();
+    }
+
+
+    public void API_17(String seq_user,String page){
+        clearMessage();
+        TAG+="17";
+        request=API17.getRequest(seq_user,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_18(String seq_user,String seq_kindergarden, String seq_kindergarden_class,String title,String content,String year,String month,String day,String c_survey_vote,byte[][]files,String[]vote_item){
+        clearMessage();
+        TAG+="18";
+        request=API18.getRequest(seq_user,seq_kindergarden,seq_kindergarden_class,title,content,year,month,day,c_survey_vote,files,vote_item);
+        start();
+        waitResponse();
+    }
+
+    public void API_19(String seq_user,String seq_kindergarden_class,String title,String content,String year,String month,String day,String c_survey_vote,byte[][]files,String[]vote_item){
+        clearMessage();
+        TAG+="19";
+        request=API19.getRequest(seq_user,seq_kindergarden_class,title,content,year,month,day,c_survey_vote,files,vote_item);
         start();
         waitResponse();
     }
@@ -186,6 +219,140 @@ public class API extends Thread{
         clearMessage();
         TAG+="21";
         request=API21.getRequest(seq_survey);
+        start();
+        waitResponse();
+    }
+
+    public void API_22(String id){
+        clearMessage();
+        TAG+="22";
+        request=API22.getRequest(id);
+        start();
+        waitResponse();
+    }
+
+    public void API_23(String seq_user,String seq_kindergarden,String plan_flag,String title,String content,byte[]files){
+        clearMessage();
+        TAG+="23";
+        request=API23.getRequest(seq_user,seq_kindergarden,plan_flag,title,content,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_24(String seq_educational_plan,String plan_flag,String title,String content,byte[]files){
+        clearMessage();
+        TAG+="24";
+        request=API24.getRequest(seq_educational_plan,plan_flag,title,content,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_25(String seq_educational_plan){
+        clearMessage();
+        TAG+="25";
+        request=API25.getRequest(seq_educational_plan);
+        start();
+        waitResponse();
+    }
+
+    public void API_26(String seq_kindergarden,String plan_flag,String page){
+        clearMessage();
+        TAG+="26";
+        request=API26.getRequest(seq_kindergarden,plan_flag,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_27(String seq_educational_plan){
+        clearMessage();
+        TAG+="27";
+        request=API27.getRequest(seq_educational_plan);
+        start();
+        waitResponse();
+    }
+
+    public void API_28(String seq_user,String seq_kindergarden,String seq_kids,String seq,String flag,String content){
+        clearMessage();
+        TAG+="28";
+        request=API28.getRequest(seq_user,seq_kindergarden,seq_kids,seq,flag,content);
+        start();
+        waitResponse();
+    }
+
+    public void API_29(String seq_reply){
+        clearMessage();
+        TAG+="29";
+        request=API29.getRequest(seq_reply);
+        start();
+        waitResponse();
+    }
+
+    public void API_30(String seq,String flag,String page){
+        clearMessage();
+        TAG+="30";
+        request=API30.getRequest(seq,flag,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_31(String seq_user_parent,String seq_kindergarden,String seq_kindergarden_class,String seq_kids,String symptom,String medicine_type,String dosage,String dosage_time,String keep_method,
+                       String uniqueness,String year,String month,String day,byte[] files0,byte[]files1){
+        clearMessage();
+        TAG+="31";
+        request=API31.getRequest(seq_user_parent,seq_kindergarden,seq_kindergarden_class,seq_kids,symptom,medicine_type,dosage,dosage_time,keep_method,
+                uniqueness,year,month,day,files0,files1);
+        start();
+        waitResponse();
+    }
+
+    public void API_32(String seq_medication_request,String seq_user_teacher,String symptom,String medicine_type,String dosage,String dosage_time,String keep_method,
+                       String uniqueness,String year,String month,String day,byte[] files0,byte[]files1){
+        clearMessage();
+        TAG+="32";
+        request=API32.getRequest(seq_medication_request,seq_user_teacher,symptom,medicine_type,dosage,dosage_time,keep_method,
+                uniqueness,year,month,day,files0,files1);
+        start();
+        waitResponse();
+    }
+
+    public void API_33(String seq_medication_request){
+        clearMessage();
+        TAG+="33";
+        request=API33.getRequest(seq_medication_request);
+        start();
+        waitResponse();
+    }
+
+    public void API_34(String seq_kindergarden,String seq_kindergarden_class,String year,String month,String day,String page){
+        clearMessage();
+        TAG+="34";
+        request=API34.getRequest(seq_kindergarden,seq_kindergarden_class,year,month,day,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_35(String seq_medication_request){
+        clearMessage();
+        TAG+="35";
+        request=API35.getRequest(seq_medication_request);
+        start();
+        waitResponse();
+    }
+
+    public void API_36(String seq_user_parent,String seq_kindergarden,String seq_kindergarden_class,String seq_kids,String home_reason,String home_time,String home_method,String companion,String tel_no,String uniqueness,
+                       String year,String month,String day,byte[]files0,byte[]files1){
+        clearMessage();
+        TAG+="36";
+        request=API36.getRequest(seq_user_parent,seq_kindergarden,seq_kindergarden_class,seq_kids,home_reason,home_time,home_method,companion,tel_no,uniqueness,
+                year,month,day,files0,files1);
+        start();
+        waitResponse();
+    }
+
+    public void API_37(String seq_home_request,String seq_user_teacher,String home_reason,String home_time,String home_method,String companion,String tel_no,String uniqueness,byte[]files0,byte[]files1){
+        clearMessage();
+        TAG+="37";
+        request=API37.getRequest(seq_home_request,seq_user_teacher,home_reason,home_time,home_method,companion,tel_no,uniqueness,files0,files1);
         start();
         waitResponse();
     }

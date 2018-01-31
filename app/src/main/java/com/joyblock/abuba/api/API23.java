@@ -10,24 +10,18 @@ import okhttp3.RequestBody;
  * Created by BLUE1 on 2018-01-31.
  */
 
-public class API15 {
-    static Request getRequest(String seq_user,String kids_name,String sex,String birth_year,String birth_month,String birth_day,byte[] files,String name_title){
-        String command="insertKids";
+public class API23 {
+    static Request getRequest(String seq_user,String seq_kindergarden,String plan_flag,String title,String content,byte[]files){
+        String command="insertEducationalPlan";
         String url=API.url+command+".do";
         MultipartBody.Builder builder=new MultipartBody.Builder().setType(MultipartBody.FORM);
         builder.addFormDataPart("seq_user",seq_user);
-        builder.addFormDataPart("kids_name",kids_name);
-        builder.addFormDataPart("sex",sex);
-        if(!birth_year.equals(""))
-            builder.addFormDataPart("birth_year",birth_year);
-        if(!birth_month.equals(""))
-            builder.addFormDataPart("birth_month",birth_month);
-        if(!birth_day.equals(""))
-            builder.addFormDataPart("birth_day",birth_day);
+        builder.addFormDataPart("seq_kindergarden",seq_kindergarden);
+        builder.addFormDataPart("plan_flag",plan_flag);
+        builder.addFormDataPart("title",title);
+        builder.addFormDataPart("content",content);
         if(files!=null)
             builder.addFormDataPart("files", TimeConverter.getFileTime()+".png",RequestBody.create(MultipartBody.FORM,files));
-        if(!name_title.equals(""))
-            builder.addFormDataPart("name_title",name_title);
 
         RequestBody body=builder.build();
 

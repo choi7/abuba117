@@ -43,7 +43,6 @@ public class A0_bus extends BaseActivity {
 //        api.API_10("18","1","y","0","공지사항","내용없음",null);
 
 
-
         setContentView(R.layout.layout_a0_bus);
         Log.d("BAN LIST",app.kindergarden_class_list.get(0).kindergarden_class_name);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
