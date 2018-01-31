@@ -27,21 +27,20 @@ public class A0_bus extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         API api=new API();
-//        api.API2("test0","test0");
-//        api.API3(app.seq_user,"어부바","","","","",null,"","","","120","30");
-//        api.API4("ar2","경상남도");
-
-
-
-
-//        try {
+        //        try {
 //            api.join();
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-
-
-        Log.d("API result","응답메시지 : "+api.getMessage());
+//        api.API2("test0","test0");
+//        api.API3(app.seq_user,"어부바","","","","",null,"","","","120","30");
+//        api.API4("ar2","경상남도");
+//        api.API5("경상남도","창원시","테스트 유치원","1");
+//        api.API6("1","1");
+//        api.API7("1","18","","t","","1987","03","11");
+//        api.API8("18","");
+//        api.API_9("18","test0","test0");
+//        api.API_10("18","1","y","0","공지사항","내용없음",null);
 
 
 
