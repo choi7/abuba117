@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -43,8 +45,11 @@ public class CommentActivity extends BaseActivity implements Serializable {
     Context context;
     CommentListVieaAdapter commentListVieaAdapter;
     InputMethodManager imm;
-    String seq_notice, flag, page = "1";
+    String seq_notice, flag, page = "1", seq_kids, del_seq_user, del_seq_reply, seq_user, seq_kindergarden;
     Intent intent;
+    ArrayList<String> getseq_user = new ArrayList<String>();
+    ArrayList<String> getseq_reply = new ArrayList<String>();
+    TextDialog mCustomDialog;
 
     @Override
     protected void onPostResume() {
@@ -61,14 +66,18 @@ public class CommentActivity extends BaseActivity implements Serializable {
         addBacklistner();
 
         commentPushText = (TextView) findViewById(R.id.commentPushText);
-        allCommentListView = (ListView) findViewById(R.id.allCommentListView);
+        allCommentListView = (ListView) findViewById(R.id.allCommentListView1);
         commentEditText = (EditText) findViewById(R.id.commentEditText);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        seq_user = pref.getString("seq_user", "");
+        seq_kindergarden = pref.getString("seq_kindergarden", "");
+        seq_kids = pref.getString("seq_kids", "");
 
         commentListVieaAdapter = new CommentListVieaAdapter(getApplicationContext());
 
         allCommentListView.setAdapter(commentListVieaAdapter);
+
 //        commentListVieaAdapter.addItem("테스트요", "시간이다", "어부바원장님");
 //        commentListVieaAdapter.addItem("테스트요\n\n", "시간이다", "어부바원장님");
 //        commentListVieaAdapter.addItem("테스트요\n\n\n\n", "시간이다", "어부바원장님");
@@ -82,19 +91,19 @@ public class CommentActivity extends BaseActivity implements Serializable {
             public void onClick(View v) {
                 if (!commentEditText.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "/" + commentEditText.getText() + "/", Toast.LENGTH_LONG).show();
-                    String seq_user = pref.getString("seq_user", "");
-                    String seq_kindergarden = pref.getString("seq_kindergarden", "");
-                    String seq_kids = pref.getString("seq_kids", "");
-                    Log.d("seq_notice", seq_notice);
-                    Reply insertReply = new Reply(seq_user, seq_kindergarden, seq_kids, seq_notice, flag, commentEditText.getText().toString());
+
+                    Log.d("insertReply",seq_user +""+seq_kindergarden +""+ seq_kids+""+ seq_notice+""+ flag+""+ commentEditText.getText().toString());
+                    Log.d("insertReply-seq_kids",seq_kids);
+                    Log.d("insertReply-seq_notice",seq_notice);
+                    Reply insertReply = new Reply(seq_user, seq_kindergarden, seq_notice, flag, commentEditText.getText().toString());
                     insertReply.execute();
                     commentEditText.clearFocus();
                     commentEditText.setText(null);
 //                commentEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
 //                    titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
-                    commentListVieaAdapter.notifyDataSetChanged();
-                    allCommentListView.deferNotifyDataSetChanged();
+
+                    new Reply(seq_notice, flag, page).execute();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
                     builder.setMessage("내용을 입력해주세요").setNegativeButton("확인", null).show();
@@ -143,16 +152,24 @@ public class CommentActivity extends BaseActivity implements Serializable {
                     getWindow().setStatusBarColor(Color.parseColor("#66CCFF"));
                 }
                 break;
+            case "NoticeDetailActivity":
+                flag = "n";
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
+                if (Build.VERSION.SDK_INT >= 21) {
+                    getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
+                }
+                break;
             default:
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
                 if (Build.VERSION.SDK_INT >= 21) {
                     getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
                 }
 
-                Reply insertReply = new Reply(seq_notice, flag, page);
-                insertReply.execute();
+
                 break;
         }
+        Reply insertReply = new Reply(seq_notice, flag, page);
+        insertReply.execute();
 
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -173,6 +190,7 @@ public class CommentActivity extends BaseActivity implements Serializable {
     R29_DeleteReply deleteReply;
     R30_SelectReplyList[] selectReplyList;
 
+    int pos;
     class Reply extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
@@ -181,16 +199,27 @@ public class CommentActivity extends BaseActivity implements Serializable {
         int type;
 
         //덧글 등록
-        public Reply(String seq_user, String seq_kindergarden, String seq_kids, String seq, String flag, String content) {
+        public Reply(String seq_user, String seq_kindergarden, String seq, String flag, String content) {
             client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_user", seq_user)
-                    .add("seq_kindergarden", seq_kindergarden)
-                    .add("seq_kids", seq_kids)
-                    .add("seq", seq)
-                    .add("flag", flag)
-                    .add("content", content)
-                    .build();
+
+            if (!(seq_kids.equals(""))) {
+                formBody = new FormBody.Builder()
+                        .add("seq_user", seq_user)
+                        .add("seq_kindergarden", seq_kindergarden)
+                        .add("seq", seq)
+                        .add("flag", flag)
+                        .add("content", content)
+                        .build();
+            } else {
+                formBody = new FormBody.Builder()
+                        .add("seq_user", seq_user)
+                        .add("seq_kindergarden", seq_kindergarden)
+                        .add("seq_kids", seq_kids)
+                        .add("seq", seq)
+                        .add("flag", flag)
+                        .add("content", content)
+                        .build();
+            }
 
             request = new okhttp3.Request.Builder()
                     .url("http://58.229.208.246/Ububa/insertReply.do")
@@ -268,28 +297,60 @@ public class CommentActivity extends BaseActivity implements Serializable {
                             }).show();
                             break;
                         case 1: //댓글 조회
-//                            selectReplyList = new GsonBuilder().create().fromJson(jsonResponse.getString(message_key), R30_SelectReplyList.class);
                             selectReplyList = new GsonBuilder().create().fromJson(jsonResponse.getString(message_key), R30_SelectReplyList[].class);
+                            commentListVieaAdapter = new CommentListVieaAdapter(getApplicationContext());
                             Log.d("detail114", String.valueOf(selectReplyList));
                             for (int i = 0; i < selectReplyList.length; i++) {
                                 R30_SelectReplyList list = selectReplyList[i];
-//                                commentListVieaAdapter.addItem(list.file_path, list.title, TimeConverter.convert(list.reg_date), list.name);
-                                commentListVieaAdapter.addItem(list.content, TimeConverter.convert(list.reg_date), list.name);
+                                commentListVieaAdapter.addItem(list.content, TimeConverter.convert(list.reg_date), list.name, list.seq_user, list.seq_reply);
+
+                                getseq_user.add(String.valueOf(list.seq_user));
+                                getseq_reply.add(String.valueOf(list.seq_reply));
                             }
+
+                            allCommentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    pos=position;
+                                    Log.d("p234", String.valueOf(position));
+                                    Log.d("prpr11", String.valueOf(position));
+                                    Log.d("prpr11", String.valueOf(id));
+                                    Log.d("prpr12", String.valueOf(view));
+                                    del_seq_user = getseq_user.get(position);
+                                    del_seq_reply = getseq_reply.get(position);
+                                }
+                            });
+
+//                            Log.d("seq_userss", String.valueOf(getseq_user));
+//                            Log.d("seq_replyss", String.valueOf(getseq_reply));
+                            allCommentListView.setAdapter(commentListVieaAdapter);
+
                             titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
                             commentListVieaAdapter.notifyDataSetChanged();
                             allCommentListView.deferNotifyDataSetChanged();
                             break;
                         case 2: //댓글 삭제
+                            titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
+                            commentListVieaAdapter.notifyDataSetChanged();
+                            allCommentListView.deferNotifyDataSetChanged();
+//                            allCommentListView.setAdapter(commentListVieaAdapter);
+                            mCustomDialog = new TextDialog(CommentActivity.this, R.layout.dialog_one_check);
+                            mCustomDialog.setTexts(new String[]{"삭제되었습니다.", "확인"});
+                            mCustomDialog.show();
+
+                            /*
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(CommentActivity.this);
                             builder1.setMessage("삭제되었습니다").setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
-                                    commentListVieaAdapter.notifyDataSetChanged();
-                                    allCommentListView.deferNotifyDataSetChanged();
+//                                    new Reply(seq_user, seq_kindergarden, seq_notice, flag, commentEditText.getText().toString()).execute();
+//                                    titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
+//                                    commentListVieaAdapter.notifyDataSetChanged();
+//                                    allCommentListView.deferNotifyDataSetChanged();
+//                                    allCommentListView.setAdapter(commentListVieaAdapter);
                                 }
                             }).show();
+                            */
                             break;
                     }
                     allCommentListView.deferNotifyDataSetChanged();
@@ -308,6 +369,42 @@ public class CommentActivity extends BaseActivity implements Serializable {
 
         }
     }
+
+    public void comment_delete(View v) {
+
+        mCustomDialog = new TextDialog(CommentActivity.this, R.layout.dialog_call);
+        mCustomDialog.setTexts(new String[]{"정말로 삭제하시겠습니까?", "취소", "확인"});
+        mCustomDialog.show();
+        String seq_user = pref.getString("seq_user", "");
+        /*
+        Log.d("comment_delete", seq_user +" " + del_seq_user + " " +del_seq_reply);
+        if(seq_user.equals(del_seq_user)) {
+            Log.d("comment_delete", seq_user +" " + del_seq_user + " " +del_seq_reply);
+            new Reply(del_seq_reply).execute();
+        }
+        */
+//        Reply(R30_SelectReplyList.class.)
+    }
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+        del_seq_user = selectReplyList[pos].seq_user;
+
+//        new Reply(del_seq_reply).execute();
+    }
+
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+
+
+
+    }
+
 
 
 }

@@ -43,6 +43,7 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire_detail);
         seq_survey =getIntent().getStringExtra("seq_survey");
+        new SelectSurveyOne(seq_survey).execute();
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -247,7 +248,9 @@ public class QuestionnaireDetailActivity extends BaseActivity {
 //                detail.resultcode
 
 
-                Log.d("detail" , String.valueOf(detail));
+                Log.d("detail-1" , String.valueOf(detail));
+                Log.d("detail-2" , String.valueOf(detail.survey_vote_item_list));
+
 //                notice_detail_seq_user = detail.seq_user;
 //                intentPutExtraModifyData = jsonResponse.getString("notice");
 

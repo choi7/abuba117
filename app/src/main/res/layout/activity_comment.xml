@@ -10,7 +10,7 @@
     >
 
     <ListView
-        android:id="@+id/allCommentListView"
+        android:id="@+id/allCommentListView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:listSelector="@android:color/transparent"

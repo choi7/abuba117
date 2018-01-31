@@ -1,6 +1,7 @@
 package com.joyblock.abuba;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class CommentListVieaAdapter extends BaseAdapter implements Serializable 
 
 //        ImageView photo;
         TextView title,time,name;
+        ConstraintLayout comment_delete_constraintLayout = null;
         //        // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
@@ -60,6 +62,9 @@ public class CommentListVieaAdapter extends BaseAdapter implements Serializable 
             title= (TextView) convertView.findViewById(R.id.commentContentText);
             time = (TextView) convertView.findViewById(R.id.commentTimeText);
             name = (TextView) convertView.findViewById(R.id.commentNameText);
+            comment_delete_constraintLayout = (ConstraintLayout) convertView.findViewById(R.id.comment_delete_constraintLayout);
+
+
             holder=new ListViewHolder();
 //            holder.photo=photo;
             holder.title=title;
@@ -89,15 +94,16 @@ public class CommentListVieaAdapter extends BaseAdapter implements Serializable 
 
 
 //        photo.setImageDrawable(listViewItem.getPhoto());
+
         title.setText(listViewItem.getTitle());
         name.setText(listViewItem.getName());
         time.setText(listViewItem.getTime());
         return convertView;
     }
 //String file_path,
-    public void addItem( String title,String time,String name) {
+    public void addItem( String title,String time,String name, String seq_user, String seq_reply) {
 //        listViewItems.add(new CommentListVieaAdapter.NoticeListViewItem(file_path,title,name,time));
-        listViewItems.add(new NoticeListViewItem(title,name,time));
+        listViewItems.add(new NoticeListViewItem(title,name,time, seq_user, seq_reply));
     }
 
     public class ListViewHolder {
@@ -108,14 +114,17 @@ public class CommentListVieaAdapter extends BaseAdapter implements Serializable 
 
     public class NoticeListViewItem {
 
-        private String file_path, title,name,time;
+        private String file_path, title,name,time, seq_user, seq_reply;
         boolean a=false;
-//String file_path,
-        public NoticeListViewItem(String title,String name,String time){
+
+        //String file_path,
+        public NoticeListViewItem(String title,String name,String time, String seq_user, String seq_reply){
 //            this.file_path=file_path;
             this.title=title;
             this.name=name;
             this.time=time;
+            this.seq_user=seq_user;
+            this.seq_reply=seq_reply;
         }
 
         public String getFile_path(){
@@ -130,6 +139,8 @@ public class CommentListVieaAdapter extends BaseAdapter implements Serializable 
         public String getTime(){
             return time;
         }
+        public String getSeq_user(){return seq_user;}
+        public String getSeq_reply(){return seq_reply;}
 
 
 //    public Drawable getIcon() {
