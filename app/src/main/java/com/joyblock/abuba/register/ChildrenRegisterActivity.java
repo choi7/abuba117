@@ -385,6 +385,8 @@ public class ChildrenRegisterActivity extends BaseActivity {
         }
     }
 
+
+
     public void clickTextViewOne(View v) {
         mCustomDialog.dismiss();
     }

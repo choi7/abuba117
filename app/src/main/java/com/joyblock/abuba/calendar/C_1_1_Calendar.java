@@ -18,6 +18,7 @@ import com.joyblock.abuba.FragmentCalendar;
 import com.joyblock.abuba.FragmentCarter;
 import com.joyblock.abuba.MainDawerSelectActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.document.FragmentAbsence;
 
 
@@ -40,6 +41,7 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
 
     FragmentCalendar fragmentCalendar;
     FragmentCarter fragmentCarter;
+    TextDialog mCustomDialog;
 
 
     @Override
@@ -118,22 +120,10 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
         editorImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(C_1_1_Calendar.this);
-                builder.setMessage("작성하실 메뉴를 선택하세요.")
-                        .setNegativeButton("일정표", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(C_1_1_Calendar.this, C_3_1_CalendarEditor.class);
-                                C_1_1_Calendar.this.startActivity(intent);
-                            }
-                        })
-                        .setPositiveButton("식단표", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(C_1_1_Calendar.this, C_2_2_CarteEditor.class);
-                                C_1_1_Calendar.this.startActivity(intent);
-                            }
-                        }).create().show();
+
+                mCustomDialog = new TextDialog(C_1_1_Calendar.this, R.layout.dialog_one_check);
+                mCustomDialog.setTexts(new String[]{"작성하실 메뉴를 선택하세요.", "일정표", "식단표"});
+                mCustomDialog.show();
             }
         });
 
@@ -176,6 +166,25 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
                 break;
         }
     }
+
+
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+        Intent intent = new Intent(C_1_1_Calendar.this, C_3_1_CalendarEditor.class);
+        C_1_1_Calendar.this.startActivity(intent);
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+        Intent intent = new Intent(C_1_1_Calendar.this, C_2_2_CarteEditor.class);
+        C_1_1_Calendar.this.startActivity(intent);
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+    }
+
 
 
 }
