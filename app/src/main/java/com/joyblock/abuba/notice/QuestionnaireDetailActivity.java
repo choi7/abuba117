@@ -1,30 +1,45 @@
 package com.joyblock.abuba.notice;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
+import com.joyblock.abuba.QuestionaireDetailListViewAdapter;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.api_message.R21_SelectNoticeOne;
+import com.joyblock.abuba.util.ImageFileProcessor;
+import com.joyblock.abuba.util.TimeConverter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -32,21 +47,26 @@ import okhttp3.RequestBody;
 
 public class QuestionnaireDetailActivity extends BaseActivity {
 
-    TextView noticeTitle,noticeBan,noticeName,noticeTime,noticeContent, commentregister;//제목, 반, 작성자, 등록시간, 내용, 덧글등록
-    String seq_survey, notice_detail_seq_user, intentPutExtraModifyData, seq_user;
+    TextView noticeTitle, noticeBan, noticeName, noticeTime, noticeContent, commentregister;//제목, 반, 작성자, 등록시간, 내용, 덧글등록
+    String notice_detail_seq_user, intentPutExtraModifyData;
     ImageView insertAndDelete, detailImage, backImage, commentPushImage, checkPeopleListImage;
     Activity activity;
     CustomDialogModifyAndDel mCustomDialog;
-//    String seq_kindergarden_class, reg_date, month, year
+    String seq_kindergarden_class, reg_date, month, year, seq_kindergarden, is_yn, mod_date, seq_user, seq_survey, titles, day, content;
+    R21_SelectNoticeOne detail;
+    ListView listView;
+    QuestionaireDetailListViewAdapter mAdapter11;
+    ListViewAdapter listViewAdapter;
+    public int mSelectedItem;
+    ArrayList<ListViewAdapter.Data> ListData = new ArrayList<ListViewAdapter.Data>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        activity=this;
+        activity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire_detail);
-        seq_survey =getIntent().getStringExtra("seq_survey");
-        new SelectSurveyOne(seq_survey).execute();
-
+        seq_survey = getIntent().getStringExtra("seq_survey");
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -67,24 +87,76 @@ public class QuestionnaireDetailActivity extends BaseActivity {
 
 
         api.API_21(seq_survey);
-        String json=api.getMessage();
+        String json = api.getMessage();
         try {
             JSONObject jsonResponse = new JSONObject(json);
             Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-        }catch (JSONException e){}
+        } catch (JSONException e) {
+        }
 
 
         detail = new GsonBuilder().create().fromJson(json, R21_SelectNoticeOne.class);
 //                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("survey"),R21_SelectNoticeOne.class);
 //                detail.survey_list[0];
 //                detail.resultcode
-        for(int i=0;i<detail.survey_vote_item_list.length;i++)
+        for (int i = 0; i < detail.survey_vote_item_list.length; i++) {
             Log.d("detail-1", String.valueOf(detail.survey_vote_item_list[i]));
 
+        }
+        seq_kindergarden_class = detail.survey.seq_kindergarden_class;
+        reg_date = detail.survey.reg_date;
+        month = detail.survey.month;
+        year = detail.survey.year;
+        seq_kindergarden = detail.survey.seq_kindergarden;
+        is_yn = detail.survey.is_yn;
+        mod_date = detail.survey.seq_kindergarden_class;
+        seq_user = detail.survey.seq_kindergarden_class;
+        seq_survey = detail.survey.seq_kindergarden_class;
+        titles = detail.survey.title;
+        day = detail.survey.day;
+        content = detail.survey.content;
+       String class_name = app.kindergarden_class_list.get(Integer.parseInt(seq_kindergarden_class)).kindergarden_class_name;
 
-//        detail.survey.seq_kindergarden
+        noticeTitle = (TextView) findViewById(R.id.noticeDetailTitleText);
+        noticeTitle.setText(titles);
+        noticeBan = (TextView) findViewById(R.id.noticeDetailBanText);
+        noticeBan.setText(class_name);
+        noticeName = (TextView) findViewById(R.id.noticeDetailNameText);
+        noticeName.setText(titles);
+        noticeTime = (TextView) findViewById(R.id.noticeDetailTimeText);
+        noticeTime.setText(TimeConverter.convert(reg_date));
+        noticeContent = (TextView) findViewById(R.id.inTex);
+        noticeContent.setText(content);
+        listView = (ListView) findViewById(R.id.questListview);
+//        mAdapter11 = new QuestionaireDetailListViewAdapter(this);
+        listViewAdapter = new ListViewAdapter(this);
+        listView.setAdapter(listViewAdapter);
+        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"찬성","3");
+        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"반대","3");
+        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"기권","4");
+        setListViewHeightBasedOnChildren(listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSelectedItem = position;
+                listViewAdapter.notifyDataSetChanged();
+                for (int i = 0; i < ListData.size(); i++) {
+                    if (i != position) {
+                        ListData.get(i).a = true;
+                    } else if (ListData.get(position).a) {
+                        ListData.get(position).a = false;
+                        System.out.println("포지션은 : " + ListData.get(position).a);
+                    } else {
+                        ListData.get(position).a = true;
+                        System.out.println("포지션sdf : " + ListData.get(position).a);
+                    }
+                }
+
+            }
+        });
 
         Log.d("detail-2", String.valueOf(detail.survey_vote_item_list));
+
 
 //                notice_detail_seq_user = detail.seq_user;
 //                intentPutExtraModifyData = jsonResponse.getString("notice");
@@ -143,11 +215,7 @@ public class QuestionnaireDetailActivity extends BaseActivity {
 //        });
 //
 
-        noticeTitle=(TextView)findViewById(R.id.noticeDetailTitleText);
-        noticeBan=(TextView)findViewById(R.id.noticeDetailBanText);
-        noticeName=(TextView)findViewById(R.id.noticeDetailNameText);
-        noticeTime=(TextView)findViewById(R.id.noticeDetailTimeText);
-        noticeContent=(TextView)findViewById(R.id.inTex);
+
 //
 //        String seq_notice=getIntent().getStringExtra("seq_notice");
 //
@@ -192,16 +260,14 @@ public class QuestionnaireDetailActivity extends BaseActivity {
     };
 
 
-
-
-    public void clickModDel(View v){
+    public void clickModDel(View v) {
         mCustomDialog = new CustomDialogModifyAndDel(QuestionnaireDetailActivity.this,
-                        modifyListener,
-                        delListener);
-                mCustomDialog.show();
+                modifyListener,
+                delListener);
+        mCustomDialog.show();
     }
 
-    public void setNotice(String ban,String title, String name, String time, String content,boolean availabeReply){
+    public void setNotice(String ban, String title, String name, String time, String content, boolean availabeReply) {
         noticeBan.setText(ban);
         noticeTitle.setText(title);
         noticeName.setText(name);
@@ -212,7 +278,6 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         //userImage, content
 
     }
-
 
 
     //휴대폰 하단 백 버튼 눌렀을때 실행되는 메소드
@@ -239,107 +304,16 @@ public class QuestionnaireDetailActivity extends BaseActivity {
     }
     */
 
-    R21_SelectNoticeOne detail;
-    class SelectSurveyOne extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/selectSurveyOne.do";
-
-        //설문지 상세 조회
-        public SelectSurveyOne(String seq_notice) {
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_survey", seq_notice)
-                    .build();
-
-            request = new okhttp3.Request.Builder()
-                    .url(url)
-                    .post(formBody)
-                    .build();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            Log.d("response : ",json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-
-
-
-                detail=new GsonBuilder().create().fromJson(json,R21_SelectNoticeOne.class);
-//                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("survey"),R21_SelectNoticeOne.class);
-//                detail.survey_list[0];
-//                detail.resultcode
-
-
-                Log.d("detail-1" , String.valueOf(detail));
-                Log.d("detail-2" , String.valueOf(detail.survey_vote_item_list));
-
-//                notice_detail_seq_user = detail.seq_user;
-//                intentPutExtraModifyData = jsonResponse.getString("notice");
-
-//                Log.d("유저 시퀀스 ", notice_detail_seq_user);
-//                Log.d("유저 시퀀스1 ", seq_user);
-
-
-                if(seq_user.equals(notice_detail_seq_user)){
-                    insertAndDelete.setVisibility(View.VISIBLE);
-                    Log.d("sd ", "ss");
-                } else {
-                    insertAndDelete.setVisibility(View.INVISIBLE);
-                    Log.d("sd ", "ee");
-                }
-
-//                Picasso.with(getApplicationContext()).load(detail.file_path).into(detailImage);
-//                detailImage.setVisibility(View.VISIBLE);
-//
-//                setNotice(detail.seq_kindergarden_class,detail.title,detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
-//                for(R14_SelectNoticeOne list:noticeList)
-
-
-//                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title,list.reg_date,list.name);
-//                adapter.notifyDataSetChanged();
-//                Log.d("Tag","공지사항 길이 : "+noticeList.length);
-//                if (ss == 200) {
-//                    String userID = jsonResponse.getString("resultCode");
-//                    String userPassword = jsonResponse.getString("resultMsg");
-//                    System.out.println(userID + userPassword);
-//                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
-//                    System.out.println(json1);
-//                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 
     class UpdateSurvey extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;
         RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/deleteNotice.do";
+        String url = "http://58.229.208.246/Ububa/deleteNotice.do";
 
         //설문지 수정
-        public UpdateSurvey(String seq_survey, String seq_kindergarden_class, String title , String content,
-                            String year , String month, String day, String c_survey_vote, String files, String vote_item) {
+        public UpdateSurvey(String seq_survey, String seq_kindergarden_class, String title, String content,
+                            String year, String month, String day, String c_survey_vote, String files, String vote_item) {
             client = new OkHttpClient();
             formBody = new FormBody.Builder()
                     .add("seq_survey", seq_survey)
@@ -377,7 +351,7 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            Log.d("response : ",json);
+            Log.d("response : ", json);
             try {
                 JSONObject jsonResponse = new JSONObject(json);
                 Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
@@ -388,6 +362,32 @@ public class QuestionnaireDetailActivity extends BaseActivity {
 
         }
     }
+
+    //설문지 항목 리스트가 추가 될때마다 스크롤이 되는데 이때 스크롤을 없애고 공간을 늘리는 메소드
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            //listItem.measure(0, 0);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
+
+        listView.requestLayout();
+    }
+
 
 //
 //    //수정버튼
@@ -426,5 +426,172 @@ public class QuestionnaireDetailActivity extends BaseActivity {
     };
 
 
+    private class ListViewAdapter extends BaseAdapter {
+
+        Activity activity;
+        //    private Context mContext = null;
+        ImageFileProcessor ifp=new ImageFileProcessor();
+        ConstraintLayout constraintLayout;
+
+        public ArrayList<Data> data_list = new ArrayList<Data>();
+        public int mSelectedItem;
+
+
+        public int getSize(){
+            int size=0;
+            for(Data list:data_list){
+                if(list.bool_image||!(list.mTitle.equals("")))
+                    size++;
+            }
+            Log.d("size",size+"");
+            return size;
+        }
+
+        public ListViewAdapter(Activity activity) {
+            super();
+//        this.mContext = mContext;
+            this.activity=activity;
+        }
+
+        public void addDefualtItem(Drawable icon, String text) {
+            Data addInfo= new Data();
+            addInfo.mIcon = icon;
+            addInfo.mTitle = text;
+            data_list.add(addInfo);
+        }
+
+
+
+        public void addItem(Drawable icon, String mTitle, String mCount) {
+            Data addInfo = new Data();
+            addInfo.mIcon = icon;
+            addInfo.mTitle = mTitle;
+            addInfo.mCount = mCount;
+            data_list.add(addInfo);
+        }
+
+        public void setIcon(int position,Drawable icon,byte[] image_byte_array){
+            Data item=(Data)getItem(position);
+            item.image_byte_array=image_byte_array;
+            item.bool_image=true;
+            item.mIcon=icon;
+
+        }
+
+        @Override
+        public int getCount() {
+            return data_list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return  data_list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final int pos=position;
+            final ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.votedetaillistviewcell, null);
+                holder.mIcon = (ImageView) convertView.findViewById(R.id.imageView19);
+                holder.mText = (TextView) convertView.findViewById(R.id.editText4);
+                holder.mCount = (TextView) convertView.findViewById(R.id.textView164);
+                holder.constraintLayout = (ConstraintLayout) convertView.findViewById(R.id.vote_cons);
+//                holder.mDate = (TextView) convertView.findViewById(R.id.textView1);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            Data mData = data_list.get(position);
+
+            holder.mIcon.setImageDrawable(mData.mIcon);
+            holder.mIcon.setVisibility(View.VISIBLE);
+            holder.mText.setText(mData.mTitle);
+            holder.mCount.setText(mData.mCount);
+
+            if (ListData.get(position).a) {
+//                holder.mText.setTextColor(Color.BLACK);
+//                linearLayout.setBackgroundColor(Color.parseColor("#F7F7F7"));
+                convertView.setBackgroundColor(Color.parseColor("#FAE734"));
+
+            } else {
+//                holder.mText.setTextColor(Color.WHITE);
+//                linearLayout.setBackgroundColor(Color.parseColor("#2CA6E0"));
+                convertView.setBackgroundColor(Color.parseColor("#E5E5E5"));
+            }
+
+            if(position == mSelectedItem) {
+                constraintLayout.setBackgroundResource(R.drawable.votedetaillistviewcellcustom_selector);
+            }
+
+
+//        holder.mText.setEditableFactory(Editab);//.setEnabled(!(position>size+1));
+
+
+
+            holder.mIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ImageFileProcessor().selectGallery(activity,pos);
+
+                }
+            });
+
+
+            holder.mText.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // 입력되는 텍스트에 변화가 있을 때 호출된다.
+                    Data data=data_list.get(pos);
+                    data.mTitle=holder.mText.getText().toString();
+                }
+
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    // 입력이 끝났을 때 호출된다.
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // 입력하기 전에 호출된다.
+                }
+            });
+
+            return convertView;
+        }
+
+
+        public class ViewHolder {
+            public ImageView mIcon;
+            public TextView mText;
+            public TextView mCount;
+            public ConstraintLayout constraintLayout;
+        }
+
+
+        public class Data {
+            //아이콘
+            public Drawable mIcon;
+            //제목
+            public String mTitle;
+            public String mCount;
+            boolean bool_image;
+            public boolean a;
+
+            public byte[] image_byte_array;
+
+        }
+
+
+    }
 
 }
