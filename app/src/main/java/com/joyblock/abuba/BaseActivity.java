@@ -63,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         gson=new GsonBuilder().create();
         app=(MyApplication)getApplicationContext();
         //액션바가 있을때 하단 명암 제거
+        
         try {
             getSupportActionBar().setElevation(0);
 //            getSupportActionBar().setDisplayShowCustomEnabled(true);
