@@ -10,10 +10,10 @@ import okhttp3.RequestBody;
 
 public class API21 {
     static Request getRequest(String seq_survey){
-        String command="selectNoticeOne";
+        String command="selectSurveyOne";
         String url=API.url+command+".do";
         MultipartBody.Builder builder=new MultipartBody.Builder().setType(MultipartBody.FORM);
-        builder.addFormDataPart("seq_user",seq_survey);
+        builder.addFormDataPart("seq_survey",seq_survey);
 
 
         RequestBody body=builder.build();

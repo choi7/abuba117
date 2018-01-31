@@ -21,7 +21,7 @@ public class API15 {
         if(!birth_month.equals(""))
             builder.addFormDataPart("birth_month",birth_month);
         if(!birth_day.equals(""))
-            builder.addFormDataPart("birth_month",birth_);
+            builder.addFormDataPart("birth_day",birth_day);
 
         RequestBody body=builder.build();
 

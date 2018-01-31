@@ -21,6 +21,7 @@ import com.joyblock.abuba.CustomDialogModifyAndDel;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.api_message.R21_SelectNoticeOne;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class QuestionnaireDetailActivity extends BaseActivity {
     ImageView insertAndDelete, detailImage, backImage, commentPushImage, checkPeopleListImage;
     Activity activity;
     CustomDialogModifyAndDel mCustomDialog;
+//    String seq_kindergarden_class, reg_date, month, year
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_questionnaire_detail);
         seq_survey =getIntent().getStringExtra("seq_survey");
         new SelectSurveyOne(seq_survey).execute();
+
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff0099ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -61,6 +64,44 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         TextView title = (TextView) findViewById(R.id.titleName);
         title.setText("설문지");
         title.setVisibility(View.VISIBLE);
+
+
+        api.API_21(seq_survey);
+        String json=api.getMessage();
+        try {
+            JSONObject jsonResponse = new JSONObject(json);
+            Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+        }catch (JSONException e){}
+
+
+        detail = new GsonBuilder().create().fromJson(json, R21_SelectNoticeOne.class);
+//                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("survey"),R21_SelectNoticeOne.class);
+//                detail.survey_list[0];
+//                detail.resultcode
+        for(int i=0;i<detail.survey_vote_item_list.length;i++)
+            Log.d("detail-1", String.valueOf(detail.survey_vote_item_list[i]));
+
+
+//        detail.survey.seq_kindergarden
+
+        Log.d("detail-2", String.valueOf(detail.survey_vote_item_list));
+
+//                notice_detail_seq_user = detail.seq_user;
+//                intentPutExtraModifyData = jsonResponse.getString("notice");
+
+//                Log.d("유저 시퀀스 ", notice_detail_seq_user);
+//                Log.d("유저 시퀀스1 ", seq_user);
+
+/*
+        if (seq_user.equals(notice_detail_seq_user)) {
+            insertAndDelete.setVisibility(View.VISIBLE);
+            Log.d("sd ", "ss");
+        } else {
+            insertAndDelete.setVisibility(View.INVISIBLE);
+            Log.d("sd ", "ee");
+        }
+        */
+
 //        //에디트 텍스트를 누르면 등록텍스트가 활성화할려고 등록함 현재 gone
 //        commentregister = (TextView) findViewById(R.id.commentPushText1);
 //

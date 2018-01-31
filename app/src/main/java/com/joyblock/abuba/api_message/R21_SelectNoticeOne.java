@@ -9,14 +9,21 @@ public class R21_SelectNoticeOne {
     public ItemList[] survey_vote_item_list;
     public Survey survey;
 
+    public int getSizeItemList(){
+        return survey_vote_item_list.length;
+    }
+
+
+    public class ItemList{
+        public String seq_survey_vote_item,vote_flag,vote_item;
+    }
+    public class Survey{
+        public String seq_kindergarden_class, reg_date, month, year, seq_kindergarden,
+                is_yn, mod_date, seq_user, seq_survey, title, day, content;
+    }
+
 }
 
 
-class ItemList{
-    public String seq_survey_vote_item,vote_flag,vote_item;
-}
 
-class Survey{
-    public String seq_kindergarden_class, reg_date, month, year, seq_kindergarden,
-            is_yn, mod_date, seq_user, seq_survey, title, day, content;
-}
+

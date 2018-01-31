@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.joyblock.abuba.api.API;
 import com.joyblock.abuba.data.MyApplication;
 
 import java.io.ByteArrayOutputStream;
@@ -47,6 +48,8 @@ import static android.graphics.Bitmap.CompressFormat.PNG;
 public abstract class BaseActivity extends AppCompatActivity{
     RelativeLayout.LayoutParams rp;
     LinearLayout.LayoutParams lp;
+
+    public API api=new API();
     public Gson gson;
     int width, height;
     public SharedPreferences pref;
@@ -63,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         gson=new GsonBuilder().create();
         app=(MyApplication)getApplicationContext();
         //액션바가 있을때 하단 명암 제거
-        
+
         try {
             getSupportActionBar().setElevation(0);
 //            getSupportActionBar().setDisplayShowCustomEnabled(true);
