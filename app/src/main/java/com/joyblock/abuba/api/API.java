@@ -61,7 +61,7 @@ public class API extends Thread{
         }
     }
 
-    public void API2(String ID,String 비밀번호){
+    public void API_2(String ID,String 비밀번호){
         clearMessage();
         TAG="API2";
         request=API2.getRequest(ID,비밀번호);
@@ -69,7 +69,7 @@ public class API extends Thread{
         waitResponse();
     }
 
-    public void API3(String seq_user,String name,String birthday,String phone_no,String email,String token,byte[] files,String ar1,String ar2,String addr_etc,String lat,String lng){
+    public void API_3(String seq_user,String name,String birthday,String phone_no,String email,String token,byte[] files,String ar1,String ar2,String addr_etc,String lat,String lng){
         clearMessage();
         TAG="API3";
         request=API3.getRequest(seq_user,name,birthday,phone_no,email,token,files,ar1,ar2,addr_etc,lat,lng);
@@ -77,7 +77,7 @@ public class API extends Thread{
         waitResponse();
     }
 
-    public void API4(String ar1_또는_ar2_입력,String ar2_입력시사용_예_경상남도){
+    public void API_4(String ar1_또는_ar2_입력,String ar2_입력시사용_예_경상남도){
         clearMessage();
         TAG+="4";
         request=API4.getRequest(ar1_또는_ar2_입력,ar2_입력시사용_예_경상남도);
@@ -85,11 +85,117 @@ public class API extends Thread{
         waitResponse();
     }
 
+    public void API_5(String ar1_도단위,String ar2_시단위,String kindergarden_name,String page){
+        clearMessage();
+        TAG+="5";
+        request=API5.getRequest(ar1_도단위,ar2_시단위,kindergarden_name,page);
+        start();
+        waitResponse();
+
+    }
+
+    public void API_6(String seq_kindergarden,String page){
+        clearMessage();
+        TAG+="6";
+        request=API6.getRequest(seq_kindergarden,page);
+        start();
+        waitResponse();
+    }
+    public void API_7(String seq_kindergarden,String seq_user,String seq_kindergarden_class,String req_flag,String seq_kids,String year,String month,String day){
+        clearMessage();
+        TAG+="7";
+        request=API7.getRequest(seq_kindergarden,seq_user,seq_kindergarden_class,req_flag,seq_kids,year,month,day);
+        start();
+        waitResponse();
+    }
+
+    public void API_8(String seq_user,String page){
+        clearMessage();
+        TAG+="8";
+        request=API8.getRequest(seq_user,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_9(String seq_user,String password,String new_password){
+        clearMessage();
+        TAG+="9";
+        request=API9.getRequest(seq_user,password,new_password);
+        start();
+        waitResponse();
+    }
+
+    public void API_10(String seq_user,String seq_kindergarden,String is_reply,String seq_kindergarden_class,String title,String content,byte[] files){
+        clearMessage();
+        TAG+="10";
+        request=API10.getRequest(seq_user,seq_kindergarden,is_reply,seq_kindergarden_class,title,content,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_11(String seq_notice,String is_reply,String seq_kindergarden_class,String title,String content,byte[] files){
+        clearMessage();
+        TAG+="11";
+        request=API11.getRequest(seq_notice,is_reply,seq_kindergarden_class,title,content,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_12(String seq_notice){
+        clearMessage();
+        TAG+="12";
+        request=API12.getRequest(seq_notice);
+        start();
+        waitResponse();
+    }
+
+    public void API_13(String seq_kindergarden,String seq_kindergarden_class,String page){
+        clearMessage();
+        TAG+="13";
+        request=API13.getRequest(seq_kindergarden,seq_kindergarden_class,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_14(String seq_notice){
+        clearMessage();
+        TAG+="14";
+        request=API14.getRequest(seq_notice);
+        start();
+        waitResponse();
+    }
+
+    public void API_15(String seq_notice){
+        clearMessage();
+        TAG+="15";
+        request=API14.getRequest(seq_notice);
+        start();
+        waitResponse();
+    }
+
+
+    public void API_20(String seq_kindergarden,String seq_kindergarden_class,String page){
+        clearMessage();
+        TAG+="20";
+        request=API20.getRequest(seq_kindergarden,seq_kindergarden_class,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_21(String seq_survey){
+        clearMessage();
+        TAG+="21";
+        request=API21.getRequest(seq_survey);
+        start();
+        waitResponse();
+    }
+
+
+
     static void printRequest(RequestBody body) {
         try {
             Buffer buffer = new Buffer();
             body.writeTo(buffer);
-
             Log.d(TAG+" request", buffer.readUtf8());
         } catch (IOException e) {
             e.printStackTrace();
