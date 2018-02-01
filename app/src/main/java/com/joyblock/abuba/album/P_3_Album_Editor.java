@@ -255,6 +255,11 @@ public class P_3_Album_Editor extends BaseActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                maintitle = titleText.getText().toString();
+                intext = inText.getText().toString();
+//                api.API_51(seq_user, seq_kindergarden, is_reply, seq_kindergarden_class, title, content, files, year, month, day);
+
                 android.support.v7.app.AlertDialog.Builder nd = new android.support.v7.app.AlertDialog.Builder(P_3_Album_Editor.this);
                 nd.setMessage("등록하시겠습니까")
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
@@ -317,7 +322,7 @@ public class P_3_Album_Editor extends BaseActivity {
                     .addFormDataPart("is_reply", is_reply)
                     .addFormDataPart("title", title)
                     .addFormDataPart("content", content)
-                    .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
+//                    .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
                     .build();
 
             request = new okhttp3.Request.Builder()
@@ -470,7 +475,7 @@ public class P_3_Album_Editor extends BaseActivity {
     private final int CAMERA_CODE = 1111;
     private final int GALLERY_CODE = 1112;
     String imagePath;
-    byte[] image;
+    byte[][] image=new byte[10][];
     ImageView editorImage;
 
     /*
@@ -518,8 +523,7 @@ public class P_3_Album_Editor extends BaseActivity {
         if (images == null) return;
         String fileName = "";
         StringBuilder stringBuffer = new StringBuilder();
-
-
+        image=new byte[10][];
         for (int i = 0, l = images.size(); i < l; i++) {
             Log.d("getpath", images.get(i).getPath());
 //            stringBuffer.append(images.get(i).getPath()).append("\n");
@@ -531,74 +535,81 @@ public class P_3_Album_Editor extends BaseActivity {
             int id = c.getInt(c.getColumnIndex("_id"));
             Uri uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
             inText.setText(stringBuffer.toString());
+            //        byte[] a1={1,1};
+            image[i]=(byte[])(imp.getDrawableAndByteArray(uri,this))[1];
 
-            sendPicture(uri);
+
         }
+
+        api.API_51("","","","","","",image,"","","");
 
 //        Log.d("stringbuff", stringBuffer.toString());
     }
 
-    //선택한 사진 데이터 갤러리 처리
-    private void sendPicture(Uri data) {
-        Log.d("data : ", String.valueOf(data));
-        imagePath = getRealPathFromURI(data); // path 경로
-        Log.d("imagePath : ", imagePath);
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(imagePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        int exifDegree = exifOrientationToDegrees(exifOrientation);
-
-//        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
-        Bitmap bitmap1 = null;
-
-        try {
-            bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-            if (bitmap1.getByteCount() > 100000) {
-//                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
-                bitmap1.compress(PNG, 1, stream);
-                image = stream.toByteArray();
-            } else {
-                bitmap1.compress(PNG, 100, stream);
-                image = stream.toByteArray();
-
-            }
-
-            Log.d("Tag", "size" + image.length);
-            Log.d("Tag", "size" + bitmap1.getByteCount());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        /*
-        editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
-//        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
-        editorImage.setVisibility(View.VISIBLE);
-        editorImage.setScaleType(ImageView.ScaleType.CENTER);
-        editorImage.setAdjustViewBounds(true);
-        */
-
-
-//        image = bitmapToByteArray(bitmap1);
-
-        Drawable d = new BitmapDrawable(getResources(), bitmap1);
-        album_iamge_listview.setAdapter(album_view_adapter);
-
-
-        album_view_adapter.addItem(data);
-        setListViewHeightBasedOnChildren(album_iamge_listview);
-
-
-        Log.d("albumimage", "ss");
-        Log.d("albumimage", String.valueOf(bitmap1));
-        Log.d("albumimage", "ss");
-
-    }
+//    //선택한 사진 데이터 갤러리 처리
+//    private void sendPicture(Uri data) {
+//        Log.d("data : ", String.valueOf(data));
+//        imagePath = getRealPathFromURI(data); // path 경로
+//        Log.d("imagePath : ", imagePath);
+//        ExifInterface exif = null;
+//        try {
+//            exif = new ExifInterface(imagePath);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//        int exifDegree = exifOrientationToDegrees(exifOrientation);
+//
+////        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
+//        Bitmap bitmap1 = null;
+//
+//        try {
+//            bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//
+//            if (bitmap1.getByteCount() > 100000) {
+////                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
+//                bitmap1.compress(PNG, 1, stream);
+//                image = stream.toByteArray();
+//            } else {
+//                bitmap1.compress(PNG, 100, stream);
+//                image = stream.toByteArray();
+//
+//            }
+//
+//            Log.d("Tag", "size" + image.length);
+//            Log.d("Tag", "size" + bitmap1.getByteCount());
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        /*
+//        editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
+////        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
+//        editorImage.setVisibility(View.VISIBLE);
+//        editorImage.setScaleType(ImageView.ScaleType.CENTER);
+//        editorImage.setAdjustViewBounds(true);
+//        */
+//
+//
+////        image = bitmapToByteArray(bitmap1);
+//
+//        Drawable d = new BitmapDrawable(getResources(), bitmap1);
+//        album_iamge_listview.setAdapter(album_view_adapter);
+//
+////        byte[] a1={1,1};
+////        byte[] a2={2,1};
+////        api.API_51(,,,,,,new byte[][]{a1,a2});
+//
+//        album_view_adapter.addItem(data);
+//        setListViewHeightBasedOnChildren(album_iamge_listview);
+//
+//
+//        Log.d("albumimage", "ss");
+//        Log.d("albumimage", String.valueOf(bitmap1));
+//        Log.d("albumimage", "ss");
+//
+//    }
 
     //사진의 절대경로 구하기
     private String getRealPathFromURI(Uri contentUri) {

@@ -19,13 +19,18 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 
+import com.joyblock.abuba.TextDialog;
+import com.joyblock.abuba.api_message.R2_Login;
 import com.joyblock.abuba.register.MainActivity;
 import com.joyblock.abuba.MainDawerSelectActivity;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.register.ProvisionActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -47,11 +52,17 @@ public class LoginActivity extends BaseActivity {
     CheckBox autoLoginCheckBox;
     ConstraintLayout constraintLayout;
     ImageView checkImage;
+    R2_Login detail;
+    TextDialog mCustomDialog;
+    Integer loginSucess;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
         //fbi 셋팅
         findViewbyIdSet();
 
@@ -65,7 +76,7 @@ public class LoginActivity extends BaseActivity {
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(autoCheck) {
+                if (autoCheck) {
                     checkImage.setImageDrawable(getResources().getDrawable(R.drawable.check_off));
                     autoCheck = false;
                     editor = pref.edit();
@@ -88,8 +99,8 @@ public class LoginActivity extends BaseActivity {
         autoLoginCheckBox.setOnCheckedChangeListener(checkedChangeListener);
 
         //SharePreferences에 값이 저장되어 있는 id와 pass가 있을시 자동으로 로그인
-        Log.d("AUTO","!"+pref.getString("id", " ")+" / "+pref.getString("password", " ")+"!");
-        if(pref.getBoolean("autoLogin", false)) {
+        Log.d("AUTO", "!" + pref.getString("id", " ") + " / " + pref.getString("password", " ") + "!");
+        if (pref.getBoolean("autoLogin", false)) {
             idText.setText(pref.getString("id", " "));
             passwordText.setText(pref.getString("password", " "));
 //            autoLoginCheckBox.setChecked(true);
@@ -121,9 +132,22 @@ public class LoginActivity extends BaseActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buyTask = new BuyTask(idText.getText().toString(), passwordText.getText().toString());
-                buyTask.execute();
+
+                if (!idText.getText().toString().equals("") && !passwordText.getText().toString().equals("")) {
+
+                    Login();
+                } else {
+                    loginSucess = 3;
+                    mCustomDialog = new TextDialog(LoginActivity.this, R.layout.dialog_one_check);
+                    mCustomDialog.setTexts(new String[]{"아이디 또는 비밀번호를 확인해주세요.", "확인"});
+                    mCustomDialog.show();
+                }
+
+
             }
+//                buyTask = new BuyTask(idText.getText().toString(), passwordText.getText().toString());
+//                buyTask.execute();
+
         });
     }
 
@@ -182,13 +206,13 @@ public class LoginActivity extends BaseActivity {
                     System.out.println(json2);
 
 
-                    app.name=json2.getString("name");
-                    app.phone_no=json2.getString("phone_no");
-                    app.authority=json2.getString("authority");
-                    app.seq_user=json2.getString("seq_user");
-                    app.push_yn=json2.getString("push_yn").equals("y");
-                    app.email=json2.getString("email");
-                    app.token=json2.getString("token");
+                    app.name = json2.getString("name");
+                    app.phone_no = json2.getString("phone_no");
+                    app.authority = json2.getString("authority");
+                    app.seq_user = json2.getString("seq_user");
+                    app.push_yn = json2.getString("push_yn").equals("y");
+                    app.email = json2.getString("email");
+                    app.token = json2.getString("token");
 
 
                     editor = pref.edit();
@@ -202,14 +226,11 @@ public class LoginActivity extends BaseActivity {
 //                    boolean auto=autoLoginCheckBox.isChecked();
                     boolean auto = autoCheck;
                     editor.putBoolean("autoLogin", auto);
-                    editor.putString("id", auto?idText.getText().toString():"");
-                    editor.putString("password", auto?passwordText.getText().toString():"");
+                    editor.putString("id", auto ? idText.getText().toString() : "");
+                    editor.putString("password", auto ? passwordText.getText().toString() : "");
                     editor.commit();
-//                    Log.d("반환값 : ", pref.getString("name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
-//                    autoId = pref.getString("id", null);
-//                    autoPassword = pref.getString("password", null);
 
-                    if(pref.getBoolean("autoLogin", false)) {
+                    if (pref.getBoolean("autoLogin", false)) {
                         Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
                         // save id, password to Database
                         Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
@@ -217,7 +238,6 @@ public class LoginActivity extends BaseActivity {
                         finish();
                         return;
                     }
-
 
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -247,56 +267,6 @@ public class LoginActivity extends BaseActivity {
 
         }
     }
-
-//    private boolean loginValidation(String id, String password) {
-//        if (pref.getString("id", " ").equals(id) && pref.getString("password", " ").equals(password)) {
-//            // login success
-//            return true;
-//        } else if (pref.getString("id", "").equals(null)) {
-//            // sign in first
-//            Toast.makeText(LoginActivity.this, "Please Sign in first", Toast.LENGTH_LONG).show();
-//            return false;
-//        } else {
-//            // login failed
-//            return false;
-//        }
-//    }
-
-    //자동 로그인 체크박스 선택시  SharePreferences에 저장되어 있는 아이디와 비밀번호가 일치하는지를 확인하여
-    //로그인 액티비티에서 바로 실행될때 자동 로그인하여 메인 액티비티로 이동하는 기능
-//    public void autoLogin() {
-//        //처음 로그인시 autoLogin안에 데이터가 있지 않으면 else로 넘어가서 자동로그인이 되지 않음.
-//        //또한 자동 로그인 체크 박스에 체크가 되어 있으면 SharePreferences안에 있는 autoLogin 값을
-//        //true로 리턴 시켜줘서 if를 true 값으로 진행시킴
-//        if (pref.getBoolean("autoLogin", false)) {
-//            idText.setText(pref.getString("id", " "));
-//            passwordText.setText(pref.getString("password", " "));
-//            autoLoginCheckBox.setChecked(true);
-//            String id = idText.getText().toString();
-//            String password = passwordText.getText().toString();
-//            //로그인 버튼 클릭시 SharePreferences 안에 저장되는 값을 가지고 와서 loginValidation에 적용시켜
-//            //현재 입력된 id, pass값을 비교하여 값이 일치하면 true값을 반영하게 됨.
-//            Boolean validation = loginValidation(id, password);
-//            if (validation) {
-//                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
-//                // save id, password to Database
-//                Log.d("login : ", String.valueOf(loginChecked));
-//                Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
-//                LoginActivity.this.startActivity(intent);
-//                finish();
-//                if (loginChecked) {
-//                    // if autoLogin Checked, save values
-//                    editor.putString("id", id);
-//                    editor.putString("password", password);
-//                    editor.commit();
-//                }
-//            } else {
-//                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
-//            }
-//        } else {
-//            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
-//        }
-//    }
 
 
     public void findViewbyIdSet() {
@@ -365,125 +335,178 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+
+        switch (loginSucess) {
+            //로그인 성공시
+            case 1:
+                Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    Log.d("아이디는 ", id);
+                loginIntent.putExtra("id", id);
+                LoginActivity.this.startActivity(loginIntent);
+                finish();
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+
+        switch (loginSucess) {
+            //로그인 성공시
+            case 1:
+                Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    Log.d("아이디는 ", id);
+                loginIntent.putExtra("id", id);
+                LoginActivity.this.startActivity(loginIntent);
+                finish();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void Login() {
+
+        api.API_2(idText.getText().toString(), passwordText.getText().toString());
+        String json = api.getMessage();
+        Integer resultcode = null;
+
+        try {
+            JSONObject jsonResponse = new JSONObject(json);
+            resultcode = Integer.parseInt(jsonResponse.getString("resultCode"));
+            Log.d("resultcode" , String.valueOf(resultcode));
+            switch (resultcode) {
+                case 200:
+                    JSONObject json1 = jsonResponse.getJSONObject("retMap");
+                    String json2 = json1.getString("user");
+                    detail = new GsonBuilder().create().fromJson(json2, R2_Login.class);
+
+                    app.name = detail.name;
+                    app.phone_no = detail.phone_no;
+                    app.authority = detail.authority;
+                    app.seq_user = detail.seq_user;
+                    app.push_yn = detail.push_yn.equals("y");
+                    app.email = detail.email;
+                    app.token = detail.token;
+//                app.push_yn=json2.getString("push_yn").equals("y");
+
+                    editor = pref.edit();
+                    editor.putString("name", detail.name);
+                    editor.putString("phone_no", detail.phone_no);
+                    editor.putString("authority", detail.authority);
+                    editor.putString("seq_user", detail.seq_user);
+                    editor.putString("push_yn", detail.push_yn);
+                    editor.putString("email", detail.email);
+                    editor.putString("token", detail.token);
+//                    boolean auto=autoLoginCheckBox.isChecked();
+                    boolean auto = autoCheck;
+                    editor.putBoolean("autoLogin", auto);
+                    editor.putString("id", auto ? idText.getText().toString() : "");
+                    editor.putString("password", auto ? passwordText.getText().toString() : "");
+                    editor.commit();
+//                    Log.d("반환값 : ", pref.getString("name", "ㄴㅇㄹㄴㅇㄹㄴㅇㄹ"));
+//                    autoId = pref.getString("id", null);
+//                    autoPassword = pref.getString("password", null);
+
+                    if (pref.getBoolean("autoLogin", false)) {
+                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                        // save id, password to Database
+                        Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
+                        LoginActivity.this.startActivity(intent);
+                        finish();
+                        return;
+                    }
+                    loginSucess = 1;
+                    mCustomDialog = new TextDialog(LoginActivity.this, R.layout.dialog_one_check);
+                    mCustomDialog.setTexts(new String[]{"로그인에 성공하였습니다.", "확인"});
+                    mCustomDialog.show();
+                    break;
+                case 102:
+                    loginSucess = 2;
+                    mCustomDialog = new TextDialog(LoginActivity.this, R.layout.dialog_one_check);
+                    mCustomDialog.setTexts(new String[]{"아이디 또는 비밀번호가 틀립니다.", "확인"});
+                    mCustomDialog.show();
+                    break;
+                default:
+                    break;
+            }
+
+
+
+        } catch (JSONException e) {
+        }
+
+
+
+
+    }
+
+
 }
 
 
+//    private boolean loginValidation(String id, String password) {
+//        if (pref.getString("id", " ").equals(id) && pref.getString("password", " ").equals(password)) {
+//            // login success
+//            return true;
+//        } else if (pref.getString("id", "").equals(null)) {
+//            // sign in first
+//            Toast.makeText(LoginActivity.this, "Please Sign in first", Toast.LENGTH_LONG).show();
+//            return false;
+//        } else {
+//            // login failed
+//            return false;
+//        }
+//    }
 
-/*
-                RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, fullurl, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println(response);
-                        System.out.println("위에껍니다");
-                        System.out.println(fullurl);
-                        System.out.println(fullurl);
-                        System.out.println(fullurl);
-
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            System.out.println(jsonResponse);
-                            Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                            System.out.println(ss);
-
-                            if (ss == 200) {
-                                String userID = jsonResponse.getString("resultCode");
-                                String userPassword = jsonResponse.getString("resultMsg");
-                                System.out.println(userID + userPassword);
-
-//                                JSONArray ss = jsonResponse.getString("retMap");
-
-                                JSONObject json = new JSONObject(jsonResponse.getString("retMap"));
-                                System.out.println(json);
-                                JSONObject json2 = new JSONObject(json.getString("user"));
-                                System.out.println(json2);
-                                user_data.name = json2.getString("name");
-                                user_data.phone_no = json2.getString("phone_no");
-                                user_data.authority = json2.getString("authority");
-                                user_data.seq_user = json2.getString("seq_user");
-                                user_data.push_yn = json2.getString("push_yn");
-                                user_data.email = json2.getString("email");
-                                user_data.token = json2.getString("token");
-
-                                pref = getSharedPreferences("test_User_data", Activity.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString("name",json2.getString("name"));
-                                editor.putString("phone_no",json2.getString("phone_no"));
-                                editor.putString("authority",json2.getString("authority"));
-                                editor.putString("seq_user",json2.getString("seq_user"));
-                                editor.putString("push_yn",json2.getString("push_yn"));
-                                editor.putString("email",json2.getString("email"));
-                                editor.putString("token",json2.getString("token"));
-                                editor.commit();
-
-                                String authority = jsonResponse.getString("retMap");
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                builder.setMessage("로그인에 성공하였습니다.")
-                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-//                                                loginIntent.putExtra("userID", userID);
-//                                                loginIntent.putExtra("userPassword", userPassword);
-                                                LoginActivity.this.startActivity(loginIntent);
-                                                finish();
-                                            }
-                                        })
-                                        .create()
-                                        .show();
-                            } else if (ss == 102) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                builder.setMessage("아이디 또는 비밀번호가 틀립니다")
-                                        .setNegativeButton("다시 시도", null)
-                                        .create()
-                                        .show();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-                requestQueue.add(stringRequest);
-                System.out.println(stringRequest);
-                System.out.println("테스트중입니다");
-
-                */
-
-        /*
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff71cac2));
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbarcustom);
-
-        TextView title = (TextView) findViewById(R.id.titleName);
-        title.setText("로그인");
-        title.setVisibility(View.VISIBLE);
-        if (Build.VERSION.SDK_INT >= 21) {
-            // 21 버전 이상일 때
-            getWindow().setStatusBarColor(Color.parseColor("#71CAC2"));
-        }
-        */
-
-
-
-        /*
-
-        id = idText.getText().toString();
-                fullurl = "http://58.229.208.246/Ububa/login.do?";
-                try {
-                    if (idText.length() > 0) {
-                        fullurl = fullurl + "id=" + URLEncoder.encode(idText.getText().toString(), "UTF-8");
-                    }
-                    if (passwordText.length() > 0) {
-                        fullurl = fullurl + "&password=" + URLEncoder.encode(passwordText.getText().toString(), "UTF-8");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-         */
+//자동 로그인 체크박스 선택시  SharePreferences에 저장되어 있는 아이디와 비밀번호가 일치하는지를 확인하여
+//로그인 액티비티에서 바로 실행될때 자동 로그인하여 메인 액티비티로 이동하는 기능
+//    public void autoLogin() {
+//        //처음 로그인시 autoLogin안에 데이터가 있지 않으면 else로 넘어가서 자동로그인이 되지 않음.
+//        //또한 자동 로그인 체크 박스에 체크가 되어 있으면 SharePreferences안에 있는 autoLogin 값을
+//        //true로 리턴 시켜줘서 if를 true 값으로 진행시킴
+//        if (pref.getBoolean("autoLogin", false)) {
+//            idText.setText(pref.getString("id", " "));
+//            passwordText.setText(pref.getString("password", " "));
+//            autoLoginCheckBox.setChecked(true);
+//            String id = idText.getText().toString();
+//            String password = passwordText.getText().toString();
+//            //로그인 버튼 클릭시 SharePreferences 안에 저장되는 값을 가지고 와서 loginValidation에 적용시켜
+//            //현재 입력된 id, pass값을 비교하여 값이 일치하면 true값을 반영하게 됨.
+//            Boolean validation = loginValidation(id, password);
+//            if (validation) {
+//                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+//                // save id, password to Database
+//                Log.d("login : ", String.valueOf(loginChecked));
+//                Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
+//                LoginActivity.this.startActivity(intent);
+//                finish();
+//                if (loginChecked) {
+//                    // if autoLogin Checked, save values
+//                    editor.putString("id", id);
+//                    editor.putString("password", password);
+//                    editor.commit();
+//                }
+//            } else {
+//                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+//            }
+//        } else {
+//            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+//        }
+//    }

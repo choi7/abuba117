@@ -12,7 +12,7 @@ import okhttp3.RequestBody;
 
 public class API2{
     static Request getRequest(String ID,String password){
-        String command="longin";
+        String command="login";
         String url=API.url+command+".do";
         RequestBody body = new FormBody.Builder()
                 .add("id", ID)

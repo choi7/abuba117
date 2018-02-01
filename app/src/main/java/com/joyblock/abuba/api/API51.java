@@ -25,9 +25,9 @@ public class API51 {
         if(!content.equals(""))
             builder.addFormDataPart("content",content);
         if(files!=null)
-            for(int i=0;i<files.length;i++)
-                if(files[i]!=null)
-                    builder.addFormDataPart("files["+i+"]", TimeConverter.getFileTime("png"),RequestBody.create(MultipartBody.FORM,files[i]));
+        for(int i=0;i<files.length;i++)
+            if(files[i]!=null)
+                builder.addFormDataPart("files["+i+"]", TimeConverter.getFileTime("png"),RequestBody.create(MultipartBody.FORM,files[i]));
         builder.addFormDataPart("year",year);
         builder.addFormDataPart("month",month);
         builder.addFormDataPart("day",day);

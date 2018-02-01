@@ -35,6 +35,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.api.API;
 import com.joyblock.abuba.data.MyApplication;
+import com.joyblock.abuba.util.ImageFileProcessor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -54,6 +55,8 @@ public abstract class BaseActivity extends AppCompatActivity{
     int width, height;
     public SharedPreferences pref;
     public Typeface NanumSquareBold,NanumSquareExtraBold,NanumSquareLight,NanumSquareRegular;
+
+    public ImageFileProcessor imp=new ImageFileProcessor();
 
     public MyApplication app;
 

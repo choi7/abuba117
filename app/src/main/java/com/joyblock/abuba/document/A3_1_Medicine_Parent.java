@@ -28,6 +28,7 @@ import com.joyblock.abuba.notice.BanListViewAdapter;
 import com.joyblock.abuba.notice.BanListViewItem;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -65,6 +66,27 @@ public class A3_1_Medicine_Parent extends BaseActivity {
         TextView title = ((TextView) findViewById(R.id.titleName));
         title.setText("투약의뢰서");
         title.setVisibility(View.VISIBLE);
+
+        /*
+        api.API_21(seq_survey);
+        String json = api.getMessage();
+        try {
+            JSONObject jsonResponse = new JSONObject(json);
+            Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+        } catch (JSONException e) {
+        }
+
+
+        detail = new GsonBuilder().create().fromJson(json, R21_SelectNoticeOne.class);
+//                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("survey"),R21_SelectNoticeOne.class);
+//                detail.survey_list[0];
+//                detail.resultcode
+        for (int i = 0; i < detail.survey_vote_item_list.length; i++) {
+            Log.d("detail-1", String.valueOf(detail.survey_vote_item_list[i]));
+
+        }
+        */
+
 
         listView = (ListView) findViewById(R.id.a3_1_Parent_listView);
 
