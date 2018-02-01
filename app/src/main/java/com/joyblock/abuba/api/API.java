@@ -357,7 +357,161 @@ public class API extends Thread{
         waitResponse();
     }
 
+    public void API_38(String seq_home_request){
+        clearMessage();
+        TAG+="38";
+        request=API38.getRequest(seq_home_request);
+        start();
+        waitResponse();
+    }
 
+    public void API_39(String seq_kindergarden,String seq_kindergarden_class,String year,String month,String day,String page){
+        clearMessage();
+        TAG+="39";
+        request=API39.getRequest(seq_kindergarden,seq_kindergarden_class,year,month,day,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_40(String seq_home_request){
+        clearMessage();
+        TAG+="40";
+        request=API40.getRequest(seq_home_request);
+        start();
+        waitResponse();
+    }
+
+    public void API_41(String seq_user,String seq_kindergarden,String start_year,String start_month,String start_day,String end_year,String end_month,String end_day,
+                       String start_time_hour,String start_time_nim,String end_time_hour,String end_time_min,String title,String content,String lat,String lng,String addr,byte[] files){
+        clearMessage();
+        TAG+="41";
+        request=API41.getRequest(seq_user,seq_kindergarden,start_year,start_month,start_day,end_year,end_month,end_day,start_time_hour,start_time_nim,end_time_hour,end_time_min,title,content,lat,lng,addr,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_42(String seq_schedule_management,String start_year,String start_month,String start_day,String end_year,String end_month,String end_day,
+                       String start_time_hour,String start_time_nim,String end_time_hour,String end_time_min,String title,String content,String lat,String lng,String addr,byte[] files){
+        clearMessage();
+        TAG+="42";
+        request=API42.getRequest(seq_schedule_management,start_year,start_month,start_day,end_year,end_month,end_day,start_time_hour,start_time_nim,end_time_hour,end_time_min,title,content,lat,lng,addr,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_43(String seq_schedule_management){
+        clearMessage();
+        TAG+="43";
+        request=API43.getRequest(seq_schedule_management);
+        start();
+        waitResponse();
+    }
+
+    public void API_44(String seq_kindergarden,String year,String month){
+        clearMessage();
+        TAG+="44";
+        request=API44.getRequest(seq_kindergarden,year,month);
+        start();
+        waitResponse();
+    }
+
+    public void API_45(String seq_schedule_management){
+        clearMessage();
+        TAG+="45";
+        request=API45.getRequest(seq_schedule_management);
+        start();
+        waitResponse();
+    }
+
+    public void API_46(String seq_user,String seq_kindergarden,String year,String month,String day,String type,String rice,String soup,
+                       String side_dish_1,String side_dish_2,String side_dish_3,String side_dish_4,String side_dish_5,String snack,String memo,byte[]files){
+        clearMessage();
+        TAG+="46";
+        request=API46.getRequest(seq_user,seq_kindergarden,year,month,day,type,rice,soup,side_dish_1,side_dish_2,side_dish_3,side_dish_4,side_dish_5,snack,memo,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_47(String seq_menu_management,String type,String rice,String soup,
+                       String side_dish_1,String side_dish_2,String side_dish_3,String side_dish_4,String side_dish_5,String snack,String memo,byte[]files){
+        clearMessage();
+        TAG+="47";
+        request=API47.getRequest(seq_menu_management,type,rice,soup,side_dish_1,side_dish_2,side_dish_3,side_dish_4,side_dish_5,snack,memo,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_48(String seq_menu_management){
+        clearMessage();
+        TAG+="48";
+        request=API48.getRequest(seq_menu_management);
+        start();
+        waitResponse();
+    }
+
+    public void API_49(String seq_kindergarden,String year,String month,String page){
+        clearMessage();
+        TAG+="49";
+        request=API49.getRequest(seq_kindergarden,year,month,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_50(String seq_menu_management){
+        clearMessage();
+        TAG+="50";
+        request=API50.getRequest(seq_menu_management);
+        start();
+        waitResponse();
+    }
+
+    public void API_51(String seq_user,String seq_kindergarden,String is_reply,String seq_kindergarden_class,String title,String content,byte[][] files,String year,String month,String day){
+        clearMessage();
+        TAG+="51";
+        request=API51.getRequest(seq_user,seq_kindergarden,is_reply,seq_kindergarden_class,title,content,files,year,month,day);
+        start();
+        waitResponse();
+    }
+
+    public void API_52(String seq_album,String is_reply,String seq_kindergarden_class,String title,String content,byte[][] files){
+        clearMessage();
+        TAG+="52";
+        request=API52.getRequest(seq_album,is_reply,seq_kindergarden_class,title,content,files);
+        start();
+        waitResponse();
+    }
+
+    public void API_53(String seq_album){
+        clearMessage();
+        TAG+="53";
+        request=API53.getRequest(seq_album);
+        start();
+        waitResponse();
+    }
+
+    public void API_54(String seq_kindergarden,String seq_kindergarden_class,String page){
+        clearMessage();
+        TAG+="54";
+        request=API54.getRequest(seq_kindergarden,seq_kindergarden_class,page);
+        start();
+        waitResponse();
+    }
+
+    public void API_55(String seq_album){
+        clearMessage();
+        TAG+="55";
+        request=API55.getRequest(seq_album);
+        start();
+        waitResponse();
+    }
+
+    public void API_56(String seq_survey,String seq_survey_vote_item,String seq_user,String seq_kids){
+        clearMessage();
+        TAG+="56";
+        request=API56.getRequest(seq_survey,seq_survey_vote_item,seq_user,seq_kids);
+        start();
+        waitResponse();
+    }
 
     static void printRequest(RequestBody body) {
         try {
