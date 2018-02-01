@@ -43,6 +43,7 @@ public class RegisterJobSelectActivity extends BaseActivity {
     private RegisterJobSelectActivity.ListViewAdapter mAdapter = null;
     private ArrayList<ListData> mListData = new ArrayList<ListData>();
     String id, password, authority, name, birthday, birthdays, phone, email, ar1, ar2, addr_etc;
+    byte[] files;
 
 
     @Override
@@ -61,6 +62,7 @@ public class RegisterJobSelectActivity extends BaseActivity {
         ar1 = intent.getStringExtra("ar1");
         ar2 = intent.getStringExtra("ar2");
         addr_etc = intent.getStringExtra("addr_etc");
+        files = intent.getByteArrayExtra("files");
 
 //        authority
 
@@ -135,6 +137,10 @@ public class RegisterJobSelectActivity extends BaseActivity {
                     mCustomDialog.findViewById(R.id.textview3).setBackgroundColor(Color.parseColor("#E73828"));
                 } else {
                     Log.d("ididid", id+" "+password+" "+authority+" "+ name+" "+ birthdays+" "+ phone+" "+email+" "+ar1+" "+ar2+" "+ addr_etc);
+                    
+
+
+
                     new InsertUser(id, password, authority, name, birthdays, phone, email, "n", ar1, ar2, addr_etc).execute();
                 }
 

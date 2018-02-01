@@ -55,7 +55,7 @@
         android:textCursorDrawable="@drawable/color_cursor"
         android:ems="10"
         android:textSize="13.75dp"
-        android:hint="댓글을 남겨주세요"
+        android:hint="댓글을 남겨주세요            "
         android:inputType="textPersonName"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
