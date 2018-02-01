@@ -126,16 +126,22 @@ public class A2_1_EducationPlan extends BaseActivity {
 
 //
         ImageView imageView = (ImageView) findViewById(R.id.editorImage);
-        imageView.setVisibility(View.VISIBLE);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(A2_1_EducationPlan.this, A2_2_EducationPlanEditor.class);
-                intent.putExtra("plan_flag",plan_flag);
-                A2_1_EducationPlan.this.startActivity(intent);
+        if(app.authority.equals("ROLE_TEACHER")) {
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(A2_1_EducationPlan.this, A2_2_EducationPlanEditor.class);
+                    intent.putExtra("plan_flag",plan_flag);
+                    A2_1_EducationPlan.this.startActivity(intent);
 //                finish();
-            }
-        });
+                }
+            });
+        } else {
+            imageView.setVisibility(View.GONE);
+        }
+
+
 
 //        ImageView backImage = (ImageView) findViewById(R.id.backImage);
 //        backImage.setOnClickListener(new View.OnClickListener() {

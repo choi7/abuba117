@@ -44,6 +44,7 @@ public class A3_1_Medicine_Parent extends BaseActivity {
     ListView listView;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class A3_1_Medicine_Parent extends BaseActivity {
         title.setVisibility(View.VISIBLE);
 
         listView = (ListView) findViewById(R.id.a3_1_Parent_listView);
+
 
 
         editorImageView = (ImageView) findViewById(R.id.editorImage);

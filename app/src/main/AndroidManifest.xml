@@ -90,7 +90,9 @@
         <activity android:name=".document.A1_DocumentSelect" />
         <activity android:name=".document.A4_1_HomeComming" />
         <activity android:name=".document.A2_1_EducationPlan" />
-        <activity android:name=".document.A2_2_EducationPlanEditor" />
+        <activity android:name=".document.A2_2_EducationPlanEditor"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
         <activity android:name=".document.A2_3_EducationPlanDetailActivity" />
         <activity android:name=".document.A3_1_Medicine" />
         <activity

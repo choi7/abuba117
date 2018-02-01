@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.api_message.R35_SelectMedicationRequestOne;
 import com.squareup.picasso.Picasso;
 
@@ -34,6 +35,7 @@ public class A3_2_MedicineView extends BaseActivity {
             specialNoteText, a3_2_timeText, title, titles, medicineViewPushText;
 
     ImageView medicinePhotoImageView;
+    TextDialog mCustomDialog;
 
 
     @Override
@@ -70,23 +72,9 @@ public class A3_2_MedicineView extends BaseActivity {
         medicineViewPushText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(A3_2_MedicineView.this);
-                builder.setMessage("투약을 완료하시겠습니까?")
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent loginIntent = new Intent(A3_2_MedicineView.this, A3_4_MedicineCheck.class);
-                                loginIntent.putExtra("kid_name", list.kids_name);
-                                loginIntent.putExtra("time", list.year + "." + list.month + "." + list.day + " ");
-
-
-                                A3_2_MedicineView.this.startActivity(loginIntent);
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("취소", null)
-                        .create()
-                        .show();
+                mCustomDialog = new TextDialog(A3_2_MedicineView.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"투약을 완료하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
             }
         });
     }
@@ -165,5 +153,25 @@ public class A3_2_MedicineView extends BaseActivity {
         medicineViewPushText = (TextView) findViewById(R.id.medicineViewPushText);
         medicinePhotoImageView = (ImageView) findViewById(R.id.medicinePhotoImageView1);
     }
+
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+        Intent loginIntent = new Intent(A3_2_MedicineView.this, A3_4_MedicineCheck.class);
+        loginIntent.putExtra("kid_name", list.kids_name);
+        loginIntent.putExtra("time", list.year + "." + list.month + "." + list.day + " ");
+        A3_2_MedicineView.this.startActivity(loginIntent);
+        finish();
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+    }
+
 
 }

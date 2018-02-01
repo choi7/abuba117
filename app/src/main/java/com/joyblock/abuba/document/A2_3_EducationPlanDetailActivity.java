@@ -16,14 +16,17 @@ import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
+import com.joyblock.abuba.CommentActivity;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.api_message.R26_SelectEducationalPlanList;
 import com.joyblock.abuba.util.TimeConverter;
 import com.joyblock.abuba.api_message.R27_SelectEducationalPlanOne;
 import com.joyblock.abuba.notice.NoticeActivity;
 import com.joyblock.abuba.notice.NoticeEditorActivity;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -35,10 +38,12 @@ import okhttp3.RequestBody;
 public class A2_3_EducationPlanDetailActivity extends BaseActivity {
 
     TextView educationPlanTitle,educationPlanAge,educationPlanName,educationPlanTime,educationPlanContent;//제목, 반, 작성자, 등록시간, 내용
-    String seq_educational_plan,plan_str, notice_detail_seq_user, intentPutExtraModifyData;
+    String plan_str, notice_detail_seq_user, intentPutExtraModifyData, seq_kindergarden_class, file_path, reg_date, seq_kindergarden, is_yn, plan_flag, mod_date, seq_user, seq_educational_plan, title, content;
     ImageView insertAndDelete, detailImage, backImage;
     Activity activity;
     CustomDialogModifyAndDel mCustomDialog;
+    R27_SelectEducationalPlanOne detail;
+    String json1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,57 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_notice_view1);
         seq_educational_plan=getIntent().getStringExtra("seq_educational_plan");
         plan_str=getIntent().getStringExtra("plan_str");
+
+        api.API_27(seq_educational_plan);
+        String json = api.getMessage();
+        try {
+            JSONObject jsonResponse = new JSONObject(json);
+            Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+            json1 = jsonResponse.getString("educational_plan");
+        } catch (JSONException e) {
+        }
+
+
+        detail = new GsonBuilder().create().fromJson(json1, R27_SelectEducationalPlanOne.class);
+//                detail=new GsonBuilder().create().fromJson(jsonResponse.getString("survey"),R21_SelectNoticeOne.class);
+//                detail.survey_list[0];
+//                detail.resultcode
+//        for (int i = 0; i < detail.survey_vote_item_list.length; i++) {
+//            Log.d("detail-1", String.valueOf(detail.survey_vote_item_list[i]));
+//
+//        }
+
+        seq_kindergarden_class = detail.seq_kindergarden_class;
+        file_path = detail.file_path;
+        reg_date = detail.reg_date;
+        seq_kindergarden = detail.seq_kindergarden;
+        is_yn = detail.is_yn;
+        mod_date = detail.mod_date;
+        seq_user = detail.seq_user;
+        seq_educational_plan = detail.seq_educational_plan;
+        title = detail.title;
+        content = detail.content;
+        Log.d("R27", seq_kindergarden_class +" "+ file_path+" " + reg_date +" " +seq_kindergarden +" "+is_yn +" " +mod_date +" " +seq_user +" "+seq_educational_plan+ " "+ title +" "+ content);
+//        String class_name = app.kindergarden_class_list.get(Integer.parseInt(seq_kindergarden_class)).kindergarden_class_name;
+
+        educationPlanTitle=(TextView)findViewById(R.id.noticeDetailTitleText);
+        educationPlanTitle.setText(title);
+        educationPlanAge=(TextView)findViewById(R.id.noticeDetailBanText);
+
+        educationPlanName=(TextView)findViewById(R.id.noticeDetailNameText);
+        educationPlanName.setText(title);
+        educationPlanTime=(TextView)findViewById(R.id.noticeDetailTimeText);
+        educationPlanTime.setText(TimeConverter.convert(reg_date));
+        educationPlanContent=(TextView)findViewById(R.id.inTextView);
+        educationPlanContent.setText(content);
+        detailImage=(ImageView) findViewById(R.id.detailImageView);
+        if(!file_path.equals(null) && !file_path.equals("")) {
+            Picasso.with(this).load(file_path).into(detailImage);
+            detailImage.setVisibility(View.VISIBLE);
+        }
+//        noticeBan = (TextView) findViewById(R.id.noticeDetailBanText);
+//        noticeBan.setText(class_name);
+
 
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
@@ -65,12 +121,24 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
         TextView title = (TextView) findViewById(R.id.titleName);
         title.setText(plan_str+" 교육계획안");
         title.setVisibility(View.VISIBLE);
+//
+//        EditText et = (EditText) findViewById(R.id.editTexttt);
+//        et.setVisibility(View.VISIBLE);
 
-        EditText et = (EditText) findViewById(R.id.editTexttt);
-        et.setVisibility(View.VISIBLE);
+//        ImageView commentPushImage = (ImageView) findViewById(R.id.commentPushImage);
+//        commentPushImage.setVisibility(View.VISIBLE);
+//        commentPushImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(A2_3_EducationPlanDetailActivity.this, CommentActivity.class);
+//                intent.putExtra("seq_notice", detail.seq_notice);
+//                intent.putExtra("flag", "A2_3_EducationPlanDetailActivity");
+//                A2_3_EducationPlanDetailActivity.this.startActivity(intent);
+//            }
+//        });
 
         insertAndDelete = (ImageView) findViewById(R.id.noticeDetailinsertAndDeleteText);
-        detailImage=(ImageView) findViewById(R.id.detailImageView);
+
 //        backImage=(ImageView) findViewById(R.id.backImage);
 //
 //        backImage.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +158,7 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
 
 //        setNotice(position,position,null,position,position,position,false);
 
-        new SelectEducationalPlanOne(seq_educational_plan).execute();
+//        new SelectEducationalPlanOne(seq_educational_plan).execute();
 
 //        setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
 
@@ -146,7 +214,7 @@ public class A2_3_EducationPlanDetailActivity extends BaseActivity {
     }
     */
 
-    R27_SelectEducationalPlanOne detail;
+
     class SelectEducationalPlanOne extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
         okhttp3.Request request;

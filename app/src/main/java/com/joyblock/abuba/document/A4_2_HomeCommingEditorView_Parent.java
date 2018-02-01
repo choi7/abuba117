@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.util.ImageFileProcessor;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +42,7 @@ public class A4_2_HomeCommingEditorView_Parent extends BaseActivity {
 
     ImageFileProcessor imageFileProcessor = new ImageFileProcessor();
     byte[] bytes;
+    TextDialog mCustomDialog;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -144,42 +146,9 @@ public class A4_2_HomeCommingEditorView_Parent extends BaseActivity {
         medicineViewPushText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(A4_2_HomeCommingEditorView_Parent.this);
-                nd.setMessage("등록하시겠습니까")
-                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                home_reason = symptomEditText.getText().toString();
-                                home_time = medicineTypeEditText.getText().toString();
-                                tel_no = medicationCapacityEditText.getText().toString();
-                                companion = medicationTimeEditText.getText().toString();
-//                                keep_method = symptomEditText.getText().toString();
-                                uniqueness = specialNoteEditText.getText().toString();
-//                                year month day files
-                                files = "";
-
-                                Intent intent = new Intent(A4_2_HomeCommingEditorView_Parent.this, A_4_3_HomeComming_Sign_Parent.class);
-                                intent.putExtra("seq_user_parent", seq_user_parent);
-                                intent.putExtra("seq_kindergarden", seq_kindergarden);
-                                intent.putExtra("seq_kindergarden_class", seq_kindergarden_class);
-                                intent.putExtra("seq_kids", seq_kids);
-                                intent.putExtra("home_reason", home_reason);
-                                intent.putExtra("home_time", home_time);
-                                intent.putExtra("home_method", home_method);
-                                intent.putExtra("companion", companion);
-                                intent.putExtra("tel_no", tel_no);
-                                intent.putExtra("uniqueness", uniqueness);
-                                intent.putExtra("getyear", getyear);
-                                intent.putExtra("getmonth", getmonth);
-                                intent.putExtra("getday", getday);
-                                intent.putExtra("bytes", bytes);
-
-                                A4_2_HomeCommingEditorView_Parent.this.startActivity(intent);
-                            }
-                        })
-                        .setPositiveButton("취소", null)
-                        .create()
-                        .show();
+                mCustomDialog = new TextDialog(A4_2_HomeCommingEditorView_Parent.this, R.layout.layout_document_education_plan_age_dialog);
+                mCustomDialog.setTexts(new String[]{"등록하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
             }
         });
 
@@ -224,6 +193,50 @@ public class A4_2_HomeCommingEditorView_Parent extends BaseActivity {
 
 
     }
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+
+        home_reason = symptomEditText.getText().toString();
+        home_time = medicineTypeEditText.getText().toString();
+        tel_no = medicationCapacityEditText.getText().toString();
+        companion = medicationTimeEditText.getText().toString();
+//                                keep_method = symptomEditText.getText().toString();
+        uniqueness = specialNoteEditText.getText().toString();
+//                                year month day files
+        files = "";
+
+        Intent intent = new Intent(A4_2_HomeCommingEditorView_Parent.this, A_4_3_HomeComming_Sign_Parent.class);
+        intent.putExtra("seq_user_parent", seq_user_parent);
+        intent.putExtra("seq_kindergarden", seq_kindergarden);
+        intent.putExtra("seq_kindergarden_class", seq_kindergarden_class);
+        intent.putExtra("seq_kids", seq_kids);
+        intent.putExtra("home_reason", home_reason);
+        intent.putExtra("home_time", home_time);
+        intent.putExtra("home_method", home_method);
+        intent.putExtra("companion", companion);
+        intent.putExtra("tel_no", tel_no);
+        intent.putExtra("uniqueness", uniqueness);
+        intent.putExtra("getyear", getyear);
+        intent.putExtra("getmonth", getmonth);
+        intent.putExtra("getday", getday);
+        intent.putExtra("bytes", bytes);
+
+        A4_2_HomeCommingEditorView_Parent.this.startActivity(intent);
+
+
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+    }
+
 
 
 

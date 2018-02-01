@@ -354,43 +354,6 @@ public class A3_1_Medicine extends BaseActivity {
                                 dialog.dismiss();
                             }
                         });
-
-
-                        /*
-                        View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
-                        // 해당 뷰에 리스트뷰 호출
-                        listview = (ListView) view.findViewById(R.id.notice_popup_listview);
-                        // 리스트뷰에 어댑터 설정
-                        adapter = new BanListViewAdapter();
-                        listview.setAdapter(adapter);
-                        adapter.addItem("전체");
-                        for (R6_SelectKindergardenClassList list : classList) {
-                            adapter.addItem(list.kindergarden_class_name);
-                        }
-                        adapter.notifyDataSetChanged();
-
-                        // 반 다이얼로그 생성
-                        banListDialogBuilder = new AlertDialog.Builder(activity);
-                        // 리스트뷰 설정된 레이아웃
-                        banListDialogBuilder.setView(view);
-
-                        // 반 다이얼로그 보기
-                        banListDialogInterface = banListDialogBuilder.show();
-
-                        //반 다이얼로그 이벤트 처리
-                        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                BanListViewItem item = adapter.list.get(position);
-                                seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
-                                classText.setText(item.getName());
-                                Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
-                                banListDialogInterface.dismiss();
-
-
-                            }
-                        });
-                        */
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

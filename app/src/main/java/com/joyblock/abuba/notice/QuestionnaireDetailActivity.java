@@ -115,7 +115,7 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         titles = detail.survey.title;
         day = detail.survey.day;
         content = detail.survey.content;
-       String class_name = app.kindergarden_class_list.get(Integer.parseInt(seq_kindergarden_class)).kindergarden_class_name;
+        String class_name = app.kindergarden_class_list.get(Integer.parseInt(seq_kindergarden_class)).kindergarden_class_name;
 
         noticeTitle = (TextView) findViewById(R.id.noticeDetailTitleText);
         noticeTitle.setText(titles);

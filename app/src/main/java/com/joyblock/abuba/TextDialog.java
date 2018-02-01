@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class TextDialog extends Dialog {
     int textview_id_start=R.id.textview1;
-    int textview_id_end=R.id.textview3;
+    int textview_id_end=R.id.textview4;
     int int_size=textview_id_end-textview_id_start+1;
     int int_layout;
     String[] str_array;

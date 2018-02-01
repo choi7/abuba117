@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.Mypainter;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.util.TimeConverter;
 
 import org.json.JSONObject;
@@ -59,6 +60,8 @@ public class A_4_3_HomeComming_Sign_Parent extends BaseActivity {
     Bitmap bitmap;
     public byte[] byteArray;
     byte[] objects;
+    TextDialog mCustomDialog;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,6 +121,11 @@ public class A_4_3_HomeComming_Sign_Parent extends BaseActivity {
         textView111.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
+
                 bitmap = mypainter.Save(getExternalPath() + "sign-img.png");
                 Log.d("bitmap", String.valueOf(bitmap));
 //                mypainter.Open(getExternalPath() + "sign-img.jpg");
@@ -129,18 +137,9 @@ public class A_4_3_HomeComming_Sign_Parent extends BaseActivity {
                         .execute();
                 Log.d("bitmapsssss", "ssssssss");
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(A_4_3_HomeComming_Sign_Parent.this);
-                builder.setMessage("귀가를 신청했습니다.")
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getApplicationContext(), A3_1_Medicine_Parent.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-
-                                finish();
-                            }
-                        }).create().show();
+                mCustomDialog = new TextDialog(A_4_3_HomeComming_Sign_Parent.this, R.layout.dialog_one_check);
+                mCustomDialog.setTexts(new String[]{"귀가를 신청했습니다.", "확인"});
+                mCustomDialog.show();
             }
         });
 
@@ -329,6 +328,29 @@ public class A_4_3_HomeComming_Sign_Parent extends BaseActivity {
         getyear = year.format(date);
         Log.d("시간은", getday + "" + getmonth + "" + getyear);
 
+
+    }
+
+
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+
+
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+        Intent intent = new Intent(getApplicationContext(), A3_1_Medicine_Parent.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+        finish();
 
     }
 

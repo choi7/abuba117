@@ -33,9 +33,9 @@ public class CustomDialogAge extends Dialog {
 
         setContentView(R.layout.layout_document_education_plan_age_dialog);
 
-        btn7 = (Button) findViewById(R.id.btn_7age);
-        btn6 = (Button) findViewById(R.id.btn_6age);
-        btn5 = (Button) findViewById(R.id.btn_5age);
+        btn7 = (Button) findViewById(R.id.textview1);
+        btn6 = (Button) findViewById(R.id.textview2);
+        btn5 = (Button) findViewById(R.id.textview3);
 
         // 클릭 이벤트 셋팅
 //        if (topClickListener != null && bottomClickListener != null) {

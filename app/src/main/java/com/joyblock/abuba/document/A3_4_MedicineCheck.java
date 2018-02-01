@@ -14,8 +14,11 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 
 public class A3_4_MedicineCheck extends BaseActivity {
+    TextDialog mCustomDialog;
+    int pushAndcancel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,32 +68,51 @@ public class A3_4_MedicineCheck extends BaseActivity {
         a3_4_falseText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(A3_4_MedicineCheck.this);
-                builder.setMessage("보류하시겠습니까?")
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        }).setNegativeButton("취소", null)
-                        .create().show();
+                pushAndcancel = 1;
+                mCustomDialog = new TextDialog(A3_4_MedicineCheck.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"보류하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
+
             }
         });
 
         a3_4_trueText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(A3_4_MedicineCheck.this);
-                builder.setMessage("전송하시겠습니까?")
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        }).setNegativeButton("취소", null)
-                        .create().show();
+                pushAndcancel = 2;
+                mCustomDialog = new TextDialog(A3_4_MedicineCheck.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"전송하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
             }
         });
 
     }
+
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+        switch (pushAndcancel) {
+            //보류시
+            case 1:
+                break;
+            //삭제시
+            case 2:
+                break;
+            default:
+                break;
+        }
+        //임의로 설정한 종료
+        finish();
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+    }
+
+
 }

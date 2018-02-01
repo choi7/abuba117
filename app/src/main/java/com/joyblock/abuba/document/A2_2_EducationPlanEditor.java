@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 
 
 import org.json.JSONObject;
@@ -55,12 +56,13 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
 
 
     RadioGroup rg;
-    String seq_user, seq_kindergarden, age,plan_flag,maintitle, intext;
+    String seq_user, seq_kindergarden, age, plan_flag, maintitle, intext;
     Boolean imageChange = true;
     EditText titleText, inText;
     String plan;
+    int cancelAndPush;
 
-    ImageView editorImage;
+    ImageView editorImage, titleNameRightImage;
     private final int CAMERA_CODE = 1111;
     private final int GALLERY_CODE = 1112;
     private Uri photoUri;
@@ -68,6 +70,8 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
     String mImageCaptureName;
     byte[] image;
     String imagePath, imageName;
+    TextDialog mCustomDialogs;
+
 
     ListView listview;
 
@@ -80,9 +84,9 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_editor1);
-        plan_flag=getIntent().getStringExtra("plan_flag");
-        plan=plan_flag.equals("m")?"월간 ":"주간 ";
-        activity=this;
+        plan_flag = getIntent().getStringExtra("plan_flag");
+        plan = plan_flag.equals("m") ? "월간 " : "주간 ";
+        activity = this;
 
         titleText = (EditText) findViewById(R.id.titleText);
         inText = (EditText) findViewById(R.id.inText);
@@ -99,10 +103,8 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
         });
 
         TextView txt = (TextView) findViewById(R.id.comenttextView);
-        txt.setVisibility(View.VISIBLE);
+        txt.setVisibility(View.GONE);
         actionbarCustom();
-
-
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -113,63 +115,74 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
     }
 
 
-
     CustomDialogAge mCustomDialog;
 
-    public void setAge7(View v){
-        age=7+"";
-        title.setText(plan+"7세");
-        mCustomDialog.dismiss();
+    public void setAge8(View v) {
+
+        title.setText(plan + " 전체");
+        titleNameRightImage.setVisibility(View.VISIBLE);
+        mCustomDialogs.dismiss();
 
     }
-    public void setAge6(View v){
-        age=6+"";
-        title.setText(plan+"6세");
-        mCustomDialog.dismiss();
-    }
-    public void setAge5(View v){
-        age=7+"";
-        title.setText(plan+"5세");
-        mCustomDialog.dismiss();
+
+    public void setAge7(View v) {
+        age = 7 + "";
+        title.setText(plan + "7세");
+        titleNameRightImage.setVisibility(View.GONE);
+        mCustomDialogs.dismiss();
+
     }
 
+    public void setAge6(View v) {
+        age = 6 + "";
+        title.setText(plan + "6세");
+        titleNameRightImage.setVisibility(View.GONE);
+        mCustomDialogs.dismiss();
+    }
+
+    public void setAge5(View v) {
+        age = 7 + "";
+        title.setText(plan + "5세");
+        titleNameRightImage.setVisibility(View.GONE);
+        mCustomDialogs.dismiss();
+    }
 
 
     TextView title;
+
     public void actionbarCustom() {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff9966ff));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
         title = (TextView) findViewById(R.id.titleName);
-        title.setText(plan+"전체");
+        title.setText(plan + "전체");
+        titleNameRightImage = (ImageView) findViewById(R.id.titleNameRightImage);
+        titleNameRightImage.setVisibility(View.VISIBLE);
 
-        seq_user = pref.getString("seq_user","없음");
-        seq_kindergarden = pref.getString("seq_kindergarden","없음");
+        seq_user = pref.getString("seq_user", "없음");
+        seq_kindergarden = pref.getString("seq_kindergarden", "없음");
 
         title.setVisibility(View.VISIBLE);
-        title.setOnClickListener(new View.OnClickListener(){
+        title.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
-                mCustomDialog = new CustomDialogAge(A2_2_EducationPlanEditor.this);
-                mCustomDialog.show();
-
-
+//                cancelAndPush = 2;
+                mCustomDialogs = new TextDialog(A2_2_EducationPlanEditor.this, R.layout.layout_document_education_plan_age_dialog);
+                mCustomDialogs.setTexts(new String[]{"전체", "7세", "6세", "5세"});
+                mCustomDialogs.show();
+//
+//                mCustomDialog = new CustomDialogAge(A2_2_EducationPlanEditor.this);
+//                mCustomDialog.show();
 
 
 //                new SelectKindergardenClassList(seq_kindergarden).execute();
 
 
-
-
             }
 
         });
-
-
-
-
 
 
         TextView backText = (TextView) findViewById(R.id.editorTextLeft);
@@ -178,20 +191,11 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
         backText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(A2_2_EducationPlanEditor.this);
-                nd.setMessage("작성을 취소하시겠습니까")
-                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-//                                Intent intent = new Intent(A2_2_EducationPlanEditor.this, A2_1_EducationPlan.class);
-//                                A2_2_EducationPlanEditor.this.startActivity(intent);
+                cancelAndPush = 2;
+                mCustomDialogs = new TextDialog(A2_2_EducationPlanEditor.this, R.layout.dialog_call);
+                mCustomDialogs.setTexts(new String[]{"작성을 취소하시겠습니까?", "취소", "확인"});
+                mCustomDialogs.show();
 
-                                finish();
-                            }
-                        })
-                        .setPositiveButton("취소", null)
-                        .create()
-                        .show();
             }
         });
 
@@ -204,31 +208,26 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(A2_2_EducationPlanEditor.this);
-                nd.setMessage("등록하시겠습니까")
-                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                maintitle = titleText.getText().toString();
-                                intext = inText.getText().toString();
+                maintitle = titleText.getText().toString();
+                intext = inText.getText().toString();
+                if (!maintitle.equals(null) && !maintitle.equals("") && !intext.equals(null) && !intext.equals("")) {
+                    cancelAndPush = 1;
+                    mCustomDialogs = new TextDialog(A2_2_EducationPlanEditor.this, R.layout.dialog_call);
+                    mCustomDialogs.setTexts(new String[]{"등록하시겠습니까?", "취소", "확인"});
+                    mCustomDialogs.show();
+                } else {
+                    cancelAndPush = 3;
+                    mCustomDialogs = new TextDialog(A2_2_EducationPlanEditor.this, R.layout.dialog_one_check);
+                    mCustomDialogs.setTexts(new String[]{"제목 및 내용을 입력해주세요", "확인"});
+                    mCustomDialogs.show();
+                }
 
-                                Log.d("타이틀" , maintitle);
-                                Log.d("sub타이틀" , intext);
-
-                                InsertEducationPlan buyTask = new InsertEducationPlan(seq_user,seq_kindergarden,plan_flag,maintitle, intext,age);
-                                buyTask.execute();
-
-                            }
-                        })
-                        .setPositiveButton("취소", null)
-                        .create()
-                        .show();
             }
         });
 
 
         if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.parseColor("#0099FF"));
+            getWindow().setStatusBarColor(Color.parseColor("#9966FF"));
         }
         if (Build.VERSION.SDK_INT >= 23) {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
@@ -241,10 +240,7 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
         RequestBody formBody1;
 
 
-
-
-
-        public InsertEducationPlan(String seq_user, String seq_kindergarden,String plan_flag, String title, String content,String age) {
+        public InsertEducationPlan(String seq_user, String seq_kindergarden, String plan_flag, String title, String content, String age) {
             client = new OkHttpClient();
 
             // 현재시간을 msec 으로 구한다.
@@ -256,26 +252,37 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
             // nowDate 변수에 값을 저장한다.
             String formatDate = sdfNow.format(date);
 
-            imageName = seq_user + "_" +seq_kindergarden + ".png";
+            imageName = seq_user + "_" + seq_kindergarden + ".png";
 
-            String api="insertEducationalPlan";
+            String api = "insertEducationalPlan";
 
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
-
-            formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("seq_user", seq_user)
-                    .addFormDataPart("seq_kindergarden", seq_kindergarden)
-                    .addFormDataPart("plan_flag", plan_flag)
+            if (image == null) {
+                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("seq_user", seq_user)
+                        .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                        .addFormDataPart("plan_flag", plan_flag)
 //                    .addFormDataPart("age", age)
-                    .addFormDataPart("title", title)
-                    .addFormDataPart("content", content)
-                    .addFormDataPart("files",imageName,RequestBody.create(MultipartBody.FORM, image))
-                    .build();
+                        .addFormDataPart("title", title)
+                        .addFormDataPart("content", content)
+                        .build();
+            } else {
+                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("seq_user", seq_user)
+                        .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                        .addFormDataPart("plan_flag", plan_flag)
+//                    .addFormDataPart("age", age)
+                        .addFormDataPart("title", title)
+                        .addFormDataPart("content", content)
+                        .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
+                        .build();
+            }
+
 
             request = new okhttp3.Request.Builder()
-                    .url("http://58.229.208.246/Ububa/"+api+".do")
+                    .url("http://58.229.208.246/Ububa/" + api + ".do")
                     .post(formBody1)
                     .build();
         }
@@ -313,10 +320,10 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
 //                    System.out.println(json1);
 //                    Intent intent = new Intent(A2_2_EducationPlanEditor.this, A2_1_EducationPlan.class);
 //                    A2_2_EducationPlanEditor.this.startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "등록완료.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "등록완료.", Toast.LENGTH_LONG).show();
                     finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "잠시 후에 재시도 해주세요.",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "잠시 후에 재시도 해주세요.", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -495,9 +502,9 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
         try {
             bitmap1 = A2_2_EducationPlanEditor.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap1.compress( PNG, 30, stream) ;
-            image=stream.toByteArray();
-            Log.d("Tag",""+stream.size());
+            bitmap1.compress(PNG, 30, stream);
+            image = stream.toByteArray();
+            Log.d("Tag", "" + stream.size());
 
 
 //            Uri uri = Uri.fromFile(file);
@@ -519,10 +526,10 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
 
     //사진의 절대경로 구하기
     private String getRealPathFromURI(Uri contentUri) {
-        int column_index=0;
+        int column_index = 0;
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
         return cursor.getString(column_index);
@@ -574,13 +581,12 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
     }
 
 
-
     //안드로이드 7.0 부터는 앱권한이 적용되지 않아 유저한테 직접 권한을 받는 메소드
-    public void checkPermissions(){
+    public void checkPermissions() {
 
         if (ContextCompat.checkSelfPermission(A2_2_EducationPlanEditor.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED||
+                != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(A2_2_EducationPlanEditor.this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -605,7 +611,7 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
                 // arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED ){
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
                     // permission was granted.
 
@@ -629,12 +635,11 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
         o.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
 
-        int width_tmp = o.outWidth
-                , height_tmp = o.outHeight;
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
 
-        while(true) {
-            if(width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
+        while (true) {
+            if (width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
                 break;
             width_tmp /= 2;
             height_tmp /= 2;
@@ -647,5 +652,36 @@ public class A2_2_EducationPlanEditor extends BaseActivity {
     }
 
 
+    public void clickTextView2(View v) {
+        mCustomDialogs.dismiss();
+
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialogs.dismiss();
+
+
+        switch (cancelAndPush) {
+            case 1:
+                maintitle = titleText.getText().toString();
+                intext = inText.getText().toString();
+                Log.d("타이틀", maintitle);
+                Log.d("sub타이틀", intext);
+                InsertEducationPlan buyTask = new InsertEducationPlan(seq_user, seq_kindergarden, plan_flag, maintitle, intext, age);
+                buyTask.execute();
+                break;
+            case 2:
+                finish();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialogs.dismiss();
+    }
 
 }

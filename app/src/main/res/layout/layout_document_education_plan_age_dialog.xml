@@ -7,7 +7,24 @@
 
 
     <Button
-        android:id="@+id/btn_7age"
+        android:id="@+id/textview1"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/nanumsquarebold"
+        android:onClick="setAge8"
+        android:text="textview1"
+        android:textColor="#000000"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/textView176"
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:background="#7E7E7E" />
+
+    <Button
+        android:id="@+id/textview2"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="#FFFFFF"
@@ -23,7 +40,7 @@
         android:background="#7E7E7E" />
 
     <Button
-        android:id="@+id/btn_6age"
+        android:id="@+id/textview3"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="#FFFFFF"
@@ -40,7 +57,7 @@
         android:background="#7E7E7E" />
 
     <Button
-        android:id="@+id/btn_5age"
+        android:id="@+id/textview4"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="#FFFFFF"
@@ -49,4 +66,5 @@
         android:text="5세"
         android:textColor="#000000"
         android:textSize="15dp" />
+
 </LinearLayout>
