@@ -77,8 +77,9 @@ public class RegisterActivity extends BaseActivity {
     ImageFileProcessor imageFileProcessor = new ImageFileProcessor();
 
     SharedPreferences.Editor editor;
-    BuyTask buyTask;
     Boolean aBoolean = false;
+    Integer useridcheck;
+    byte[] files;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -89,6 +90,7 @@ public class RegisterActivity extends BaseActivity {
                 imageFileProcessor.sendPicture(data.getData(), profileImage, RegisterActivity.this); //갤러리에서 가져오기
                 Object[] drawable_byteArray = imageFileProcessor.getDrawableAndByteArray(data.getData(), RegisterActivity.this);
                 BitmapDrawable bitmap = (BitmapDrawable) drawable_byteArray[0];
+                files = (byte[])drawable_byteArray[1];
                 Picasso.with(this).load(data.getData()).transform(new CircleTransform()).into(profileImage);
 //                Picasso.with(this).load((BitmapDrawable) drawable_byteArray[0]).into(profileImage);
 //                Picasso.with(this).load
@@ -115,8 +117,29 @@ public class RegisterActivity extends BaseActivity {
         selectUserCheckIDImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("ssss", "eeee");
-                new selectUserReduplicationIdCheck(idText.getText().toString().trim()).execute();
+                api.API_22(idText.getText().toString().trim());
+                String json = api.getMessage();
+                try {
+                    JSONObject jsonResponse = new JSONObject(json);
+                    Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                    if (ss == 200) {
+                        mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
+                        mCustomDialog.setTexts(new String[]{"등록 가능한 아이디입니다.", "확인"});
+                        mCustomDialog.show();
+                        aBoolean = true;
+                        nextaBoolean = "y";
+                    } else if (ss == 101) {
+                        mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
+                        mCustomDialog.setTexts(new String[]{"다른 아이디로 등록하세요.", "확인"});
+                        mCustomDialog.show();
+                    } else if (ss == 301) {
+                        mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
+                        mCustomDialog.setTexts(new String[]{"이미 등록된 아이디입니다.", "확인"});
+                        mCustomDialog.show();
+                    }
+                } catch (JSONException e) {
+                }
+//                new selectUserReduplicationIdCheck(idText.getText().toString().trim()).execute();
             }
         });
 
@@ -257,6 +280,7 @@ public class RegisterActivity extends BaseActivity {
                     intent.putExtra("ar1", ar1);
                     intent.putExtra("ar2", ar2);
                     intent.putExtra("addr_etc", addr_etc);
+                    intent.putExtra("files", files);
                     RegisterActivity.this.startActivity(intent);
                 } else if (!(a.equals(b))) {
                     mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
@@ -276,153 +300,12 @@ public class RegisterActivity extends BaseActivity {
                 }
 
 
-
-
-/*
-                switch (job) {
-                    case "ROLE_PARENTS":
-                        intent = new Intent(RegisterActivity.this, ChildrenRegisterActivity.class);
-                        RegisterActivity.this.startActivity(intent);
-                        break;
-                    case "ROLE_DIRECTOR_TEACHER":
-                        intent = new Intent(RegisterActivity.this, SchoolRegisterActivity.class);
-                        RegisterActivity.this.startActivity(intent);
-                        break;
-                    case "ROLE_TEACHER":
-                        intent = new Intent(RegisterActivity.this, SchoolRegister_1Activity.class);
-                        RegisterActivity.this.startActivity(intent);
-                        break;
-                }
-                */
-
-
-
-
-
-
-
-
-                                /*
-                        new BuyTask(
-                                idText.getText().toString(),
-                                passwordText.getText().toString(),
-                                job,
-                                nameText.getText().toString(),
-                                birthdayText.getText().toString(),
-                                phonenumberText.getText().toString(),
-                                emailText.getText().toString(),
-                                "0").execute();
-                                */
-
-
             }
         });
 
 
     }
 
-
-    public void postRegister() {
-
-//        String schoolName = schoolNameText.getText().toString();
-//        String phoneNumber = phoneNumberText.getText().toString();
-//                String
-        RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, fullurl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", userID);
-                params.put("password", userPassword);
-                params.put("name", userName);
-                params.put("birtyday", userBirtyday);
-                params.put("phone_no", userPhoneNumber);
-                params.put("email", userEmail);
-                params.put("token", "true");
-                params.put("authority", job);
-                System.out.println(params);
-                return params;
-
-
-            }
-
-        };
-
-        requestQueue.add(stringRequest);
-
-    }
-
-
-    public void stringUrls() {
-
-
-        try {
-//            fullurl = URLEncoder.encode("http://58.229.208.246/Ububa/insertUser.do?", "UTF-8");
-//            fullurl = URLEncoder.encode("http://58.229.208.246/Ububa/insertUser.do?", "euc-kr");
-            System.out.println(fullurl);
-            if (userID.length() > 0) {
-                userID = URLEncoder.encode(userID, "UTF-8");
-//                String name = URLEncoder.encode("id=", "UTF-8");
-                fullurl = fullurl + "id=" + URLEncoder.encode(idText.getText().toString(), "UTF-8");
-            }
-            if (userPassword.length() > 0) {
-                String name = URLEncoder.encode("&password=", "UTF-8");
-                fullurl = fullurl + "&password=" + URLEncoder.encode(passwordText.getText().toString(), "UTF-8");
-            }
-            if (job.length() > 0) {
-                String name = URLEncoder.encode("&authority=", "UTF-8");
-                fullurl = fullurl + "&authority=" + URLEncoder.encode(job, "UTF-8");
-                ;
-            }
-            if (userEmail.length() > 0) {
-                String name = URLEncoder.encode("&email=", "UTF-8");
-                fullurl = fullurl + "&email=" + URLEncoder.encode(emailText.getText().toString(), "UTF-8");
-            }
-            if (userBirtyday.length() > 0) {
-//                userName = URLEncoder.encode(userBirtyday,"euc-kr");
-                userBirtyday = URLEncoder.encode(birthdayText.getText().toString(), "UTF-8");
-                String name = URLEncoder.encode("&birthday=", "UTF-8");
-                fullurl = fullurl + "&birthday=" + URLEncoder.encode(birthdayText.getText().toString(), "UTF-8");
-            }
-            if (userPhoneNumber.length() > 0) {
-                userName = URLEncoder.encode(userPhoneNumber, "UTF-8");
-                String name = URLEncoder.encode("&phone_no=", "UTF-8");
-                fullurl = fullurl + "&phone_no=" + URLEncoder.encode(phonenumberText.getText().toString(), "UTF-8");
-            }
-
-
-            if (userName.length() > 0) {
-                String name = URLEncoder.encode("&name=", "UTF-8");
-                fullurl = fullurl + "&name=" + URLEncoder.encode(nameText.getText().toString(), "UTF-8");
-                System.out.println(fullurl);
-                System.out.println(fullurl);
-                System.out.println(fullurl);
-                System.out.println(fullurl);
-                System.out.println(userName);
-
-            }
-            System.out.println(fullurl);
-            System.out.println(fullurl);
-            System.out.println(fullurl);
-            System.out.println(fullurl);
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-//        fullurl = URLEncoder.encode()
-        System.out.println(fullurl);
-    }
 
     RadioGroup.OnCheckedChangeListener radioGrouplistner = new RadioGroup.OnCheckedChangeListener() {
         @Override
@@ -499,163 +382,6 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
         }
 
-    }
-
-
-    public class BuyTask extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody;
-
-        public BuyTask(String id, String password, String authority, String name, String birthday, String phone_no, String email, String token) {
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("id", id)
-                    .add("password", password)
-                    .add("authority", authority)
-                    .add("name", name)
-                    .add("birthday", birthday)
-                    .add("phone_no", phone_no)
-                    .add("email", email)
-                    .add("token", token)
-//                    .add("cu_num", cu_num + "")
-//                    .add("cu_price", cu_price + "")
-                    .build();
-            request = new okhttp3.Request.Builder()
-                    .url(fullurl12)
-                    .post(formBody)
-                    .build();
-        }
-
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            Log.d("TAG", json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-
-                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                System.out.println(ss);
-
-
-                if (ss == 200) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("회원 등록에 성공했습니다.")
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    RegisterActivity.this.startActivity(intent);
-                                    finish();
-                                }
-                            })
-                            .create()
-                            .show();
-
-
-                } else if (ss == 102 | ss == 101) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("회원 등록에 실패했습니다.")
-                            .setNegativeButton("다시 시도", null)
-                            .create()
-                            .show();
-                } else if (ss == 301) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("이미 등록된 아이디입니다")
-                            .setNegativeButton("다시 시도", null)
-                            .create()
-                            .show();
-                } else {
-                    System.out.println("Error");
-                    System.out.println("Error");
-                    System.out.println("Error");
-                    System.out.println("Error");
-                    System.out.println("Error");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    public class selectUserReduplicationIdCheck extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody;
-
-        public selectUserReduplicationIdCheck(String id) {
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("id", id)
-                    .build();
-            request = new okhttp3.Request.Builder()
-                    .url("http://58.229.208.246/Ububa/selectUserReduplicationIdCheck.do")
-                    .post(formBody)
-                    .build();
-        }
-
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            Log.d("TAG", json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                if (ss == 200) {
-                    mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
-                    mCustomDialog.setTexts(new String[]{"등록 가능한 아이디입니다.", "확인"});
-                    mCustomDialog.show();
-//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
-                    aBoolean = true;
-                    nextaBoolean = "y";
-
-                } else if (ss == 101) {
-                    mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
-                    mCustomDialog.setTexts(new String[]{"다른 아이디로 등록하세요.", "확인"});
-                    mCustomDialog.show();
-//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
-                } else if (ss == 301) {
-                    mCustomDialog = new TextDialog(RegisterActivity.this, R.layout.dialog_one_check);
-                    mCustomDialog.setTexts(new String[]{"이미 등록된 아이디입니다.", "확인"});
-                    mCustomDialog.show();
-//                    mCustomDialog.findViewById(R.id.textview2).setBackgroundColor(Color.parseColor("#E73828"));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
     }
 
     boolean agree = true;
