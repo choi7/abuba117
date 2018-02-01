@@ -25,13 +25,15 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
-import com.joyblock.abuba.QuestionaireDetailListViewAdapter;
+//import com.joyblock.abuba.QuestionaireDetailListViewAdapter;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.api_message.R21_SelectNoticeOne;
+import com.joyblock.abuba.bus.TextListViewAdapter;
 import com.joyblock.abuba.util.ImageFileProcessor;
 import com.joyblock.abuba.util.TimeConverter;
 
@@ -55,11 +57,11 @@ public class QuestionnaireDetailActivity extends BaseActivity {
     String seq_kindergarden_class, reg_date, month, year, seq_kindergarden, is_yn, mod_date, seq_user, seq_survey, titles, day, content;
     R21_SelectNoticeOne detail;
     ListView listView;
-    QuestionaireDetailListViewAdapter mAdapter11;
-    ListViewAdapter listViewAdapter;
+    TextListViewAdapter listViewAdapter;
+//    ListViewAdapter listViewAdapter;
     public int mSelectedItem;
-    ArrayList<ListViewAdapter.Data> ListData = new ArrayList<ListViewAdapter.Data>();
 
+    int pos;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,29 +130,37 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         noticeContent = (TextView) findViewById(R.id.inTex);
         noticeContent.setText(content);
         listView = (ListView) findViewById(R.id.questListview);
-//        mAdapter11 = new QuestionaireDetailListViewAdapter(this);
-        listViewAdapter = new ListViewAdapter(this);
+        listViewAdapter=new TextListViewAdapter(2,R.layout.votedetaillistviewcell);
+        listViewAdapter.addItem("찬성","3");
+        listViewAdapter.addItem("반대","3");
+        listViewAdapter.addItem("기권","4");
         listView.setAdapter(listViewAdapter);
-        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"찬성","3");
-        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"반대","3");
-        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"기권","4");
+
         setListViewHeightBasedOnChildren(listView);
+//        mAdapter11 = new QuestionaireDetailListViewAdapter(this);
+//        listViewAdapter = new ListViewAdapter(this);
+//        listView.setAdapter(listViewAdapter);
+//        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"찬성","3");
+//        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"반대","3");
+//        listViewAdapter.addItem(getResources().getDrawable(R.drawable.vote_image),"기권","4");
+//        setListViewHeightBasedOnChildren(listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedItem = position;
-                listViewAdapter.notifyDataSetChanged();
-                for (int i = 0; i < ListData.size(); i++) {
-                    if (i != position) {
-                        ListData.get(i).a = true;
-                    } else if (ListData.get(position).a) {
-                        ListData.get(position).a = false;
-                        System.out.println("포지션은 : " + ListData.get(position).a);
-                    } else {
-                        ListData.get(position).a = true;
-                        System.out.println("포지션sdf : " + ListData.get(position).a);
-                    }
-                }
+//                listViewAdapter.getView(position,)
+//                listViewAdapter.notifyDataSetChanged();
+//                for (int i = 0; i < ListData.size(); i++) {
+//                    if (i != position) {
+//                        ListData.get(i).a = true;
+//                    } else if (ListData.get(position).a) {
+//                        ListData.get(position).a = false;
+//                        System.out.println("포지션은 : " + ListData.get(position).a);
+//                    } else {
+//                        ListData.get(position).a = true;
+//                        System.out.println("포지션sdf : " + ListData.get(position).a);
+//                    }
+//                }
 
             }
         });
@@ -246,6 +256,10 @@ public class QuestionnaireDetailActivity extends BaseActivity {
 
 
     }
+
+
+
+
 
     //수정버튼
     private View.OnClickListener modifyListener = new View.OnClickListener() {
@@ -424,174 +438,5 @@ public class QuestionnaireDetailActivity extends BaseActivity {
                     .show();
         }
     };
-
-
-    private class ListViewAdapter extends BaseAdapter {
-
-        Activity activity;
-        //    private Context mContext = null;
-        ImageFileProcessor ifp=new ImageFileProcessor();
-        ConstraintLayout constraintLayout;
-
-        public ArrayList<Data> data_list = new ArrayList<Data>();
-        public int mSelectedItem;
-
-
-        public int getSize(){
-            int size=0;
-            for(Data list:data_list){
-                if(list.bool_image||!(list.mTitle.equals("")))
-                    size++;
-            }
-            Log.d("size",size+"");
-            return size;
-        }
-
-        public ListViewAdapter(Activity activity) {
-            super();
-//        this.mContext = mContext;
-            this.activity=activity;
-        }
-
-        public void addDefualtItem(Drawable icon, String text) {
-            Data addInfo= new Data();
-            addInfo.mIcon = icon;
-            addInfo.mTitle = text;
-            data_list.add(addInfo);
-        }
-
-
-
-        public void addItem(Drawable icon, String mTitle, String mCount) {
-            Data addInfo = new Data();
-            addInfo.mIcon = icon;
-            addInfo.mTitle = mTitle;
-            addInfo.mCount = mCount;
-            data_list.add(addInfo);
-        }
-
-        public void setIcon(int position,Drawable icon,byte[] image_byte_array){
-            Data item=(Data)getItem(position);
-            item.image_byte_array=image_byte_array;
-            item.bool_image=true;
-            item.mIcon=icon;
-
-        }
-
-        @Override
-        public int getCount() {
-            return data_list.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return  data_list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            final int pos=position;
-            final ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.votedetaillistviewcell, null);
-                holder.mIcon = (ImageView) convertView.findViewById(R.id.imageView19);
-                holder.mText = (TextView) convertView.findViewById(R.id.editText4);
-                holder.mCount = (TextView) convertView.findViewById(R.id.textView164);
-                holder.constraintLayout = (ConstraintLayout) convertView.findViewById(R.id.vote_cons);
-//                holder.mDate = (TextView) convertView.findViewById(R.id.textView1);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            Data mData = data_list.get(position);
-
-            holder.mIcon.setImageDrawable(mData.mIcon);
-            holder.mIcon.setVisibility(View.VISIBLE);
-            holder.mText.setText(mData.mTitle);
-            holder.mCount.setText(mData.mCount);
-
-            if (ListData.get(position).a) {
-//                holder.mText.setTextColor(Color.BLACK);
-//                linearLayout.setBackgroundColor(Color.parseColor("#F7F7F7"));
-                convertView.setBackgroundColor(Color.parseColor("#FAE734"));
-
-            } else {
-//                holder.mText.setTextColor(Color.WHITE);
-//                linearLayout.setBackgroundColor(Color.parseColor("#2CA6E0"));
-                convertView.setBackgroundColor(Color.parseColor("#E5E5E5"));
-            }
-
-            if(position == mSelectedItem) {
-                constraintLayout.setBackgroundResource(R.drawable.votedetaillistviewcellcustom_selector);
-            }
-
-
-//        holder.mText.setEditableFactory(Editab);//.setEnabled(!(position>size+1));
-
-
-
-            holder.mIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new ImageFileProcessor().selectGallery(activity,pos);
-
-                }
-            });
-
-
-            holder.mText.addTextChangedListener(new TextWatcher() {
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    // 입력되는 텍스트에 변화가 있을 때 호출된다.
-                    Data data=data_list.get(pos);
-                    data.mTitle=holder.mText.getText().toString();
-                }
-
-                @Override
-                public void afterTextChanged(Editable arg0) {
-                    // 입력이 끝났을 때 호출된다.
-                }
-
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    // 입력하기 전에 호출된다.
-                }
-            });
-
-            return convertView;
-        }
-
-
-        public class ViewHolder {
-            public ImageView mIcon;
-            public TextView mText;
-            public TextView mCount;
-            public ConstraintLayout constraintLayout;
-        }
-
-
-        public class Data {
-            //아이콘
-            public Drawable mIcon;
-            //제목
-            public String mTitle;
-            public String mCount;
-            boolean bool_image;
-            public boolean a;
-
-            public byte[] image_byte_array;
-
-        }
-
-
-    }
 
 }

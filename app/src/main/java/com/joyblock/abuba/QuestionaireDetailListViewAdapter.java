@@ -98,7 +98,7 @@ public class QuestionaireDetailListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.votedetaillistviewcell, null);
             holder.mIcon = (ImageView) convertView.findViewById(R.id.imageView19);
             holder.mText = (TextView) convertView.findViewById(R.id.editText4);
-            holder.mCount = (TextView) convertView.findViewById(R.id.textView164);
+//            holder.mCount = (TextView) convertView.findViewById(R.id.textView164);
 //                holder.mDate = (TextView) convertView.findViewById(R.id.textView1);
             convertView.setTag(holder);
         } else {
