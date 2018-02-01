@@ -42,6 +42,7 @@ import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -78,6 +79,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
     boolean cancelAndRegister = true;
     CustomListViewDialog dialog;
     ImageView titleNameRightImage;
+    Integer repush;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         seq_notice = detail.seq_notice;
         seq_kindergarden_class = detail.seq_kindergarden_class;
         file_path = detail.file_path;
-        Log.d("file_path",file_path);
+        Log.d("file_path", file_path);
         content = detail.content;
         is_reply = detail.is_reply;
         titles = detail.title;
@@ -104,7 +106,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         inText = (EditText) findViewById(R.id.inText);
         inText.setText(content);
         editorImage = (ImageView) findViewById(R.id.questionnaireImage);
-        if(!file_path.equals("")) {
+        if (!file_path.equals("")) {
 //            editorImage = (ImageView) findViewById(R.id.questionnaireImage);
             Picasso.with(NoticeEditorModifyActivity.this).load(file_path).into(editorImage);
             editorImage.setVisibility(View.VISIBLE);
@@ -169,8 +171,52 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                api.API_6(seq_kindergarden,"");
+                String json = api.getMessage();
+                Integer resultcode = null;
+                try{
+                    JSONObject jsonResponse = new JSONObject(json);
+                    resultcode = Integer.parseInt(jsonResponse.getString("resultCode"));
+                    Log.d("resultcode" , String.valueOf(resultcode));
+                    classList=new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"),R6_SelectKindergardenClassList[].class);
 
-                new NoticeEditorModifyActivity.SelectKindergardenClassList(seq_kindergarden).execute();
+//                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
+                    // 해당 뷰에 리스트뷰 호출
+                    listview = (ListView)findViewById(R.id.notice_popup_listview);
+                    // 리스트뷰에 어댑터 설정
+                    adapter=new BanListViewAdapter();
+//                listview.setAdapter(adapter);
+                    dialog = new CustomListViewDialog(NoticeEditorModifyActivity.this,adapter);
+                    adapter.addItem("전체");
+                    for(R6_SelectKindergardenClassList list:classList){
+                        adapter.addItem(list.kindergarden_class_name);
+                    }
+                    adapter.notifyDataSetChanged();
+                    dialog.show();
+                    listview=dialog.getListView();
+                    //반 다이얼로그 이벤트 처리
+
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            BanListViewItem item = adapter.list.get(position);
+                            seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+//                        banListDialogInterface.dismiss();
+                            title.setText(item.getName());
+                            titleNameRightImage.setVisibility(View.GONE);
+                            if (title.getText().toString() == "전체") {
+                                titleNameRightImage.setVisibility(View.VISIBLE);
+                            }
+                            Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+//                new NoticeEditorModifyActivity.SelectKindergardenClassList(seq_kindergarden).execute();
 
             }
 
@@ -257,9 +303,9 @@ public class NoticeEditorModifyActivity extends BaseActivity {
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
-            Log.d("값들", seq_notice+""+is_reply+""+seq_kindergarden_class+""+title+""+content + "" + file_path);
+            Log.d("값들", seq_notice + "" + is_reply + "" + seq_kindergarden_class + "" + title + "" + content + "" + file_path);
 
-            imageName = seq_user + "_" +seq_kindergarden + ".png";
+            imageName = seq_user + "_" + seq_kindergarden + ".png";
 
 //            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
 //            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
@@ -273,7 +319,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                         .addFormDataPart("content", content)
                         .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
                         .build();
-            }catch(NullPointerException e){
+            } catch (NullPointerException e) {
                 formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
                         .addFormDataPart("seq_notice", seq_notice)
                         .addFormDataPart("is_reply", is_reply)
@@ -288,7 +334,6 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                     .post(formBody1)
                     .build();
         }
-
 
 
         @Override
@@ -392,7 +437,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                 // 리스트뷰에 어댑터 설정
                 adapter = new BanListViewAdapter();
 //                listview.setAdapter(adapter);
-                dialog = new CustomListViewDialog(NoticeEditorModifyActivity.this,adapter);
+                dialog = new CustomListViewDialog(NoticeEditorModifyActivity.this, adapter);
                 adapter.addItem("전체");
                 for (R6_SelectKindergardenClassList list : classList) {
                     adapter.addItem(list.kindergarden_class_name);
@@ -412,7 +457,7 @@ public class NoticeEditorModifyActivity extends BaseActivity {
                 // 반 다이얼로그 보기
                 banListDialogInterface = banListDialogBuilder.show();
                 */
-                listview=dialog.getListView();
+                listview = dialog.getListView();
                 //반 다이얼로그 이벤트 처리
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -523,13 +568,13 @@ public class NoticeEditorModifyActivity extends BaseActivity {
             bitmap1 = NoticeEditorActivity.decodeUri(this, data, 400);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-            if(bitmap1.getByteCount() > 100000) {
+            if (bitmap1.getByteCount() > 100000) {
 //                bitmap1.compress( PNG, (int) (100*(10000.0/bitmap1.getByteCount())), stream) ;
-                bitmap1.compress( PNG, 1, stream) ;
-                image=stream.toByteArray();
+                bitmap1.compress(PNG, 1, stream);
+                image = stream.toByteArray();
             } else {
-                bitmap1.compress( PNG, 100, stream) ;
-                image=stream.toByteArray();
+                bitmap1.compress(PNG, 100, stream);
+                image = stream.toByteArray();
 
             }
             /*
@@ -552,12 +597,12 @@ public class NoticeEditorModifyActivity extends BaseActivity {
         }
 
 
-            editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
+        editorImage.setImageBitmap(rotate(bitmap1, exifDegree));//이미지 뷰에 비트맵 넣기
 //        editorImage.setImageBitmap(bitmap);//이미지 뷰에 비트맵 넣기
-            editorImage.setVisibility(View.VISIBLE);
-            editorImage.setScaleType(ImageView.ScaleType.CENTER);
+        editorImage.setVisibility(View.VISIBLE);
+        editorImage.setScaleType(ImageView.ScaleType.CENTER);
 
-            editorImage.setAdjustViewBounds(true);
+        editorImage.setAdjustViewBounds(true);
 
 //        image = bitmapToByteArray(bitmap1);
 
@@ -700,27 +745,58 @@ public class NoticeEditorModifyActivity extends BaseActivity {
     public void clickTextView3(View v) {
         mCustomDialog.dismiss();
 
-        if(cancelAndRegister) {
+        if (cancelAndRegister) {
             //따로 사진을 바꾸지 않았으면 false 사진을 바꾼다면 sendPicture에서 modifyImageChange를 true바꿔줌
-//
 // if(modifyImageChange) {
 //                NoticeEditorModifyActivity.UpdateNotice buyTask = new NoticeEditorModifyActivity.UpdateNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString(), modifyImageChange);
 //                buyTask.execute();
 //            } else {
-                NoticeEditorModifyActivity.UpdateNotice buyTask = new NoticeEditorModifyActivity.UpdateNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString());
-                buyTask.execute();
-//            }
+
+            api.API_11(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString(), image);
+            String json = api.getMessage();
+            Integer resultcode = null;
+
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                resultcode = Integer.parseInt(jsonResponse.getString("resultCode"));
+                Log.d("resultcode", String.valueOf(resultcode));
+
+                switch (resultcode) {
+                    case 200:
+                        repush = 1;
+                        mCustomDialog = new TextDialog(NoticeEditorModifyActivity.this, R.layout.dialog_one_check);
+                        mCustomDialog.setTexts(new String[]{"수정이 완료되었습니다.", "확인"});
+                        mCustomDialog.show();
+//                        mCustomDialog.setTexts;
+                        break;
+                    case 102:
+                        break;
+                    default:
+                        break;
+                }
+            } catch (JSONException e) {
+            }
+
+//            NoticeEditorModifyActivity.UpdateNotice buyTask = new NoticeEditorModifyActivity.UpdateNotice(seq_notice, is_reply, seq_kindergarden_class, titleText.getText().toString(), inText.getText().toString());
+//            buyTask.execute();
+
         } else {
             finish();
         }
-
-
 
 
     }
 
     public void clickTextViewOne(View v) {
         mCustomDialog.dismiss();
+
+        switch (repush) {
+            case 1:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
 }

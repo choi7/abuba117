@@ -39,6 +39,7 @@ import com.joyblock.abuba.CustomListViewDialog;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.api_message.R6_SelectKindergardenClassList;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -62,7 +63,8 @@ public class NoticeEditorActivity extends BaseActivity {
 
 
     RadioGroup rg;
-    String checkid = "y", is_reply = "y", seq_user, seq_kindergarden, seq_kindergarden_class, maintitle, intext, files;
+    String checkid = "y", is_reply = "y", seq_user, seq_kindergarden, seq_kindergarden_class = "0", maintitle, intext, files;
+    byte[] bytes;
     String noticeEditorPush = "http://58.229.208.246/Ububa/insertNotice.do";
     Boolean imageChange = true;
     EditText titleText, inText;
@@ -97,7 +99,6 @@ public class NoticeEditorActivity extends BaseActivity {
         inText = (EditText) findViewById(R.id.inText);
         editorImage = (ImageView) findViewById(R.id.questionnaireImage);
 
-
         ImageView pictureRegister = (ImageView) findViewById(R.id.pictureRegisterimageView);
         pictureRegister.setVisibility(View.VISIBLE);
         pictureRegister.setOnClickListener(new View.OnClickListener() {
@@ -128,21 +129,12 @@ public class NoticeEditorActivity extends BaseActivity {
 
         actionbarCustom();
 
-
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkPermissions();
         }
 
 
     }
-
-
-
-
-
-
     TextView title;
     public void actionbarCustom() {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -161,16 +153,56 @@ public class NoticeEditorActivity extends BaseActivity {
         title.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                new SelectKindergardenClassList(seq_kindergarden).execute();
+                api.API_6(seq_kindergarden,"");
+                String json = api.getMessage();
+                Integer resultcode = null;
+                try{
+                    JSONObject jsonResponse = new JSONObject(json);
+                    resultcode = Integer.parseInt(jsonResponse.getString("resultCode"));
+                    Log.d("resultcode" , String.valueOf(resultcode));
+                    classList=new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"),R6_SelectKindergardenClassList[].class);
+
+//                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
+                    // 해당 뷰에 리스트뷰 호출
+                    listview = (ListView)findViewById(R.id.notice_popup_listview);
+                    // 리스트뷰에 어댑터 설정
+                    adapter=new BanListViewAdapter();
+//                listview.setAdapter(adapter);
+                    dialog = new CustomListViewDialog(NoticeEditorActivity.this,adapter);
+                    adapter.addItem("전체");
+                    for(R6_SelectKindergardenClassList list:classList){
+                        adapter.addItem(list.kindergarden_class_name);
+                    }
+                    adapter.notifyDataSetChanged();
+                    dialog.show();
+                    listview=dialog.getListView();
+                    //반 다이얼로그 이벤트 처리
+
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            BanListViewItem item = adapter.list.get(position);
+                            seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+//                        banListDialogInterface.dismiss();
+                            title.setText(item.getName());
+                            titleNameRightImage.setVisibility(View.GONE);
+                            if (title.getText().toString() == "전체") {
+                                titleNameRightImage.setVisibility(View.VISIBLE);
+                            }
+                            Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
+//                new SelectKindergardenClassList(seq_kindergarden).execute();
 
             }
 
         });
-
-
-
-
-
 
         TextView backText = (TextView) findViewById(R.id.editorTextLeft);
         backText.setVisibility(View.VISIBLE);
@@ -210,205 +242,6 @@ public class NoticeEditorActivity extends BaseActivity {
         }
     }
 
-    public class InsertNotice extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody1;
-
-
-
-
-
-        public InsertNotice(String seq_user, String seq_kindergarden, String is_reply, String title, String content) {
-            client = new OkHttpClient();
-
-            // 현재시간을 msec 으로 구한다.
-            long now = System.currentTimeMillis();
-            // 현재시간을 date 변수에 저장한다.
-            Date date = new Date(now);
-            // 시간을 나타냇 포맷을 정한다 ( yyyy/MM/dd 같은 형태로 변형 가능 )
-            SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            // nowDate 변수에 값을 저장한다.
-            String formatDate = sdfNow.format(date);
-
-            imageName = seq_user + "_" +seq_kindergarden + ".png";
-
-//            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
-//            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-
-            try {
-                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("seq_user", seq_user)
-                        .addFormDataPart("seq_kindergarden", seq_kindergarden)
-                        .addFormDataPart("is_reply", is_reply)
-                        .addFormDataPart("title", title)
-                        .addFormDataPart("content", content)
-                        .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
-                        .build();
-            }catch(NullPointerException e){
-                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("seq_user", seq_user)
-                        .addFormDataPart("seq_kindergarden", seq_kindergarden)
-                        .addFormDataPart("is_reply", is_reply)
-                        .addFormDataPart("title", title)
-                        .addFormDataPart("content", content)
-                        .build();
-            }
-
-            request = new okhttp3.Request.Builder()
-                    .url("http://58.229.208.246/Ububa/insertNotice.do")
-                    .post(formBody1)
-                    .build();
-        }
-
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            Log.d("TAG", json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-                System.out.println("반환되는 값 : " + jsonResponse);
-                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                System.out.println(ss);
-                if (ss == 200) {
-                    String userID = jsonResponse.getString("resultCode");
-                    String userPassword = jsonResponse.getString("resultMsg");
-                    System.out.println(userID + userPassword);
-//                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
-//                    System.out.println(json1);
-//                    Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
-//                    NoticeEditorActivity.this.startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "등록완료.",Toast.LENGTH_LONG).show();
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(), "잠시 후에 재시도 해주세요.",Toast.LENGTH_LONG).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    class SelectKindergardenClassList extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody;
-        String url="http://58.229.208.246/Ububa/selectKindergardenClassList.do";
-
-        public SelectKindergardenClassList(String seq_kindergarden) {
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_kindergarden", seq_kindergarden)
-                    .build();
-            request = new okhttp3.Request.Builder()
-                    .url(url)
-                    .post(formBody)
-                    .build();
-        }
-
-        public SelectKindergardenClassList(String seq_kindergarden,String page) {
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_kindergarden", seq_kindergarden)
-                    .add("page", page)
-                    .build();
-            request = new okhttp3.Request.Builder()
-                    .url(url)
-                    .post(formBody)
-                    .build();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        boolean flag=false;
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            Log.d("TAG", json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                classList=new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"),R6_SelectKindergardenClassList[].class);
-
-//                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
-                // 해당 뷰에 리스트뷰 호출
-                listview = (ListView)findViewById(R.id.notice_popup_listview);
-                // 리스트뷰에 어댑터 설정
-                adapter=new BanListViewAdapter();
-//                listview.setAdapter(adapter);
-                dialog = new CustomListViewDialog(NoticeEditorActivity.this,adapter);
-                adapter.addItem("전체");
-                for(R6_SelectKindergardenClassList list:classList){
-                    adapter.addItem(list.kindergarden_class_name);
-                }
-                adapter.notifyDataSetChanged();
-                dialog.show();
-
-                /*
-                // 반 다이얼로그 생성
-                banListDialogBuilder= new AlertDialog.Builder(activity);
-                // 리스트뷰 설정된 레이아웃
-                banListDialogBuilder.setView(view);
-
-//                // 확인버튼
-//                banListDialogBuilder.setPositiveButton("확인", null);
-
-                // 반 다이얼로그 보기
-                banListDialogInterface=banListDialogBuilder.show();
-                */
-
-                listview=dialog.getListView();
-                //반 다이얼로그 이벤트 처리
-
-                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            BanListViewItem item = adapter.list.get(position);
-                            seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
-//                        banListDialogInterface.dismiss();
-                            title.setText(item.getName());
-                            titleNameRightImage.setVisibility(View.GONE);
-                            if (title.getText().toString() == "전체") {
-                                titleNameRightImage.setVisibility(View.VISIBLE);
-                            }
-                            Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
-
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
 
@@ -664,7 +497,6 @@ public class NoticeEditorActivity extends BaseActivity {
     public void clickTextView2(View v) {
         mCustomDialog.dismiss();
 
-
     }
 
     public void clickTextView3(View v) {
@@ -675,20 +507,235 @@ public class NoticeEditorActivity extends BaseActivity {
 
             Log.d("타이틀" , maintitle);
             Log.d("sub타이틀" , intext);
+            Log.d("seq_kin" , seq_kindergarden);
+            Log.d("user타이틀" , seq_user);
+            Log.d("reply타이틀" , is_reply);
+            Log.d("class타이틀" , seq_kindergarden_class);
+            Log.d("image타이틀" , String.valueOf(image));
 
-            InsertNotice buyTask = new InsertNotice(seq_user,seq_kindergarden,is_reply,maintitle, intext);
-            buyTask.execute();
-
+            api.API_10(seq_user, seq_kindergarden, is_reply, seq_kindergarden_class, maintitle, intext, image);
+            String json = api.getMessage();
+            Integer resultcode = null;
+            try{
+                JSONObject jsonResponse = new JSONObject(json);
+                resultcode = Integer.parseInt(jsonResponse.getString("resultCode"));
+                Log.d("resultcode" , String.valueOf(resultcode));
+            } catch (Exception e) {
+            }
+//            InsertNotice buyTask = new InsertNotice(seq_user,seq_kindergarden,is_reply,maintitle, intext);
+//            buyTask.execute();
             finish();
         } else {
             finish();
         }
-
     }
 
     public void clickTextViewOne(View v) {
         mCustomDialog.dismiss();
     }
 
-
 }
+
+
+/*
+    public class InsertNotice extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody1;
+
+
+
+
+
+        public InsertNotice(String seq_user, String seq_kindergarden, String is_reply, String title, String content) {
+            client = new OkHttpClient();
+
+            // 현재시간을 msec 으로 구한다.
+            long now = System.currentTimeMillis();
+            // 현재시간을 date 변수에 저장한다.
+            Date date = new Date(now);
+            // 시간을 나타냇 포맷을 정한다 ( yyyy/MM/dd 같은 형태로 변형 가능 )
+            SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            // nowDate 변수에 값을 저장한다.
+            String formatDate = sdfNow.format(date);
+
+            imageName = seq_user + "_" +seq_kindergarden + ".png";
+
+//            경로에서 파일로 변환시켜서 넣어줘야 문제가 없음. 이부분에서 문제가 있었음
+//            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+
+            try {
+                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("seq_user", seq_user)
+                        .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                        .addFormDataPart("is_reply", is_reply)
+                        .addFormDataPart("title", title)
+                        .addFormDataPart("content", content)
+                        .addFormDataPart("files", imageName, RequestBody.create(MultipartBody.FORM, image))
+                        .build();
+            }catch(NullPointerException e){
+                formBody1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("seq_user", seq_user)
+                        .addFormDataPart("seq_kindergarden", seq_kindergarden)
+                        .addFormDataPart("is_reply", is_reply)
+                        .addFormDataPart("title", title)
+                        .addFormDataPart("content", content)
+                        .build();
+            }
+
+            request = new okhttp3.Request.Builder()
+                    .url("http://58.229.208.246/Ububa/insertNotice.do")
+                    .post(formBody1)
+                    .build();
+        }
+
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("TAG", json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                System.out.println("반환되는 값 : " + jsonResponse);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                System.out.println(ss);
+                if (ss == 200) {
+                    String userID = jsonResponse.getString("resultCode");
+                    String userPassword = jsonResponse.getString("resultMsg");
+                    System.out.println(userID + userPassword);
+//                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
+//                    System.out.println(json1);
+//                    Intent intent = new Intent(NoticeEditorActivity.this, NoticeActivity.class);
+//                    NoticeEditorActivity.this.startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "등록완료.",Toast.LENGTH_LONG).show();
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "잠시 후에 재시도 해주세요.",Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    */
+
+//
+//    class SelectKindergardenClassList extends AsyncTask<Void, Void, String> {
+//        OkHttpClient client;
+//        okhttp3.Request request;
+//        RequestBody formBody;
+//        String url="http://58.229.208.246/Ububa/selectKindergardenClassList.do";
+//
+//        public SelectKindergardenClassList(String seq_kindergarden) {
+//            client = new OkHttpClient();
+//            formBody = new FormBody.Builder()
+//                    .add("seq_kindergarden", seq_kindergarden)
+//                    .build();
+//            request = new okhttp3.Request.Builder()
+//                    .url(url)
+//                    .post(formBody)
+//                    .build();
+//        }
+//
+//        public SelectKindergardenClassList(String seq_kindergarden,String page) {
+//            client = new OkHttpClient();
+//            formBody = new FormBody.Builder()
+//                    .add("seq_kindergarden", seq_kindergarden)
+//                    .add("page", page)
+//                    .build();
+//            request = new okhttp3.Request.Builder()
+//                    .url(url)
+//                    .post(formBody)
+//                    .build();
+//        }
+//
+//        @Override
+//        protected String doInBackground(Void... params) {
+//            try {
+//                okhttp3.Response response = client.newCall(request).execute();
+//                if (!response.isSuccessful()) {
+//                    return null;
+//                }
+//                return response.body().string();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
+//        boolean flag=false;
+//        @Override
+//        protected void onPostExecute(String json) {
+//            super.onPostExecute(json);
+//            Log.d("TAG", json);
+//            try {
+//                JSONObject jsonResponse = new JSONObject(json);
+//                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+//                classList=new GsonBuilder().create().fromJson(jsonResponse.getString("kindergarden_class_list"),R6_SelectKindergardenClassList[].class);
+//
+////                View view = activity.getLayoutInflater().inflate(R.layout.park_layout_notice_popup_list, null);
+//                // 해당 뷰에 리스트뷰 호출
+//                listview = (ListView)findViewById(R.id.notice_popup_listview);
+//                // 리스트뷰에 어댑터 설정
+//                adapter=new BanListViewAdapter();
+////                listview.setAdapter(adapter);
+//                dialog = new CustomListViewDialog(NoticeEditorActivity.this,adapter);
+//                adapter.addItem("전체");
+//                for(R6_SelectKindergardenClassList list:classList){
+//                    adapter.addItem(list.kindergarden_class_name);
+//                }
+//                adapter.notifyDataSetChanged();
+//                dialog.show();
+//
+//                /*
+//                // 반 다이얼로그 생성
+//                banListDialogBuilder= new AlertDialog.Builder(activity);
+//                // 리스트뷰 설정된 레이아웃
+//                banListDialogBuilder.setView(view);
+//
+////                // 확인버튼
+////                banListDialogBuilder.setPositiveButton("확인", null);
+//
+//                // 반 다이얼로그 보기
+//                banListDialogInterface=banListDialogBuilder.show();
+//                */
+//
+//                listview=dialog.getListView();
+//                //반 다이얼로그 이벤트 처리
+//
+//                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                            BanListViewItem item = adapter.list.get(position);
+//                            seq_kindergarden_class = position == 0 ? "0" : classList[position - 1].seq_kindergarden_class;
+////                        banListDialogInterface.dismiss();
+//                            title.setText(item.getName());
+//                            titleNameRightImage.setVisibility(View.GONE);
+//                            if (title.getText().toString() == "전체") {
+//                                titleNameRightImage.setVisibility(View.VISIBLE);
+//                            }
+//                            Toast.makeText(getApplicationContext(), position == 0 ? "전체" : item.getName(), Toast.LENGTH_LONG).show();
+//                            dialog.dismiss();
+//
+//                    }
+//                });
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }

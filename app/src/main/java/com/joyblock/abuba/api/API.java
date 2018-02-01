@@ -61,6 +61,8 @@ public class API extends Thread{
         }
     }
 
+    
+
     public void API_2(String ID,String 비밀번호){
         clearMessage();
         TAG="API2";

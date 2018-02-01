@@ -11,9 +11,9 @@
         android:id="@+id/noticeDetailBanText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13.5dp"
-        android:text="노랑반"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/nanumsquareregular"
+        android:text="노랑반"
         android:textColor="#595757"
         android:textSize="8.75dp"
         app:layout_constraintStart_toStartOf="@+id/noticeDetailTitleText"
@@ -24,7 +24,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="5.5dp"
+        android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:fontFamily="@font/nanumsquarebold"
         android:singleLine="true"
@@ -32,17 +32,16 @@
         android:textColor="#000000"
         android:textSize="13.75dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noticeDetailBanText"
-        android:layout_marginLeft="24dp" />
+        app:layout_constraintTop_toBottomOf="@+id/noticeDetailBanText" />
 
     <TextView
         android:id="@+id/noticeDetailTimeText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="14dp"
         android:fontFamily="@font/nanumsquareregular"
         android:text="2018.01.01 오후 7:00"
         android:textColor="#B4B4B5"
-        android:textSize="6.25dp"
+        android:textSize="9dp"
         app:layout_constraintStart_toStartOf="@+id/noticeDetailNameText"
         app:layout_constraintTop_toBottomOf="@+id/noticeDetailNameText" />
 
@@ -50,13 +49,11 @@
         android:id="@+id/noticeDetailNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6.25dp"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/nanumsquareregular"
         android:text="김원장"
         android:textColor="#000000"
-        android:textSize="8.75dp"
-        app:layout_constraintBottom_toBottomOf="@+id/noticeDetailUserImage"
+        android:textSize="10dp"
         app:layout_constraintStart_toEndOf="@+id/noticeDetailUserImage"
         app:layout_constraintTop_toTopOf="@+id/noticeDetailUserImage" />
 
@@ -64,8 +61,7 @@
         android:id="@+id/noticeDetailUserImage"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginBottom="6.5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="@+id/noticeDetailTitleText"
         app:layout_constraintTop_toBottomOf="@+id/noticeDetailTitleText"
         app:srcCompat="@mipmap/ic_launcher" />
@@ -107,4 +103,5 @@
         app:layout_constraintStart_toStartOf="parent"
         android:background="#7E7E7E"
         />
+
 </android.support.constraint.ConstraintLayout>

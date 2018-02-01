@@ -46,7 +46,7 @@ public class LoginActivity extends BaseActivity {
     ConstraintLayout LoginLayout;
     String fullurl11 = "http://58.229.208.246/Ububa/login.do?";
     String id;
-    BuyTask buyTask;
+//    BuyTask buyTask;
     Boolean loginChecked = false, autoCheck = false;
     SharedPreferences.Editor editor;
     CheckBox autoLoginCheckBox;
@@ -106,7 +106,9 @@ public class LoginActivity extends BaseActivity {
 //            autoLoginCheckBox.setChecked(true);
             checkImage.setImageDrawable(getResources().getDrawable(R.drawable.check_on));
             autoCheck = true;
-            new BuyTask(pref.getString("id", " "), pref.getString("password", " ")).execute();
+            api.API_2(pref.getString("id", " "), pref.getString("password", " "));
+            Login();
+//            new BuyTask(pref.getString("id", " "), pref.getString("password", " ")).execute();
         }
 
 
@@ -134,7 +136,7 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View view) {
 
                 if (!idText.getText().toString().equals("") && !passwordText.getText().toString().equals("")) {
-
+                    api.API_2(idText.getText().toString(), passwordText.getText().toString());
                     Login();
                 } else {
                     loginSucess = 3;
@@ -151,122 +153,6 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    public class BuyTask extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody;
-
-        public BuyTask(String id, String password) {
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("id", id)
-                    .add("password", password)
-//                    .add("cu_num", cu_num + "")
-//                    .add("cu_price", cu_price + "")
-                    .build();
-            request = new okhttp3.Request.Builder()
-                    .url(fullurl11)
-                    .post(formBody)
-                    .build();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            Log.d("TAG", json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-                System.out.println(jsonResponse);
-                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-                System.out.println(ss);
-
-                if (ss == 200) {
-                    String resultCode = jsonResponse.getString("resultCode");
-                    String resultMsg = jsonResponse.getString("resultMsg");
-                    Log.d("resultCode : ", resultCode);
-                    Log.d("resultMsg : ", resultMsg);
-
-                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
-                    System.out.println(json);
-                    JSONObject json2 = new JSONObject(json1.getString("user"));
-                    System.out.println(json2);
-
-
-                    app.name = json2.getString("name");
-                    app.phone_no = json2.getString("phone_no");
-                    app.authority = json2.getString("authority");
-                    app.seq_user = json2.getString("seq_user");
-                    app.push_yn = json2.getString("push_yn").equals("y");
-                    app.email = json2.getString("email");
-                    app.token = json2.getString("token");
-
-
-                    editor = pref.edit();
-                    editor.putString("name", json2.getString("name"));
-                    editor.putString("phone_no", json2.getString("phone_no"));
-                    editor.putString("authority", json2.getString("authority"));
-                    editor.putString("seq_user", json2.getString("seq_user"));
-                    editor.putString("push_yn", json2.getString("push_yn"));
-                    editor.putString("email", json2.getString("email"));
-                    editor.putString("token", json2.getString("token"));
-//                    boolean auto=autoLoginCheckBox.isChecked();
-                    boolean auto = autoCheck;
-                    editor.putBoolean("autoLogin", auto);
-                    editor.putString("id", auto ? idText.getText().toString() : "");
-                    editor.putString("password", auto ? passwordText.getText().toString() : "");
-                    editor.commit();
-
-                    if (pref.getBoolean("autoLogin", false)) {
-                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
-                        // save id, password to Database
-                        Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
-                        LoginActivity.this.startActivity(intent);
-                        finish();
-                        return;
-                    }
-
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setMessage("로그인에 성공하였습니다.")
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-//                                    Log.d("아이디는 ", id);
-                                    loginIntent.putExtra("id", id);
-                                    LoginActivity.this.startActivity(loginIntent);
-                                    finish();
-                                }
-                            })
-                            .create()
-                            .show();
-                } else if (ss == 102) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setMessage("아이디 또는 비밀번호가 틀립니다")
-                            .setNegativeButton("다시 시도", null)
-                            .create()
-                            .show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 
 
     public void findViewbyIdSet() {
@@ -382,8 +268,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void Login() {
-
-        api.API_2(idText.getText().toString(), passwordText.getText().toString());
         String json = api.getMessage();
         Integer resultcode = null;
 
@@ -510,3 +394,121 @@ public class LoginActivity extends BaseActivity {
 //            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
 //        }
 //    }
+/*
+    public class BuyTask extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+
+        public BuyTask(String id, String password) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("id", id)
+                    .add("password", password)
+//                    .add("cu_num", cu_num + "")
+//                    .add("cu_price", cu_price + "")
+                    .build();
+            request = new okhttp3.Request.Builder()
+                    .url(fullurl11)
+                    .post(formBody)
+                    .build();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("TAG", json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                System.out.println(jsonResponse);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+                System.out.println(ss);
+
+                if (ss == 200) {
+                    String resultCode = jsonResponse.getString("resultCode");
+                    String resultMsg = jsonResponse.getString("resultMsg");
+                    Log.d("resultCode : ", resultCode);
+                    Log.d("resultMsg : ", resultMsg);
+
+                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
+                    System.out.println(json);
+                    JSONObject json2 = new JSONObject(json1.getString("user"));
+                    System.out.println(json2);
+
+
+                    app.name = json2.getString("name");
+                    app.phone_no = json2.getString("phone_no");
+                    app.authority = json2.getString("authority");
+                    app.seq_user = json2.getString("seq_user");
+                    app.push_yn = json2.getString("push_yn").equals("y");
+                    app.email = json2.getString("email");
+                    app.token = json2.getString("token");
+
+
+                    editor = pref.edit();
+                    editor.putString("name", json2.getString("name"));
+                    editor.putString("phone_no", json2.getString("phone_no"));
+                    editor.putString("authority", json2.getString("authority"));
+                    editor.putString("seq_user", json2.getString("seq_user"));
+                    editor.putString("push_yn", json2.getString("push_yn"));
+                    editor.putString("email", json2.getString("email"));
+                    editor.putString("token", json2.getString("token"));
+//                    boolean auto=autoLoginCheckBox.isChecked();
+                    boolean auto = autoCheck;
+                    editor.putBoolean("autoLogin", auto);
+                    editor.putString("id", auto ? idText.getText().toString() : "");
+                    editor.putString("password", auto ? passwordText.getText().toString() : "");
+                    editor.commit();
+
+                    if (pref.getBoolean("autoLogin", false)) {
+                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                        // save id, password to Database
+                        Intent intent = new Intent(LoginActivity.this, MainDawerSelectActivity.class);
+                        LoginActivity.this.startActivity(intent);
+                        finish();
+                        return;
+                    }
+
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("로그인에 성공하였습니다.")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    Log.d("아이디는 ", id);
+                                    loginIntent.putExtra("id", id);
+                                    LoginActivity.this.startActivity(loginIntent);
+                                    finish();
+                                }
+                            })
+                            .create()
+                            .show();
+                } else if (ss == 102) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("아이디 또는 비밀번호가 틀립니다")
+                            .setNegativeButton("다시 시도", null)
+                            .create()
+                            .show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    */

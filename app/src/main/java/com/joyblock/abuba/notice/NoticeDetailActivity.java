@@ -17,9 +17,11 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ import com.joyblock.abuba.CheckPeopleListActivity;
 import com.joyblock.abuba.CommentActivity;
 import com.joyblock.abuba.CommentListVieaAdapter;
 import com.joyblock.abuba.CustomDialogModifyAndDel;
+import com.joyblock.abuba.CustomListViewDialog;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.api_message.R30_SelectReplyList;
@@ -37,6 +40,7 @@ import com.joyblock.abuba.util.TimeConverter;
 import com.joyblock.abuba.api_message.R14_SelectNoticeOne;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -55,6 +59,7 @@ public class NoticeDetailActivity extends BaseActivity {
     CustomDialogModifyAndDel mCustomDialog;
     TextDialog mCustomDialogs;
     InputMethodManager imm;
+    Integer commentpush;
     boolean cancelAndRegister = true, editTouch = false;
 
 
@@ -113,11 +118,11 @@ public class NoticeDetailActivity extends BaseActivity {
                 NoticeDetailActivity.this.startActivity(intent);
             }
         });
-        ScrollView scrollView5 = (ScrollView) findViewById(R.id.scrollView5) ;
+        ScrollView scrollView5 = (ScrollView) findViewById(R.id.scrollView5);
         scrollView5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("sdfsdf","sdfsdf");
+                Log.d("sdfsdf", "sdfsdf");
                 et.clearFocus();
                 et.setCursorVisible(false);
                 InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -150,7 +155,7 @@ public class NoticeDetailActivity extends BaseActivity {
         noticeviewlinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("sdfssss","sdfsdf");
+                Log.d("sdfssss", "sdfsdf");
             }
         });
 
@@ -214,7 +219,7 @@ public class NoticeDetailActivity extends BaseActivity {
                     commentPushImage.setVisibility(View.VISIBLE);
                 }
                 */
-                Log.d("getkey", String.valueOf( event.getAction()));
+                Log.d("getkey", String.valueOf(event.getAction()));
                 return false;
             }
         });
@@ -266,8 +271,29 @@ public class NoticeDetailActivity extends BaseActivity {
 //                    Log.d("insertReply-seq_kids",seq_kids);
                     Log.d("insertReply-seq_notice", seq_notice);
                     flag = "n";
-                    Reply insertReply = new Reply(seq_user, seq_kindergarden, seq_notice, flag, et.getText().toString());
-                    insertReply.execute();
+
+                    api.API_28(seq_user, seq_kindergarden, "", seq_notice, flag, et.getText().toString());
+
+                    String json = api.getMessage();
+                    Integer resultcode = null;
+                    try {
+                        JSONObject jsonResponse = new JSONObject(json);
+                        resultcode = Integer.parseInt(jsonResponse.getString("resultCode"));
+                        Log.d("resultcode", String.valueOf(resultcode));
+                        switch (resultcode) {
+                            case 200:
+                                commentpush = 1;
+                                mCustomDialogs = new TextDialog(NoticeDetailActivity.this, R.layout.dialog_one_check);
+                                mCustomDialogs.setTexts(new String[]{"등록되었습니다.", "확인"});
+                                mCustomDialogs.show();
+
+                        }
+                    } catch (JSONException e) {
+                    }
+
+
+//                    Reply insertReply = new Reply(seq_user, seq_kindergarden, seq_notice, flag, et.getText().toString());
+//                    insertReply.execute();
                     et.clearFocus();
                     et.setText(null);
 //                commentEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -275,8 +301,10 @@ public class NoticeDetailActivity extends BaseActivity {
 //                    titleCount.setText(String.valueOf(commentListVieaAdapter.getCount()));
                     String page = "1";
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(NoticeDetailActivity.this);
-                    builder.setMessage("내용을 입력해주세요").setNegativeButton("확인", null).show();
+                    commentpush = 2;
+                    mCustomDialogs = new TextDialog(NoticeDetailActivity.this, R.layout.dialog_one_check);
+                    mCustomDialogs.setTexts(new String[]{"내용을 입력해주세요.", "확인"});
+                    mCustomDialogs.show();
                 }
             }
         });
@@ -353,7 +381,7 @@ public class NoticeDetailActivity extends BaseActivity {
 //        Intent intent = new Intent(NoticeDetailActivity.this, NoticeActivity.class);
 //        NoticeDetailActivity.this.startActivity(intent);
         Log.d("editTouch", String.valueOf(editTouch));
-        if(editTouch) {
+        if (editTouch) {
             et.clearFocus();
             et.setCursorVisible(false);
             InputMethodManager imm = (InputMethodManager) et.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -449,69 +477,7 @@ public class NoticeDetailActivity extends BaseActivity {
                     detailImage.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
                 }
-
                 setNotice(detail.seq_kindergarden_class, detail.title, detail.name, TimeConverter.convert(detail.reg_date), detail.content, detail.equals("y"));
-//                for(R14_SelectNoticeOne list:noticeList)
-
-
-//                    adapter.addItem(getResources().getDrawable(R.mipmap.ic_document),list.title,list.reg_date,list.name);
-//                adapter.notifyDataSetChanged();
-//                Log.d("Tag","공지사항 길이 : "+noticeList.length);
-//                if (ss == 200) {
-//                    String userID = jsonResponse.getString("resultCode");
-//                    String userPassword = jsonResponse.getString("resultMsg");
-//                    System.out.println(userID + userPassword);
-//                    JSONObject json1 = new JSONObject(jsonResponse.getString("retMap"));
-//                    System.out.println(json1);
-//                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    class DeleteNotice extends AsyncTask<Void, Void, String> {
-        OkHttpClient client;
-        okhttp3.Request request;
-        RequestBody formBody;
-        String url = "http://58.229.208.246/Ububa/deleteNotice.do";
-
-        //공지 삭제
-        public DeleteNotice(String seq_notice) {
-            client = new OkHttpClient();
-            formBody = new FormBody.Builder()
-                    .add("seq_notice", seq_notice)
-                    .build();
-
-            request = new okhttp3.Request.Builder()
-                    .url(url)
-                    .post(formBody)
-                    .build();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            try {
-                okhttp3.Response response = client.newCall(request).execute();
-                if (!response.isSuccessful()) {
-                    return null;
-                }
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String json) {
-            super.onPostExecute(json);
-            Log.d("response : ", json);
-            try {
-                JSONObject jsonResponse = new JSONObject(json);
-                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -535,7 +501,7 @@ public class NoticeDetailActivity extends BaseActivity {
     //삭제버튼
     private View.OnClickListener delListener = new View.OnClickListener() {
         public void onClick(View v) {
-
+            commentpush = 3;
             mCustomDialogs = new TextDialog(NoticeDetailActivity.this, R.layout.dialog_call);
             mCustomDialogs.setTexts(new String[]{"정말로 삭제하시겠습니까?", "취소", "확인"});
             mCustomDialogs.show();
@@ -574,14 +540,45 @@ public class NoticeDetailActivity extends BaseActivity {
     public void clickTextView3(View v) {
         mCustomDialogs.dismiss();
         mCustomDialog.dismiss();
-        NoticeDetailActivity.DeleteNotice buyTask = new NoticeDetailActivity.DeleteNotice(seq_notice);
-        buyTask.execute();
+
+
+        switch (commentpush) {
+            case 1:
+                Intent intent = new Intent(NoticeDetailActivity.this, CommentActivity.class);
+                intent.putExtra("seq_notice", detail.seq_notice);
+                intent.putExtra("flag", "NoticeDetailActivity");
+                NoticeDetailActivity.this.startActivity(intent);
+                break;
+            case 2:
+                break;
+            //게시글 삭제
+            case 3:
+                api.API_12(seq_notice);
+                String json = api.getMessage();
+                Integer resultcode = null;
+                try {
+                    JSONObject jsonResponse = new JSONObject(json);
+                    resultcode = Integer.parseInt(jsonResponse.getString("resultCode"));
+                    Log.d("resultcode", String.valueOf(resultcode));
+
+                } catch (Exception e) {
+
+                }
+                break;
+            default:
+                break;
+        }
+
+
+//        NoticeDetailActivity.DeleteNotice buyTask = new NoticeDetailActivity.DeleteNotice(seq_notice);
+//        buyTask.execute();
         finish();
     }
 
     public void clickTextViewOne(View v) {
         mCustomDialogs.dismiss();
     }
+
 
     class Reply extends AsyncTask<Void, Void, String> {
         OkHttpClient client;
@@ -665,3 +662,54 @@ public class NoticeDetailActivity extends BaseActivity {
         }
     }
 }
+
+
+  /*
+    class DeleteNotice extends AsyncTask<Void, Void, String> {
+        OkHttpClient client;
+        okhttp3.Request request;
+        RequestBody formBody;
+        String url = "http://58.229.208.246/Ububa/deleteNotice.do";
+
+        //공지 삭제
+        public DeleteNotice(String seq_notice) {
+            client = new OkHttpClient();
+            formBody = new FormBody.Builder()
+                    .add("seq_notice", seq_notice)
+                    .build();
+
+            request = new okhttp3.Request.Builder()
+                    .url(url)
+                    .post(formBody)
+                    .build();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                okhttp3.Response response = client.newCall(request).execute();
+                if (!response.isSuccessful()) {
+                    return null;
+                }
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+            Log.d("response : ", json);
+            try {
+                JSONObject jsonResponse = new JSONObject(json);
+                Integer ss = Integer.parseInt(jsonResponse.getString("resultCode"));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+*/
