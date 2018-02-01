@@ -119,22 +119,30 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         content = detail.survey.content;
         String class_name = app.kindergarden_class_list.get(Integer.parseInt(seq_kindergarden_class)).kindergarden_class_name;
 
-        noticeTitle = (TextView) findViewById(R.id.noticeDetailTitleText);
-        noticeTitle.setText(titles);
-        noticeBan = (TextView) findViewById(R.id.noticeDetailBanText);
-        noticeBan.setText(class_name);
-        noticeName = (TextView) findViewById(R.id.noticeDetailNameText);
-        noticeName.setText(titles);
-        noticeTime = (TextView) findViewById(R.id.noticeDetailTimeText);
-        noticeTime.setText(TimeConverter.convert(reg_date));
-        noticeContent = (TextView) findViewById(R.id.inTex);
-        noticeContent.setText(content);
+//        noticeTitle = (TextView) findViewById(R.id.noticeDetailTitleText);
+//        noticeTitle.setText(titles);
+//        noticeBan = (TextView) findViewById(R.id.noticeDetailBanText);
+//        noticeBan.setText(class_name);
+//        noticeName = (TextView) findViewById(R.id.noticeDetailNameText);
+//        noticeName.setText(titles);
+//        noticeTime = (TextView) findViewById(R.id.noticeDetailTimeText);
+//        noticeTime.setText(TimeConverter.convert(reg_date));
+//        noticeContent = (TextView) findViewById(R.id.inTex);
+//        noticeContent.setText(content);
+
         listView = (ListView) findViewById(R.id.questListview);
         listViewAdapter=new TextListViewAdapter(2,R.layout.votedetaillistviewcell);
+        listView.setAdapter(listViewAdapter);
         listViewAdapter.addItem("찬성","3");
         listViewAdapter.addItem("반대","3");
         listViewAdapter.addItem("기권","4");
-        listView.setAdapter(listViewAdapter);
+//        listViewAdapter.addItem("기권","4");
+//        listViewAdapter.addItem("기권","4");
+//        listViewAdapter.addItem("기권","4");
+//        listViewAdapter.addItem("기권","4");
+//        listViewAdapter.addItem("기권","4");
+//        listViewAdapter.addItem("기권","4");
+//        listViewAdapter.addItem("기권","4");
 
         setListViewHeightBasedOnChildren(listView);
 //        mAdapter11 = new QuestionaireDetailListViewAdapter(this);
@@ -147,7 +155,14 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mSelectedItem = position;
+//                mSelectedItem = position;
+
+//                ConstraintLayout cons=(ConstraintLayout)view.findViewById(R.id.listview_layout1);
+//                TextView tv1=(TextView)row_view.findViewById(R.id.listview_text1);
+                Toast.makeText(QuestionnaireDetailActivity.this, position,Toast.LENGTH_LONG).show();
+//                cons.setBackgroundColor(Color.RED);
+
+//                listViewAdapter.notifyDataSetChanged();
 //                listViewAdapter.getView(position,)
 //                listViewAdapter.notifyDataSetChanged();
 //                for (int i = 0; i < ListData.size(); i++) {
@@ -165,98 +180,13 @@ public class QuestionnaireDetailActivity extends BaseActivity {
             }
         });
 
-        Log.d("detail-2", String.valueOf(detail.survey_vote_item_list));
-
-
-//                notice_detail_seq_user = detail.seq_user;
-//                intentPutExtraModifyData = jsonResponse.getString("notice");
-
-//                Log.d("유저 시퀀스 ", notice_detail_seq_user);
-//                Log.d("유저 시퀀스1 ", seq_user);
-
-/*
-        if (seq_user.equals(notice_detail_seq_user)) {
-            insertAndDelete.setVisibility(View.VISIBLE);
-            Log.d("sd ", "ss");
-        } else {
-            insertAndDelete.setVisibility(View.INVISIBLE);
-            Log.d("sd ", "ee");
-        }
-        */
-
-//        //에디트 텍스트를 누르면 등록텍스트가 활성화할려고 등록함 현재 gone
-//        commentregister = (TextView) findViewById(R.id.commentPushText1);
-//
-//        EditText et = (EditText) findViewById(R.id.editTexttt);
-//        et.setVisibility(View.VISIBLE);
-//
-//        insertAndDelete = (ImageView) findViewById(R.id.noticeDetailinsertAndDeleteText);
-//        detailImage=(ImageView) findViewById(R.id.detailImageView);
-//        backImage=(ImageView) findViewById(R.id.backImage);
-//
-//        backImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(QuestionnaireDetailActivity.this, NoticeActivity.class);
-//                QuestionnaireDetailActivity.this.startActivity(intent);
-//                finish();
-//            }
-//        });
-//
-//        commentPushImage = (ImageView) findViewById(R.id.commentPushImage);
-//        commentPushImage.setVisibility(View.VISIBLE);
-//        commentPushImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(QuestionnaireDetailActivity.this, CommentActivity.class);
-//                intent.putExtra("seq_notice", detail.seq_notice);
-//                intent.putExtra("flag", "n");
-//                QuestionnaireDetailActivity.this.startActivity(intent);
-//            }
-//        });
-//
-//        checkPeopleListImage = (ImageView) findViewById(R.id.checkPushImageView);
-//        checkPeopleListImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(QuestionnaireDetailActivity.this, CheckPeopleListActivity.class);
-//                QuestionnaireDetailActivity.this.startActivity(intent);
-//            }
-//        });
-//
-
-
-//
-//        String seq_notice=getIntent().getStringExtra("seq_notice");
-//
-////        setNotice(position,position,null,position,position,position,false);
-//
-//
-//
-//        new SelectNoticeOne(seq_notice).execute();
-//
-////        setNotice(detail.seq_kindergarden_class,detail.title,getResources().getDrawable(R.mipmap.ic_document),detail.name, TimeConverter.convert(detail.reg_date),detail.content,detail.equals("y"));
-//
-//
-//
-//        seq_user = pref.getString("seq_user","");
-//        Log.d("유저 시퀀스 " , seq_user);
-//
-//
-//        insertAndDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                mCustomDialog = new CustomDialogModifyAndDel(QuestionnaireDetailActivity.this,
-//                        modifyListener,
-//                        delListener);
-//                mCustomDialog.show();
-//            }
-//        });
-
 
     }
 
+
+    public void doVote(View v){
+        Toast.makeText(QuestionnaireDetailActivity.this, "투표했습니다.",Toast.LENGTH_LONG).show();
+    }
 
 
 

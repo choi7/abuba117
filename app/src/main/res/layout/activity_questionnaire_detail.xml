@@ -91,7 +91,6 @@
                         android:layout_width="304dp"
                         android:layout_height="wrap_content"
                         android:divider="@null"
-                        android:listSelector="@drawable/vote_seletor"
                         android:dividerHeight="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true"
         android:drawable="@drawable/votedetaillistviewcellcustom_selector"></item>
-    <item android:state_pressed="false"
-        android:drawable="@drawable/voteldetaillistviewcellcustom" />
-    <item  android:state_focused="true"
-        android:drawable="@drawable/votedetaillistviewcellcustom_selector" />
+    <!--<item android:state_pressed="false"-->
+        <!--android:drawable="@drawable/voteldetaillistviewcellcustom" />-->
+    <!--<item  android:state_focused="true"-->
+        <!--android:drawable="@drawable/votedetaillistviewcellcustom_selector" />-->
 
 </selector>
