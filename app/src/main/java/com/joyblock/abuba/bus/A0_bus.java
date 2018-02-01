@@ -26,17 +26,16 @@ public class A0_bus extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        API api=new API();
+//        API api=new API();
         //        try {
 //            api.join();
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-//        api.API2("test0","test0");
-//        api.API3(app.seq_user,"어부바","","","","",null,"","","","120","30");
-//        api.API4("ar2","경상남도");
-//        api.API5("경상남도","창원시","테스트 유치원","1");
-//        api.API6("1","1");
+//        api.API_2("test0","test0");
+
+//        api.API_5("경상남도","창원시","테스트 유치원","1");
+//        api.API_6("1","1");
 //        api.API7("1","18","","t","","1987","03","11");
 //        api.API8("18","");
 //        api.API_9("18","test0","test0");
@@ -110,6 +109,10 @@ public class A0_bus extends BaseActivity {
             }
         });
 
+//        api.API_3(app.seq_user,"어부바","","","","",null,"","","","120","30");
+//
+//        api.API_4("ar2","경상남도");
+//        api.API_4("ar2","경상남도");
 
     }
 

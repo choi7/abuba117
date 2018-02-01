@@ -20,7 +20,7 @@ import okio.Buffer;
  * Created by BLUE1 on 2018-01-30.
  */
 
-public class API extends Thread{
+public class API{
     private OkHttpClient client=new OkHttpClient();
     static String TAG="API";
     static String url="http://58.229.208.246/Ububa/";
@@ -28,22 +28,31 @@ public class API extends Thread{
     private Request request;
     public MessageCallback callback=new MessageCallback();
     /** 웹 서버로 요청을 한다. */
-
     private void clearMessage(){
         message="";
     }
 
     public void waitResponse(){
-        while(message.equals(""));
+        while(message.equals(""))
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void run(){
-//        clearMessage();
-        client.newCall(request).enqueue(callback);
+    public void start(){
+
+        new Thread() {
+            public void run(){
+                Log.d(TAG,"start");
+                client.newCall(request).enqueue(callback);
+            }
+        }.start();
     }
 
     class MessageCallback implements Callback {
@@ -64,6 +73,7 @@ public class API extends Thread{
     
 
     public void API_2(String ID,String 비밀번호){
+
         clearMessage();
         TAG="API2";
         request=API2.getRequest(ID,비밀번호);
@@ -72,6 +82,7 @@ public class API extends Thread{
     }
 
     public void API_3(String seq_user,String name,String birthday,String phone_no,String email,String token,byte[] files,String ar1,String ar2,String addr_etc,String lat,String lng){
+
         clearMessage();
         TAG="API3";
         request=API3.getRequest(seq_user,name,birthday,phone_no,email,token,files,ar1,ar2,addr_etc,lat,lng);

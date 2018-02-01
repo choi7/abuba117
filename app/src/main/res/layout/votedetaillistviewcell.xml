@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="49.5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="49.5dp">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/vote_cons"
+        android:id="@+id/listview_layout1"
         android:layout_width="304dp"
         android:layout_height="44dp"
         android:layout_marginBottom="2.75dp"
@@ -18,11 +18,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/editText4"
+            android:id="@+id/listview_text1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:background="@null"
             android:ems="10"
             android:fontFamily="@font/nanumsquareregular"
@@ -48,7 +47,7 @@
             app:srcCompat="@drawable/vote_image" />
 
         <TextView
-            android:id="@+id/textView164"
+            android:id="@+id/listview_text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
