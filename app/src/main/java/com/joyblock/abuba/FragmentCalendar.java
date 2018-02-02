@@ -48,14 +48,12 @@ public class FragmentCalendar extends Fragment {
     GridAdapter gridAdapter;
     private ArrayList<String> dayList;
 
-
     private GridView gridView;
     private ListView c_1_1_listview, listView2;
     private Calendar mCal;
     public API api=new API();
     String start_day, end_day, cal_title;
     int dayNum;
-
 
     public MyApplication app;
     public void setPref(SharedPreferences pref){
@@ -68,8 +66,6 @@ public class FragmentCalendar extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_c_1_1_calendar, container, false);
-
-
 
         final ConstraintLayout constraintLayout = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout7);
         final ConstraintLayout constraintLayout1 = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout8);
@@ -113,8 +109,6 @@ public class FragmentCalendar extends Fragment {
                 Log.d("start_end", start_day + " " + end_day);
 
                 Calendar cal = Calendar.getInstance();
-
-
 
                 String change_day_of_week = null;
                 cal.set(Calendar.YEAR, Integer.parseInt(curYearFormat.format(date)));

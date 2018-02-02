@@ -42,6 +42,18 @@ public class C3_2_CalendarView extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_c_3_2_calendar_view);
+
+        /*
+        titles = (TextView) findViewById(R.id.titleName);
+        titles.setVisibility(View.VISIBLE);
+        titles.setText("일정관리");
+        titles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+
+        });
+        */
         findViewbyId();
         actionbarCustom();
     }
@@ -51,11 +63,11 @@ public class C3_2_CalendarView extends BaseActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xffff9900));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
-//        addBacklistner();
+        addBacklistner();
 
 
 
-//        titles.setText("일정관리");
+
         Intent intent = getIntent();
         seq_schedule_management = intent.getStringExtra("seq_schedule_management");
 
@@ -64,6 +76,7 @@ public class C3_2_CalendarView extends BaseActivity {
         try {
             JSONObject jsonObject = new JSONObject(apis);
             detail = new GsonBuilder().create().fromJson(jsonObject.getString("schedule_management"), R45_SelectScheduleManagementOne.class);
+
             this.title = detail.title;
             end_day = detail.end_day;
             file_path = detail.file_path;
@@ -87,6 +100,12 @@ public class C3_2_CalendarView extends BaseActivity {
             addr = detail.addr;
             end_year = detail.end_year;
             lat = detail.lat;
+
+            System.out.println(title+"1" + end_day+"2" + end_day+"ㅇ3" + file_path+"ㅇ3" + start_time_hour+"ㅇ4" + lng +"ㅇ5" + start_day +"ㅇ6" +  start_year +"ㅇ7" +  end_time_min +"ㅇ8" + mod_date+"ㅇ9" +
+            seq_user+"ㅇ10" +content+"ㅇ11" +seq_schedule_management+"ㅇ12" +reg_date+"ㅇ13" +end_time_hour+"ㅇ14" +seq_kindergarden+"ㅇ15" +is_yn+"ㅇ16" +name+"ㅇ17" +start_month+"ㅇ18" +start_time_min+"ㅇ19" +end_month
+                            +"ㅇ20" +addr
+                            +"ㅇ21" +end_year+"ㅇ22" +lat
+            );
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -125,12 +144,13 @@ public class C3_2_CalendarView extends BaseActivity {
             case 7:change_day_of_week1 = "토";break;
         }
 
-/*
+
         String moringandnight, moringandnight1;
         Integer sh, eh, sm, em;
         sh = Integer.valueOf(start_time_hour);
 //        eh = end_time_hour;
-        sm = Integer.valueOf(start_time_min);
+        //start_time_min
+        sm = Integer.valueOf("19");
 //        em = end_time_min;
         if (sh < 13) {
             moringandnight = "오전";
@@ -153,10 +173,10 @@ public class C3_2_CalendarView extends BaseActivity {
 //            }
             moringandnight1 = "오후";
         }
-        */
+
 
         textView137.setText(start_month + "월 " + start_day + "일 " + "(" + change_day_of_week + ") "+ start_time_hour + ":" + start_time_min);// + moringandnight
-//        textView138.setText(end_month + "월 " + end_day + "일 " + "(" + change_day_of_week1 + ") " + end_time_hour + ":" + end_time_min);//+ moringandnight
+        textView138.setText(end_month + "월 " + end_day + "일 " + "(" + change_day_of_week1 + ") " + end_time_hour + ":" + end_time_min);//+ moringandnight
         textView139.setText("수정 예정");
         inTex.setText(content);
 
@@ -190,14 +210,8 @@ public class C3_2_CalendarView extends BaseActivity {
 
         EditText editText = (EditText) findViewById(R.id.editTexttt);
         editText.setVisibility(View.VISIBLE);
-//        titles = (TextView) findViewById(R.id.titleName);
-//        titles.setVisibility(View.VISIBLE);
-//        titles.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            }
-//
-//        });
+
+
 
     }
 
