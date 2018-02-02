@@ -55,15 +55,7 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
         actionbarCustom();
 
 //        today();
-        long now = System.currentTimeMillis();
-        final Date date = new Date(now);
-        //연,월,일을 따로 저장
-        final SimpleDateFormat curYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
-        final SimpleDateFormat curMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
-        final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
-        final SimpleDateFormat curHourFormat = new SimpleDateFormat("hh", Locale.KOREA);
-        final SimpleDateFormat curMinuteFormat = new SimpleDateFormat("mm", Locale.KOREA);
-        tvDate.setText(curYearFormat.format(date) + "년 " + curMonthFormat.format(date) + "월");
+
 
         dayList = new ArrayList<String>();
         dayList.add("일");
@@ -74,6 +66,21 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
         dayList.add("금");
         dayList.add("토");
         mCal = java.util.Calendar.getInstance();
+
+        long now = System.currentTimeMillis();
+        final Date date = new Date(now);
+        //연,월,일을 따로 저장
+        final SimpleDateFormat curYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
+        final SimpleDateFormat curMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
+//        final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
+//        final SimpleDateFormat curHourFormat = new SimpleDateFormat("hh", Locale.KOREA);
+//        final SimpleDateFormat curMinuteFormat = new SimpleDateFormat("mm", Locale.KOREA);
+
+
+        tvDate.setText(curYearFormat.format(date) + "년 " + curMonthFormat.format(date) + "월");
+
+
+
 
         mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, 1);
         int dayNum = mCal.get(java.util.Calendar.DAY_OF_WEEK);
@@ -206,15 +213,6 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
                     finish();
                 }
 
-                /*
-                for (String n : app.calendarIntent.array){
-                    if (n == null) {
-//                        mCustomDialog
-                        break;
-                    }
-                    Log.d("n" ,n);
-                }
-                */
 
 
             }
@@ -256,6 +254,100 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
             }
         });
 
+    }
+
+    public void setCalendar(final int year,final int month){
+        tvDate.setText((year + "년 " + (month<10?"0":""+month) + "월"));
+
+
+
+        Date date=new Date();
+
+        mCal.set(year, month-1, 1);
+        int dayNum = mCal.get(java.util.Calendar.DAY_OF_WEEK);
+        //1일 - 요일 매칭 시키기 위해 공백 add
+        for (int i = 1; i < dayNum; i++) {
+            dayList.add("");
+        }
+
+
+//        starthour, startminute, endhour, endminute, startyear, startmonth, startday, endyear, endmonth, endday, start_day_of_week, end_day_of_week
+
+
+        setCalendarDate(mCal.get(java.util.Calendar.MONTH) + 1);
+        gridAdapter = new GridAdapter(C_3_1_CalendarEditor_TimeSetting.this, dayList);
+        gridView.setAdapter(gridAdapter);
+        //달력터치시
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("포지션은 : ", String.valueOf(position));
+
+                Calendar cal = Calendar.getInstance();
+
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DATE, position - 10);
+                switch (cal.get(Calendar.DAY_OF_WEEK)) {
+                    case 1:
+                        System.out.println("일");
+                        change_day_of_week = "일";
+                        break;
+                    case 2:
+                        System.out.println("월");
+                        change_day_of_week = "월";
+                        break;
+                    case 3:
+                        System.out.println("화");
+                        change_day_of_week = "화";
+                        break;
+                    case 4:
+                        System.out.println("수");
+                        change_day_of_week = "수";
+                        break;
+                    case 5:
+                        System.out.println("목");
+                        change_day_of_week = "목";
+                        break;
+                    case 6:
+                        System.out.println("금");
+                        change_day_of_week = "금";
+                        break;
+                    case 7:
+                        System.out.println("토");
+                        change_day_of_week = "토";
+                        break;
+                }
+
+                if (position < 10) {
+                    changeday = "" + (position - 10);
+                } else {
+                    changeday = String.valueOf(position - 10);
+                }
+                if (mCal.get(Calendar.MONTH) + 1 < 10) {
+                    changemonth = "" + (mCal.get(Calendar.MONTH) + 1);
+                } else {
+                    changemonth = String.valueOf(mCal.get(Calendar.MONTH) + 1);
+                }
+
+                if (nextAndBack == 1) {
+                    startyear = year+"";
+                    startmonth = changemonth;
+                    startday = changeday;
+                    start_day_of_week = change_day_of_week;
+                    Log.d("시작날짜 : ", startyear + " " + startmonth + " " + startday);
+                } else {
+                    endyear = year+"";
+                    endmonth = changemonth;
+                    endday = changeday;
+                    end_day_of_week = change_day_of_week;
+                    Log.d("종료날짜 : ", endyear + " " + endmonth + " " + endday);
+
+                }
+
+
+            }
+        });
     }
 
 
@@ -395,39 +487,5 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
         mCustomDialog.dismiss();
     }
 
-    public void today() {
-
-        Calendar cal = Calendar.getInstance();
-        switch (cal.get(Calendar.DAY_OF_WEEK)) {
-            case 1:
-                start_day_of_week = "일";
-                end_day_of_week = "일";
-                break;
-            case 2:
-                start_day_of_week = "월";
-                end_day_of_week = "월";
-                break;
-            case 3:
-                start_day_of_week = "화";
-                end_day_of_week = "화";
-                break;
-            case 4:
-                start_day_of_week = "수";
-                end_day_of_week = "수";
-                break;
-            case 5:
-                start_day_of_week = "목";
-                end_day_of_week = "목";
-                break;
-            case 6:
-                start_day_of_week = "금";
-                end_day_of_week = "금";
-                break;
-            case 7:
-                start_day_of_week = "토";
-                end_day_of_week = "토";
-                break;
-        }
-    }
 
 }
