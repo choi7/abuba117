@@ -48,6 +48,12 @@ public class FragmentCalendar extends Fragment {
     GridAdapter gridAdapter;
     private ArrayList<String> dayList;
 
+<<<<<<< Updated upstream
+=======
+//    private int[] num_day={31,}
+    Schdule[] schdule=new Schdule[31];
+
+>>>>>>> Stashed changes
     private GridView gridView;
     private ListView c_1_1_listview, listView2;
     private Calendar mCal;
@@ -100,6 +106,17 @@ public class FragmentCalendar extends Fragment {
             JSONObject jsonObject = new JSONObject(ss);
             ss = jsonObject.getString("schedule_management_list");
             detail=new GsonBuilder().create().fromJson(jsonObject.getString("schedule_management_list"),R44_SelectScheduleManagementList[].class);
+
+            for(int i=0;i<schdule.length;i++)
+                schdule[i]=new Schdule();
+
+            for(int i=0;i<detail.length;i++){
+                for(int j=Integer.parseInt(detail[i].start_day)-1;j<Integer.parseInt(end_day);j++){
+                    schdule[j].order.add(i);
+                }
+            }
+
+
             //for(R13_SelectNoticeList list:noticeList)
             for(int i=0;i<detail.length;i++) {
                 R44_SelectScheduleManagementList list=detail[i];
@@ -180,6 +197,10 @@ public class FragmentCalendar extends Fragment {
                 ArrayList<Integer> s=getPositionSchdules(position-dayNum+2);
 //                printS(position-dayNum+2);
                 intent.putExtra("seq_schedule_management",detail[s.get(0)].seq_schedule_management);
+                int start=Integer.parseInt(detail[0].start_day)+dayNum-1;
+                int end=Integer.parseInt(detail[0].end_day)+dayNum-1;
+                intent.putExtra("start",start%7);
+                intent.putExtra("end",end%7);
 //                intent.putExtra("seq_schedule_management",detail[position-dayNum+2].seq_schedule_management);
                 FragmentCalendar.this.startActivity(intent);
             }
@@ -403,7 +424,6 @@ public class FragmentCalendar extends Fragment {
 
     }
     class Schdule{
-        int day;
         ArrayList<Integer> order=new ArrayList<>();
     }
 
