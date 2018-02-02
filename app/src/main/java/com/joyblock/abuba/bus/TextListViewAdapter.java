@@ -26,6 +26,8 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
     //필요한 만큼 텍스트 뷰를 증가시면 된다.
     int[] textview_id={R.id.listview_text1,R.id.listview_text2,R.id.listview_text3,R.id.listview_text4,R.id.listview_text5,R.id.listview_image1};
 
+    ArrayList<View> view_row_list= new ArrayList<>();
+
     public ArrayList<Item> list= new ArrayList<>();
     int int_layout;
     int size;
@@ -57,6 +59,8 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+
+
         final int pos = position;
         final Context context = parent.getContext();
 
@@ -76,6 +80,10 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
             holder=new ListViewHolder();
             holder.textview=textview;
             convertView.setTag(holder);
+//            if(view_row_list.size)
+            if(view_row_list.size()<position+1)
+                view_row_list.add(position, convertView);
+
         }else{
             holder=(ListViewHolder)convertView.getTag();
             textview=holder.textview;
@@ -100,7 +108,16 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
                 textview[i].setTextColor(item.bool_selected?Color.BLUE:Color.BLACK);
         }
 
+
+
+
+
+
         return convertView;
+    }
+
+    public View getPositionView(int position){
+        return view_row_list.get(position);
     }
 
     //필요에 따라 addItem을 정의한다.
@@ -128,14 +145,14 @@ public class TextListViewAdapter extends BaseAdapter implements Serializable {
     }
 
 
-    void setSelected(int int_position){
+    public void setSelected(int int_position){
         for(Item item:list)
             item.bool_selected=false;
         list.get(int_position).bool_selected=true;
         notifyDataSetChanged();
     }
 
-    void toggleSelected(int int_position){
+    public void toggleSelected(int int_position){
         list.get(int_position).toggleSelected();
         notifyDataSetChanged();
     }

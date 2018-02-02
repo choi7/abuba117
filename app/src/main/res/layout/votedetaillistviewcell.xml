@@ -26,7 +26,6 @@
             android:ems="10"
             android:fontFamily="@font/nanumsquareregular"
             android:gravity="center|left"
-            android:inputType="textPersonName"
             android:paddingLeft="15.5dp"
             android:text="찬성"
             android:textColor="#000000"

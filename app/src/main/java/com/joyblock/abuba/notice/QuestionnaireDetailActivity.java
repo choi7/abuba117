@@ -59,7 +59,7 @@ public class QuestionnaireDetailActivity extends BaseActivity {
     ListView listView;
     TextListViewAdapter listViewAdapter;
 //    ListViewAdapter listViewAdapter;
-    public int mSelectedItem;
+    public int mSelectedItem=-1;
 
     int pos;
 
@@ -103,8 +103,8 @@ public class QuestionnaireDetailActivity extends BaseActivity {
 //                detail.resultcode
         for (int i = 0; i < detail.survey_vote_item_list.length; i++) {
             Log.d("detail-1", String.valueOf(detail.survey_vote_item_list[i]));
-
         }
+
         seq_kindergarden_class = detail.survey.seq_kindergarden_class;
         reg_date = detail.survey.reg_date;
         month = detail.survey.month;
@@ -155,12 +155,19 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                mSelectedItem = position;
 
-//                ConstraintLayout cons=(ConstraintLayout)view.findViewById(R.id.listview_layout1);
+                if(pre_cons!=null)
+                    pre_cons.setBackgroundColor(Color.parseColor("#e5e5e5"));
+                mSelectedItem = position;
+
+                ConstraintLayout cons=(ConstraintLayout)view.findViewById(R.id.listview_layout1);
+                cons.setBackgroundColor(Color.parseColor("#fae734"));
+
+                pre_cons=cons;
 //                TextView tv1=(TextView)row_view.findViewById(R.id.listview_text1);
-                Toast.makeText(QuestionnaireDetailActivity.this, position,Toast.LENGTH_LONG).show();
-//                cons.setBackgroundColor(Color.RED);
+//                Toast.makeText(QuestionnaireDetailActivity.this, position,Toast.LENGTH_LONG).show();
+
+
 
 //                listViewAdapter.notifyDataSetChanged();
 //                listViewAdapter.getView(position,)
@@ -182,6 +189,8 @@ public class QuestionnaireDetailActivity extends BaseActivity {
 
 
     }
+
+    View pre_cons;
 
 
     public void doVote(View v){
@@ -217,10 +226,7 @@ public class QuestionnaireDetailActivity extends BaseActivity {
         noticeName.setText(name);
         noticeTime.setText(time);
         noticeContent.setText(content);
-
-
         //userImage, content
-
     }
 
 
