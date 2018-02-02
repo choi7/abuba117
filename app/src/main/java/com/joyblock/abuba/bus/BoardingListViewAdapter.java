@@ -93,7 +93,7 @@ public class BoardingListViewAdapter extends BaseAdapter implements Serializable
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(int_layout, parent, false);
             textview_class= (TextView) convertView.findViewById(R.id.listview_text1);
-            textview_name = (TextView) convertView.findViewById(R.id.listview_text3);
+            textview_name = (TextView) convertView.findViewById(R.id.listview_text2);
             imageview_boarding = (ImageView) convertView.findViewById(R.id.listview_image1);
             boarding_type1=(ImageView) convertView.findViewById(R.id.boarding_type1);
             boarding_type2=(ImageView) convertView.findViewById(R.id.boarding_type2);

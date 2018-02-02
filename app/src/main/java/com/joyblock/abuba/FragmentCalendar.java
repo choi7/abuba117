@@ -82,8 +82,12 @@ public class FragmentCalendar extends Fragment {
         c_1_1_listview = (ListView) rootView.findViewById(R.id.c_1_1_listview);
         c_1_1_listview.setVisibility(View.GONE);
         listView2 = (ListView) rootView.findViewById(R.id.listView2);
-        constraintLayout.setVisibility(View.VISIBLE);
-        gridView.setVisibility(View.VISIBLE);
+        constraintLayout.setVisibility(View.GONE);
+        gridView.setVisibility(View.GONE);
+
+        constraintLayout1.setVisibility(View.VISIBLE);
+        listView2.setVisibility(View.VISIBLE);
+
         long now = System.currentTimeMillis();
         final Date date = new Date(now);
         //연,월,일을 따로 저장
@@ -202,6 +206,7 @@ public class FragmentCalendar extends Fragment {
 
         //터치시 캘린더 안보이게 하고 리스트뷰 보이게 하기
         ImageView fragment_c_1_1_List_Change_ImageView = (ImageView) rootView.findViewById(R.id.fragment_c_1_1_List_Change_ImageView);
+
         fragment_c_1_1_List_Change_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,6 +219,7 @@ public class FragmentCalendar extends Fragment {
         });
         //터치시 리스트뷰 안보이게 하고 캘린더 보이게 하기
         ImageView imageView21 = (ImageView) rootView.findViewById(R.id.imageView21);
+        imageView21.setVisibility(View.GONE);
         imageView21.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

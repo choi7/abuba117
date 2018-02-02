@@ -192,14 +192,6 @@ public class C3_2_CalendarView extends BaseActivity {
 
         EditText editText = (EditText) findViewById(R.id.editTexttt);
         editText.setVisibility(View.VISIBLE);
-//        titles = (TextView) findViewById(R.id.titleName);
-//        titles.setVisibility(View.VISIBLE);
-//        titles.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            }
-//
-//        });
 
     }
 

@@ -1,5 +1,6 @@
 package com.joyblock.abuba;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +59,7 @@ public class FragmentCarter extends Fragment {
     R49_SelectMenuManagementList[] detail;
 
 
+
     public MyApplication app;
 
     public void setPref(SharedPreferences pref) {
@@ -73,22 +76,15 @@ public class FragmentCarter extends Fragment {
         final ConstraintLayout constraintLayout2 = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout9);
 
 
-
-
-
-//        LinearLayout calendarLinear = (LinearLayout) rootView.findViewById(R.id.calendarLinear);
-//        calendarLinear.setVisibility(View.GONE);
-
-//        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_CONSTRAINT_WRAP, ConstraintLayout.LayoutParams.MATCH_CONSTRAINT);
-//        constraintLayout1.setLayoutParams(lp);
-
-//        calendarLinear.setLayoutParams(lp);
-
         carterListview = (ListView) rootView.findViewById(R.id.c_1_1_listview);
         tvDate = (TextView) rootView.findViewById(R.id.tv_date);
         gridView = (GridView) rootView.findViewById(R.id.calendar_Gridview);
-        constraintLayout.setVisibility(View.VISIBLE);
-        gridView.setVisibility(View.VISIBLE);
+        constraintLayout.setVisibility(View.GONE);
+        gridView.setVisibility(View.GONE);
+
+        constraintLayout2.setVisibility(View.VISIBLE);
+        carterListview.setVisibility(View.VISIBLE);
+
 
         long now = System.currentTimeMillis();
         final Date date = new Date(now);
@@ -125,6 +121,7 @@ public class FragmentCarter extends Fragment {
                 FragmentCarter.this.startActivity(intent);
             }
         });
+
         TextListViewAdapter adapter=new TextListViewAdapter(5,R.layout.custom_cell_c_2_1_carte_list);
         carterListview.setAdapter(adapter);
         String seq_kindergarden = pref.getString("seq_kindergarden","");
@@ -135,6 +132,9 @@ public class FragmentCarter extends Fragment {
             JSONObject jsonObject = new JSONObject(apis);
             detail=new GsonBuilder().create().fromJson(jsonObject.getString("menu_management_list"),R49_SelectMenuManagementList[].class);
             for(R49_SelectMenuManagementList list:detail) {
+
+//                adapter.addItem("1","2","3","4","5");
+
                 adapter.addItem(list.month +"/" + list.day ,list.type, list.rice+"/"+list.soup+"/"+list.side_dish1+"/"+list.side_dish2+"/"+list.side_dish3+"/"+list.side_dish_4, list.snack, list.memo);
             }
         } catch (JSONException e) {
@@ -175,6 +175,8 @@ public class FragmentCarter extends Fragment {
         });
 
         ImageView imageView21 = (ImageView) rootView.findViewById(R.id.imageView22);
+        imageView21.setVisibility(View.GONE);
+
         imageView21.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

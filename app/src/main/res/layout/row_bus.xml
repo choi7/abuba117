@@ -16,12 +16,12 @@
         android:textSize="13.75dp" />
 
     <TextView
-        android:id="@+id/listview_text3"
+        android:id="@+id/listview_text2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignEnd="@+id/listview_text4"
+        android:layout_alignEnd="@+id/listview_text3"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/listview_text4"
+        android:layout_alignRight="@+id/listview_text3"
         android:layout_weight="1"
         android:fontFamily="@font/nanumsquarebold"
         android:gravity="center"
@@ -29,7 +29,7 @@
         android:textSize="13.75dp" />
 
     <TextView
-        android:id="@+id/listview_text4"
+        android:id="@+id/listview_text3"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="false"
