@@ -265,10 +265,8 @@ public class C_3_1_CalendarEditor extends BaseActivity {
                 datecount = "오후";
                 endhour = String.valueOf(endhours - 12);
             }
-
             startTime.setText(app.calendarIntent.startmonth + "월 " + app.calendarIntent.startday + "일 " + "(" + app.calendarIntent.start_day_of_week + ")    " + datecount + " " + starthour + ":" + app.calendarIntent.startminute);
             endTime.setText(app.calendarIntent.endmonth + "월 " + app.calendarIntent.endday + "일 " + "(" + app.calendarIntent.end_day_of_week + ")    " + datecount + " " + endhour + ":" + app.calendarIntent.endminute);
-
         }
     }
 
@@ -300,6 +298,8 @@ public class C_3_1_CalendarEditor extends BaseActivity {
                     } else {
                         endmonth = String.valueOf(endmonths);
                     }
+
+//                    Log.d("startminuteTest", app.calendarIntent.startminute);
 
                     api.API_41(app.seq_user, seq_kindergarden, app.calendarIntent.startyear, startmonth, app.calendarIntent.startday, app.calendarIntent.endyear,
                             endmonth, app.calendarIntent.endday, app.calendarIntent.starthour, app.calendarIntent.startminute, app.calendarIntent.endhour,

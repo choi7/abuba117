@@ -12,7 +12,7 @@ import okhttp3.RequestBody;
 
 public class API41 {
     static Request getRequest(String seq_user,String seq_kindergarden,String start_year,String start_month,String start_day,String end_year,String end_month,String end_day,
-                              String start_time_hour,String start_time_nim,String end_time_hour,String end_time_min,String title,String content,String lat,String lng,String addr,byte[] files){
+                              String start_time_hour,String start_time_min,String end_time_hour,String end_time_min,String title,String content,String lat,String lng,String addr,byte[] files){
         String command="insertScheduleManagement";
         String url=API.url+command+".do";
         MultipartBody.Builder builder=new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -25,7 +25,7 @@ public class API41 {
         builder.addFormDataPart("end_month",end_month);
         builder.addFormDataPart("end_day",end_day);
         builder.addFormDataPart("start_time_hour",start_time_hour);
-        builder.addFormDataPart("start_time_nim",start_time_nim);
+        builder.addFormDataPart("start_time_min",start_time_min);
         builder.addFormDataPart("end_time_hour",end_time_hour);
         builder.addFormDataPart("end_time_min",end_time_min);
         if(!title.equals(""))

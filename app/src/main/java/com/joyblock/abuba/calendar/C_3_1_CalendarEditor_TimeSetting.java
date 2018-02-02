@@ -1,7 +1,6 @@
 package com.joyblock.abuba.calendar;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -24,7 +23,6 @@ import android.widget.TimePicker;
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
 import com.joyblock.abuba.TextDialog;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -204,6 +202,7 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
                 } else {
                     mCustomDialog.show();
                     app.calendarIntent.setCalendarIntent(starthour, startminute, endhour, endminute, startyear, startmonth, startday, endyear, endmonth, endday, start_day_of_week, end_day_of_week);
+                    Log.d("startminute",startminute);
                     finish();
                 }
 
@@ -270,7 +269,7 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
         constraintLayout4 = (ConstraintLayout) findViewById(R.id.constraintLayout15);
         startDate = (TextView) findViewById(R.id.startDate);
         startDate1 = (TextView) findViewById(R.id.startDate1);
-        endDate = (TextView) findViewById(R.id.endDate);
+        endDate = (TextView) findViewById(R.id.listview_text2);
         endDate1 = (TextView) findViewById(R.id.endDate1);
         gridView = (GridView) findViewById(R.id.c_3_1_calendar_girdview);
         tvDate = (TextView) findViewById(R.id.textView175);

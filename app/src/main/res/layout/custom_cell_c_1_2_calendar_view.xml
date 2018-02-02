@@ -23,7 +23,7 @@
         android:layout_marginLeft="17.75dp" />
 
     <TextView
-        android:id="@+id/listview_text2"
+        android:id="@+id/listview_text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -39,7 +39,7 @@
         android:layout_marginLeft="8dp" />
 
     <TextView
-        android:id="@+id/listview_text3"
+        android:id="@+id/listview_text4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -50,12 +50,12 @@
         android:textColor="#000000"
         android:text="10시~\n  12시"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/listview_text2"
+        app:layout_constraintStart_toEndOf="@+id/listview_text3"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="14dp" />
 
     <TextView
-        android:id="@+id/listview_text4"
+        android:id="@+id/listview_text5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -66,7 +66,7 @@
         android:textColor="#000000"
         android:text="창원시\n마산회원구"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/listview_text3"
+        app:layout_constraintStart_toEndOf="@+id/listview_text4"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="21.25dp" />
 
@@ -82,7 +82,7 @@
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView23"
-        app:layout_constraintStart_toEndOf="@+id/listview_text4"
+        app:layout_constraintStart_toEndOf="@+id/listview_text5"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

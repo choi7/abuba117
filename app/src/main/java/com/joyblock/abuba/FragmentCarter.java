@@ -21,9 +21,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.GsonBuilder;
+import com.joyblock.abuba.api.API;
+import com.joyblock.abuba.api_message.R49_SelectMenuManagementList;
 import com.joyblock.abuba.bus.TextListViewAdapter;
 import com.joyblock.abuba.calendar.C2_3_CarteView;
 import com.joyblock.abuba.data.MyApplication;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +53,8 @@ public class FragmentCarter extends Fragment {
     private GridView gridView;
     private ListView carterListview;
     private Calendar mCal;
+    public API api=new API();
+    R49_SelectMenuManagementList[] detail;
 
 
     public MyApplication app;
@@ -62,6 +71,9 @@ public class FragmentCarter extends Fragment {
         final ConstraintLayout constraintLayout = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout7);
         final ConstraintLayout constraintLayout1 = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout8);
         final ConstraintLayout constraintLayout2 = (ConstraintLayout) rootView.findViewById(R.id.constraintLayout9);
+
+
+
 
 
 //        LinearLayout calendarLinear = (LinearLayout) rootView.findViewById(R.id.calendarLinear);
@@ -113,16 +125,31 @@ public class FragmentCarter extends Fragment {
                 FragmentCarter.this.startActivity(intent);
             }
         });
-
-        TextListViewAdapter adapter=new TextListViewAdapter(4,R.layout.custom_cell_c_2_1_carte_list);
+        TextListViewAdapter adapter=new TextListViewAdapter(5,R.layout.custom_cell_c_2_1_carte_list);
         carterListview.setAdapter(adapter);
-        adapter.addItem("01/03 (수)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
-        adapter.addItem("01/04 (목)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
-        adapter.addItem("01/05 (금)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
-        adapter.addItem("01/06 (월)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
-        adapter.addItem("01/06 (화)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
-        adapter.addItem("01/06 (수)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
-        adapter.addItem("01/06 (목)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+        String seq_kindergarden = pref.getString("seq_kindergarden","");
+        String year = "2018", month = "02";
+        api.API_49(seq_kindergarden, year, month, "");
+        String apis = api.getMessage();
+        try {
+            JSONObject jsonObject = new JSONObject(apis);
+            detail=new GsonBuilder().create().fromJson(jsonObject.getString("menu_management_list"),R49_SelectMenuManagementList[].class);
+            for(R49_SelectMenuManagementList list:detail) {
+                adapter.addItem(list.month +"/" + list.day ,list.type, list.rice+"/"+list.soup+"/"+list.side_dish1+"/"+list.side_dish2+"/"+list.side_dish3+"/"+list.side_dish_4, list.snack, list.memo);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+//        adapter.addItem("01/03 (수)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+//        adapter.addItem("01/04 (목)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+//        adapter.addItem("01/05 (금)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+//        adapter.addItem("01/06 (월)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+//        adapter.addItem("01/06 (화)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+//        adapter.addItem("01/06 (수)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
+//        adapter.addItem("01/06 (목)","쌀밥/미역국/불고기/시금치/김치", "계란/고구마","알러기 원아 확인필요");
         carterListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

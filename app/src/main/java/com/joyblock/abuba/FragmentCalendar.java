@@ -66,7 +66,6 @@ public class FragmentCalendar extends Fragment {
     }
     R44_SelectScheduleManagementList[] detail;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -105,17 +104,14 @@ public class FragmentCalendar extends Fragment {
             JSONObject jsonObject = new JSONObject(ss);
             ss = jsonObject.getString("schedule_management_list");
             detail=new GsonBuilder().create().fromJson(jsonObject.getString("schedule_management_list"),R44_SelectScheduleManagementList[].class);
-
-            for(int i=0;i<schdule.length;i++)
-                schdule[i]=new Schdule();
-
-            for(int i=0;i<detail.length;i++){
-                for(int j=Integer.parseInt(detail[i].start_day)-1;j<Integer.parseInt(end_day);j++){
-                    schdule[j].order.add(i);
-                }
-            }
-
-
+//            for(int i=0;i<schdule.length;i++)
+//                schdule[i]=new Schdule();
+//
+//            for(int i=0;i<detail.length;i++){
+//                for(int j=Integer.parseInt(detail[i].start_day)-1;j<Integer.parseInt(end_day);j++){
+//                    schdule[j].order.add(i);
+//                }
+//            }
             //for(R13_SelectNoticeList list:noticeList)
             for(int i=0;i<detail.length;i++) {
                 R44_SelectScheduleManagementList list=detail[i];
@@ -124,6 +120,9 @@ public class FragmentCalendar extends Fragment {
                 cal_title = list.title;
                 Log.d("start_end", start_day + " " + end_day);
 
+
+
+                //시작날짜 요일 구하기
                 Calendar cal = Calendar.getInstance();
 
                 String change_day_of_week = null;
@@ -131,40 +130,21 @@ public class FragmentCalendar extends Fragment {
                 cal.set(Calendar.MONTH, Calendar.MONTH);
                 cal.set(Calendar.DATE, Integer.parseInt(list.start_day));
                 switch (cal.get(Calendar.DAY_OF_WEEK)) {
-                    case 1:
-                        change_day_of_week = "일";
-                        break;
-                    case 2:
-                        change_day_of_week = "월";
-                        break;
-                    case 3:
-                        change_day_of_week = "화";
-                        break;
-                    case 4:
-                        change_day_of_week = "수";
-                        break;
-                    case 5:
-                        change_day_of_week = "목";
-                        break;
-                    case 6:
-                        change_day_of_week = "금";
-                        break;
-                    case 7:
-                        change_day_of_week = "토";
-                        break;
+                    case 1:change_day_of_week = "일";break;
+                    case 2:change_day_of_week = "월";break;
+                    case 3:change_day_of_week = "화";break;
+                    case 4:change_day_of_week = "수";break;
+                    case 5:change_day_of_week = "목";break;
+                    case 6:change_day_of_week = "금";break;
+                    case 7:change_day_of_week = "토";break;
                 }
-
-
-
+                //리스트뷰에 추가
                 adapter.addItem(list.start_day+"일",change_day_of_week.equals("")?"금요일":change_day_of_week, list.start_time_hour +"시~\n  "+ list.end_time_hour +"시",list.addr.equals("")?"창원시\n마산회원구":list.addr,list.title);
-
             }
-//            adapter.notifyDataSetChanged();
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         dayList = new ArrayList<String>();
 //        dayList.add("SUN");
@@ -195,28 +175,22 @@ public class FragmentCalendar extends Fragment {
                 Intent intent = new Intent(getContext(), C3_2_CalendarView.class);
                 ArrayList<Integer> s=getPositionSchdules(position-dayNum+2);
 //                printS(position-dayNum+2);
-                intent.putExtra("seq_schedule_management",detail[s.get(0)].seq_schedule_management);
-                int start=Integer.parseInt(detail[0].start_day)+dayNum-1;
-                int end=Integer.parseInt(detail[0].end_day)+dayNum-1;
-                intent.putExtra("start",start%7);
-                intent.putExtra("end",end%7);
+                for(int i=0;i<s.size();i++) {
+                    intent.putExtra("seq_schedule_management", detail[s.get(i)].seq_schedule_management);
+                    int start = Integer.parseInt(detail[0].start_day) + dayNum - 1;
+                    int end = Integer.parseInt(detail[0].end_day) + dayNum - 1;
+                    intent.putExtra(i+"start", start % 7);
+                    intent.putExtra(i+"end", end % 7);
+                }
 //                intent.putExtra("seq_schedule_management",detail[position-dayNum+2].seq_schedule_management);
                 FragmentCalendar.this.startActivity(intent);
             }
         });
 
 
+
+
         listView2.setAdapter(adapter);
-
-
-
-//
-//        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-//        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-//        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-//        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-//        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
-//        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
 //        adapter.addItem("5일","금요일", "10시~\n  12시","창원시\n마산회원구","동계장기자랑");
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -226,7 +200,7 @@ public class FragmentCalendar extends Fragment {
             }
         });
 
-
+        //터치시 캘린더 안보이게 하고 리스트뷰 보이게 하기
         ImageView fragment_c_1_1_List_Change_ImageView = (ImageView) rootView.findViewById(R.id.fragment_c_1_1_List_Change_ImageView);
         fragment_c_1_1_List_Change_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,12 +210,9 @@ public class FragmentCalendar extends Fragment {
                 gridView.setVisibility(View.GONE);
                 c_1_1_listview.setVisibility(View.GONE);
                 listView2.setVisibility(View.VISIBLE);
-
-//                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
-//                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();
             }
         });
-
+        //터치시 리스트뷰 안보이게 하고 캘린더 보이게 하기
         ImageView imageView21 = (ImageView) rootView.findViewById(R.id.imageView21);
         imageView21.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,15 +222,13 @@ public class FragmentCalendar extends Fragment {
                 gridView.setVisibility(View.VISIBLE);
                 c_1_1_listview.setVisibility(View.GONE);
                 listView2.setVisibility(View.GONE);
-
-//                Intent intent = new Intent(FragmentCalendar.this, C_1_1_Calendar.class);
-//                Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_LONG).show();
             }
         });
 
-
         return rootView;
     }
+
+
 
     public ArrayList<Integer> getPositionSchdules(int position){
         ArrayList<Integer> schdule_order_list=new ArrayList<>();
@@ -277,6 +246,7 @@ public class FragmentCalendar extends Fragment {
     }
 
 
+    //월마다 다른 날짜넣기
     private void setCalendarDate(int month) {
         mCal.set(Calendar.MONTH, month - 1);
         for (int i = 0; i < mCal.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
@@ -284,6 +254,8 @@ public class FragmentCalendar extends Fragment {
         }
     }
 
+
+    //그리드뷰 아답터설정
     private class GridAdapter extends BaseAdapter {
 
         private final List<String> list;
@@ -360,56 +332,6 @@ public class FragmentCalendar extends Fragment {
                     holder.tvItemGridViewContent.setBackgroundColor(Color.parseColor("#F5FFFE"));
                     holder.tvItemGridView.setBackgroundColor(Color.parseColor("#F5FFFE"));
             }
-
-
-
-            /*
-            if(position >= int_start_day) {
-                Log.d("테스트" ,int_start_day + "와" + int_end_day + "의" + position);
-                for(int pos = position; pos<int_end_day; pos++) {
-                    Log.d("테스트1" ,int_start_day + "와" + int_end_day + "의" + position);
-                    holder.tvItemGridViewContent.setText(cal_title);
-                    holder.tvItemGridViewContent.setBackgroundColor(Color.parseColor("#F5FFFE"));
-                    holder.tvItemGridView.setBackgroundColor(Color.parseColor("#F5FFFE"));
-                }
-            }
-            */
-
-
-            /*
-            for (int i = 0; i<int_end_day; i++){
-                if(position == i) {
-                    for(int s = int_start_day; s<int_end_day; s++) {
-                        holder.tvItemGridViewContent.setText(cal_title);
-                        holder.tvItemGridViewContent.setBackgroundColor(Color.parseColor("#F5FFFE"));
-                        holder.tvItemGridView.setBackgroundColor(Color.parseColor("#F5FFFE"));
-                    }
-
-                }
-            }
-            */
-
-
-
-            /*
-            for(int i = int_start_day; i<int_end_day; i++) {
-                Log.d("테스트" ,int_start_day + "" + int_end_day + "" + position);
-                if(position == i) {
-                    holder.tvItemGridViewContent.setText(cal_title);
-                    holder.tvItemGridViewContent.setBackgroundColor(Color.parseColor("#F5FFFE"));
-                    holder.tvItemGridView.setBackgroundColor(Color.parseColor("#F5FFFE"));
-                }
-            }
-            */
-
-
-
-
-//            }
-
-
-
-
 
             return convertView;
         }

@@ -17,15 +17,15 @@
         android:textSize="13.75dp" />
 
     <TextView
-        android:id="@+id/listview_text2"
+        android:id="@+id/listview_text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/listview_text4"
-        android:layout_toStartOf="@+id/listview_text4"
+        android:layout_toLeftOf="@+id/listview_text5"
+        android:layout_toStartOf="@+id/listview_text5"
         android:layout_weight="1"
         android:fontFamily="@font/nanumsquarebold"
         android:gravity="left|center"
@@ -35,14 +35,14 @@
         android:textSize="13.75dp" />
 
     <TextView
-        android:id="@+id/listview_text3"
+        android:id="@+id/listview_text4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/listview_text4"
-        android:layout_toStartOf="@+id/listview_text4"
+        android:layout_toLeftOf="@+id/listview_text5"
+        android:layout_toStartOf="@+id/listview_text5"
         android:layout_weight="1"
         android:fontFamily="@font/nanumsquarebold"
         android:gravity="left|center"
@@ -52,7 +52,7 @@
         android:textSize="8.75dp" />
 
     <TextView
-        android:id="@+id/listview_text4"
+        android:id="@+id/listview_text5"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="false"

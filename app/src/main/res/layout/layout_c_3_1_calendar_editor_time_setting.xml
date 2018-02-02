@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="@+id/constraintLayout12">
 
         <TextView
-            android:id="@+id/endDate"
+            android:id="@+id/listview_text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

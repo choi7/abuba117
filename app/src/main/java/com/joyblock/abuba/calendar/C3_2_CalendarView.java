@@ -51,7 +51,7 @@ public class C3_2_CalendarView extends BaseActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xffff9900));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);
-//        addBacklistner();
+        addBacklistner();
 
 
 
@@ -127,7 +127,7 @@ public class C3_2_CalendarView extends BaseActivity {
             case 7:change_day_of_week1 = "토";break;
         }
 
-/*
+
         String moringandnight, moringandnight1;
         Integer sh, eh, sm, em;
         sh = Integer.valueOf(start_time_hour);
@@ -155,10 +155,10 @@ public class C3_2_CalendarView extends BaseActivity {
 //            }
             moringandnight1 = "오후";
         }
-        */
+
 
         textView137.setText(start_month + "월 " + start_day + "일 " + "(" + change_day_of_week + ") "+ start_time_hour + ":" + start_time_min);// + moringandnight
-//        textView138.setText(end_month + "월 " + end_day + "일 " + "(" + change_day_of_week1 + ") " + end_time_hour + ":" + end_time_min);//+ moringandnight
+        textView138.setText(end_month + "월 " + end_day + "일 " + "(" + change_day_of_week1 + ") " + end_time_hour + ":" + end_time_min);//+ moringandnight
         textView139.setText("수정 예정");
         inTex.setText(content);
 

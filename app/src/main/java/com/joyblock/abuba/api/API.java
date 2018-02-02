@@ -395,10 +395,10 @@ public class API{
     }
 
     public void API_41(String seq_user,String seq_kindergarden,String start_year,String start_month,String start_day,String end_year,String end_month,String end_day,
-                       String start_time_hour,String start_time_nim,String end_time_hour,String end_time_min,String title,String content,String lat,String lng,String addr,byte[] files){
+                       String start_time_hour,String start_time_min,String end_time_hour,String end_time_min,String title,String content,String lat,String lng,String addr,byte[] files){
         clearMessage();
         TAG+="41";
-        request=API41.getRequest(seq_user,seq_kindergarden,start_year,start_month,start_day,end_year,end_month,end_day,start_time_hour,start_time_nim,end_time_hour,end_time_min,title,content,lat,lng,addr,files);
+        request=API41.getRequest(seq_user,seq_kindergarden,start_year,start_month,start_day,end_year,end_month,end_day,start_time_hour,start_time_min,end_time_hour,end_time_min,title,content,lat,lng,addr,files);
         start();
         waitResponse();
     }
