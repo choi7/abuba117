@@ -48,12 +48,11 @@ public class FragmentCalendar extends Fragment {
     GridAdapter gridAdapter;
     private ArrayList<String> dayList;
 
-<<<<<<< Updated upstream
-=======
+
 //    private int[] num_day={31,}
     Schdule[] schdule=new Schdule[31];
 
->>>>>>> Stashed changes
+
     private GridView gridView;
     private ListView c_1_1_listview, listView2;
     private Calendar mCal;
