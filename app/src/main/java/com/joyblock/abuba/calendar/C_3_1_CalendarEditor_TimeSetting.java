@@ -193,14 +193,18 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
 
                 if (starthour.equals(null)) {
                     mCustomDialog.setTexts(new String[]{"시작 시간을 선택해주세요.", "확인"});
+                    mCustomDialog.show();
                 } else if (endhour.equals(null)) {
                     mCustomDialog.setTexts(new String[]{"종료 시간을 선택해주세요.", "확인"});
+                    mCustomDialog.show();
                 } else if (startday.equals(null)) {
                     mCustomDialog.setTexts(new String[]{"시작 날짜를 선택해주세요.", "확인"});
+                    mCustomDialog.show();
                 } else if (endday.equals(null)) {
                     mCustomDialog.setTexts(new String[]{"시작 날짜를 선택해주세요.", "확인"});
-                } else {
                     mCustomDialog.show();
+                } else {
+
                     app.calendarIntent.setCalendarIntent(starthour, startminute, endhour, endminute, startyear, startmonth, startday, endyear, endmonth, endday, start_day_of_week, end_day_of_week);
                     Log.d("startminute",startminute);
                     finish();
