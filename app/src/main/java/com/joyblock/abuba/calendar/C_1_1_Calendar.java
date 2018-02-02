@@ -121,7 +121,7 @@ public class C_1_1_Calendar extends BaseActivity implements View.OnClickListener
             @Override
             public void onClick(View v) {
 
-                mCustomDialog = new TextDialog(C_1_1_Calendar.this, R.layout.dialog_one_check);
+                mCustomDialog = new TextDialog(C_1_1_Calendar.this, R.layout.dialog_call);
                 mCustomDialog.setTexts(new String[]{"작성하실 메뉴를 선택하세요.", "일정표", "식단표"});
                 mCustomDialog.show();
             }

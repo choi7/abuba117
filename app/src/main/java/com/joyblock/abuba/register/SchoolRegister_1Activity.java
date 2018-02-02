@@ -49,10 +49,13 @@ public class SchoolRegister_1Activity extends BaseActivity {
     String ids, seq_kindergarden, ar1, ar2, addr_etc, tel_no, fullAddress, kindergarden_name;
     R5_SelectKindergardenList[] r5_selectKindergardenList;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_register_1);
+
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbarcustom);

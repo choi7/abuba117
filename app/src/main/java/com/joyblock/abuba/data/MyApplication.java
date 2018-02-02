@@ -23,6 +23,9 @@ public class MyApplication extends Application {
             email,      //이메일
             token;      //토큰
 
+
+    public CalendarIntent calendarIntent = new CalendarIntent();
+
     public boolean push_yn;    //푸시 on/off
 
     public ArrayList<R8_SelectMykindergardenList> my_kindergarden_list=new ArrayList<>();
@@ -44,6 +47,46 @@ public class MyApplication extends Application {
     public void onLowMemory() {
         super.onLowMemory();
     }
+
+    public class CalendarIntent{
+        public boolean on = false;
+        public String starthour, startminute, endhour, endminute, startyear, startmonth, startday, endyear, endmonth, endday, start_day_of_week, end_day_of_week;
+        public ArrayList<String> calendarList = new ArrayList<>();
+        public String[] array;
+        public void setCalendarIntent(String starthour,String startminute,String endhour,String endminute,String startyear,String startmonth,String startday,String endyear,String endmonth,String endday, String start_day_of_week, String end_day_of_week){
+            calendarList.add(starthour);
+            calendarList.add(startminute);
+            calendarList.add(endhour);
+            calendarList.add(endminute);
+            calendarList.add(startyear);
+            calendarList.add(startmonth);
+            calendarList.add(startday);
+            calendarList.add(endyear);
+            calendarList.add(endmonth);
+            calendarList.add(endday);
+            calendarList.add(start_day_of_week);
+            calendarList.add(end_day_of_week);
+            array = new String[]{starthour, startminute, endhour, endminute, startyear, startmonth, startday, endyear, endmonth, endday, start_day_of_week, end_day_of_week};
+            this.starthour=starthour;
+            this.startminute=startminute;
+            this.endhour=endhour;
+            this.endminute=endminute;
+            this.startyear=startyear;
+            this.startmonth=startmonth;
+            this.startday=startday;
+            this.endyear=endyear;
+            this.endmonth=endmonth;
+            this.endday=endday;
+            this.start_day_of_week=start_day_of_week;
+            this.end_day_of_week=end_day_of_week;
+
+
+            on=true;
+
+        }
+    }
+
+
 
 
 }

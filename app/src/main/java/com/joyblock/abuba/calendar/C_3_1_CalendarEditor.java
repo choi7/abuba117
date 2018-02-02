@@ -18,9 +18,13 @@ import android.widget.TextView;
 
 import com.joyblock.abuba.BaseActivity;
 import com.joyblock.abuba.R;
+import com.joyblock.abuba.TextDialog;
 import com.joyblock.abuba.notice.CalendarCustomDialogActivity;
 import com.joyblock.abuba.notice.QuestionnaireListViewAdapter;
 import com.joyblock.abuba.util.ImageFileProcessor;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 public class C_3_1_CalendarEditor extends BaseActivity {
 
@@ -30,26 +34,30 @@ public class C_3_1_CalendarEditor extends BaseActivity {
     private ListView mListView11 = null;
     private QuestionnaireListViewAdapter mAdapter11 = null;
     ImageView questTimeSettingImageView, timeImage, questionnaireImage;
-    TextView deadLineText;
-    CalendarCustomDialogActivity mCustomDialog;
+    TextView deadLineText, startTime, endTime;
+    //    CalendarCustomDialogActivity mCustomDialog;
+    TextDialog mCustomDialog;
 
-    String seq_user,seq_kindergarden,seq_kindergarden_class, is_reply="y";
-    Integer year, month, day;
+    String seq_user, seq_kindergarden, seq_kindergarden_class, is_reply = "y", starthour, endhour;
+    Integer year, month, day, push_flag;
     private final int CAMERA_CODE = 1111, GALLERY_CODE = 1112;
-//    private Uri photoUri;
+    //    private Uri photoUri;
 //    byte[] image;
     ConstraintLayout constraintLayout8, constraintLayout9, constraintLayout10;
 
-    ImageFileProcessor image_file_processor=new ImageFileProcessor();
+    ImageFileProcessor image_file_processor = new ImageFileProcessor();
+    byte[] files;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_c_3_1_calendar_editor);
 
         titleText = (EditText) findViewById(R.id.titleText);
         inText = (EditText) findViewById(R.id.inText);
+        startTime = (TextView) findViewById(R.id.textView137);
+        endTime = (TextView) findViewById(R.id.textView138);
 
         ImageView pictureRegister = (ImageView) findViewById(R.id.pictureRegisterimageView);
         questionnaireImage = (ImageView) findViewById(R.id.editorimageView);
@@ -86,12 +94,18 @@ public class C_3_1_CalendarEditor extends BaseActivity {
         pictureRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                image_file_processor.selectGallery(QuestionnaireActivity.this,100);
+
+
+                image_file_processor.selectGallery(C_3_1_CalendarEditor.this, 100);
+
+                files = image_file_processor.byteArray;
             }
         });
         deadLineText = (TextView) findViewById(R.id.deadLineTimeText);
+
+        //댓글허용여부
         TextView txt = (TextView) findViewById(R.id.comenttextView);
-        txt.setVisibility(View.VISIBLE);
+        txt.setVisibility(View.GONE);
         final ImageView replyCheck = (ImageView) findViewById(R.id.replyCheckImage);
 //        replyCheck.setVisibility(View.VISIBLE);
         questTimeSettingImageView = (ImageView) findViewById(R.id.questionTimeSettingImageView);
@@ -145,6 +159,8 @@ public class C_3_1_CalendarEditor extends BaseActivity {
         backText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                push_flag = 2;
+
                 AlertDialog.Builder nd = new AlertDialog.Builder(C_3_1_CalendarEditor.this);
                 nd.setMessage("작성을 취소하시겠습니까")
                         .setNegativeButton("확인", new DialogInterface.OnClickListener() {
@@ -171,20 +187,11 @@ public class C_3_1_CalendarEditor extends BaseActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder nd = new AlertDialog.Builder(C_3_1_CalendarEditor.this);
-                nd.setMessage("등록하시겠습니까")
-                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String survey_title=titleText.getText().toString()
-                                        ,survey_content=inText.getText().toString();
+                push_flag = 1;
+                mCustomDialog = new TextDialog(C_3_1_CalendarEditor.this, R.layout.dialog_call);
+                mCustomDialog.setTexts(new String[]{"등록하시겠습니까?", "취소", "확인"});
+                mCustomDialog.show();
 
-                                finish();
-                            }
-                        })
-                        .setPositiveButton("취소", null)
-                        .create()
-                        .show();
             }
         });
 
@@ -196,12 +203,13 @@ public class C_3_1_CalendarEditor extends BaseActivity {
             getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
 
+        //댓글허용여부 옆 이미지 체크
         final ImageView replyCheck = (ImageView) findViewById(R.id.replyCheckImage);
-        replyCheck.setVisibility(View.VISIBLE);
+        replyCheck.setVisibility(View.GONE);
         replyCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imageChange) {
+                if (imageChange) {
                     replyCheck.setImageDrawable(getResources().getDrawable(R.drawable.del));
                     is_reply = "n";
                     imageChange = false;
@@ -213,5 +221,105 @@ public class C_3_1_CalendarEditor extends BaseActivity {
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case GALLERY_CODE:
+                    image_file_processor.sendPicture(data.getData(), questionnaireImage, C_3_1_CalendarEditor.this); //갤러리에서 가져오기
+                    questionnaireImage.setVisibility(View.VISIBLE);
+                    break;
+                case CAMERA_CODE:
+//                    getPictureForPhoto(); //카메라에서 가져오기
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (app.calendarIntent.on) {
+            startTime = (TextView) findViewById(R.id.textView137);
+            endTime = (TextView) findViewById(R.id.textView138);
+            String a, datecount;
+            Integer starthours = Integer.valueOf(app.calendarIntent.starthour);
+            Integer endhours = Integer.valueOf(app.calendarIntent.endhour);
+            if (starthours < 13) {
+                datecount = "오전";
+                starthour = String.valueOf(starthours);
+            } else {
+                datecount = "오후";
+                starthour = String.valueOf(starthours - 12);
+            }
+
+            if (endhours < 13) {
+                datecount = "오전";
+                endhour = String.valueOf(endhours);
+            } else {
+                datecount = "오후";
+                endhour = String.valueOf(endhours - 12);
+            }
+
+            startTime.setText(app.calendarIntent.startmonth + "월 " + app.calendarIntent.startday + "일 " + "(" + app.calendarIntent.start_day_of_week + ")    " + datecount + " " + starthour + ":" + app.calendarIntent.startminute);
+            endTime.setText(app.calendarIntent.endmonth + "월 " + app.calendarIntent.endday + "일 " + "(" + app.calendarIntent.end_day_of_week + ")    " + datecount + " " + endhour + ":" + app.calendarIntent.endminute);
+
+        }
+    }
+
+    public void clickTextView2(View v) {
+        mCustomDialog.dismiss();
+
+    }
+
+    public void clickTextView3(View v) {
+        mCustomDialog.dismiss();
+        String seq_kindergarden = pref.getString("seq_kindergarden","");
+
+
+        switch (push_flag) {
+            case 1:
+                String survey_title = titleText.getText().toString(), survey_content = inText.getText().toString();
+                if (!survey_title.equals("") && !survey_content.equals("")) {
+//                                    api.API_41(seq_user,seq_kindergarden,);
+                    Integer startmonths = Integer.valueOf(app.calendarIntent.startmonth);
+                    Integer endmonths = Integer.valueOf(app.calendarIntent.endmonth);
+                    String startmonth, endmonth;
+                    if(startmonths < 10) {
+                        startmonth = "0"+startmonths;
+                    } else {
+                        startmonth = String.valueOf(startmonths);
+                    }
+                    if(endmonths < 10) {
+                        endmonth = "0"+endmonths;
+                    } else {
+                        endmonth = String.valueOf(endmonths);
+                    }
+
+                    api.API_41(app.seq_user, seq_kindergarden, app.calendarIntent.startyear, startmonth, app.calendarIntent.startday, app.calendarIntent.endyear,
+                            endmonth, app.calendarIntent.endday, app.calendarIntent.starthour, app.calendarIntent.startminute, app.calendarIntent.endhour,
+                            app.calendarIntent.endminute, titleText.getText().toString(), inText.getText().toString(), "", "", "", files);
+                    String ss = api.getMessage();
+                }
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+
+        finish();
+
+    }
+
+    public void clickTextViewOne(View v) {
+        mCustomDialog.dismiss();
+    }
+
 
 }
