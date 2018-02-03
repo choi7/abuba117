@@ -47,6 +47,7 @@ public class C_3_1_CalendarEditor_TimeSetting extends BaseActivity {
     TextDialog mCustomDialog;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
